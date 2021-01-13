@@ -227,7 +227,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/_variables.scss' as v;
+@use '../../assets/styles/variables.scss' as v;
 
 h2 {
   margin-left: 3rem;

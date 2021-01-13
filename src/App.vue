@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use './assets/styles/_variables.scss' as v;
+@use './assets/styles/variables.scss' as v;
 
 //muuta em
 $desktop: 960px;
@@ -44,7 +44,7 @@ h1 {
   text-align: center;
   font-size: 2.5rem;
   font-weight: bold;
-  font-family: v.$KAMLouisBold;
+  font-family: v.$KAMLouis;
   text-transform: uppercase;
   margin-bottom: 2rem;
 }

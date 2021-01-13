@@ -64,14 +64,14 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/styles/_variables.scss' as v;
+@use '../../assets/styles/variables.scss' as v;
 
 .profiles-header {
   position: relative;
 }
 h1 {
   position: absolute;
-  top: 0;
+  top: 4rem;
   margin-left: auto;
   margin-right: auto;
   left: 0;

@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/_variables.scss' as v;
+@use '../../assets/styles/variables.scss' as v;
 h1 {
   margin-top: 0;
   margin-bottom: 5rem;

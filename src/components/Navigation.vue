@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped >
-@use '../assets/styles/_variables.scss' as v;
+@use '../assets/styles/variables.scss' as v;
 
 .navbar {
   background-color: v.$KAMGreenDark;
@@ -65,6 +65,7 @@ export default {
   position: fixed;
   transform: translate3d(0, 0, 0);
   transition: 0.1s all ease-out;
+  z-index: 1;
 }
 .navbar.navbar-hidden {
   box-shadow: none;
