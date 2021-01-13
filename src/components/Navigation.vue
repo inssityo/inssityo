@@ -1,17 +1,18 @@
 <template>
   <header>
-    <nav class="navbar">
-      <router-link to="/" class="kam_logo">Kämpp</router-link> 
-      <div class="dropdown">
-        <button class="dropbtn"> 
-          <i class="fas fa-equals"></i>
-          <!--<i class="fas fa-bars"></i>-->
-        </button>
-        <div class="dropdown_content">
-          <a href="#">Kirjaudu</a>
-          <router-link to="/profile">Profiilit</router-link> 
-          <a href="#">Asunnot</a>
-          <a href="#">Suomi</a>
+    <nav class="navbar" :class="{ 'navbar-hidden': !showNavbar }">
+      <div class="navbar-div">
+        <router-link to="/" class="kam_logo">Kämpp</router-link> 
+        <div class="dropdown">
+          <button class="dropbtn"> 
+            <i class="fas fa-equals"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="#">Kirjaudu</a>
+            <router-link to="/profile">Profiilit</router-link> 
+            <a href="#">Asunnot</a>
+            <a href="#">Suomi</a>
+          </div>
         </div>
       </div> 
     </nav>
@@ -22,6 +23,33 @@
 <script>
 export default {
   name: "NavigationBar",
+
+  data () {
+    return {
+      showNavbar: true,
+      lastScrollPosition: 0
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
+  },
+  beforeUnmount () {
+    window.removeEventListener('scroll', this.onScroll)
+  },
+  methods: {
+    onScroll () {
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+
+      if (currentScrollPosition < 0) {
+        return
+      }
+      if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
+        return
+      }
+      this.showNavbar = currentScrollPosition < this.lastScrollPosition
+      this.lastScrollPosition = currentScrollPosition
+    }
+  }
 }
 </script>
 
@@ -29,13 +57,26 @@ export default {
 @use '../assets/styles/_variables.scss' as v;
 
 .navbar {
-  overflow: hidden;
   background-color: v.$KAMGreenDark;
-  height: 2rem;
-  padding: 1rem 2rem;
   display: flex; 
   justify-content: space-between;
   align-items: center;
+  width: -webkit-fill-available;
+  position: fixed;
+  transform: translate3d(0, 0, 0);
+  transition: 0.1s all ease-out;
+}
+.navbar.navbar-hidden {
+  box-shadow: none;
+  transform: translate3d(0, -100%, 0);
+}
+.navbar-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2rem;
+  width: 100vw;
+  padding: 1rem 2rem;
 }
 .kam_logo {
   font-family: v.$KAMQuinn;
@@ -54,6 +95,7 @@ export default {
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  padding: 0;
 }
 .dropdown:hover .dropbtn {
   cursor: pointer;
@@ -61,7 +103,7 @@ export default {
 .fa-equals {
   font-size: 1.6rem;
 }
-.dropdown_content {
+.dropdown-content {
   display: none;
   position: absolute;
   background-color: v.$KAMGreenDark;
@@ -70,9 +112,9 @@ export default {
   box-shadow: 0 0.6rem 1rem 0 rgba(0,0,0,0.2);
   z-index: 1;
   right: 0;
-  padding: 1rem 0 0 0;
+  padding: 1.1rem 0 0 0;
 }
-.dropdown_content a {
+.dropdown-content a {
   float: none;
   color: v.$White;
   padding: 0.75rem 1rem;
@@ -80,14 +122,14 @@ export default {
   display: block;
   text-align: left;
 }
-.dropdown_content a:hover {
+.dropdown-content a:hover {
   background-color: v.$KAMGrey;
   color: v.$Black;
 }
-.dropdown_content a:last-child:hover {
+.dropdown-content a:last-child:hover {
   border-radius: 0 0 0 1.5rem;
 }
-.dropdown:hover .dropdown_content {
+.dropdown:hover .dropdown-content {
   display: block;
 }
 a {
