@@ -35,7 +35,8 @@
         </div>
         
         <div class="form_group_item--8">
-          <img src="../../assets/images/pexels-jonaorle-3828240.jpg" class="grid_img" alt="Profile Image" >
+          <ProfileImage v-on:childToParent="onChildClickProfileImage" />
+          {{fromChildSrc}}
         </div>
 
         <div class="form_group_item--6">
@@ -75,6 +76,7 @@
 import Age from './form/Age.vue'
 import Gender from './form/Gender.vue'
 import Status from './form/Status.vue'
+import ProfileImage from './form/ProfileImage.vue'
 import Characters from './form/Characters.vue'
 import Pets from './form/Pets.vue'
 import Intoxicants from './form/Intoxicants.vue'
@@ -87,6 +89,7 @@ export default {
     Age,
     Gender,
     Status,
+    ProfileImage,
     Characters,
     Pets,
     Intoxicants
@@ -105,6 +108,7 @@ export default {
       fromChildAge: null,
       fromChildGender: null,
       fromChildStatus: null,
+      fromChildSrc: '',
       fromChildCheckedCharacterList: [],
       fromChildCheckedPetList: [],
       fromChildCheckedIntoxidantList: [],
@@ -140,6 +144,9 @@ export default {
     },
     onChildClickPets (value) {
       this.fromChildCheckedPetList = value;
+    },
+    onChildClickProfileImage (value) {
+      this.fromChildSrc = value;
     },
     onChildClickCharacters (value) {
       this.fromChildCheckedCharacterList = value;
@@ -296,14 +303,6 @@ input, select {
 }
 .form_group-basic_details input:focus {
   background: v.$White;
-}
-
-.grid_img {
-  width: 100%;
-  max-height: calc(100vh - 0rem - 7.7rem);
-  height: 100%;
-  object-fit: cover;
-  border-radius: 1.5rem;
 }
 
 // -- pets -- //
