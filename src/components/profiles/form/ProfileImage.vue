@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       selectedImage: null,
-      src: 'empty_profile_img.jpg',
+      src: 'pexels-anna-shvets-4672714-2.jpg',
     }
   },
   methods: {
@@ -55,15 +55,19 @@ p {
   left: 0;
   bottom: 0;
   margin: 0;
-  padding: 0.5rem;
-  border-radius: 0 0 1.5rem 1.5rem;
+  padding: 0.3rem 0.5rem 0.5rem 0.7rem;
   width: -webkit-fill-available;
+  border-style: none none solid none !important;
+  border-color: transparent !important;
+  border-width: 0.25rem;
 }
 label:hover {
   p {
     padding: 0.3rem 0.5rem 0.5rem 0.7rem;
-    background: v.$KAMGreenDark;
-    color: v.$White;
+    background: v.$White;
+    border-style: none none solid none !important;
+    border-color: v.$KAMGreenDark !important;
+    border-width: 0.25rem;
   }
 }
 div {
@@ -74,7 +78,6 @@ div {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1.5rem;
 }
 
 </style>

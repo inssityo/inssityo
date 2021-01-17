@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ optionIntoxidants }}
     <div>  
       <p>Käytätkö alkoholia päihtymistarkoitukseen?</p>
       <div class="without_dot" >
@@ -67,6 +66,9 @@ label {
   letter-spacing: 0.05rem;
   cursor: pointer;
 }
+p {
+  margin: 0;
+}
 .form_group-intoxicants div {
   margin-top: 0.2rem;
 }
@@ -81,13 +83,17 @@ label {
 }
 .without_dot {
   display: flex;
-  margin-top: 0.5rem!important;
+  margin-top: 0.2rem!important;
   flex-wrap: wrap;
+}
+.without_dot div {
+  margin-bottom: 0.5rem;
 }
 .without_dot input[type="radio"], .without_dot input[type="checkbox"] {
   visibility: hidden;
   height: 0;
   width: 0;
+  margin: 0;
 }
 .without_dot label {
   //display: table-cell;

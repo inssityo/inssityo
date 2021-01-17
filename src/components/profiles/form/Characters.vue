@@ -1,9 +1,8 @@
 <template>
   <div>  
-    <p>Valitse luonnettasi kuvaavat sanat (max. 7) array</p>
+    <p>Valitse luonnettasi kuvaavat sanat (max. 7)</p>
+    <div class="text-danger">{{ errors.characters }}</div>
     <div class="without_dot">
-      <div class="text-danger">{{ errors.characters }}</div>
-  
       <div v-for="(character, index,) in optionsCharacters" :key="index">
         <input type="checkbox" :id="'c'+index" v-model="character.checked"/>
         <label :for="'c'+index" v-on:click="emitToParent" @click="handleCharacters">{{ character.text }}</label>
@@ -51,10 +50,41 @@ export default {
       this.$emit('childToParent', this.optionsCharacters)
     },
     handleCharacters() {
+      
+      let checked = [];
+      let i;
+      for (i = 0; i < this.optionsCharacters.length; i++) {
+        if (this.optionsCharacters[i].checked) {
+          checked.push(this.optionsCharacters[i]);
+        }
+      }
+      this.checkedCharacterList = checked;
 
-      let result = this.optionsCharacters.filter(c => c.checked); 
-      console.log("res" + JSON.stringify(result)); //Toimii viiveellä
+      if (this.checkedCharacterList.length > 2) {
+        //this.checkedCharacterList[0].checked = false; //Poistaa kaksi aikaisempaa
+        let p = checked.pop();
+        
+        this.optionsCharacters.forEach(item => {
+          if (item.value === p.value) {
+            item.checked = false;
+          }
+        })
+      }
+      //console.log(JSON.stringify(this.checkedCharacterList))
 
+
+      //let result = this.optionsCharacters.filter(c => c.checked); 
+      //console.log("res" + JSON.stringify(result)); //Toimii viiveellä
+      console.log("check " + this.checkedCharacterList.length)
+      if (this.checkedCharacterList.length + 1 > 7) {
+        this.isValid = false;
+        this.errorList["characters"] = "Max 7 characters can be chosen.";
+        this.errors = this.errorList;
+      } else {
+        this.isValid = true;
+        this.errors = {};
+      
+      }
       /*
       if (this.checked.length > 7) {
         this.isValid = false;
@@ -65,13 +95,12 @@ export default {
         this.errors = {};
       }*/
 
-      console.log("Values of checked items: ", this.optionsCharacters) //Toimii oikein
+      //console.log("Values of checked items: ", this.optionsCharacters) //Toimii oikein
     },
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
@@ -79,19 +108,13 @@ label {
   letter-spacing: 0.05rem;
   cursor: pointer;
 }
-.form_group-character div {
-  margin-top: 0.2rem;
-}
-.form_group-character div div {
-  margin-bottom: 0;
-}
-.form_group-character div p {
-  margin: 0;
-}
 .without_dot {
   display: flex;
-  margin-top: 0.5rem!important;
+  margin-top: 0.2rem!important;
   flex-wrap: wrap;
+}
+.without_dot div {
+  margin: 0.15rem 0.1rem;
 }
 .without_dot input[type="radio"], .without_dot input[type="checkbox"] {
   visibility: hidden;
@@ -105,12 +128,8 @@ label {
   background-color: v.$KAMGreyDark;
   color: v.$White;
   padding: 0.2rem 0.4rem;
-  margin: 0.2rem 0 0.2rem 0.2rem;
   border-radius: 0.2rem;
   font-size: 0.75rem!important;
-}
-.without_dot label:last-child {
-  margin-right: 0;
 }
 .without_dot input[type="radio"]:checked + label, .without_dot input[type="checkbox"]:checked + label{
   background-color: v.$KAMGreenSemiLight;

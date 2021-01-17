@@ -6,9 +6,9 @@
 
       <div class="form_group form_group-grid">
 
-        <div class="form_group_item--1">
+        <!--<div class="form_group_item--1">
           <textarea type="text" id="more_about" placeholder="Kerro vapaasti mieleisestäsi kämppiksestä" v-model="more_about"></textarea>
-        </div>
+        </div>-->
 
         <div class="form_group_item--2">
           <div class="form_group-basic_details">

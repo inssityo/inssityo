@@ -1,9 +1,23 @@
 <template>
-  <div>
-    <div class="petlist" v-for="(pet, index) in optionsPets" :key="index">
-      <input type="checkbox" :id="'p'+index" :value="pet.value" v-model="pet.checked" v-on:click="emitToParent">
-      <label :for="'p'+index" v-on:click="emitToParent">{{ pet.text }}</label>
+  <div>  
+    <div class="switch-div">
+      <div>
+        <p>Omistatko lemmikkejä?</p>
+        <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedPets ? "-kyllä" : "-ei" }}</p>
+      </div>
+      <label class="switch" @click="handleCheckedPets" v-on:click="emitToParent">
+        <input type="checkbox" id="checkboxPet" checked v-model="checkedPets">
+        <span class="slider round"></span>
+      </label>
     </div>
+   
+    <div class="without_dot" v-if="checkedPets">
+      <div v-for="(pet, index,) in optionsPets" :key="index">
+        <input type="checkbox" :id="'p'+index" v-model="pet.checked"/>
+        <label :for="'p'+index" v-on:click="emitToParent">{{ pet.text }}</label>
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -13,6 +27,7 @@ export default {
 
   data() {
     return {
+      checkedPets: true,
       optionsPets: [
         { text: 'Koiria', value: 'dogs', checked: false },
         { text: 'Kissoja', value: 'cats', checked: false },
@@ -26,7 +41,15 @@ export default {
   },
   methods: {
     emitToParent () {
-      this.$emit('childToParent', this.optionsPets)
+      console.log("con" + this.checkedPets)
+      this.$emit('childToParent', {'tableOne':this.checkedPets, 'tableTwo':this.optionsPets});
+    },
+    handleCheckedPets() {
+      if(!this.checkedPets) {
+        this.optionsPets.forEach(pet => {
+          pet.checked = false;
+        });
+      }
     },
   }
 }
@@ -35,44 +58,100 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
-label {
-  cursor: pointer;
-}
-input, select {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  border-style: none none solid none!important;
-  border-color: v.$KAMGreenDark!important;
-}
-.petlist {
-  margin: 0.2rem 0;
+.switch-div {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
-.petlist label {
-  margin-left: 0.6rem;
+.switch-div div {
+  display: flex;
+  align-items: center;
+  p {
+    margin-right: 0.5rem;
+  }
 }
-.petlist [type="checkbox"]{
-  border: 0.1rem solid v.$KAMGreenDark;
-  background: v.$KAMGreySemiDark;
-  border-radius: 50%; 
-  display: inline-block;
-  height: 1rem;
-  width: 1.1rem;
-  margin: 0 0 0 0.5rem;
+.switch {
   position: relative;
-  -webkit-appearance: none;
+  display: inline-block;
+  width: 3.12rem;
+  height: 1.5rem;
 }
-.petlist [type="checkbox"]:checked, .petlist [type="checkbox"]:checked {
-  border: 0.25rem solid v.$KAMGreenDark;
-  background: v.$White;
-  width: 1.2rem;
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: v.$KAMBeigeLight;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: 4px;
+  bottom: 4px;
+  background-color: v.$White;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: v.$KAMGreenDark;
+}
+//kehys
+input:focus + .slider {
+  box-shadow: 0 0 1px v.$KAMBeigeLight;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.slider.round {
+  border-radius: 1.5rem;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+
+//======================
+label {
+  letter-spacing: 0.05rem;
+  cursor: pointer;
+}
+.without_dot {
+  display: flex;
+  margin-top: 0.2rem!important;
+  flex-wrap: wrap;
+}
+.without_dot div {
+  margin: 0.15rem 0.1rem;
+}
+.without_dot input[type="radio"], .without_dot input[type="checkbox"] {
+  visibility: hidden;
+  height: 0;
+  width: 0;
   margin: 0;
 }
-.petlist [type="checkbox"]:checked + label{
-  color: v.$KAMGreenDark;
-  font-weight: bold;
+.without_dot label {
+  vertical-align: middle;
+  text-align: center;
+  background-color: v.$KAMGreyDark;
+  color: v.$White;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+  font-size: 0.75rem!important;
+}
+.without_dot input[type="radio"]:checked + label, .without_dot input[type="checkbox"]:checked + label{
+  background-color: v.$KAMGreenSemiLight;
 }
 
 </style>

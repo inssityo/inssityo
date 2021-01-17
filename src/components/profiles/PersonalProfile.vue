@@ -1,72 +1,72 @@
 <template>
-  <div>  
-    <h2>Luo henkilökohtainen profiilisi: harrastukset</h2>
+  <div class="section">  
+    <h2>Luo henkilökohtainen profiilisi:</h2>
 
-    <form id="personalProfile" class="profile_form">
+    <form id="personal-profile">
+      <div class="form_group-grid--1">
 
-      <div class="form_group form_group-grid">
-
-        <div class="form_group_item--1">
-          <label for="firstname">Etunimi</label>
-          <input type="text" id="firstname" v-model="firstname" v-on:keyup="emitToParent">
-        </div>
-        <div class="form_group_item--2">
-          <label for="lastname">Sukunimi</label>
-          <input type="text" id="lastname" v-model="lastname">
-        </div>
-
-        <div class="form_group_item--3">
-          <textarea type="text" id="more_about" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="more_about"></textarea>
-        </div>
-
-        <div class="form_group_item--4">
-          <div class="form_group-basic_details">
-            <Age v-on:childToParent="onChildClickAge" />
+        <div class="form_group_item--1-grid">
+          <div class="form_group_item--1">
+            <ProfileImage v-on:childToParent="onChildClickProfileImage" />
           </div>
-          <div class="form_group-basic_details">
-            <Gender v-on:childToParent="onChildClickGender" />
+          <div class="form_group_item--2">
+            <label for="firstname">Etunimi</label>
+            <input type="text" id="firstname" v-model="firstname" v-on:keyup="emitToParent">
           </div>
-        </div>
+          <div class="form_group_item--3">
+            <label for="lastname">Sukunimi</label>
+            <input type="text" id="lastname" v-model="lastname">
+          </div>
+          <div class="form_group_item--4">
+            <div class="form_group_item--flex">
+              <Age v-on:childToParent="onChildClickAge" />
+            </div>
+            <div class="form_group_item--flex">
+              <Gender v-on:childToParent="onChildClickGender" />
+            </div>
+          </div>
 
-        <div class="form_group_item--5">
-          <div class="form_group-basic_details">
-            <Status v-on:childToParent="onChildClickStatus" />
+          <div class="form_group_item--5">
+            <div v-bind:class="{'form_group_item--flex': fromChildStatus ===1}">
+              <Status v-on:childToParent="onChildClickStatus" />
+            </div>
+            <div class="form_group_item--flex" v-if="fromChildStatus === 1">
+              <WorkType v-on:childToParent="onChildClickWorkType" />
+            </div>
           </div>
-        </div>
-        
-        <div class="form_group_item--8">
-          <ProfileImage v-on:childToParent="onChildClickProfileImage" />
-          {{fromChildSrc}}
-        </div>
 
-        <div class="form_group_item--6">
-          <div class="form_group-pets">
-            <label>Omistatko lemmikkejä?</label>
-            <input type="checkbox" id="pets" v-model="checkedPets" @click="handleCheckedPets">
-            <p v-bind:style="{ fontWeight: 'bold'}">{{ checkedPets ? "-kyllä" : "-ei" }}</p>
-          </div>
-          <div class="pets_list" v-if="checkedPets">
-            <Pets v-on:childToParent="onChildClickPets" />
-            {{fromChildCheckedPetList}}
+          <div class="form_group_item--6">
+            <textarea type="text" id="more_about" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="more_about"></textarea>
           </div>
         </div>
 
-        <div class="form_group_item--9">
-          <div class="form_group-character">
+        <div class="form_group_item--2-grid">
+          <div class="form_group_item--1">
+            <Hobbies v-on:childToParent="onChildClickHobbies" />
+          </div>
+        </div>
+
+        <div class="form_group_item--3-grid">
+          <div class="form_group_item--1">
+            <Sociality v-on:childToParent="onChildClickSociality" />
+          </div>
+
+          <div class="form_group_item--2">
             <Characters v-on:childToParent="onChildClickCharacters"/>
+             <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
             <li v-for="character in filteredCharacters" :key="character.value">{{character.value}}</li>
           </div>
-        </div>
-        
-        <div class="form_group_item--7">
-          <div class="form_group-intoxicants">
-            <Intoxicants v-on:childToParent="onChildClickIntoxicants" />
 
+          <div class="form_group_item--3">
+            <Pets v-on:childToParent="onChildClickPets" />
           </div>
-        </div>
-       
-      </div>
 
+          <div class="form_group_item--4">
+            <Intoxicants v-on:childToParent="onChildClickIntoxicants" />
+          </div>
+
+        </div>
+      </div>
     </form>
 
   </div>
@@ -78,8 +78,11 @@ import Gender from './form/Gender.vue'
 import Status from './form/Status.vue'
 import ProfileImage from './form/ProfileImage.vue'
 import Characters from './form/Characters.vue'
+import Hobbies from './form/Hobbies.vue'
 import Pets from './form/Pets.vue'
 import Intoxicants from './form/Intoxicants.vue'
+import Sociality from './form/Sociality.vue'
+import WorkType from './form/WorkType.vue'
 
 export default {
   name: 'PersonalProfile',
@@ -91,8 +94,11 @@ export default {
     Status,
     ProfileImage,
     Characters,
+    Hobbies,
     Pets,
-    Intoxicants
+    Intoxicants,
+    Sociality,
+    WorkType
   },
   
   data() {
@@ -101,20 +107,19 @@ export default {
       lastname: '',
       email: '',
       more_about: '',
-      gender: '',
 
-      status: '',
       checkedPets: true,
       fromChildAge: null,
       fromChildGender: null,
       fromChildStatus: null,
       fromChildSrc: '',
       fromChildCheckedCharacterList: [],
+      fromChildCheckedHobbyList: [],
+      fromChildCheckedPets: true,
       fromChildCheckedPetList: [],
       fromChildCheckedIntoxidantList: [],
-      alcohol: true,
-      smoke: true,
-      drugs: true,
+      fromChildSociality: null,
+      fromChildWorkType: null,
       
       errors: {},
       errorList: {},
@@ -130,31 +135,46 @@ export default {
   },
 
   methods: {
-    emitToParent () {
+    emitToParent() {
       this.$emit('childToParent', this.firstname)
     },
-    onChildClickGender (value) {
+    onChildClickGender(value) {
       this.fromChildGender = value;
     },
-    onChildClickAge (value) {
+    onChildClickAge(value) {
       this.fromChildAge = value;
     },
-    onChildClickStatus (value) {
+    onChildClickStatus(value) {
       this.fromChildStatus = value;
+      this.handleWorkType();
     },
-    onChildClickPets (value) {
-      this.fromChildCheckedPetList = value;
+    onChildClickPets(value) {
+      this.fromChildCheckedPets = !value.tableOne;
+      this.fromChildCheckedPetList = value.tableTwo;
     },
-    onChildClickProfileImage (value) {
+    onChildClickProfileImage(value) {
       this.fromChildSrc = value;
     },
-    onChildClickCharacters (value) {
+    onChildClickCharacters(value) {
       this.fromChildCheckedCharacterList = value;
     },
-    onChildClickIntoxicants (value) {
+    onChildClickHobbies(value) {
+      this.fromChildCheckedHobbyList = value;
+    },
+    onChildClickIntoxicants(value) {
       this.fromChildCheckedIntoxidantList = value;
     },
-    
+    onChildClickSociality(value) {
+      this.fromChildSociality = value;
+    },
+    onChildClickWorkType(value) {
+      this.fromChildWorkType = value;
+    },
+    handleWorkType() {
+      if (this.fromChildStatus !== 1) {
+        this.fromChildWorkType = null;
+      }
+    }
   }
 }
 </script>
@@ -162,261 +182,180 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-h2 {
-  margin-left: 3rem;
+input[type="text"] {
+  padding: 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 0.5rem 0;
+  border-style: none none solid none !important;
+  border-color: v.$KAMGreenDark !important;
+  border-width: 0.25rem;
+  width: 100%;
 }
-label {
-  border-radius: 1.5rem 0 0 1.5rem;
-  cursor: pointer;
-}
-.profile_form {
-  margin: 2rem 4rem;
-}
-.form_group {
-  margin: 0 1rem 2rem 1rem;
-  border-radius: 1.5rem;
-}
-.form_group-grid {
+.form_group-grid--1 {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(10, 2.9rem);
-  background: v.$KAMGrey;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
-.form_group_item--1 { //firstname
+.form_group_item--1-grid {
   grid-column-start: 1;
+  grid-column-end: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(12, 4rem);
+  background: v.$KAMGreyLight;
+}
+.form_group_item--2-grid {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(12, 3rem);
+  background: v.$KAMBeigeLight;
+}
+.form_group_item--3-grid {
+  grid-column-start: 3;
   grid-column-end: 4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(15, 3rem);
+  background: v.$KAMGreyLight;
+}
+.form_group_item--1-grid .form_group_item--1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
   grid-row-start: 1;
-  grid-row-end: 3;
-  padding: 1rem 0.7rem 1rem 1.7rem;
-  display: flex;
+  grid-row-end: 5;
+  margin-bottom: 0.8rem;
 }
-.form_group_item--2 { //lastname
+.form_group_item--1-grid .form_group_item--2 {
   grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  padding: 0 0.7rem 0 1.7rem;
+  grid-column-end: 3;
+  grid-row-start: 5;
+  grid-row-end: 6;
   display: flex;
+  align-items: center;
+  margin: 0 0.7rem;
 }
-.form_group_item--1 label, .form_group_item--2 label {
+.form_group_item--1-grid .form_group_item--3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem;
+}
+.form_group_item--1-grid .form_group_item--2 label,
+.form_group_item--1-grid .form_group_item--3 label {
   background: v.$White;
-  padding: 0.5rem 0 0.5rem 0.5rem;
+  padding: 0.5rem;
   border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
+  border-width: 0.25rem;
 }
-.form_group_item--2 input {
-  margin-right: 5.9rem;
+.form_group_item--1-grid .form_group_item--4 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem;
+  justify-content: space-between;
 }
-.form_group_item--1 input, .form_group_item--2 input {
-  padding: 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin: auto 0.9rem auto 0;
+.form_group_item--flex {
+  width: 48.5% !important;
+}
+select {
+  padding: 0 0.2rem !important;
+  margin: 0;
+  height: 2rem;
+  width: -webkit-fill-available;
+  border-radius: 0.5rem;
   border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: unset;
+  border-color: #016361 !important;
+  border-width: 0.25rem;
+  background: v.$White;
+}
+.form_group_item--1-grid .form_group_item--5 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem;
+  justify-content: space-between;
+}
+.form_group_item--1-grid .form_group_item--5 div {
   width: 100%;
 }
-.form_group_item--3 { //other textarea
+.form_group_item--1-grid .form_group_item--6 {
   grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 6;
-  grid-row-end: 11;
-  padding: 1.5rem 0 1rem 1.7rem;
+  grid-column-end: 3;
+  grid-row-start: 9;
+  grid-row-end: 13;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0.7rem;
 }
-.form_group_item--3 textarea {
+.form_group_item--1-grid .form_group_item--6 textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
-  margin: 0.2rem 1.7rem 0.5rem 0;
+  height: 100%;
+  width: -webkit-fill-available;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
-  width: -webkit-fill-available;
-  border-width: unset;
+  border-width: 0.25rem;
 }
-.form_group_item--4 { //age and gender
-  grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 4;
-  grid-row-end: 5;
-  padding: 1.5rem 1.7rem 0 1.7rem;
-  display: flex;
-  justify-content: space-between;
-}
-.form_group_item--4 .form_group-basic_details:first-child {
-  margin-right: 1.5rem;
-}
-.form_group_item--5 { //life status
-  grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 5;
-  grid-row-end: 6;
-  padding: 1.5rem 1.7rem 1rem 1.7rem;
-}
-.form_group_item--6 { //pets
-  grid-column-start: 4;
-  grid-column-end: 6;
-  grid-row-start: 5;
-  grid-row-end: 11;
-  padding: 1rem 0.7rem 1rem 0;
-}
-.form_group_item--9 { //
-  grid-column-start: 6;
-  grid-column-end: 10;
-  grid-row-start: 1;
-  grid-row-end: 6;
-  padding: 1rem 1.6rem 1rem 0;
-}
-.form_group_item--7 { //drugs
-  grid-column-start: 6;
-  grid-column-end: 10;
-  grid-row-start: 6;
-  grid-row-end: 11;
-  padding: 1rem 1.6rem 1rem 0;
-}
-.form_group_item--8 { //profile img
-  grid-column-start: 4;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 5;
-  padding: 1.5rem 1.7rem 0 0;
-}
-.form_group-basic_details {
-  display: block;
-  width: -webkit-fill-available;
-}
-.form_group-basic_details div {
-  display: block;
-  margin: 1.2rem 1rem;
-}
-.form_group-basic_details label {
-  display: block;
-}
-input, select {
+.form_group_item--2-grid {
   padding: 0.5rem;
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  border-style: none none solid none!important;
-  border-color: v.$KAMGreenDark!important;
 }
-.form_group-basic_details input:focus {
-  background: v.$White;
-}
-
-// -- pets -- //
-.form_group-pets {
-  margin-top: 0.6rem;
-}
-.pets_list {
-  margin: 1.2rem 0.7rem;
-}
-.form_group-pets p {
-  margin: 0.7rem 0 0 0;
-}
-.form_group-pets label {
-  cursor: default;
-  display: block;
-}
-.form_group-pets input {
-  float: left;
-}
-#pets[type="checkbox"]{
-  border: 0.1rem solid v.$KAMGreenDark;
-  background: v.$KAMGreySemiDark;
-  border-radius: 50%; 
-  display: inline-block;
-  height: 1.5rem;
-  width: 1.5rem;
-  margin: 0.7rem 0.7rem 0 0;
-  position: relative;
-  -webkit-appearance: none;
-}
-#pets [type="checkbox"]:checked, #pets[type="checkbox"]:checked {
-  border: 0.25rem solid v.$KAMGreenDark;
-  background: v.$White;
-}
-
-@media screen and (max-width: 1280px) {
-
-.form_group-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(12, 2.9rem);
-}
-.form_group_item--1 {
+.form_group_item--2-grid .form_group_item--1 {
   grid-column-start: 1;
-  grid-column-end: 4;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 13;
+  margin-bottom: 0.8rem;
+  position: relative;
+}
+.form_group_item--3-grid {
+  padding: 0.5rem;
+}
+.form_group_item--3-grid .form_group_item--1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 3;
-  padding: 0 0.7rem 0 1.7rem;
+  margin-bottom: 0.8rem;
+  position: relative;
 }
-.form_group_item--2 {
+.form_group_item--3-grid .form_group_item--2 {
   grid-column-start: 1;
-  grid-column-end: 4;
+  grid-column-end: 3;
   grid-row-start: 3;
-  grid-row-end: 4;
-  padding: 0 0.7rem 0 1.7rem;
+  grid-row-end: 8;
+  margin-bottom: 0.8rem;
 }
-.form_group_item--2 label, .form_group_item--2 input {
-  margin-top: 0;
-}
-.form_group_item--3 {
+.form_group_item--3-grid .form_group_item--3 {
   grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 4;
-  grid-row-end: 7;
-  padding: 1rem 0 1rem 1.7rem;
-  display: flex;
-}
-.form_group_item--4 {
-  grid-column-start: 4;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 4;
-  padding: 1.75rem 0.7rem 0 0;
-  display: block;
-}
-.form_group-basic_details {
-  margin-right: 1rem !important;
-}
-.form_group_item--4 .form_group-basic_details:last-child {
-  margin-top: 2.5rem;
-}
-.form_group_item--5 {
-  grid-column-start: 4;
-  grid-column-end: 6;
-  grid-row-start: 4;
-  grid-row-end: 7;
-  padding: 1rem 0.75rem 0 0;
-  display: flex;
-  justify-content: space-between;
-}
-#status {
-  margin-top: 0.2rem;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 11;
+  margin-bottom: 0.8rem;
 }
 
-.form_group_item--6 {
-  grid-column-start: 4;
-  grid-column-end: 6;
-  grid-row-start: 7;
-  grid-row-end: 13;
-  padding: 0 0.7rem 1rem 0;
-}
-.form_group_item--7 {
+.form_group_item--3-grid .form_group_item--4 {
   grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 7;
-  grid-row-end: 13;
-  padding: 0 1.7rem 1rem 1.7rem;
+  grid-column-end: 3;
+  grid-row-start: 11;
+  grid-row-end: 15;
+  margin-bottom: 0.8rem;
 }
-.form_group_item--8 {
-  grid-column-start: 6;
-  grid-column-end: 9;
-  grid-row-start: 1;
-  grid-row-end: 13;
-}
-}
+
+
 
 </style>

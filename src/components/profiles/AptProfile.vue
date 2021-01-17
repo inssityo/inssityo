@@ -15,9 +15,9 @@
           <input type="text" id="location" v-model="lastname">
         </div>
 
-        <div class="form_group_item--3">
+        <!--<div class="form_group_item--3">
           <textarea type="text" id="more_about" placeholder="Kerro vapaasti asunnosta, jota etsit" v-model="more_about"></textarea>
-        </div>
+        </div>-->
 
         <div class="form_group_item--4">
           <div class="form_group-basic_details">

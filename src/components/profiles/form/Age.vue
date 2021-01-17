@@ -1,5 +1,5 @@
 <template>
-  <select id="age" v-model="age" v-on:click="emitToParent">
+  <select v-model="age" v-on:click="emitToParent">
     <option value="" selected disabled hidden>Ikä</option>
     <option v-for="(age, index,) in optionAges" :value="age.value" :key="index">{{ age.text }}</option>
   </select>
@@ -34,24 +34,6 @@ export default {
 
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
-label {
-  cursor: pointer;
-}
-input, select {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  border-style: none none solid none!important;
-  border-color: v.$KAMGreenDark!important;
-}
-input:focus {
-  background: v.$White;
-}
-#age {
-  padding: 0.1rem;
-  margin: 0;
-  border: none;
-  width: -webkit-fill-available;
-}
+
 
 </style>

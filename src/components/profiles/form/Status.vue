@@ -1,5 +1,5 @@
 <template>
-  <select id="status" v-model="status" v-on:click="emitToParent">
+  <select v-model="status" v-on:click="emitToParent">
     <option value="" selected disabled hidden>Elämäntilanne</option>
     <option v-for="(status, index,) in optionStatus" :value="status.value" :key="index">{{ status.text }}</option>
   </select>
@@ -44,11 +44,6 @@ input, select {
 input:focus {
   background: v.$White;
 }
-#status {
-  padding: 0.1rem;
-  margin: 0;
-  border: none;
-  width: -webkit-fill-available;
-}
+
 
 </style>
