@@ -336,7 +336,7 @@ svg {
   //grid-template-columns: calc(27% - 0rem) calc(27% - 0rem) calc(27% - 0rem);
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(7, 9vw);
-  grid-gap: 0.5rem;
+  gap: 0.5rem;
   width: 100%;
   height: 100%;
   box-sizing: border-box;

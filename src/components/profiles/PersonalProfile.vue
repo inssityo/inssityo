@@ -41,7 +41,7 @@
 
         <div class="form_group_item--2-grid">
           <div class="form_group_item--1">
-            <Hobbies v-on:childToParent="onChildClickHobbies" />
+            <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" />
           </div>
         </div>
 
@@ -104,7 +104,7 @@ export default {
     Sociality,
     WorkType
   },
-  
+ 
   data() {
     return {
       firstname: '',
@@ -184,7 +184,7 @@ export default {
 
   }
 
-  /* Tee json, lisää button, pets cats=true jne
+  /*
   
   {
   "email": "example@internet.com", req
@@ -259,7 +259,7 @@ select {
 .form_group-grid--1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  //gap: 1.5rem;
   margin-top: 2rem;
 }
 .form_group_item--1-grid {

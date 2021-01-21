@@ -1,6 +1,6 @@
 <template>
   <div class="section">  
-    <h2>Luo kämppiksen profiilisi:</h2>
+    <h2>Luo kämppiksen profiili:</h2>
 
     <form id="roommate-profile">
       <div class="form_group-grid--1">
@@ -13,7 +13,6 @@
             <Gender v-on:childToParent="onChildClickGender" />
           </div>
           
-
           <div class="form_group_item--3">
             <div v-bind:class="{'form_group_item--flex': fromChildStatus ===1}">
               <Status v-on:childToParent="onChildClickStatus" />
@@ -30,7 +29,7 @@
 
         <div class="form_group_item--2-grid">
           <div class="form_group_item--1">
-            <Hobbies v-on:childToParent="onChildClickHobbies" />
+            <Hobbies id-value="R" v-on:childToParent="onChildClickHobbies" />
           </div>
         </div>
 
@@ -169,45 +168,6 @@ export default {
   mounted() {
 
   }
-
-  /* Tee json, lisää button, pets cats=true jne
-  
-  {
-  "email": "example@internet.com", req
-  "password": "secret", req
-  "lastActive" req
-  "ilmoituksen jättö" req
-  "name": "Edwin",
-  "surname": "Xample",
-  "ageGroup": 3,
-  "gender": 1,
-  "location": ["Helsinki", "Espoo", "Vantaa"],
-  "rentLimit": 900,
-  "maxRoomMates": 3,
-  "employmentStatus": 3,
-  "description": "A perfect example to live with",
-  "alcohol": 2,
-  "smoking": 1,
-  "drugs": 1,
-  "personalityTraits": ["Harkitseva", "Sopeutuvainen", "Määrätietoinen"],
-  "sociality": 2,
-  "pets": false,
-  "hobbies": {
-    "collecting": 1,
-    "crafts": 3,
-    "informationTech": 5,
-    "sports": 4,
-    "music": 1,
-    "games": 5,
-    "reading": 2,
-    "art": 3,
-    "culture": 1,
-    "cooking": 4,
-    "travelling": 1,
-    "voluntaryWork": 1
-  }
-}
-  */
 }
 </script>
 
@@ -220,7 +180,7 @@ input[type="text"] {
   margin: 0.5rem 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
   width: 100%;
 }
 .form_group_item--flex {
@@ -235,7 +195,7 @@ select {
   border-radius: 0.5rem;
   border-style: none none solid none !important;
   border-color: #016361 !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
   background: v.$White;
 }
 .form_group-grid--1 {
@@ -317,7 +277,7 @@ select {
   width: 100%;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
 }
 .form_group_item--2-grid {
   padding: 0.5rem;
