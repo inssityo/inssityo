@@ -1,12 +1,12 @@
 <template>
-  <div class="section">
+  <div id="find" class="section">
     <h1>Etsi ja löydä</h1>
     <div class="gallery">
       <div class="find_item gallery_item--1">
         <p class="gallery_item">Löydä kämppis</p>
       </div>
       <figure class="gallery_item gallery_item--2">
-        <img src="../../assets/images/pexels-helena-lopes-708392-2.jpg" class="gallery_img" alt="Image 2">
+        <img src="../../assets/images/pexels-savannah-dematteo-2346701.jpg" class="gallery_img" alt="Image 2">
       </figure>
       <figure class="gallery_item gallery_item--3">
         <img src="../../assets/images/home-5835289_1920.jpg" class="gallery_img" alt="Image 3">
@@ -15,11 +15,6 @@
         <p class="gallery_item">Löydä asunto</p>
       </div>
     </div>
-    <!--
-    <div class="wrapper">
-      <button type="button" class="wrapper_item--1">Löydä kämppis</button>
-      <button type="button" class="wrapper_item--2">Löydä asunto</button>
-    </div>-->
   </div>
 </template>
 
@@ -96,37 +91,4 @@ p {
 figure {
   margin: 0;
 }
-/*
-.wrapper {
-  display: grid;
-  //grid-template-columns: 1fr 1fr;
-  grid-template-columns: repeat(5, 1fr);
-}
-.wrapper_button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.wrapper_item--1 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-}
-.wrapper_item--2 {
-  grid-column-start: 4;
-  grid-column-end: 5;
-}
-button {
-  background: v.$KAMBlue;
-  color: v.$White;
-  border: none;
-  padding: 1rem;
-  border-radius: 0.8rem;
-  font-size: 1.5rem;
-  font-family: v.$KAMLouis;
-  margin-bottom: 2rem;
-}
-button:hover {
-  background: v.$KAMOrange;
-  cursor: pointer;
-}*/
 </style>

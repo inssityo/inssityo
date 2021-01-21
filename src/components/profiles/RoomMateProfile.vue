@@ -1,449 +1,367 @@
 <template>
-  <div>  
-    <h2>Luo kämppiksen profiili: Paikkakunta, kk-maksu</h2>
+  <div class="section">  
+    <h2>Luo kämppiksen profiilisi:</h2>
 
-    <form id="personalProfile" class="profile_form">
+    <form id="roommate-profile">
+      <div class="form_group-grid--1">
 
-      <div class="form_group form_group-grid">
-
-        <!--<div class="form_group_item--1">
-          <textarea type="text" id="more_about" placeholder="Kerro vapaasti mieleisestäsi kämppiksestä" v-model="more_about"></textarea>
-        </div>-->
-
-        <div class="form_group_item--2">
-          <div class="form_group-basic_details">
-            <select id="age" placeholder="age" v-model="age">
-              <option value="" selected disabled hidden>Ikä</option>
-              <option value="under20">&lt; 20</option>
-              <option value="20-24">20-24</option>
-              <option value="25-29">25-29</option>
-              <option value="30-34">30-34</option>
-              <option value="35-39">35-39</option>
-              <option value="40-44">40-44</option>
-              <option value="45-49">45-49</option>
-              <option value="over50">&gt; 50</option>
-            </select>
+        <div class="form_group_item--1-grid">
+          <div class="form_group_item--1">
+            <Age v-on:childToParent="onChildClickAge" />
           </div>
+          <div class="form_group_item--2">
+            <Gender v-on:childToParent="onChildClickGender" />
+          </div>
+          
 
-          <div class="form_group-basic_details">
-            <select id="gender" placeholder="gender" @click="changeDesign" v-model="gender">
-              <option value="" selected disabled hidden>Sukupuoli</option>
-              <option value="male">Mies</option>
-              <option value="female">Nainen</option>
-              <option value="other">Muu</option>
-            </select>
-          </div>
-        </div>
-        <div class="form_group_item--3">
-          <div class="form_group-basic_details">
-            <select id="gender" placeholder="gender" @click="changeDesign" v-model="status">
-              <option value="" selected disabled hidden>Olen..</option>
-              <option value="male">Työssäkäyvä</option>
-              <option value="female">Työtön</option>
-              <option value="other">Opiskelija</option>
-              <option value="other">Eläkeläinen</option>
-            </select>
-          </div>
-        </div>
-        <div class="form_group_item--4">
-          <div class="form_group-pets">
-            <label>Lemmikit?</label>
-            <input type="checkbox" id="pets" v-model="checkedPets" @click="handleCheckedPets">
-            <p v-bind:style="{ fontWeight: 'bold'}">{{ checkedPets ? "-kyllä" : "-ei" }}</p>
-          </div>
-          <div class="pets_list" v-if="checkedPets">
-            <!-- https://codepen.io/huleos/pen/xQaYdK -->
-            <div class="petlist" v-for="(option, index) in optionsPets" :key="index">
-              <input type="checkbox" :id="index" :value="option.value" v-model="checkedPetList">
-              <label :for="index">{{ option.text }}</label>
+          <div class="form_group_item--3">
+            <div v-bind:class="{'form_group_item--flex': fromChildStatus ===1}">
+              <Status v-on:childToParent="onChildClickStatus" />
+            </div>
+            <div class="form_group_item--flex" v-if="fromChildStatus === 1">
+              <WorkType v-on:childToParent="onChildClickWorkType" />
             </div>
           </div>
-        </div>
-        
-        
-        <div class="form_group_item--5">
-          <div class="form_group-intoxicants">
-            
-            <div>
-              <div>   
-                <p>Alkoholin käyttö päihtymistarkoitukseen?</p>
-              </div>
-              <div class="without_dot">
-                <input type="radio" id="alcohol_no" checked name="alcohol" value="alcohol_no" v-model="alcohol" />
-                <label for="alcohol_no">En ollenkaan</label>
-                  
-                <input type="radio" id="alcohol_sometimes" name="alcohol" value="alcohol_sometimes" v-model="alcohol" />
-                <label for="alcohol_sometimes">Silloin tällöin</label>
 
-                <input type="radio" id="alcohol_often" name="alcohol" value="alcohol_often" v-model="alcohol" />
-                <label for="alcohol_often">Usein</label>
-                  
-                <input type="radio" id="alcohol_a_lot" name="alcohol" value="alcohol_a_lot" v-model="alcohol" />
-                <label for="alcohol_a_lot">Todella paljon</label>
-              </div>
-            </div>
-            
-            <div>
-              <div>
-                <p>Tupakointi?</p>
-              </div>
-              <div class="without_dot">
-                <input type="radio" id="smoke_no" checked name="smoke" value="smoke_no" v-model="smoke" />
-                <label for="smoke_no">En ollenkaan</label>
-                  
-                <input type="radio" id="smoke_sometimes" name="smoke" value="smoke_sometimes" v-model="smoke" />
-                <label for="smoke_sometimes">Silloin tällöin</label>
-
-                <input type="radio" id="smoke_often" name="smoke" value="smoke_often" v-model="smoke" />
-                <label for="smoke_often">Usein</label>
-                  
-                <input type="radio" id="smoke_a_lot" name="smoke" value="smoke_a_lot" v-model="smoke" />
-                <label for="smoke_a_lot">Todella paljon</label>
-              </div>
-            </div>
-           
-            <div>
-              <div>
-                <p>Huumaavat aineet?</p>
-              </div>
-              <div class="without_dot">
-                <input type="radio" id="drugs_no" checked name="drugs" value="drugs_no" v-model="drugs" />
-                <label for="drugs_no">En ollenkaan</label>
-                  
-                <input type="radio" id="drugs_sometimes" name="drugs" value="drugs_sometimes" v-model="drugs" />
-                <label for="drugs_sometimes">Silloin tällöin</label>
-
-                <input type="radio" id="drugs_often" name="drugs" value="drugs_often" v-model="drugs" />
-                <label for="drugs_often">Usein</label>
-                  
-                <input type="radio" id="drugs_a_lot" name="drugs" value="drugs_a_lot" v-model="drugs" />
-                <label for="drugs_a_lot">Todella paljon</label>
-              </div>
-            </div>
+          <div class="form_group_item--4">
+            <textarea type="text" id="more_about" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="more_about"></textarea>
           </div>
         </div>
 
-        <div class="form_group-name form_group_item--6">
-          <img src="../../assets/images/pexels-jonaorle-3828240.jpg" class="grid_img" alt="Profile Image" >
+        <div class="form_group_item--2-grid">
+          <div class="form_group_item--1">
+            <Hobbies v-on:childToParent="onChildClickHobbies" />
+          </div>
         </div>
-       
+
+        <div class="form_group_item--3-grid">
+          <div class="form_group_item--1">
+            <Sociality v-on:childToParent="onChildClickSociality" />
+          </div>
+
+          <div class="form_group_item--2">
+            <Characters v-on:childToParent="onChildClickCharacters"/>
+             <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
+            <li v-for="character in filteredCharacters" :key="character.value">{{character.value}}</li>
+          </div>
+
+          <div class="form_group_item--3">
+            <Pets v-on:childToParent="onChildClickPets" />
+          </div>
+
+          <div class="form_group_item--4">
+            <Intoxicants v-on:childToParent="onChildClickIntoxicants" />
+          </div>
+
+        </div>
       </div>
 
+      
     </form>
 
   </div>
 </template>
 
 <script>
+import Age from './inputElements/person/Age.vue'
+import Gender from './inputElements/person/Gender.vue'
+import Status from './inputElements/person/Status.vue'
+import Characters from './inputElements/person/Characters.vue'
+import Hobbies from './inputElements/person/Hobbies.vue'
+import Pets from './inputElements/person/Pets.vue'
+import Intoxicants from './inputElements/person/Intoxicants.vue'
+import Sociality from './inputElements/person/Sociality.vue'
+import WorkType from './inputElements/person/WorkType.vue'
+
+//import axios from 'axios';
 
 export default {
   name: 'RoommateProfile',
   el: '#roommateProfile',
 
+  components: {
+    Age,
+    Gender,
+    Status,
+    Characters,
+    Hobbies,
+    Pets,
+    Intoxicants,
+    Sociality,
+    WorkType
+  },
   
   data() {
     return {
       firstname: '',
       lastname: '',
+      email: '',
       more_about: '',
-      gender: '',
-      age: '',
-      status: '',
-      checkedPets: true,
-      checkedOther: true,
-      otherAnimals: '',
-      checkedPetList: [],
-      alcohol: true,
-      smoke: true,
-      drugs: true,
 
-      show: false,
-      selected: [],
-      optionsPets: [
-        {
-          text: 'Koiria',
-          value: 'dogs'
-        },
-        {
-          text: 'Kissoja',
-          value: 'cats'
-        },
-        {
-          text: 'Jyrsijöitä',
-          value: 'rodents'
-        },
-        {
-          text: 'Lintuja',
-          value: 'birds'
-        },
-        {
-          text: 'Kaloja',
-          value: 'fish'
-        },
-        {
-          text: 'Terraarioeläimiä',
-          value: 'terrarium_animals'
-        },
-        {
-          text: 'Muita kotieläimiä',
-          value: 'domestic_animal'
-        }
-      ]
+      checkedPets: true,
+      fromChildAge: null,
+      fromChildGender: null,
+      fromChildStatus: null,
+      fromChildSrc: '',
+      fromChildCheckedCharacterList: [],
+      fromChildCheckedHobbyList: [],
+      fromChildCheckedPets: true,
+      fromChildCheckedPetList: [],
+      fromChildCheckedIntoxidantList: [],
+      fromChildSociality: null,
+      fromChildWorkType: null,
+      
+      errors: {},
+      errorList: {},
+      isValid: true,
     }
   },
   computed: {
-    filteredList() {
-      return this.filters.filter(item => {
-        return item.toLowerCase().includes(this.search.toLowerCase());
+    filteredCharacters() {
+      return this.fromChildCheckedCharacterList.filter((character) => { 
+        return character.checked;
       });
     }
   },
 
   methods: {
-    emitToParent () {
+    emitToParent() {
       this.$emit('childToParent', this.firstname)
     },
-    handleCheckedPets () {
-      if(!this.checkedPets) {
-        this.checkedPetList = []
+    onChildClickGender(value) {
+      this.fromChildGender = value;
+    },
+    onChildClickAge(value) {
+      this.fromChildAge = value;
+    },
+    onChildClickStatus(value) {
+      this.fromChildStatus = value;
+      this.handleWorkType();
+    },
+    onChildClickPets(value) {
+      this.fromChildCheckedPets = !value.tableOne;
+      this.fromChildCheckedPetList = value.tableTwo;
+    },
+    onChildClickProfileImage(value) {
+      this.fromChildSrc = value;
+    },
+    onChildClickCharacters(value) {
+      this.fromChildCheckedCharacterList = value;
+    },
+    onChildClickHobbies(value) {
+      this.fromChildCheckedHobbyList = value;
+    },
+    onChildClickIntoxicants(value) {
+      this.fromChildCheckedIntoxidantList = value;
+    },
+    onChildClickSociality(value) {
+      this.fromChildSociality = value;
+    },
+    onChildClickWorkType(value) {
+      this.fromChildWorkType = value;
+    },
+    handleWorkType() {
+      if (this.fromChildStatus !== 1) {
+        this.fromChildWorkType = null;
       }
-    },
-    getOtherAnimals () {
-      console.log(this.otherAnimals)
-    },
-    showDropdown() {
-      this.show = !this.show
-    },
+    }
+  },
+  mounted() {
+
   }
 
+  /* Tee json, lisää button, pets cats=true jne
+  
+  {
+  "email": "example@internet.com", req
+  "password": "secret", req
+  "lastActive" req
+  "ilmoituksen jättö" req
+  "name": "Edwin",
+  "surname": "Xample",
+  "ageGroup": 3,
+  "gender": 1,
+  "location": ["Helsinki", "Espoo", "Vantaa"],
+  "rentLimit": 900,
+  "maxRoomMates": 3,
+  "employmentStatus": 3,
+  "description": "A perfect example to live with",
+  "alcohol": 2,
+  "smoking": 1,
+  "drugs": 1,
+  "personalityTraits": ["Harkitseva", "Sopeutuvainen", "Määrätietoinen"],
+  "sociality": 2,
+  "pets": false,
+  "hobbies": {
+    "collecting": 1,
+    "crafts": 3,
+    "informationTech": 5,
+    "sports": 4,
+    "music": 1,
+    "games": 5,
+    "reading": 2,
+    "art": 3,
+    "culture": 1,
+    "cooking": 4,
+    "travelling": 1,
+    "voluntaryWork": 1
+  }
+}
+  */
 }
 </script>
 
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-h2 {
-  margin-left: 3rem;
-}
-label {
-  color: v.$White;
-  border-radius: 1.5rem 0 0 1.5rem;
-  letter-spacing: 0.05rem;
-  cursor: pointer;
-}
-.profile_form {
-  margin: 2rem 4rem;
-}
-.form_group {
-  margin: 0 1rem 2rem 1rem;
-  border-radius: 1.5rem;
-}
-.form_group-grid {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(8, 2.9rem);
-  background: v.$KAMBlue;
-}
-
-.form_group_item--1 {
-  grid-column-start: 5;
-  grid-column-end: 7;
-  grid-row-start: 1;
-  grid-row-end: 9;
-  padding: 1rem 0 1rem 0;
-  display: flex;
-  justify-content: space-between;
-}
-.form_group_item--1 textarea {
+input[type="text"] {
   padding: 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 0.5rem 0;
+  border-style: none none solid none !important;
+  border-color: v.$KAMGreenDark !important;
+  border-width: 0.25rem;
+  width: 100%;
+}
+.form_group_item--flex {
+  width: 48.5% !important;
+}
+select {
+  padding: 0 0.2rem !important;
+  margin: 0;
+  height: 2rem;
+  width: -webkit-fill-available;
+  width: 100%;
   border-radius: 0.5rem;
-  margin: 0.5rem 2rem 0.5rem 0;
   border-style: none none solid none !important;
   border-color: #016361 !important;
-  width: -webkit-fill-available;
-  border-width: unset;
+  border-width: 0.25rem;
+  background: v.$White;
 }
-.form_group_item--2 {
+.form_group-grid--1 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.form_group_item--1-grid {
   grid-column-start: 1;
+  grid-column-end: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(12, 4rem);
+  background: v.$KAMGreyLight;
+}
+.form_group_item--2-grid {
+  grid-column-start: 2;
   grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  padding: 1.5rem 1.6rem 0 1.8rem;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(12, 3rem);
+  background: v.$KAMBeigeLight;
 }
-.form_group_item--2 .form_group-basic_details:first-child {
-  margin-right: 1.5rem;
-}
-
-.form_group_item--3 {
+.form_group_item--3-grid {
   grid-column-start: 3;
   grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  padding: 1.5rem 0.7rem 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(15, 3rem);
+  background: v.$KAMGreyLight;
 }
-.form_group_item--4 {
+
+.form_group_item--1-grid .form_group_item--1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  align-items: center;
+  margin: 0 0.35rem 0 0.7rem;
+}
+.form_group_item--1-grid .form_group_item--2 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem 0 0.35rem;
+}
+.form_group_item--1-grid .form_group_item--3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem;
+  justify-content: space-between;
+}
+.form_group_item--1-grid .form_group_item--3 div {
+  width: 100%;
+}
+.form_group_item--1-grid .form_group_item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 3;
-  grid-row-end: 9;
-  padding: 1rem 0.7rem 1rem 1.8rem;
-}
-.form_group_item--5 {
-  grid-column-start: 3;
-  grid-column-end: 5;
-  grid-row-start: 3;
-  grid-row-end: 9;
-  padding: 1rem 1.6rem 1rem 0;
-}
-.form_group_item--6 {
-  grid-column-start: 7;
-  grid-column-end: 10;
-  grid-row-start: 1;
-  grid-row-end: 9;
-}
-.form_group-basic_details {
-  display: block;
-  width: -webkit-fill-available;
-}
-.form_group-basic_details div {
-  display: block;
-  margin: 1.2rem 1rem;
-}
-.form_group-basic_details label {
-  display: block;
-}
-input, select {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  border-style: none none solid none!important;
-  border-color: v.$KAMGreenDark!important;
-}
-.form_group-basic_details input:focus {
-  background: v.$White;
-}
-#gender, #age {
-  padding: 0.1rem;
-  margin: 0;
-  border: none;
-  width: -webkit-fill-available;
-}
-
-.grid_img {
-  width: 100%;
-  max-height: calc(100vh - 0rem - 7.7rem);
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0 1.5rem 1.5rem 0;
-}
-
-// -- pets -- //
-.form_group-pets {
-  margin: 0;
-}
-.pets_list {
-  margin: 1.2rem 0.7rem;
-}
-.form_group-pets p {
-  margin: 0.7rem 0 0 0;
-}
-.form_group-pets label {
-  cursor: default;
-  display: block;
-}
-.form_group-pets input {
-  float: left;
-}
-#pets[type="checkbox"]{
-  border: 0.1rem solid v.$KAMGreenDark;
-  background: v.$KAMGrey;
-  border-radius: 50%; 
-  display: inline-block;
-  height: 1.5rem;
-  width: 1.5rem;
-  margin: 0.7rem 0.7rem 0 0;
-  position: relative;
-  -webkit-appearance: none;
-}
-#pets [type="checkbox"]:checked, #pets[type="checkbox"]:checked {
-  border: 0.25rem solid v.$KAMGreenDark;
-  background: v.$White;
-}
-.petlist {
-  margin: 0.2rem 0;
+  grid-row-end: 7;
   display: flex;
   align-items: center;
+  margin: 2rem 0.7rem;
 }
-.petlist label {
-  margin-left: 0.6rem;
+.form_group_item--1-grid .form_group_item--4 textarea {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  height: 100%;
+  width: -webkit-fill-available;
+  width: 100%;
+  border-style: none none solid none !important;
+  border-color: v.$KAMGreenDark !important;
+  border-width: 0.25rem;
 }
-.petlist [type="checkbox"]{
-  border: 0.1rem solid v.$KAMGreenDark;
-  background: v.$KAMGrey;
-  border-radius: 50%; 
-  display: inline-block;
-  height: 1rem;
-  width: 1rem;
-  margin: 0 0 0 0.5rem;
+.form_group_item--2-grid {
+  padding: 0.5rem;
+}
+.form_group_item--2-grid .form_group_item--1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 13;
+  margin-bottom: 0.8rem;
   position: relative;
-  -webkit-appearance: none;
 }
-.petlist [type="checkbox"]:checked, .petlist [type="checkbox"]:checked {
-  border: 0.25rem solid v.$KAMGreenDark;
-  background: v.$White;
-  width: 1.2rem;
-  margin: 0;
+.form_group_item--3-grid {
+  padding: 0.5rem;
 }
-.petlist [type="checkbox"]:checked + label{
-  color: v.$KAMGreenDark;
-  font-weight: bold;
+.form_group_item--3-grid .form_group_item--1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  margin-bottom: 0.8rem;
+  position: relative;
 }
-
-// -- intoxicants -- //
-
-.form_group-intoxicants div {
-  margin-top: 1rem;
+.form_group_item--3-grid .form_group_item--2 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 8;
+  margin-bottom: 0.8rem;
 }
-.form_group-intoxicants div:first-child {
-  margin-top: 0;
+.form_group_item--3-grid .form_group_item--3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 11;
+  margin-bottom: 0.8rem;
 }
-.form_group-intoxicants div div {
-  margin-bottom: 0;
+.form_group_item--3-grid .form_group_item--4 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 11;
+  grid-row-end: 15;
+  margin-bottom: 0.8rem;
 }
-.form_group-intoxicants div div p {
-  margin: 0;
-  color: v.$White;
-}
-.without_dot {
-  display: flex;
-  margin-top: 0.5rem!important;
-  justify-content: space-between;
-}
-.without_dot input[type="radio"]{
-  visibility: hidden;
-  height: 0;
-  width: 0;
-}
-.without_dot label {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  background-color: v.$KAMGreyDark;
-  color: v.$White;
-  padding: 0.2rem 0.4rem;
-  margin-right: 0.5rem;
-  border-radius: 0.2rem;
-  font-size: 0.75rem!important;
-}
-.without_dot label:last-child {
-  margin-right: 0;
-}
-.without_dot input[type="radio"]:checked + label{
-  background-color: v.$KAMGreenSemiLight;
-}
-
 
 
 </style>

@@ -19,7 +19,7 @@
 
 <script>
 import PersonalProfile from '../profiles/PersonalProfile.vue'
-import RoommateProfile from '../profiles/RoomMateProfile.vue'
+import RoommateProfile from '../profiles/RoommateProfile.vue'
 import AptProfile from '../profiles/AptProfile.vue'
 
 const TIMEOUT = 1;

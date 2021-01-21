@@ -3,7 +3,7 @@
     <label for="profile-img-input">
       <input style="display: none" id="profile-img-input" type="file" @change="onFileSelected">
       <p>Valitse profiilikuva</p>
-      <img id="profile-img" :src="require(`../../../assets/images/${src}`)" class="grid_img" alt="Profile Image" v-on:click="emitToParent">
+      <img id="profile-img" :src="require(`../../../../assets/images/${src}`)" class="grid_img" alt="Profile Image" v-on:click="emitToParent">
     </label>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../../assets/styles/variables.scss' as v;
+@use '../../../../assets/styles/variables.scss' as v;
 
 label {
   cursor: pointer;

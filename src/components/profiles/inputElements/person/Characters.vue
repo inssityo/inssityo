@@ -59,8 +59,10 @@ export default {
         }
       }
       this.checkedCharacterList = checked;
-
-      if (this.checkedCharacterList.length > 2) {
+      console.log("check " + this.checkedCharacterList.length)
+      
+      if (this.checkedCharacterList.length > 6) {
+        console.log(this.checkedCharacterList.length)
         //this.checkedCharacterList[0].checked = false; //Poistaa kaksi aikaisempaa
         let p = checked.pop();
         
@@ -75,7 +77,7 @@ export default {
 
       //let result = this.optionsCharacters.filter(c => c.checked); 
       //console.log("res" + JSON.stringify(result)); //Toimii viiveellä
-      console.log("check " + this.checkedCharacterList.length)
+     
       if (this.checkedCharacterList.length + 1 > 7) {
         this.isValid = false;
         this.errorList["characters"] = "Max 7 characters can be chosen.";
@@ -102,7 +104,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../../assets/styles/variables.scss' as v;
+@use '../../../../assets/styles/variables.scss' as v;
 
 label {
   letter-spacing: 0.05rem;

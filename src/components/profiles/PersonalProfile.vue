@@ -18,15 +18,14 @@
             <input type="text" id="lastname" v-model="lastname">
           </div>
           <div class="form_group_item--4">
-            <div class="form_group_item--flex">
-              <Age v-on:childToParent="onChildClickAge" />
-            </div>
-            <div class="form_group_item--flex">
-              <Gender v-on:childToParent="onChildClickGender" />
-            </div>
+            <Age v-on:childToParent="onChildClickAge" />
           </div>
-
           <div class="form_group_item--5">
+            <Gender v-on:childToParent="onChildClickGender" />
+          </div>
+          
+
+          <div class="form_group_item--6">
             <div v-bind:class="{'form_group_item--flex': fromChildStatus ===1}">
               <Status v-on:childToParent="onChildClickStatus" />
             </div>
@@ -35,7 +34,7 @@
             </div>
           </div>
 
-          <div class="form_group_item--6">
+          <div class="form_group_item--8">
             <textarea type="text" id="more_about" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="more_about"></textarea>
           </div>
         </div>
@@ -66,23 +65,28 @@
           </div>
 
         </div>
+
       </div>
+
+      
     </form>
 
   </div>
 </template>
 
 <script>
-import Age from './form/Age.vue'
-import Gender from './form/Gender.vue'
-import Status from './form/Status.vue'
-import ProfileImage from './form/ProfileImage.vue'
-import Characters from './form/Characters.vue'
-import Hobbies from './form/Hobbies.vue'
-import Pets from './form/Pets.vue'
-import Intoxicants from './form/Intoxicants.vue'
-import Sociality from './form/Sociality.vue'
-import WorkType from './form/WorkType.vue'
+import Age from './inputElements/person/Age.vue'
+import Gender from './inputElements/person/Gender.vue'
+import Status from './inputElements/person/Status.vue'
+import ProfileImage from './inputElements/person/ProfileImage.vue'
+import Characters from './inputElements/person/Characters.vue'
+import Hobbies from './inputElements/person/Hobbies.vue'
+import Pets from './inputElements/person/Pets.vue'
+import Intoxicants from './inputElements/person/Intoxicants.vue'
+import Sociality from './inputElements/person/Sociality.vue'
+import WorkType from './inputElements/person/WorkType.vue'
+
+//import axios from 'axios';
 
 export default {
   name: 'PersonalProfile',
@@ -175,7 +179,49 @@ export default {
         this.fromChildWorkType = null;
       }
     }
+  },
+  mounted() {
+
   }
+
+  /* Tee json, lisää button, pets cats=true jne
+  
+  {
+  "email": "example@internet.com", req
+  "password": "secret", req
+  "lastActive" req
+  "ilmoituksen jättö" req
+  "name": "Edwin",
+  "surname": "Xample",
+  "ageGroup": 3,
+  "gender": 1,
+  "location": ["Helsinki", "Espoo", "Vantaa"],
+  "rentLimit": 900,
+  "maxRoomMates": 3,
+  "employmentStatus": 3,
+  "description": "A perfect example to live with",
+  "alcohol": 2,
+  "smoking": 1,
+  "drugs": 1,
+  "personalityTraits": ["Harkitseva", "Sopeutuvainen", "Määrätietoinen"],
+  "sociality": 2,
+  "pets": false,
+  "hobbies": {
+    "collecting": 1,
+    "crafts": 3,
+    "informationTech": 5,
+    "sports": 4,
+    "music": 1,
+    "games": 5,
+    "reading": 2,
+    "art": 3,
+    "culture": 1,
+    "cooking": 4,
+    "travelling": 1,
+    "voluntaryWork": 1
+  }
+}
+  */
 }
 </script>
 
@@ -188,8 +234,27 @@ input[type="text"] {
   margin: 0.5rem 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
   width: 100%;
+}
+input[type="text"]:focus{
+  outline: none;
+  background: v.$KAMGreyLight;
+}
+.form_group_item--flex {
+  width: 48.5% !important;
+}
+select {
+  padding: 0 0.2rem !important;
+  margin: 0;
+  height: 2rem;
+  width: -webkit-fill-available;
+  width: 100%;
+  border-radius: 0.5rem;
+  border-style: none none solid none !important;
+  border-color: #016361 !important;
+  border-width: 0.15rem;
+  background: v.$White;
 }
 .form_group-grid--1 {
   display: grid;
@@ -254,33 +319,27 @@ input[type="text"] {
   margin: auto 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
 }
 .form_group_item--1-grid .form_group_item--4 {
   grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  display: flex;
+  align-items: center;
+  margin: 0 0.35rem 0 0.7rem;
+}
+.form_group_item--1-grid .form_group_item--5 {
+  grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 7;
   grid-row-end: 8;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
-  justify-content: space-between;
+  margin: 0 0.7rem 0 0.35rem;
 }
-.form_group_item--flex {
-  width: 48.5% !important;
-}
-select {
-  padding: 0 0.2rem !important;
-  margin: 0;
-  height: 2rem;
-  width: -webkit-fill-available;
-  border-radius: 0.5rem;
-  border-style: none none solid none !important;
-  border-color: #016361 !important;
-  border-width: 0.25rem;
-  background: v.$White;
-}
-.form_group_item--1-grid .form_group_item--5 {
+.form_group_item--1-grid .form_group_item--6 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
@@ -290,10 +349,20 @@ select {
   margin: 0 0.7rem;
   justify-content: space-between;
 }
-.form_group_item--1-grid .form_group_item--5 div {
+.form_group_item--1-grid .form_group_item--6 div {
   width: 100%;
 }
-.form_group_item--1-grid .form_group_item--6 {
+.form_group_item--1-grid .form_group_item--7 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem;
+  justify-content: space-between;
+}
+.form_group_item--1-grid .form_group_item--8 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 9;
@@ -302,14 +371,15 @@ select {
   align-items: center;
   margin: 2rem 0.7rem;
 }
-.form_group_item--1-grid .form_group_item--6 textarea {
+.form_group_item--1-grid .form_group_item--8 textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
   height: 100%;
   width: -webkit-fill-available;
+  width: 100%;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
 }
 .form_group_item--2-grid {
   padding: 0.5rem;
@@ -347,7 +417,6 @@ select {
   grid-row-end: 11;
   margin-bottom: 0.8rem;
 }
-
 .form_group_item--3-grid .form_group_item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -355,7 +424,5 @@ select {
   grid-row-end: 15;
   margin-bottom: 0.8rem;
 }
-
-
 
 </style>

@@ -62,6 +62,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: -webkit-fill-available;
+  width: 100%;
   position: fixed;
   transform: translate3d(0, 0, 0);
   transition: 0.1s all ease-out;

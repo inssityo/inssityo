@@ -1,14 +1,17 @@
 <template>
-  <div class="gallery">
-    <figure class="gallery_item gallery_item--1">
-      <img src="../../assets/images/Thumbnail5_Large.jpg" class="gallery_img" alt="Image 1">
-    </figure>
-    <figure class="gallery_item gallery_item--2">
-      <img src="../../assets/images/chairs-2181968_1920.jpg" class="gallery_img" alt="Image 2">
-    </figure>
-    <figure class="gallery_item gallery_item--3">
-      <img src="../../assets/images/Thumbnail3_Large.jpg" class="gallery_img" alt="Image 3">
-    </figure>
+  <div>
+    <div class="gallery">
+      <figure class="gallery_item gallery_item--1">
+        <img src="../../assets/images/Thumbnail5_Large.jpg" class="gallery_img" alt="Image 1">
+      </figure>
+      <figure class="gallery_item gallery_item--2">
+        <img src="../../assets/images/chairs-2181968_1920.jpg" class="gallery_img" alt="Image 2">
+      </figure>
+      <figure class="gallery_item gallery_item--3">
+        <img src="../../assets/images/Thumbnail3_Large.jpg" class="gallery_img" alt="Image 3">
+      </figure>
+    </div>
+    <i class="fas fa-sort-down" @click="goTo('apt')"></i>
   </div>
 </template>
 
@@ -19,6 +22,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../../assets/styles/variables.scss' as v;
+
+.fa-sort-down {
+  display: block;
+  margin: 0 auto;
+  width: 2rem;
+  height: 2rem;
+  color: v.$KAMGreenDark;
+}
+.fa-sort-down:hover {
+  color: v.$KAMBlue;
+  cursor: pointer;
+}
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -27,7 +43,7 @@ export default {
 }
 .gallery_img {
   width: 100%;
-  max-height: calc(100vh - 0rem - 7.7rem);
+  max-height: calc(100vh - 0rem - 4.2rem);
   height: 100%;
   object-fit: cover;
 }

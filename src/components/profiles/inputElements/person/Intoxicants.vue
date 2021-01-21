@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../../assets/styles/variables.scss' as v;
+@use '../../../../assets/styles/variables.scss' as v;
 
 label {
   letter-spacing: 0.05rem;
