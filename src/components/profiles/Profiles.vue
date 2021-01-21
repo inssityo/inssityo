@@ -88,7 +88,7 @@ h1 {
 }
 img {
   width: 100%;
-  max-height: calc(100vh - 0rem - 7.7rem);
+  max-height: calc(100vh - 0rem - 4.2rem);
   height: 100%;
   object-fit: cover;
 }

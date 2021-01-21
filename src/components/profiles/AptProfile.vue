@@ -162,6 +162,9 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
+.section {
+  padding-top: 1rem;
+}
 input[type="text"] {
   padding: 0.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -174,9 +177,6 @@ input[type="text"] {
 input[type="text"]:focus{
   outline: none;
   background: v.$KAMGreyLight;
-}
-.form_group_item--flex {
-  width: 48.5% !important;
 }
 select {
   padding: 0 0.2rem !important;
@@ -200,7 +200,7 @@ select {
   grid-column-end: 2;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(1, 21rem);
+  grid-template-rows: repeat(1, 22.9rem);
   background: v.$KAMGreyLight;
 }
 .form_group_item--2-grid {
@@ -210,6 +210,7 @@ select {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(7, 3rem);
   background: v.$KAMGreyLight;
+  padding-bottom: 1.9rem;
 }
 .form_group_item--3-grid {
   grid-column-start: 3;

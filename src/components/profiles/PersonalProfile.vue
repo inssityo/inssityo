@@ -23,15 +23,12 @@
           <div class="form_group_item--5">
             <Gender v-on:childToParent="onChildClickGender" />
           </div>
-          
 
-          <div class="form_group_item--6">
-            <div v-bind:class="{'form_group_item--flex': fromChildStatus ===1}">
-              <Status v-on:childToParent="onChildClickStatus" />
-            </div>
-            <div class="form_group_item--flex" v-if="fromChildStatus === 1">
-              <WorkType v-on:childToParent="onChildClickWorkType" />
-            </div>
+          <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus ===1}">
+            <Status v-on:childToParent="onChildClickStatus" />
+          </div>
+          <div class="form_group_item--7" v-if="fromChildStatus === 1">
+            <WorkType v-on:childToParent="onChildClickWorkType" />
           </div>
 
           <div class="form_group_item--8">
@@ -47,21 +44,21 @@
 
         <div class="form_group_item--3-grid">
           <div class="form_group_item--1">
-            <Sociality v-on:childToParent="onChildClickSociality" />
+            <Sociality id-value="P" v-on:childToParent="onChildClickSociality" />
           </div>
 
           <div class="form_group_item--2">
-            <Characters v-on:childToParent="onChildClickCharacters"/>
+            <Characters id-value="P" v-on:childToParent="onChildClickCharacters"/>
              <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
             <li v-for="character in filteredCharacters" :key="character.value">{{character.value}}</li>
           </div>
 
           <div class="form_group_item--3">
-            <Pets v-on:childToParent="onChildClickPets" />
+            <Pets id-value="P" v-on:childToParent="onChildClickPets" />
           </div>
 
           <div class="form_group_item--4">
-            <Intoxicants v-on:childToParent="onChildClickIntoxicants" />
+            <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" />
           </div>
 
         </div>
@@ -228,6 +225,10 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
+.section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 input[type="text"] {
   padding: 0.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -237,12 +238,9 @@ input[type="text"] {
   border-width: 0.15rem;
   width: 100%;
 }
-input[type="text"]:focus{
+input[type="text"]:focus, input[type="select"]:focus {
   outline: none;
   background: v.$KAMGreyLight;
-}
-.form_group_item--flex {
-  width: 48.5% !important;
 }
 select {
   padding: 0 0.2rem !important;
@@ -267,7 +265,7 @@ select {
   grid-column-end: 2;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(12, 4rem);
+  grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGreyLight;
 }
 .form_group_item--2-grid {
@@ -275,15 +273,15 @@ select {
   grid-column-end: 3;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(12, 3rem);
-  background: v.$KAMBeigeLight;
+  grid-template-rows: repeat(13, 3rem);
+  background: v.$KAMBlueLight;
 }
 .form_group_item--3-grid {
   grid-column-start: 3;
   grid-column-end: 4;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(15, 3rem);
+  grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGreyLight;
 }
 .form_group_item--1-grid .form_group_item--1 {
@@ -352,6 +350,15 @@ select {
 .form_group_item--1-grid .form_group_item--6 div {
   width: 100%;
 }
+.form_group_item--1-grid .form_group_item--6-2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  display: flex;
+  align-items: center;
+  margin: 0 0.35rem 0 0.7rem;
+}
 .form_group_item--1-grid .form_group_item--7 {
   grid-column-start: 2;
   grid-column-end: 3;
@@ -359,14 +366,13 @@ select {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
-  justify-content: space-between;
+  margin: 0 0.7rem 0 0.35rem;
 }
 .form_group_item--1-grid .form_group_item--8 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 9;
-  grid-row-end: 13;
+  grid-row-end: 14;
   display: flex;
   align-items: center;
   margin: 2rem 0.7rem;
@@ -388,7 +394,7 @@ select {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
-  grid-row-end: 13;
+  grid-row-end: 14;
   margin-bottom: 0.8rem;
   position: relative;
 }
@@ -414,14 +420,14 @@ select {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
-  grid-row-end: 11;
+  grid-row-end: 10;
   margin-bottom: 0.8rem;
 }
 .form_group_item--3-grid .form_group_item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
-  grid-row-start: 11;
-  grid-row-end: 15;
+  grid-row-start: 10;
+  grid-row-end: 14;
   margin-bottom: 0.8rem;
 }
 

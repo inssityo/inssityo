@@ -2,19 +2,20 @@
   <div>  
     <div class="switch-div">
       <div>
-        <p>Omistatko lemmikkejä?</p>
+        <p v-if="idValue === 'P'">Omistatko lemmikkejä?</p>
+        <p v-if="idValue === 'R'">Saako kämppiksellä olla lemmikkejä?</p>
         <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedPets ? "-kyllä" : "-ei" }}</p>
       </div>
       <label class="switch" @click="handleCheckedPets" v-on:click="emitToParent">
-        <input type="checkbox" id="checkboxPet" checked v-model="checkedPets">
+        <input type="checkbox" :id="idValue+'checkboxPet'" checked v-model="checkedPets">
         <span class="slider round"></span>
       </label>
     </div>
    
     <div class="without_dot" v-if="checkedPets">
       <div v-for="(pet, index,) in optionsPets" :key="index">
-        <input type="checkbox" :id="'p'+index" v-model="pet.checked"/>
-        <label :for="'p'+index" v-on:click="emitToParent">{{ pet.text }}</label>
+        <input type="checkbox" :id="idValue+'p'+index" v-model="pet.checked"/>
+        <label :for="idValue+'p'+index" v-on:click="emitToParent">{{ pet.text }}</label>
       </div>
     </div>
     
@@ -24,6 +25,7 @@
 <script>
 export default {
   name: 'Pets',
+  props: ['idValue'],
 
   data() {
     return {
@@ -67,7 +69,7 @@ export default {
   display: flex;
   align-items: center;
   p {
-    margin-right: 0.5rem;
+    margin: 0 0.5rem 0 0;
   }
 }
 .switch {
@@ -150,7 +152,12 @@ label {
   border-radius: 0.2rem;
   font-size: 0.75rem!important;
 }
-.without_dot input[type="radio"]:checked + label, .without_dot input[type="checkbox"]:checked + label{
+.without_dot label:hover {
+  background-color: v.$KAMBeigeLight;
+  color: v.$Black;
+  font-weight: bold;
+}
+.without_dot input[type="checkbox"]:checked + label{
   background-color: v.$KAMGreenSemiLight;
 }
 

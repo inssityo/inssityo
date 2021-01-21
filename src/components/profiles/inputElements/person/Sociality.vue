@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="slider-text">
-      <p>Oletko</p> 
+      <p v-if="idValue === 'P'">Oletko</p> 
+      <p v-if="idValue === 'R'">Haluatko kämppiksen olevan</p>
       <p>1 = yksineläjä vai 7 = laumaeläin</p>
+      
     </div>
     <div class="slider-container">
       <div class="sociality">
@@ -29,7 +31,7 @@
             <div class="divider"></div>
           </div>
         </div>
-        <input type="range" name="range" id="range" min="1" max="7" step="1" v-model="sociality" v-on:click="emitToParent" />
+        <input type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" v-on:click="emitToParent" />
       </div>
     </div>
   </div>
@@ -38,6 +40,7 @@
 <script>
 export default {
   name: 'Sociality',
+  props: ['idValue'],
 
   data() {
     return {

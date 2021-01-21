@@ -1,29 +1,31 @@
 <template>
   <div class="section">  
-    <h2>Luo kämppiksen profiili:</h2>
+    <h2>Luo etsimäsi kämppiksen profiili:</h2>
 
-    <form id="roommate-profile">
+    <form id="personal-profile">
       <div class="form_group-grid--1">
 
         <div class="form_group_item--1-grid">
           <div class="form_group_item--1">
-            <Age v-on:childToParent="onChildClickAge" />
-          </div>
-          <div class="form_group_item--2">
-            <Gender v-on:childToParent="onChildClickGender" />
-          </div>
-          
-          <div class="form_group_item--3">
-            <div v-bind:class="{'form_group_item--flex': fromChildStatus ===1}">
-              <Status v-on:childToParent="onChildClickStatus" />
-            </div>
-            <div class="form_group_item--flex" v-if="fromChildStatus === 1">
-              <WorkType v-on:childToParent="onChildClickWorkType" />
-            </div>
+            <RoommateImage />
           </div>
 
-          <div class="form_group_item--4">
-            <textarea type="text" id="more_about" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="more_about"></textarea>
+          <div class="form_group_item--2">
+            <Age v-on:childToParent="onChildClickAge" />
+          </div>
+          <div class="form_group_item--3">
+            <Gender v-on:childToParent="onChildClickGender" />
+          </div>
+
+          <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus ===1}">
+            <Status v-on:childToParent="onChildClickStatus" />
+          </div>
+          <div class="form_group_item--7" v-if="fromChildStatus === 1">
+            <WorkType v-on:childToParent="onChildClickWorkType" />
+          </div>
+
+          <div class="form_group_item--8">
+            <textarea type="text" id="more_about" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="more_about"></textarea>
           </div>
         </div>
 
@@ -35,24 +37,23 @@
 
         <div class="form_group_item--3-grid">
           <div class="form_group_item--1">
-            <Sociality v-on:childToParent="onChildClickSociality" />
+            <Sociality id-value="R" v-on:childToParent="onChildClickSociality" />
           </div>
 
           <div class="form_group_item--2">
-            <Characters v-on:childToParent="onChildClickCharacters"/>
-             <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
-            <li v-for="character in filteredCharacters" :key="character.value">{{character.value}}</li>
+            <Characters id-value="R" v-on:childToParent="onChildClickCharacters"/>
           </div>
 
           <div class="form_group_item--3">
-            <Pets v-on:childToParent="onChildClickPets" />
+            <Pets id-value="R" v-on:childToParent="onChildClickPets" />
           </div>
 
           <div class="form_group_item--4">
-            <Intoxicants v-on:childToParent="onChildClickIntoxicants" />
+            <Intoxicants id-value="R" v-on:childToParent="onChildClickIntoxicants" />
           </div>
 
         </div>
+
       </div>
 
       
@@ -65,6 +66,7 @@
 import Age from './inputElements/person/Age.vue'
 import Gender from './inputElements/person/Gender.vue'
 import Status from './inputElements/person/Status.vue'
+import RoommateImage from './inputElements/person/RoommateImage.vue'
 import Characters from './inputElements/person/Characters.vue'
 import Hobbies from './inputElements/person/Hobbies.vue'
 import Pets from './inputElements/person/Pets.vue'
@@ -82,6 +84,7 @@ export default {
     Age,
     Gender,
     Status,
+    RoommateImage,
     Characters,
     Hobbies,
     Pets,
@@ -89,12 +92,10 @@ export default {
     Sociality,
     WorkType
   },
-  
+ 
   data() {
     return {
-      firstname: '',
-      lastname: '',
-      email: '',
+ 
       more_about: '',
 
       checkedPets: true,
@@ -116,17 +117,14 @@ export default {
     }
   },
   computed: {
-    filteredCharacters() {
-      return this.fromChildCheckedCharacterList.filter((character) => { 
-        return character.checked;
-      });
-    }
+
   },
 
   methods: {
+    /*
     emitToParent() {
       this.$emit('childToParent', this.firstname)
-    },
+    },*/
     onChildClickGender(value) {
       this.fromChildGender = value;
     },
@@ -174,6 +172,10 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
+.section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 input[type="text"] {
   padding: 0.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -183,8 +185,9 @@ input[type="text"] {
   border-width: 0.15rem;
   width: 100%;
 }
-.form_group_item--flex {
-  width: 48.5% !important;
+input[type="text"]:focus, input[type="select"]:focus {
+  outline: none;
+  background: v.$KAMGreyLight;
 }
 select {
   padding: 0 0.2rem !important;
@@ -201,7 +204,7 @@ select {
 .form_group-grid--1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  //gap: 1.5rem;
   margin-top: 2rem;
 }
 .form_group_item--1-grid {
@@ -209,7 +212,7 @@ select {
   grid-column-end: 2;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(12, 4rem);
+  grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGreyLight;
 }
 .form_group_item--2-grid {
@@ -217,7 +220,7 @@ select {
   grid-column-end: 3;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(12, 3rem);
+  grid-template-rows: repeat(13, 3rem);
   background: v.$KAMBeigeLight;
 }
 .form_group_item--3-grid {
@@ -225,51 +228,75 @@ select {
   grid-column-end: 4;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(15, 3rem);
+  grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGreyLight;
 }
-
 .form_group_item--1-grid .form_group_item--1 {
   grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  display: flex;
-  align-items: center;
-  margin: 0 0.35rem 0 0.7rem;
-}
-.form_group_item--1-grid .form_group_item--2 {
-  grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
-  grid-row-end: 2;
+  grid-row-end: 7;
+}
+
+.form_group_item--1-grid .form_group_item--2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 7;
+  grid-row-end: 8;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem 0 0.35rem;
+  margin: 0.9rem 0.35rem 0 0.7rem;
 }
 .form_group_item--1-grid .form_group_item--3 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  display: flex;
+  align-items: center;
+  margin: 0.9rem 0.7rem 0 0.35rem;
+}
+.form_group_item--1-grid .form_group_item--6 {
   grid-column-start: 1;
   grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
   display: flex;
   align-items: center;
   margin: 0 0.7rem;
   justify-content: space-between;
 }
-.form_group_item--1-grid .form_group_item--3 div {
+.form_group_item--1-grid .form_group_item--6 div {
   width: 100%;
 }
-.form_group_item--1-grid .form_group_item--4 {
+.form_group_item--1-grid .form_group_item--6-2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  display: flex;
+  align-items: center;
+  margin: 0 0.35rem 0 0.7rem;
+}
+.form_group_item--1-grid .form_group_item--7 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  display: flex;
+  align-items: center;
+  margin: 0 0.7rem 0 0.35rem;
+}
+.form_group_item--1-grid .form_group_item--8 {
   grid-column-start: 1;
   grid-column-end: 3;
-  grid-row-start: 3;
-  grid-row-end: 7;
+  grid-row-start: 9;
+  grid-row-end: 14;
   display: flex;
   align-items: center;
   margin: 2rem 0.7rem;
 }
-.form_group_item--1-grid .form_group_item--4 textarea {
+.form_group_item--1-grid .form_group_item--8 textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
   height: 100%;
@@ -286,7 +313,7 @@ select {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
-  grid-row-end: 13;
+  grid-row-end: 14;
   margin-bottom: 0.8rem;
   position: relative;
 }
@@ -312,16 +339,15 @@ select {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
-  grid-row-end: 11;
+  grid-row-end: 10;
   margin-bottom: 0.8rem;
 }
 .form_group_item--3-grid .form_group_item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
-  grid-row-start: 11;
-  grid-row-end: 15;
+  grid-row-start: 10;
+  grid-row-end: 14;
   margin-bottom: 0.8rem;
 }
-
 
 </style>

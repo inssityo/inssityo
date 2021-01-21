@@ -1,11 +1,12 @@
 <template>
   <div>  
-    <p>Valitse luonnettasi kuvaavat sanat (max. 7)</p>
+    <p v-if="idValue === 'P'">Valitse luonnettasi kuvaavat sanat (max. 7)</p>
+    <p v-if="idValue === 'R'">Valitse luonteet, joita arvostaisit tulevasta kämppiksestäsi (max. 7)</p>
     <div class="text-danger">{{ errors.characters }}</div>
     <div class="without_dot">
       <div v-for="(character, index,) in optionsCharacters" :key="index">
-        <input type="checkbox" :id="'c'+index" v-model="character.checked"/>
-        <label :for="'c'+index" v-on:click="emitToParent" @click="handleCharacters">{{ character.text }}</label>
+        <input type="checkbox" :id="idValue+'c'+index" v-model="character.checked"/>
+        <label :for="idValue+'c'+index" v-on:click="emitToParent" @click="handleCharacters">{{ character.text }}</label>
       </div>
     </div>
   </div>
@@ -14,6 +15,7 @@
 <script>
 export default {
   name: 'Characters',
+  props: ['idValue'],
 
   data() {
     return {
@@ -133,7 +135,12 @@ label {
   border-radius: 0.2rem;
   font-size: 0.75rem!important;
 }
-.without_dot input[type="radio"]:checked + label, .without_dot input[type="checkbox"]:checked + label{
+.without_dot label:hover {
+  background-color: v.$KAMBeigeLight;
+  color: v.$Black;
+  font-weight: bold;
+}
+.without_dot input[type="checkbox"]:checked + label{
   background-color: v.$KAMGreenSemiLight;
 }
 

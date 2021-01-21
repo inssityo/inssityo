@@ -1,31 +1,34 @@
 <template>
   <div>
     <div>  
-      <p>Käytätkö alkoholia päihtymistarkoitukseen?</p>
+      <p v-if="idValue === 'P'">Käytätkö alkoholia päihtymistarkoitukseen?</p>
+      <p v-if="idValue === 'R'">Sallitko kämppiksen alkoholin käytön päihtymistarkoitukseen?</p>
       <div class="without_dot" >
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="'i0'+index" :value="use.value" v-model="optionIntoxidants[0].use"/>
-          <label :for="'i0'+index" v-on:click="emitToParent" >{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i0'+index" :value="use.value" v-model="optionIntoxidants[0].use"/>
+          <label :for="idValue+'i0'+index" v-on:click="emitToParent" >{{ use.text }}</label>
         </div>
       </div>
     </div>
     
     <div>
-      <p>Tupakoitko?</p>
+      <p v-if="idValue === 'P'">Tupakoitko?</p>
+      <p v-if="idValue === 'R'">Sallitko kämppiksen tupakoinnin?</p>
       <div class="without_dot">
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="'i1'+index" :value="use.value" v-model="optionIntoxidants[1].use"/>
-          <label :for="'i1'+index" v-on:click="emitToParent" >{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i1'+index" :value="use.value" v-model="optionIntoxidants[1].use"/>
+          <label :for="idValue+'i1'+index" v-on:click="emitToParent" >{{ use.text }}</label>
         </div>
       </div>
     </div>
     
     <div>
-      <p>Käytätkö huumaavia aineita?</p>
+      <p v-if="idValue === 'P'">Käytätkö huumaavia aineita?</p>
+      <p v-if="idValue === 'R'">Sallitko kämppiksen huumavien aineiden käytön?</p>
       <div class="without_dot">
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="'i2'+index" :value="use.value" v-model="optionIntoxidants[2].use"/>
-          <label :for="'i2'+index" v-on:click="emitToParent" >{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i2'+index" :value="use.value" v-model="optionIntoxidants[2].use"/>
+          <label :for="idValue+'i2'+index" v-on:click="emitToParent" >{{ use.text }}</label>
         </div>
       </div>
     </div>
@@ -35,6 +38,7 @@
 <script>
 export default {
   name: 'Intoxidants',
+  props: ['idValue'],
 
   data() {
     return {
@@ -67,7 +71,7 @@ label {
   cursor: pointer;
 }
 p {
-  margin: 0;
+  margin: 0.25rem 0;
 }
 .form_group-intoxicants div {
   margin-top: 0.2rem;
@@ -106,10 +110,15 @@ p {
   border-radius: 0.2rem;
   font-size: 0.75rem!important;
 }
+.without_dot label:hover {
+  background-color: v.$KAMBeigeLight;
+  color: v.$Black;
+  font-weight: bold;
+}
 .without_dot label:last-child {
   margin-right: 0;
 }
-.without_dot input[type="radio"]:checked + label, .without_dot input[type="checkbox"]:checked + label{
+.without_dot input[type="radio"]:checked + label {
   background-color: v.$KAMGreenSemiLight;
 }
 

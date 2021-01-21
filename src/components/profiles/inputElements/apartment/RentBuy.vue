@@ -3,7 +3,7 @@
     <div class="switch-div">
       <div>
         <div>
-          <p>Etsitkö vuokra-asuntoa?*</p>
+          <p>Etsitkö vuokra-asuntoa?</p>
           <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedRent ? "-kyllä" : "-ei" }}</p>
         </div>
         <label class="switch" v-on:click="emitToParent">
@@ -13,7 +13,7 @@
       </div>
       <div>
         <div>
-          <p>Etsitkö omistusasuntoa?*</p>
+          <p>Etsitkö omistusasuntoa?</p>
           <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedBuy ? "-kyllä" : "-ei" }}</p>
         </div>
         <label class="switch" v-on:click="emitToParent">
