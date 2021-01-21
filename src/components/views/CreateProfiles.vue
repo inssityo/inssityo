@@ -1,7 +1,7 @@
 <template>
   <div class="section">  
     <h1>Luo profiilisi</h1>
-    <p>Valitse profiili, jota haluat käyttää.</p>
+    <p>Valitse profiili, jota haluat käyttää. JOS EI MITÄÄN VALITTUNA, EI PÄÄSÄ LINKISTÄ</p>
     <div class="wrapper">
       <div class="wrapper_item wrapper_item--1">
         <input type="checkbox" id="roommate" v-model="roommate" @click="handleChoice('roommate')">
@@ -12,7 +12,7 @@
               <p>Etsitkö ainoastaan kämppistä?</p>
             </div>
             <div class="wrapper_container_item--right wrapper_container_item--2" v-bind:class="{ checked: roommate }">
-              <img src="../../assets/images/pexels-helena-lopes-697244.jpg" alt="" />
+              <img src="../../assets/images/pexels-ketut-subiyanto-4245957-2.jpg" alt="" />
             </div>
           </div>
           <div v-if="roommate">
@@ -31,7 +31,7 @@
               <p>Etsitkö kämppistä sekä asuntoa?</p>
             </div>
             <div class="wrapper_container_item--right wrapper_container_item--2" v-bind:class="{ checked: roommate_apt }">
-              <img src="../../assets/images/pexels-daria-shevtsova-1054974_cropped.jpg" alt="" />
+              <img src="../../assets/images/pexels-polina-zimmerman-3747426.jpg" alt="" />
             </div>
           </div>
           <div v-if="roommate_apt">
@@ -49,7 +49,7 @@
               <p>Etsitkö ainoastaan asuntoa?</p>
             </div>
             <div class="wrapper_container_item--right wrapper_container_item--2" v-bind:class="{ checked: apt }">
-              <img src="../../assets/images/pexels-joanna-bogacz-4138152.jpg" alt="" />
+              <img src="../../assets/images/pexels-vlada-karpovich-4451937.jpg" alt="" />
             </div>
           </div>
           <div v-if="apt">
@@ -82,22 +82,16 @@ export default {
     handleChoice(name) {
       switch(name) {
         case 'roommate':
-          console.log(this.roommate, this.roommate_apt, this.apt);
           this.roommate_apt = false;
           this.apt = false;
-          console.log(this.roommate, this.roommate_apt, this.apt);
           break;
         case 'roommate_apt':
-          console.log(this.roommate, this.roommate_apt, this.apt);
           this.roommate = false;
           this.apt = false;
-          console.log(this.roommate, this.roommate_apt, this.apt);
           break;
         case 'apt':
-          console.log(this.roommate, this.roommate_apt, this.apt);
           this.roommate = false;
           this.roommate_apt = false;
-          console.log(this.roommate, this.roommate_apt, this.apt);
           break;
       }
     },
@@ -111,9 +105,6 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-h1 {
-  margin-top: 0;
-}
 .wrapper_container_item--left h2 {
   letter-spacing: 0.1rem;
   padding: 3rem 1.5rem 0 1.5rem;
@@ -125,7 +116,7 @@ p {
 }
 .wrapper p {
   padding: 1rem 1.5rem 2rem 1.5rem;
-  color: v.$White;
+  //color: v.$White;
   text-align: left;
 }
 a {
@@ -135,7 +126,8 @@ a {
   border-radius: 0.5rem;
 }
 a:hover {
-  background: v.$KAMYellow;
+  background: v.$KAMBlue;
+  //color: v.$Black;
 }
 .edit_profiles {
   margin-top: 4rem;
@@ -191,13 +183,11 @@ img {
 }
 
 .wrapper_container_item--left {
+  border-left: 0.15rem solid v.$KAMGreenDark;
+  border-bottom: 0.25rem solid v.$KAMGreenDark;
   border-radius: 1.5rem 0 0 1.5rem;
-  background: rgba(248,215,45,1);
+  background: v.$White;
 }
-.wrapper_container_item--left h2 {
-  color: v.$White;
-}
-
 .wrapper_item input[type="checkbox"]{
   visibility: hidden;
   height: 0;
@@ -208,7 +198,9 @@ img {
   padding: 0.5rem;
 }
 .wrapper_item input[type="checkbox"]:checked + label{
-  background-color: v.$KAMGreenDark;
+  //background-color: v.$KAMGreenDark;
+  border-right: 0.25rem solid v.$KAMGreenDark;
+  border-top: 0.25rem solid v.$KAMGreenDark;
   border-radius: 1.9rem;
 }
 .checked {
@@ -225,8 +217,8 @@ label {
   right: 0;
   margin: auto;
   text-align: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: v.$KAMGreenDark;
 }
 
