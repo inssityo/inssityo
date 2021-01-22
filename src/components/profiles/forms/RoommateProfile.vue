@@ -1,8 +1,8 @@
 <template>
   <div class="section">  
-    <h2>Luo etsimäsi kämppiksen profiili:</h2>
+    <h2>Minkälaista kämppistä etsit:</h2>
 
-    <form id="personal-profile">
+    <form id="roommate-profile">
       <div class="form_group-grid--1">
 
         <div class="form_group_item--1-grid">
@@ -41,7 +41,7 @@
           </div>
 
           <div class="form_group_item--2">
-            <Characters id-value="R" v-on:childToParent="onChildClickCharacters"/>
+            <Traits id-value="R" v-on:childToParent="onChildClickTraits"/>
           </div>
 
           <div class="form_group_item--3">
@@ -63,16 +63,16 @@
 </template>
 
 <script>
-import Age from './inputElements/person/Age.vue'
-import Gender from './inputElements/person/Gender.vue'
-import Status from './inputElements/person/Status.vue'
-import RoommateImage from './inputElements/person/RoommateImage.vue'
-import Characters from './inputElements/person/Characters.vue'
-import Hobbies from './inputElements/person/Hobbies.vue'
-import Pets from './inputElements/person/Pets.vue'
-import Intoxicants from './inputElements/person/Intoxicants.vue'
-import Sociality from './inputElements/person/Sociality.vue'
-import WorkType from './inputElements/person/WorkType.vue'
+import Age from '../inputElements/person/Age.vue'
+import Gender from '../inputElements/person/Gender.vue'
+import Status from '../inputElements/person/Status.vue'
+import RoommateImage from '../inputElements/person/RoommateImage.vue'
+import Traits from '../inputElements/person/Traits.vue'
+import Hobbies from '../inputElements/person/Hobbies.vue'
+import Pets from '../inputElements/person/Pets.vue'
+import Intoxicants from '../inputElements/person/Intoxicants.vue'
+import Sociality from '../inputElements/person/Sociality.vue'
+import WorkType from '../inputElements/person/WorkType.vue'
 
 //import axios from 'axios';
 
@@ -85,7 +85,7 @@ export default {
     Gender,
     Status,
     RoommateImage,
-    Characters,
+    Traits,
     Hobbies,
     Pets,
     Intoxicants,
@@ -103,7 +103,7 @@ export default {
       fromChildGender: null,
       fromChildStatus: null,
       fromChildSrc: '',
-      fromChildCheckedCharacterList: [],
+      fromChildCheckedTraitList: [],
       fromChildCheckedHobbyList: [],
       fromChildCheckedPets: true,
       fromChildCheckedPetList: [],
@@ -142,8 +142,8 @@ export default {
     onChildClickProfileImage(value) {
       this.fromChildSrc = value;
     },
-    onChildClickCharacters(value) {
-      this.fromChildCheckedCharacterList = value;
+    onChildClickTraits(value) {
+      this.fromChildCheckedTraitList = value;
     },
     onChildClickHobbies(value) {
       this.fromChildCheckedHobbyList = value;
@@ -170,11 +170,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/variables.scss' as v;
+@use '../../../assets/styles/variables.scss' as v;
 
 .section {
   padding-top: 1rem;
-  padding-bottom: 1rem;
+  //padding-bottom: 1rem;
 }
 input[type="text"] {
   padding: 0.5rem;
@@ -204,7 +204,6 @@ select {
 .form_group-grid--1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  //gap: 1.5rem;
   margin-top: 2rem;
 }
 .form_group_item--1-grid {
@@ -222,6 +221,7 @@ select {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMBeigeLight;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 .form_group_item--3-grid {
   grid-column-start: 3;
@@ -230,14 +230,17 @@ select {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGreyLight;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
+
+//AptImage
 .form_group_item--1-grid .form_group_item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 7;
 }
-
+//Age
 .form_group_item--1-grid .form_group_item--2 {
   grid-column-start: 1;
   grid-column-end: 2;
@@ -245,8 +248,9 @@ select {
   grid-row-end: 8;
   display: flex;
   align-items: center;
-  margin: 0.9rem 0.35rem 0 0.7rem;
+  margin: 0.8rem 0.4rem 0 0.8rem;
 }
+//Gender
 .form_group_item--1-grid .form_group_item--3 {
   grid-column-start: 2;
   grid-column-end: 3;
@@ -254,8 +258,9 @@ select {
   grid-row-end: 8;
   display: flex;
   align-items: center;
-  margin: 0.9rem 0.7rem 0 0.35rem;
+  margin: 0.8rem 0.8rem 0 0.4rem;
 }
+//Status
 .form_group_item--1-grid .form_group_item--6 {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -263,7 +268,7 @@ select {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
   justify-content: space-between;
 }
 .form_group_item--1-grid .form_group_item--6 div {
@@ -276,8 +281,9 @@ select {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.35rem 0 0.7rem;
+  margin: 0 0.4rem 0 0.8rem;
 }
+//WorkType
 .form_group_item--1-grid .form_group_item--7 {
   grid-column-start: 2;
   grid-column-end: 3;
@@ -285,8 +291,9 @@ select {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem 0 0.35rem;
+  margin: 0 0.8rem 0 0.4rem;
 }
+//Description
 .form_group_item--1-grid .form_group_item--8 {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -294,7 +301,7 @@ select {
   grid-row-end: 14;
   display: flex;
   align-items: center;
-  margin: 2rem 0.7rem;
+  margin: 2rem 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--8 textarea {
   padding: 0.5rem;
@@ -306,9 +313,7 @@ select {
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
 }
-.form_group_item--2-grid {
-  padding: 0.5rem;
-}
+//Hobbies
 .form_group_item--2-grid .form_group_item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -317,9 +322,7 @@ select {
   margin-bottom: 0.8rem;
   position: relative;
 }
-.form_group_item--3-grid {
-  padding: 0.5rem;
-}
+//Sociality
 .form_group_item--3-grid .form_group_item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -328,6 +331,7 @@ select {
   margin-bottom: 0.8rem;
   position: relative;
 }
+//Characters
 .form_group_item--3-grid .form_group_item--2 {
   grid-column-start: 1;
   grid-column-end: 3;

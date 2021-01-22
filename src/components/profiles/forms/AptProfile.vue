@@ -1,8 +1,8 @@
 <template>
   <div class="section">  
-    <h2>Luo etsimäsi kämppisasunnon profiili:</h2>
+    <h2>Minne olet muuttamassa:</h2>
 
-    <form id="roommate-profile">
+    <form id="apt-profile">
       <div class="form_group-grid--1">
 
         <div class="form_group_item--1-grid">
@@ -62,9 +62,6 @@
             {{fromChildLocationType}}
             {{fromChildBuildingType}}
             {{fromChildFeatures}}
-            {{fromChildRent}}
-            {{fromChildBuy}}
-            
            </div>
             
         </div>
@@ -77,14 +74,14 @@
 </template>
 
 <script>
-import AptImage from './inputElements/apartment/AptImage.vue'
-import BuildingType from './inputElements/apartment/BuildingType.vue'
-import LocationType from './inputElements/apartment/LocationType.vue'
-import RentBuy from './inputElements/apartment/RentBuy.vue'
-import Rooms from './inputElements/apartment/Rooms.vue'
-import Price from './inputElements/apartment/Price.vue'
-import Features from './inputElements/apartment/Features.vue'
-import Roommates from './inputElements/apartment/Roommates.vue'
+import AptImage from '../inputElements/apartment/AptImage.vue'
+import BuildingType from '../inputElements/apartment/BuildingType.vue'
+import LocationType from '../inputElements/apartment/LocationType.vue'
+import RentBuy from '../inputElements/apartment/RentBuy.vue'
+import Rooms from '../inputElements/apartment/Rooms.vue'
+import Price from '../inputElements/apartment/Price.vue'
+import Features from '../inputElements/apartment/Features.vue'
+import Roommates from '../inputElements/apartment/Roommates.vue'
 
 //import axios from 'axios';
 
@@ -108,8 +105,7 @@ export default {
       location: '',
       neighborhood: '',
       address: '',
-      fromChildRent: null,
-      fromChildBuy: null,
+      fromChildCheckedRent: null,
       fromChildLocationType: [],
       fromChildBuildingType: [],
       fromChildAreaMin: null,
@@ -132,8 +128,7 @@ export default {
       this.$emit('childToParent', this.firstname)
     },*/
     onChildClickRentBuy(value) {
-      this.fromChildRent = !value.rent;
-      this.fromChildBuy = !value.buy;
+      this.fromChildCheckedRent = !value;
     },
     onChildClickLocationType(value) {
       this.fromChildLocationType = value;
@@ -160,10 +155,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/variables.scss' as v;
+@use '../../../assets/styles/variables.scss' as v;
 
 .section {
   padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 input[type="text"] {
   padding: 0.5rem;
@@ -235,7 +231,7 @@ select {
   grid-row-end: 3;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
 }
 .form_group_item--2-grid .form_group_item--1 div {
   width: 100%;
@@ -248,7 +244,7 @@ select {
   grid-row-end: 4;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
 }
 //Neighborhood
 .form_group_item--2-grid .form_group_item--3 {
@@ -258,7 +254,7 @@ select {
   grid-row-end: 5;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
 }
 //Address
 .form_group_item--2-grid .form_group_item--4 {
@@ -268,7 +264,7 @@ select {
   grid-row-end: 6;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
 }
 //Area code
 .form_group_item--2-grid .form_group_item--5 {
@@ -278,7 +274,7 @@ select {
   grid-row-end: 7;
   display: flex;
   align-items: center;
-  margin: 0 0.35rem 0 0.7rem;
+  margin: 0 0.4rem 0 0.8rem;
 }
 .form_group_item--2-grid .form_group_item--2 label, 
 .form_group_item--2-grid .form_group_item--3 label, 
@@ -300,7 +296,7 @@ select {
   grid-row-end: 7;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem 0 0.35rem;
+  margin: 0 0.8rem 0 0.4rem;
 }
 //Location type
 .form_group_item--2-grid .form_group_item--7 {
@@ -310,7 +306,7 @@ select {
   grid-row-end: 8;
   display: flex;
   align-items: center;
-  margin: 0 0.35rem 0 0.7rem;
+  margin: 0 0.4rem 0 0.8rem;
 }
 //Building type
 .form_group_item--2-grid .form_group_item--8 {
@@ -320,7 +316,7 @@ select {
   grid-row-end: 8;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem 0 0.35rem;
+  margin: 0 0.8rem 0 0.4rem;
 }
 //Rooms
 .form_group_item--3-grid .form_group_item--1 {
@@ -328,7 +324,7 @@ select {
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 3;
-  margin: 0 0.35rem 0 0.7rem;
+  margin: 0 0.4rem 0 0.8rem;
 }
 //Roommates
 .form_group_item--3-grid .form_group_item--2 {
@@ -336,7 +332,7 @@ select {
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 3;
-  margin: 0 0.7rem 0 0.35rem;
+  margin: 0 0.8rem 0 0.4rem;
 }
 //Price
 .form_group_item--3-grid .form_group_item--3 {
@@ -344,7 +340,7 @@ select {
   grid-column-end: 3;
   grid-row-start: 3;
   grid-row-end: 4;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
 }
 //Tulostus
 .form_group_item--3-grid .form_group_item--4 {
@@ -352,7 +348,7 @@ select {
   grid-column-end: 3;
   grid-row-start: 5;
   grid-row-end: 7;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
 }
 
 </style>

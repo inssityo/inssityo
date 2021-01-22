@@ -1,6 +1,6 @@
 <template>
   <div class="section">  
-    <h2>Luo henkilökohtainen profiilisi:</h2>
+    <h2>Kerro itsestäsi:</h2>
 
     <form id="personal-profile">
       <div class="form_group-grid--1">
@@ -24,7 +24,7 @@
             <Gender v-on:childToParent="onChildClickGender" />
           </div>
 
-          <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus ===1}">
+          <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus === 1}">
             <Status v-on:childToParent="onChildClickStatus" />
           </div>
           <div class="form_group_item--7" v-if="fromChildStatus === 1">
@@ -48,9 +48,9 @@
           </div>
 
           <div class="form_group_item--2">
-            <Characters id-value="P" v-on:childToParent="onChildClickCharacters"/>
+            <Traits id-value="P" v-on:childToParent="onChildClickTraits"/>
              <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
-            <li v-for="character in filteredCharacters" :key="character.value">{{character.value}}</li>
+            <li v-for="trait in filteredTraits" :key="trait.value">{{trait.value}}</li>
           </div>
 
           <div class="form_group_item--3">
@@ -72,16 +72,16 @@
 </template>
 
 <script>
-import Age from './inputElements/person/Age.vue'
-import Gender from './inputElements/person/Gender.vue'
-import Status from './inputElements/person/Status.vue'
-import ProfileImage from './inputElements/person/ProfileImage.vue'
-import Characters from './inputElements/person/Characters.vue'
-import Hobbies from './inputElements/person/Hobbies.vue'
-import Pets from './inputElements/person/Pets.vue'
-import Intoxicants from './inputElements/person/Intoxicants.vue'
-import Sociality from './inputElements/person/Sociality.vue'
-import WorkType from './inputElements/person/WorkType.vue'
+import Age from '../inputElements/person/Age.vue'
+import Gender from '../inputElements/person/Gender.vue'
+import Status from '../inputElements/person/Status.vue'
+import ProfileImage from '../inputElements/person/ProfileImage.vue'
+import Traits from '../inputElements/person/Traits.vue'
+import Hobbies from '../inputElements/person/Hobbies.vue'
+import Pets from '../inputElements/person/Pets.vue'
+import Intoxicants from '../inputElements/person/Intoxicants.vue'
+import Sociality from '../inputElements/person/Sociality.vue'
+import WorkType from '../inputElements/person/WorkType.vue'
 
 //import axios from 'axios';
 
@@ -94,7 +94,7 @@ export default {
     Gender,
     Status,
     ProfileImage,
-    Characters,
+    Traits,
     Hobbies,
     Pets,
     Intoxicants,
@@ -114,7 +114,7 @@ export default {
       fromChildGender: null,
       fromChildStatus: null,
       fromChildSrc: '',
-      fromChildCheckedCharacterList: [],
+      fromChildCheckedTraitList: [],
       fromChildCheckedHobbyList: [],
       fromChildCheckedPets: true,
       fromChildCheckedPetList: [],
@@ -128,9 +128,9 @@ export default {
     }
   },
   computed: {
-    filteredCharacters() {
-      return this.fromChildCheckedCharacterList.filter((character) => { 
-        return character.checked;
+    filteredTraits() {
+      return this.fromChildCheckedTraitList.filter((trait) => { 
+        return trait.checked;
       });
     }
   },
@@ -156,8 +156,8 @@ export default {
     onChildClickProfileImage(value) {
       this.fromChildSrc = value;
     },
-    onChildClickCharacters(value) {
-      this.fromChildCheckedCharacterList = value;
+    onChildClickTraits(value) {
+      this.fromChildCheckedTraitList = value;
     },
     onChildClickHobbies(value) {
       this.fromChildCheckedHobbyList = value;
@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/variables.scss' as v;
+@use '../../../assets/styles/variables.scss' as v;
 
 .section {
   padding-top: 1rem;
@@ -257,7 +257,6 @@ select {
 .form_group-grid--1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  //gap: 1.5rem;
   margin-top: 2rem;
 }
 .form_group_item--1-grid {
@@ -274,7 +273,8 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
-  background: v.$KAMBlueLight;
+  background: v.$KAMBeigeLight;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 .form_group_item--3-grid {
   grid-column-start: 3;
@@ -283,31 +283,32 @@ select {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGreyLight;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
-  grid-row-end: 5;
+  grid-row-end: 6;
   margin-bottom: 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--2 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 5;
-  grid-row-end: 6;
-  display: flex;
-  align-items: center;
-  margin: 0 0.7rem;
-}
-.form_group_item--1-grid .form_group_item--3 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 6;
   grid-row-end: 7;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem;
+}
+.form_group_item--1-grid .form_group_item--3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  display: flex;
+  align-items: center;
+  margin: 0 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--2 label,
 .form_group_item--1-grid .form_group_item--3 label {
@@ -322,29 +323,29 @@ select {
 .form_group_item--1-grid .form_group_item--4 {
   grid-column-start: 1;
   grid-column-end: 2;
-  grid-row-start: 7;
-  grid-row-end: 8;
+  grid-row-start: 8;
+  grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.35rem 0 0.7rem;
+  margin: 0 0.4rem 0 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--5 {
   grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 7;
-  grid-row-end: 8;
-  display: flex;
-  align-items: center;
-  margin: 0 0.7rem 0 0.35rem;
-}
-.form_group_item--1-grid .form_group_item--6 {
-  grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem;
+  margin: 0 0.8rem 0 0.4rem;
+}
+.form_group_item--1-grid .form_group_item--6 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 9;
+  grid-row-end: 10;
+  display: flex;
+  align-items: center;
+  margin: 0 0.8rem;
   justify-content: space-between;
 }
 .form_group_item--1-grid .form_group_item--6 div {
@@ -353,29 +354,29 @@ select {
 .form_group_item--1-grid .form_group_item--6-2 {
   grid-column-start: 1;
   grid-column-end: 2;
-  grid-row-start: 8;
-  grid-row-end: 9;
+  grid-row-start: 9;
+  grid-row-end: 10;
   display: flex;
   align-items: center;
-  margin: 0 0.35rem 0 0.7rem;
+  margin: 0 0.4rem 0 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--7 {
   grid-column-start: 2;
   grid-column-end: 3;
-  grid-row-start: 8;
-  grid-row-end: 9;
+  grid-row-start: 9;
+  grid-row-end: 10;
   display: flex;
   align-items: center;
-  margin: 0 0.7rem 0 0.35rem;
+  margin: 0 0.8rem 0 0.4rem;
 }
 .form_group_item--1-grid .form_group_item--8 {
   grid-column-start: 1;
   grid-column-end: 3;
-  grid-row-start: 9;
+  grid-row-start: 10;
   grid-row-end: 14;
   display: flex;
   align-items: center;
-  margin: 2rem 0.7rem;
+  margin: 2rem 0.8rem;
 }
 .form_group_item--1-grid .form_group_item--8 textarea {
   padding: 0.5rem;
@@ -387,9 +388,6 @@ select {
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
 }
-.form_group_item--2-grid {
-  padding: 0.5rem;
-}
 .form_group_item--2-grid .form_group_item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
@@ -397,9 +395,6 @@ select {
   grid-row-end: 14;
   margin-bottom: 0.8rem;
   position: relative;
-}
-.form_group_item--3-grid {
-  padding: 0.5rem;
 }
 .form_group_item--3-grid .form_group_item--1 {
   grid-column-start: 1;

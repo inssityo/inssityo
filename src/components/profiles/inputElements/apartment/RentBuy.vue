@@ -2,24 +2,14 @@
   <div>  
     <div class="switch-div">
       <div>
+        <p>Etsitkö vuokra-asuntoa vai omistusasuntoa?</p>
         <div>
-          <p>Etsitkö vuokra-asuntoa?</p>
-          <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedRent ? "-kyllä" : "-ei" }}</p>
+          <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedRent ? "-vuokra-asuntoa" : "-omistusasuntoa" }}</p>
+          <label class="switch" v-on:click="emitToParent">
+            <input type="checkbox" id="checkboxRent" @click="handleChoice('rent')" v-model="checkedRent">
+            <span class="slider round"></span>
+          </label>
         </div>
-        <label class="switch" v-on:click="emitToParent">
-          <input type="checkbox" id="checkboxRent" @click="handleChoice('rent')" v-model="checkedRent">
-          <span class="slider round"></span>
-        </label>
-      </div>
-      <div>
-        <div>
-          <p>Etsitkö omistusasuntoa?</p>
-          <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedBuy ? "-kyllä" : "-ei" }}</p>
-        </div>
-        <label class="switch" v-on:click="emitToParent">
-          <input type="checkbox" id="checkboxBuy" @click="handleChoice('buy')" v-model="checkedBuy">
-          <span class="slider round"></span>
-        </label>
       </div>
     </div>
     
@@ -33,28 +23,11 @@ export default {
   data() {
     return {
       checkedRent: true,
-      checkedBuy: false,
     }
   },
   methods: {
     emitToParent() {
-      console.log("hei", this.checkedRent , this.checkedBuy) //päivittyy viiveellä
-      this.$emit('childToParent', {'rent':this.checkedRent, 'buy':this.checkedBuy});
-    },
-    handleChoice(name) {
-      switch(name) {
-        case 'rent':
- 
-          this.checkedBuy = false;
-          
-          break;
-        case 'buy':
-
-          this.checkedRent = false;
-          
-          break;
-      }
-      
+      this.$emit('childToParent', this.checkedRent);
     },
   }
 }
@@ -67,7 +40,10 @@ export default {
   margin-top: 0;
   margin-bottom: 0;
 }
-.switch-div div {
+.switch-div div p {
+  margin-bottom: 0.2rem;
+}
+.switch-div div div {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,7 +69,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: v.$KAMBeigeLight;
+  background-color: v.$KAMGreenDark;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -109,11 +85,11 @@ export default {
   transition: .4s;
 }
 input:checked + .slider {
-  background-color: v.$KAMGreenDark;
+  background-color: v.$KAMBlue;
 }
 //kehys
 input:focus + .slider {
-  box-shadow: 0 0 1px v.$KAMBeigeLight;
+  box-shadow: 0 0 1px v.$KAMGreenDark;
 }
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);

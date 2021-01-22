@@ -1,12 +1,12 @@
 <template>
   <div>  
     <p v-if="idValue === 'P'">Valitse luonnettasi kuvaavat sanat (max. 7)</p>
-    <p v-if="idValue === 'R'">Valitse luonteet, joita arvostaisit tulevasta kämppiksestäsi (max. 7)</p>
-    <div class="text-danger">{{ errors.characters }}</div>
+    <p v-if="idValue === 'R'">Valitse luonteenpiirteet, joita arvostaisit tulevassa kämppiksessä (max. 7)</p>
+    <div class="text-danger">{{ errors.trait }}</div>
     <div class="without_dot">
-      <div v-for="(character, index,) in optionsCharacters" :key="index">
-        <input type="checkbox" :id="idValue+'c'+index" v-model="character.checked"/>
-        <label :for="idValue+'c'+index" v-on:click="emitToParent" @click="handleCharacters">{{ character.text }}</label>
+      <div v-for="(trait, index,) in optionsTraits" :key="index">
+        <input type="checkbox" :id="idValue+'t'+index" v-model="trait.checked"/>
+        <label :for="idValue+'t'+index" v-on:click="emitToParent" @click="handleTraits">{{ trait.text }}</label>
       </div>
     </div>
   </div>
@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  name: 'Characters',
+  name: 'Traits',
   props: ['idValue'],
 
   data() {
     return {
-      checkedCharacterList: [],
-      optionsCharacters: [
+      checkedTraitList: [],
+      optionsTraits: [
         { text: 'Kokeilunhaluinen', value: 'experimental', checked: false },
         { text: 'Luotettava', value: 'trustworthy', checked: false },
         { text: 'Huumorintajuinen', value: 'humorous', checked: false },
@@ -49,57 +49,49 @@ export default {
   },
   methods: {
     emitToParent () {
-      this.$emit('childToParent', this.optionsCharacters)
+      this.$emit('childToParent', this.optionsTraits)
     },
     handleCharacters() {
       
       let checked = [];
       let i;
-      for (i = 0; i < this.optionsCharacters.length; i++) {
-        if (this.optionsCharacters[i].checked) {
-          checked.push(this.optionsCharacters[i]);
+      for (i = 0; i < this.optionsTraits.length; i++) {
+        if (this.optionsTraits[i].checked) {
+          checked.push(this.optionsTraits[i]);
         }
       }
-      this.checkedCharacterList = checked;
-      console.log("check " + this.checkedCharacterList.length)
+      this.checkedTraitList = checked;
+      console.log("check " + this.checkedTraitList.length)
       
-      if (this.checkedCharacterList.length > 6) {
-        console.log(this.checkedCharacterList.length)
+      if (this.checkedTraitList.length > 6) {
+        console.log(this.checkedTraitList.length)
         //this.checkedCharacterList[0].checked = false; //Poistaa kaksi aikaisempaa
         let p = checked.pop();
         
-        this.optionsCharacters.forEach(item => {
+        this.optionsTraits.forEach(item => {
           if (item.value === p.value) {
             item.checked = false;
           }
         })
       }
-      //console.log(JSON.stringify(this.checkedCharacterList))
+      //console.log(JSON.stringify(this.checkedTraitList))
 
 
-      //let result = this.optionsCharacters.filter(c => c.checked); 
+      //let result = this.optionsTraits.filter(c => c.checked); 
       //console.log("res" + JSON.stringify(result)); //Toimii viiveellä
      
-      if (this.checkedCharacterList.length + 1 > 7) {
+      if (this.checkedTraitList.length + 1 > 7) {
         this.isValid = false;
-        this.errorList["characters"] = "Max 7 characters can be chosen.";
+        this.errorList["traits"] = "Max 7 characters can be chosen.";
         this.errors = this.errorList;
       } else {
         this.isValid = true;
         this.errors = {};
       
       }
-      /*
-      if (this.checked.length > 7) {
-        this.isValid = false;
-        this.errorList["characters"] = "Max 7 characters can be chosen.";
-        this.errors = this.errorList;
-      } else {
-        this.isValid = true;
-        this.errors = {};
-      }*/
 
-      //console.log("Values of checked items: ", this.optionsCharacters) //Toimii oikein
+
+      //console.log("Values of checked items: ", this.optionsTraits) //Toimii oikein
     },
   }
 }

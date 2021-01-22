@@ -2,7 +2,8 @@
   <div class="wrapper">
     <div>
       <p>Harrastukset</p>
-      <p>Eri mieltä<span>-</span> Samaa mieltä</p>
+      <p v-if="idValue === 'P'">En harrasta<span>-</span>Himoharrastaja</p>
+      <p v-if="idValue === 'R'">Ei harrasta<span>-</span>Himoharrastaja</p>
     </div>
     <div v-for="(hobby, index) in optionsHobbies" :key="'h'+index" :id="idValue+'h'+index">  
       <p>{{ hobby.text }}</p>
@@ -112,7 +113,7 @@ span {
 .without_dot label {
   height: 1rem;
   text-align: center;
-  background-color: v.$KAMGreyLight;
+  background-color: v.$White;
   padding: 0.3rem;
   display:inline-block;
   width: 1rem;
@@ -142,8 +143,10 @@ span {
 }
 .without_dot div:nth-child(4) label:hover,
 .without_dot div:nth-child(4) input[type="radio"]:checked + label {
-  background: v.$KAMGreenDark;
-  border: 0.1rem solid v.$KAMGreyDark;
+  background: v.$KAMGrey;
+  border: 0.15rem solid v.$KAMGreyDark;
+  width: 0.25rem;
+  height: 0.25rem;
 }
 .without_dot div:first-child label, 
 .without_dot div:nth-child(2) label, 

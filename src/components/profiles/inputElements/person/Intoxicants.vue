@@ -2,7 +2,7 @@
   <div>
     <div>  
       <p v-if="idValue === 'P'">Käytätkö alkoholia päihtymistarkoitukseen?</p>
-      <p v-if="idValue === 'R'">Sallitko kämppiksen alkoholin käytön päihtymistarkoitukseen?</p>
+      <p v-if="idValue === 'R'">Sallitko alkoholin käytön päihtymistarkoitukseen?</p>
       <div class="without_dot" >
         <div v-for="(use, index,) in optionUses" :key="index">
           <input type="radio" :id="idValue+'i0'+index" :value="use.value" v-model="optionIntoxidants[0].use"/>
@@ -13,7 +13,7 @@
     
     <div>
       <p v-if="idValue === 'P'">Tupakoitko?</p>
-      <p v-if="idValue === 'R'">Sallitko kämppiksen tupakoinnin?</p>
+      <p v-if="idValue === 'R'">Sallitko tupakoinnin?</p>
       <div class="without_dot">
         <div v-for="(use, index,) in optionUses" :key="index">
           <input type="radio" :id="idValue+'i1'+index" :value="use.value" v-model="optionIntoxidants[1].use"/>
@@ -24,7 +24,7 @@
     
     <div>
       <p v-if="idValue === 'P'">Käytätkö huumaavia aineita?</p>
-      <p v-if="idValue === 'R'">Sallitko kämppiksen huumavien aineiden käytön?</p>
+      <p v-if="idValue === 'R'">Sallitko huumavien aineiden käytön?</p>
       <div class="without_dot">
         <div v-for="(use, index,) in optionUses" :key="index">
           <input type="radio" :id="idValue+'i2'+index" :value="use.value" v-model="optionIntoxidants[2].use"/>
@@ -51,7 +51,7 @@ export default {
         { text: 'En lainkaan', value: 1 },
         { text: 'Silloin tällöin', value: 2 },
         { text: 'Usein', value: 3 },
-        { text: 'Todella paljon', value: 4 },
+        { text: 'Todella paljon', value: 4 }, //Muuta teksti
       ]
     }
   },

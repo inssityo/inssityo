@@ -8,19 +8,21 @@
       </div>
       <h1>Hello{{fromChildFirstName}}!</h1> 
     </div>
+    <AptRentBuy />
     <i class="fas fa-sort-down" @click="goTo('personal')"></i>
     <PersonalProfile id="personal" v-on:childToParent="onChildClick" />
-    <i class="fas fa-sort-down" @click="goTo('roommate')"></i>
-    <RoommateProfile id="roommate" />
     <i class="fas fa-sort-down" @click="goTo('apt')"></i>
     <AptProfile id="apt" />
+    <i class="fas fa-sort-down" @click="goTo('roommate')"></i>
+    <RoommateProfile id="roommate" />
   </div>
 </template>
 
 <script>
-import PersonalProfile from '../profiles/PersonalProfile.vue'
-import RoommateProfile from '../profiles/RoommateProfile.vue'
-import AptProfile from '../profiles/AptProfile.vue'
+import PersonalProfile from '../profiles/forms/PersonalProfile.vue'
+import RoommateProfile from '../profiles/forms/RoommateProfile.vue'
+import AptProfile from '../profiles/forms/AptProfile.vue'
+import AptRentBuy from '../profiles/forms/AptRentBuy.vue'
 
 const TIMEOUT = 1;
 
@@ -29,7 +31,8 @@ export default {
   components: {
     PersonalProfile,
     RoommateProfile,
-    AptProfile
+    AptProfile,
+    AptRentBuy
   },
   mounted() { 
     //handle url anchors

@@ -3,7 +3,7 @@
     <div class="switch-div">
       <div>
         <p v-if="idValue === 'P'">Omistatko lemmikkejä?</p>
-        <p v-if="idValue === 'R'">Saako kämppiksellä olla lemmikkejä?</p>
+        <p v-if="idValue === 'R'">Saako kämppis omistaa lemmikkejä?</p>
         <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedPets ? "-kyllä" : "-ei" }}</p>
       </div>
       <label class="switch" @click="handleCheckedPets" v-on:click="emitToParent">
