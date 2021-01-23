@@ -1,7 +1,7 @@
 <template>
   <section class="hero">  
     <div class="hero-head">
-      <MainThumbnails />
+      <HeroImage />
     </div>
     <div class="hero-body">
       <section class="search"><SearchButtons /></section>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import MainThumbnails from '../home/MainThumbnailSection.vue'
+import HeroImage from '../home/HeroImage.vue'
 import SearchButtons from '../home/SearchSection.vue'
 import SecondaryThumbnails from '../home/SecondaryThumbnailSection.vue'
 import InfoContainer from '../home/InfoContainer'
@@ -25,7 +25,7 @@ import InfoContainer from '../home/InfoContainer'
 export default {
   name: 'Section',
   components: {
-    MainThumbnails,
+    HeroImage,
     SearchButtons,
     SecondaryThumbnails,
     InfoContainer

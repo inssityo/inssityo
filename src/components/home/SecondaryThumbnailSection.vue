@@ -12,8 +12,11 @@
               <h3>Aleksanterinkatu 8</h3>
               <p class="location">Keskusta, Oulu</p>
               <div class="details">
-                <p>
-                  <i class="fas fa-ruler-combined"></i>42m<span>&sup2;</span>, 2h+kk+s
+                <p v-if="floorPlan.length < 8">
+                  <i class="fas fa-ruler-combined"></i>42m<span>&sup2;</span>, {{ floorPlan }}
+                </p>
+                <p v-else>
+                  <i class="fas fa-ruler-combined"></i>42m<span>&sup2;</span>, {{ floorPlan.substring(0,8)+'..' }} <!--Katso, että katkaisee ennen + merkkiä-->
                 </p>
                 <p>
                   <i class="far fa-building"></i>5/8
@@ -220,29 +223,19 @@
       </div>
       
     </div>
-    <!--<div class="row"> 
-      <div class="column">
-        <img src="../assets/images/Thumbnail1_Large.jpg" style="width:100%">
-        <img src="../assets/images/Thumbnail3_Large.jpg" style="width:100%">
-        <img src="../assets/images/Thumbnail3_Large.jpg" style="width:100%">
-      </div>
-      <div class="column">
-        <img src="../assets/images/Thumbnail4_Large.jpg" style="width:100%">
-        <img src="../assets/images/Thumbnail3_Large.jpg" style="width:100%">
-        <img src="../assets/images/Thumbnail4_Large.jpg" style="width:100%">
-      </div>  
-      <div class="column">
-        <img src="../assets/images/Thumbnail3_Large.jpg" style="width:100%">
-        <img src="../assets/images/Thumbnail4_Large.jpg" style="width:100%">
-        <img src="../assets/images/Thumbnail1_Large.jpg" style="width:100%">
-      </div> 
-    </div>-->
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'SecondaryThumbnails',
+
+  data() {
+    return {
+      floorPlan: '2h+k+s+2h+k+s+2h+k+s'
+    }
+  }
 }
 </script>
 
@@ -280,60 +273,15 @@ p {
 .details span {
   font-family: v.$KAMQuinn;
 }
-.price {
-  //color: v.$KAMGreenDark;
-  //margin-top: 3rem;
-}
 svg {
   margin-right: 0.3rem;
   font-size: 0.9rem;
   color: v.$KAMGreenDark;
 }
 
-
-/*
-.row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  padding: 0 4px;
-}
-
-.column {
-  -ms-flex: 25%;
-  flex: 25%;
-  max-width: 25%;
-  padding: 0 4px;
-}
-
-.column img {
-  margin-top: 8px;
-  vertical-align: middle;
-  width: 100%;
-}
-
-@media screen and (max-width: 800px) {
-  .column {
-    -ms-flex: 50%;
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .column {
-    -ms-flex: 100%;
-    flex: 100%;
-    max-width: 100%;
-  }
-}*/
-
-//https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
 .gallery {
   display: grid;
-  justify-content: center; //space-around;
-  //grid-template-columns: calc(27% - 0rem) calc(27% - 0rem) calc(27% - 0rem);
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(7, 9vw);
   gap: 0.5rem;

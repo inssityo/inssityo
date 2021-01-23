@@ -1,24 +1,27 @@
 <template>
   <div id="find" class="section">
     <h1>Etsi ja löydä</h1>
+    
     <div class="gallery">
-      <div class="find_item gallery_item--1">
-        <p class="gallery_item">Löydä kämppis</p>
+      <div class="gallery_item--1">
+        <div class="transparency">
+          <p class="gallery_item">Löydä kämppis</p>
+        </div>
+        <img src="../../assets/images/pexels-anna-tarazevich-4850290.jpg" class="gallery_img" alt="Image 2">
       </div>
-      <figure class="gallery_item gallery_item--2">
-        <img src="../../assets/images/pexels-savannah-dematteo-2346701.jpg" class="gallery_img" alt="Image 2">
-      </figure>
-      <figure class="gallery_item gallery_item--3">
-        <img src="../../assets/images/home-5835289_1920.jpg" class="gallery_img" alt="Image 3">
-      </figure>
-      <div class="find_item gallery_item--4">
-        <p class="gallery_item">Löydä asunto</p>
+      <div class="gallery_item--2">
+        <div class="transparency">
+          <p class="gallery_item">Löydä asunto</p>
+        </div>
+        <img src="../../assets/images/pexels-kelly-ritta-4377192-2.jpg" class="gallery_img" alt="Image 3">
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'SearchButtons',
 }
@@ -33,6 +36,7 @@ h1 {
 p {
   font-size: 1.4rem !important;
   font-weight: normal;
+  letter-spacing: 0.03rem;
 }
 .section {
   padding-left: 8rem;
@@ -41,54 +45,63 @@ p {
 .gallery {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(7, 4vw);
-  grid-gap: 0px;
+  grid-template-rows: repeat(1, 32vw);
 }
-.gallery_img, .find_item {
+.gallery_img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.find_item {
-  background: v.$KAMBlue;
-  color: v.$White;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .gallery_item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 1;
-  border-radius: 1.5rem 0 0 0;
+  position: relative;
+}
+.gallery_item--1 img {
+  border-radius: 1.5rem 0 0 1.5rem;
+}
+.gallery_item--1 .transparency {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0.7rem 1.1rem;
+  border-bottom: 0.15rem solid v.$KAMGreenDark;
+  width: -webkit-fill-available;
+  width: 100%;
+  background: v.$White;
+  background: rgba(255, 255, 255, 0.7);
+  p {
+    margin: 0;
+  }
 }
 .gallery_item--2 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 8;
-}
-.gallery_item--3 {
   grid-column-start: 2;
   grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 7;
-}
-.gallery_item--4 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 7;
-  grid-row-end: 8;
-  border-radius: 0 0 1.5rem 0;
+  position: relative;
+  overflow: hidden;
 }
 .gallery_item--2 img {
-  border-radius: 0 0 0 1.5rem;
+  border-radius: 0 1.5rem 1.5rem 0;
 }
-.gallery_item--3 img {
-  border-radius: 0 1.5rem 0 0;
-}
-figure {
+.gallery_item--2 .transparency {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   margin: 0;
+  padding: 0.7rem 1.1rem;
+  border-top: 0.15rem solid v.$KAMGreenDark;
+  text-align: right;
+  width: -webkit-fill-available;
+  width: 100%;
+  background: v.$White;
+  background: rgba(255, 255, 255, 0.7);
+  p {
+    margin: 0;
+  }
 }
+.gallery_item--1:hover, .gallery_item--2:hover {
+  cursor: pointer;
+}
+
 </style>
