@@ -1,28 +1,47 @@
 <template>
-  <div class="wrapper">
-    <div>
-      <p>lkm</p>
-      <p>huonetyyppi</p>
-    </div>
-    <div class="floorPlan" v-for="(input, index) in floorPlan" :key="index">
-      <div>
-        <input type="text" v-model="input.amount" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
-        <select v-model="input.abbr" v-on:click="emitToParent" @click="createFloorPlanText">
-          <option v-for="(type, index2,) in optionFloorPlans" :value="type.abbr" :key="index+index2">{{ type.text }}</option>
-        </select>
+  <div>
+    <p>Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
+              
+    <label @click="handleFloorPlan">
+      <div class="moreFloorPlans" v-bind:class="{'removeBorderRadius': showFloorPlan}">
+        <p v-show="!showFloorPlan">Lisää huonetyyppejä</p> 
+        <p v-show="showFloorPlan">Sulje huoneiston kuvaus</p>
 
-        <div>
-          <div @click="remove(index)" v-show="index || ( !index && floorPlan.length > 1)">
-            <i class="fas fa-minus"></i>
-          </div>
-          <div @click="add" v-show="index == floorPlan.length-1">
-            <i class="fas fa-plus"></i>
-          </div>
+        <div v-show="showFloorPlan">
+          <i class="fas fa-times"></i>
         </div>
-        
-        <p>{{ input.amount }}<span v-show="input.amount !== null && input.abbr !== null">/</span>{{ input.abbr }}</p>
+        <div v-show="!showFloorPlan">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+    </label>
+    
+    <div class="wrapper" v-show="showFloorPlan">
+      <div>
+        <p>lkm</p>
+        <p>huonetyyppi</p>
+      </div>
+      <div class="floorPlan" v-for="(input, index) in floorPlan" :key="index">
+        <div>
+          <input type="text" v-model="input.amount" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
+          <select v-model="input.abbr" v-on:click="emitToParent" @click="createFloorPlanText">
+            <option v-for="(type, index2,) in optionFloorPlans" :value="type.abbr" :key="index+index2">{{ type.text }}</option>
+          </select>
+
+          <div>
+            <div @click="remove(index)" v-show="index || ( !index && floorPlan.length > 1)">
+              <i class="fas fa-minus"></i>
+            </div>
+            <div @click="add" v-show="index === floorPlan.length-1">
+              <i class="fas fa-plus"></i>
+            </div>
+          </div>
+          
+          <p>{{ input.amount }}<span v-show="input.amount !== null && input.abbr !== null">/</span>{{ input.abbr }}</p>
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -32,8 +51,9 @@ export default {
 
   data() {
     return {
+      showFloorPlan: false,
       floorPlan: [
-        { abbr: null, amount: null} 
+        { abbr: null, amount: null } 
       ],
       floorPlanText: '',
       optionFloorPlans: [ // POISTA LISTASTA AINA SE ABBR, JOKA ON JO VALITTU
@@ -82,6 +102,9 @@ export default {
       this.floorPlanText = arr.join(', ');
       this.emitToParent();
     },
+    handleFloorPlan() {
+      this.showFloorPlan = !this.showFloorPlan;
+    }
   }
 }
 </script>
@@ -93,6 +116,24 @@ export default {
   display: flex;
   align-items: center;
   width: 3rem;
+}
+.moreFloorPlans {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  height: 1.5rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  border-bottom: 0.15rem solid v.$KAMGreenDark;
+}
+label div:first-child div {
+  display: block;
+}
+.removeBorderRadius {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  border-bottom: none !important;
 }
 .wrapper {
   background: v.$White;

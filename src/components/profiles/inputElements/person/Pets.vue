@@ -43,8 +43,7 @@ export default {
   },
   methods: {
     emitToParent () {
-      console.log("con" + this.checkedPets)
-      this.$emit('childToParent', {'tableOne':this.checkedPets, 'tableTwo':this.optionsPets});
+      this.$emit('childToParent', {'checked': !this.checkedPets, 'petList': this.optionsPets});
     },
     handleCheckedPets() {
       if(!this.checkedPets) {

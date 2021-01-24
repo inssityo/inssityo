@@ -13,10 +13,11 @@ export default {
     return {
       buildingType: '',
       optionBuildingTypes: [
-        { text: 'Kerrostalo', value: 1, checked: false },
-        { text: 'Omakotitalo', value: 2, checked: false },
-        { text: 'Rivitalo', value: 3, checked: false },
-        { text: 'Paritalo', value: 4, checked: false },
+        { text: 'Kerrostalo', value: 1, checked: false }, //High-Rise
+        { text: 'Omakotitalo', value: 2, checked: false }, //Detached House
+        { text: 'Erillistalo', value: 3, checked: false }, //
+        { text: 'Rivitalo', value: 4, checked: false }, //Terraced House
+        { text: 'Paritalo', value: 5, checked: false }, //Semi-Detached House
       ]
     }
   },

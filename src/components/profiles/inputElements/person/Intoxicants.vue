@@ -50,8 +50,7 @@ export default {
       optionUses: [
         { text: 'En lainkaan', value: 1 },
         { text: 'Silloin tällöin', value: 2 },
-        { text: 'Usein', value: 3 },
-        { text: 'Todella paljon', value: 4 }, //Muuta teksti
+        { text: 'Usein', value: 3 }
       ]
     }
   },

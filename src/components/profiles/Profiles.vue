@@ -3,10 +3,12 @@
     <div class="profiles-header">
       <div class="profile_img-grid">
         <div class="profile_img_item--1"> 
-          <img src="../../assets/images/home-5835289_1920.jpg" alt="">
+          <img src="../../assets/images/pexels-maksim-goncharenok-4352247.jpg" alt="">
         </div>
       </div>
-      <h1>Hello{{fromChildFirstName}}!</h1> 
+      <div v-if="selectedGreeting">
+      <h1>{{selectedGreeting}}{{fromChildFirstName}}!</h1> 
+      </div>
     </div>
     <AptRentBuy />
     <i class="fas fa-sort-down" @click="goTo('personal')"></i>
@@ -34,15 +36,25 @@ export default {
     AptProfile,
     AptRentBuy
   },
+  data() {
+    return {
+      selectedGreeting: null,
+      greetings: [
+        'Hello', //English
+        'Hei', //Finnish
+        'Huomenta', //Finnish
+        'Bonjour', //French
+        'Salve', //Italian
+        'Hola', //Spanish
+        'Guten Tag', //German
+        'Konnichiwa'],  //Japanese
+      fromChildFirstName: '',
+    }
+  },
   mounted() { 
     //handle url anchors
     if (this.$route.hash) {
       setTimeout(() => this.scrollTo(this.$route.hash), TIMEOUT)
-    }
-  },
-  data () {
-    return {
-      fromChildFirstName: '', //This value is set to the value emitted by the child
     }
   },
   methods: {
@@ -59,7 +71,13 @@ export default {
       console.log(element); //ei toimi
       var top = element.offsetTop;
       window.scrollTo(0, top);
+    },
+    randomItem (items) {
+      return items[Math.floor(Math.random()*items.length)];
     }
+  },
+  created() {
+    this.selectedGreeting = this.randomItem(this.greetings);
   }
 }
 

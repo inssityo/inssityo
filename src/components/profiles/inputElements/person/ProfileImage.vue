@@ -59,7 +59,7 @@ p {
   width: -webkit-fill-available;
   border-style: none none solid none !important;
   border-color: transparent !important;
-  border-width: 0.25rem;
+  border-width: 0.15rem;
 }
 label:hover {
   p {
@@ -67,7 +67,7 @@ label:hover {
     background: v.$White;
     border-style: none none solid none !important;
     border-color: v.$KAMGreenDark !important;
-    border-width: 0.25rem;
+    border-width: 0.15rem;
   }
 }
 div {

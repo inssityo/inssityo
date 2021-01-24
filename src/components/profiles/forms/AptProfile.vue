@@ -13,7 +13,7 @@
 
         <div class="form_group_item--2-grid">
           <div class="form_group_item--1">
-            <RentBuy v-on:childToParent="onChildClickRentBuy" />
+            <RentBuy id-value="A" v-on:childToParent="onChildClickRentBuy" />
           </div>
           <div class="form_group_item--2">
             <label for="location">Kaupunki*</label>
@@ -56,12 +56,13 @@
             <Roommates v-on:childToParent="onChildClickRoommates" />
           </div>
           <div class="form_group_item--3">
-            <Price v-on:childToParent="onChildClickPrice" />
+            <PriceMinMax v-on:childToParent="onChildClickPrice" />
           </div>
            <div class="form_group_item--4">
             {{fromChildLocationType}}
             {{fromChildBuildingType}}
             {{fromChildFeatures}}
+            {{fromChildCheckedRent}}
            </div>
             
         </div>
@@ -79,7 +80,7 @@ import BuildingType from '../inputElements/apartment/BuildingType.vue'
 import LocationType from '../inputElements/apartment/LocationType.vue'
 import RentBuy from '../inputElements/apartment/RentBuy.vue'
 import Rooms from '../inputElements/apartment/Rooms.vue'
-import Price from '../inputElements/apartment/Price.vue'
+import PriceMinMax from '../inputElements/apartment/PriceMinMax.vue'
 import Features from '../inputElements/apartment/Features.vue'
 import Roommates from '../inputElements/apartment/Roommates.vue'
 
@@ -95,7 +96,7 @@ export default {
     LocationType,
     BuildingType,
     Rooms,
-    Price,
+    PriceMinMax,
     Features,
     Roommates
   },
@@ -105,7 +106,7 @@ export default {
       location: '',
       neighborhood: '',
       address: '',
-      fromChildCheckedRent: null,
+      fromChildCheckedOwner: null,
       fromChildLocationType: [],
       fromChildBuildingType: [],
       fromChildAreaMin: null,
@@ -128,7 +129,7 @@ export default {
       this.$emit('childToParent', this.firstname)
     },*/
     onChildClickRentBuy(value) {
-      this.fromChildCheckedRent = !value;
+      this.fromChildCheckedOwner = value;
     },
     onChildClickLocationType(value) {
       this.fromChildLocationType = value;
@@ -214,7 +215,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(7, 3rem);
-  background: v.$KAMPurpleLight;
+  background: v.$KAMBeigeLight;
 }
 //Image
 .form_group_item--1-grid .form_group_item--1 { 

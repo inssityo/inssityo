@@ -32,7 +32,7 @@
           </div>
 
           <div class="form_group_item--8">
-            <textarea type="text" id="more_about" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="more_about"></textarea>
+            <textarea type="text" id="description-p" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="description"></textarea>
           </div>
         </div>
 
@@ -107,7 +107,7 @@ export default {
       firstname: '',
       lastname: '',
       email: '',
-      more_about: '',
+      description: '',
 
       checkedPets: true,
       fromChildAge: null,
@@ -150,8 +150,8 @@ export default {
       this.handleWorkType();
     },
     onChildClickPets(value) {
-      this.fromChildCheckedPets = !value.tableOne;
-      this.fromChildCheckedPetList = value.tableTwo;
+      this.fromChildCheckedPets = value.checked;
+      this.fromChildCheckedPetList = value.petList;
     },
     onChildClickProfileImage(value) {
       this.fromChildSrc = value;
@@ -258,6 +258,7 @@ select {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
+  gap: 1rem;
 }
 .form_group_item--1-grid {
   grid-column-start: 1;

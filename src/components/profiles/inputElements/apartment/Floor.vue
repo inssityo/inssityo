@@ -1,14 +1,13 @@
 <template>
   <div class="wrapper">  
-    <p>Pinta-ala</p>
+    <p>Kerros</p>
     <div>
       <div>
-        <label for="min">Min</label>
-        <input type="text" id="min" v-model="min" v-on:keyup="emitToParent">
+        <input type="text" id="floor" v-model="floor" v-on:keyup="emitToParent">
       </div>
+      <p>/</p>
       <div>
-        <label for="max">Max</label>
-        <input type="text" id="max" v-model="max" v-on:keyup="emitToParent">
+        <input type="text" id="ofFloors" v-model="ofFloors" v-on:keyup="emitToParent">
       </div>
     </div>
   </div>
@@ -17,18 +16,18 @@
 <script>
 
 export default {
-  name: 'Area',
+  name: 'Floor',
   
   data() {
     return {
-      min: null,
-      max: null,
+      floor: null,
+      ofFloors: null,
     }
   },
 
   methods: {
     emitToParent() {
-      this.$emit('childToParent', {'min':this.min, 'max':this.max});
+      this.$emit('childToParent', {'floor':this.floor, 'ofFloors':this.ofFloors});
     },
   },
 }
@@ -37,28 +36,21 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-label {
-  background: v.$White;
+.wrapper p {
+  margin-bottom: 0;
+}
+.wrapper div p {
+  margin: 0;
+}
+input[type="text"] {
   padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
-  margin: auto 0;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
   box-shadow: -0.5px -0.5px v.$KAMGreySemiLight;
-}
-p {
-  margin-bottom: 0;
-}
-input[type="text"] {
-  padding: 0.2rem 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin: 0.4rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  box-shadow: 0.5px -0.5px v.$KAMGreySemiLight;
-  width: 1.9rem;
+  width: 2rem;
 }
 input[type="text"]:focus{
   outline: none;
@@ -71,8 +63,10 @@ input[type="text"]:focus{
 }
 .wrapper div div:first-child {
   margin-right: 0.35rem;
+  width: 100%;
 }
 .wrapper div div:last-child {
   margin-left: 0.35rem;
+  width: 100%;
 }
 </style>

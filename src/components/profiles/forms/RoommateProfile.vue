@@ -25,7 +25,7 @@
           </div>
 
           <div class="form_group_item--8">
-            <textarea type="text" id="more_about" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="more_about"></textarea>
+            <textarea type="text" id="description-r" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="description"></textarea>
           </div>
         </div>
 
@@ -95,14 +95,11 @@ export default {
  
   data() {
     return {
- 
-      more_about: '',
-
+      description: '',
       checkedPets: true,
       fromChildAge: null,
       fromChildGender: null,
       fromChildStatus: null,
-      fromChildSrc: '',
       fromChildCheckedTraitList: [],
       fromChildCheckedHobbyList: [],
       fromChildCheckedPets: true,
@@ -138,9 +135,6 @@ export default {
     onChildClickPets(value) {
       this.fromChildCheckedPets = !value.tableOne;
       this.fromChildCheckedPetList = value.tableTwo;
-    },
-    onChildClickProfileImage(value) {
-      this.fromChildSrc = value;
     },
     onChildClickTraits(value) {
       this.fromChildCheckedTraitList = value;

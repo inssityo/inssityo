@@ -13,7 +13,7 @@ export default {
     return {
       checkedFeatures: '',
       optionFeatures: [
-        { text: 'Balcony', value: 1, checked: false },
+        { text: 'Balcony', value: 1, checked: false }, //Poista listasta parveke, sauna, autotalli, kun kutsutaan AptRentBuysta
         { text: 'Sauna', value: 2, checked: false },
         { text: 'Lift', value: 3, checked: false },
         { text: 'Garage', value: 4, checked: false },

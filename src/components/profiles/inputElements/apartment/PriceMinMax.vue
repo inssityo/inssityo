@@ -1,24 +1,34 @@
 <template>
   <div class="wrapper">  
-    <label for="price">Vuokra/kk</label>
-    <input type="text" id="price" v-model="price" v-on:keyup="emitToParent">
+    <p>Vuokra kk</p>
+    <div>
+      <div>
+        <label for="min">Min</label>
+        <input type="text" id="min" v-model="min" v-on:keyup="emitToParent">
+      </div>
+      <div>
+        <label for="max">Max</label>
+        <input type="text" id="max" v-model="max" v-on:keyup="emitToParent">
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Price',
+  name: 'PriceMinMax',
   
   data() {
     return {
-      price: null,
+      min: null,
+      max: null,
     }
   },
 
   methods: {
     emitToParent() {
-      this.$emit('childToParent', this.price);
+      this.$emit('childToParent', {'min':this.min, 'max':this.max});
     },
   },
 }
@@ -52,10 +62,17 @@ input[type="text"]:focus{
   outline: none;
   background: v.$KAMGreyLight;
 }
-.wrapper {
+.wrapper div {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
+.wrapper div div:first-child {
+  margin-right: 0.35rem;
+  width: 100%;
+}
+.wrapper div div:last-child {
+  margin-left: 0.35rem;
+  width: 100%;
+}
 </style>

@@ -66,7 +66,7 @@ export default {
   position: fixed;
   transform: translate3d(0, 0, 0);
   transition: 0.1s all ease-out;
-  z-index: 2;
+  z-index: 3;
 }
 .navbar.navbar-hidden {
   box-shadow: none;
