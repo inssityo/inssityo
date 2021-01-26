@@ -2,153 +2,214 @@
   <div class="section">  
     <h2>Täytä asunnon tiedot:</h2>
 
-    
-
     <form id="apt-rent-buy">
+      <div id="rentOrBuy">
+          <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
+      </div>
+      <div class="container">
+        
+        <div class="column">
+          <div class="row">
+            <h3>Sijainti</h3>
+            <div class="flex">
+              <label for="location" class="labelText">Kaupunki*</label>
+              <input type="text" id="location" v-model="location">
+            </div>
+            <div class="flex">
+              <label for="neighborhood" class="labelText">Kaupunginosa</label>
+              <input type="text" id="neighborhood" v-model="neighborhood">
+            </div>
+            <div class="flex">
+              <label for="address" class="labelText">Osoite</label>
+              <input type="text" id="address" v-model="address">
+            </div>
+            <div class="flex">
+              <label for="areaCode" class="labelText">Postinumero</label>
+              <input type="text" id="areaCode" v-model="areaCode">
+            </div>
+          </div>
+
+          <div class="row">
+            <h3>Rakennuksen tiedot</h3>
+            <div class="flex">
+              <label for="buildYear" class="labelText">Rakennusvuosi</label>
+              <input type="text" id="buildYear" v-model="buildYear">
+            </div>
+            <div>
+              <BuildingType v-on:childToParent="onChildClickBuildingType"/>
+            </div>
+            <div class="flex two_items">
+              <div>
+                <Floor v-on:childToParent="onChildClickFloor"/>
+              </div>
+              <div>
+                <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <h3>Ehdot</h3>
+            <Terms v-on:childToParent="onChildClickTerms" />
+            <div class="textarea">
+              <label for="terms">Muita ehtoja</label>
+              <textarea type="text" id="terms" placeholder="Muita ehtoja" v-model="termsDescription"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="row">
+            <h3>Asunnon tiedot</h3>
+            <div>
+              <FloorPlan v-on:childToParent="onChildClickFloorPlan"/>
+              <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />
+              <Area v-on:childToParent="onChildClickArea"/>
+            </div>
+            <div class="flex two_items">
+              <Condition v-on:childToParent="onChildClickCondition"/>
+              <Features v-on:childToParent="onChildClickFeatures"/>
+            </div>
+    
+            <div class="textarea">
+              <label for="equipment">Keittiön varustus</label>
+              <textarea type="text" id="kitchen_equipment" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
+            </div>
+            <div class="textarea">
+              <label for="equipment">Kylpyhuoneen varustus</label>
+              <textarea type="text" id="bathroom_equipment" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
+            </div>
+            <div class="textarea">
+              <label for="equipment">Säilytystilat</label>
+              <textarea type="text" id="storage" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
+            </div>
+            <div class="textarea">
+              <label for="equipment">Muuta varustusta</label>
+              <textarea type="text" id="equipment" placeholder="Muuta" v-model="equipment"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="column">
+          <div class="row">
+            <div class="textarea">
+              <label for="description-arb">Esittelyteksti asunnosta, sijainnista ja palveluista</label>
+              <textarea type="text" id="description-arb" placeholder="Kuvaus" v-model="description"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <h3>Palvelut</h3>
+            <Services v-on:childToParent="onChildClickServices"/>
+          </div>
+          <div class="row">
+            <h3>Kustannukset</h3>
+            <OtherExpenses v-on:childToParent="onChildClickOtherExpenses"/>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+    <!--<form id="apt-rent-buy">
       <div class="form_group-grid--1">
 
         <div class="form_group_item--0">
-        <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
+          <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
         </div>
 
-        <div class="form_group_item--1-grid">
-          <div class="form_group_item--1">
-            <h3>Sijainti</h3>
-          </div>
-          <div class="form_group_item--2">
+        <div class="form_group_item--1">
+          <h3>Sijainti</h3>
+          <div class="flex">
             <label for="location" class="labelText">Kaupunki*</label>
             <input type="text" id="location" v-model="location">
           </div>
-          <div class="form_group_item--3">
+          <div class="flex">
             <label for="neighborhood" class="labelText">Kaupunginosa</label>
             <input type="text" id="neighborhood" v-model="neighborhood">
           </div>
-
-          <div class="form_group_item--4">
+          <div class="flex">
             <label for="address" class="labelText">Osoite</label>
             <input type="text" id="address" v-model="address">
           </div>
-
-          <div class="form_group_item--5">
+          <div class="flex">
             <label for="areaCode" class="labelText">Postinumero</label>
             <input type="text" id="areaCode" v-model="areaCode">
           </div>
+        </div>
 
-          <div class="form_group_item--6">
-            <h3>Rakennuksen tiedot</h3>
-          </div>
-
-          <div class="form_group_item--7">
+        <div class="form_group_item--2">
+          <h3>Rakennuksen tiedot</h3>
+          <div class="flex">
             <label for="buildYear" class="labelText">Rakennusvuosi</label>
             <input type="text" id="buildYear" v-model="buildYear">
           </div>
-
-          <div class="form_group_item--8">
+          <div>
             <BuildingType v-on:childToParent="onChildClickBuildingType"/>
           </div>
-
-          <div class="form_group_item--9">
-            <Floor v-on:childToParent="onChildClickFloor"/>
+          <div class="flex two_items">
+            <div>
+              <Floor v-on:childToParent="onChildClickFloor"/>
+            </div>
+            <div>
+              <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
+            </div>
           </div>
-          <div class="form_group_item--10">
-            <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
-          </div>
+        </div>
 
-          <div class="form_group_item--11">
-            <h3>Ehdot</h3>
-          </div>
-
-          <div class="form_group_item--12">
+        <div class="form_group_item--3">
+          <h3>Ehdot</h3>
+          <div>
             <Terms v-on:childToParent="onChildClickTerms" />
           </div>
-
-          <div class="form_group_item--13">
-            <textarea type="text" id="terms-arb" placeholder="ehdot" v-model="description"></textarea>
+          <div>
+            <label for="terms-arb">Ehdot</label>
+            <div>
+              <textarea type="text" id="terms-arb" placeholder="ehdot" v-model="description"></textarea>
+            </div>
           </div>
           
-          <div class="form_group_item--14">
+          <div>
             <textarea type="text" id="description-arb" placeholder="Kuvaus asunnosta" v-model="description"></textarea>
           </div>
         </div>
 
-        <div class="form_group_item--2-grid">
-          <div class="form_group_item--1">
-            <h3>Asunnon tiedot</h3>
-          </div>
-          
-          <div class="form_group_item--2">
+        <div class="form_group_item--4">
+          <h3>Asunnon tiedot</h3>
+          <div>
             <FloorPlan v-on:childToParent="onChildClickFloorPlan"/>
           </div>
-
-          <div class="form_group_item--3">
+          <div>
             <Area v-on:childToParent="onChildClickArea"/>
           </div>
-
-          <div class="form_group_item--4">
+          <div class="flex two_items">
             <Condition v-on:childToParent="onChildClickCondition"/>
-          </div>
-
-          <div class="form_group_item--5">
             <Features v-on:childToParent="onChildClickFeatures"/>
           </div>
-
-          <div class="form_group_item--6">
-            <label for="equipment">Varustus</label>
-            <textarea type="text" id="equipment" placeholder="Varustus" v-model="equipment"></textarea>
-          </div>
-          <div class="form_group_item--7">
-            <label for="equipment">Keittiön varustus</label>
-            <textarea type="text" id="kitchen_equipment" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
-          </div>
-          <div class="form_group_item--8">
-            <label for="equipment">Kylpyhuoneen varustus</label>
-            <textarea type="text" id="bathroom_equipment" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
-          </div>
-          <div class="form_group_item--9">
-            <label for="equipment">Säilytystilat</label>
-            <textarea type="text" id="storage" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
-          </div>
-        
         </div>
 
-        <div class="form_group_item--3-grid">
-          <div class="form_group_item--1">
-            <h3>Kustannukset</h3>
+        <div class="form_group_item--5">
+          <div class="flex">
+            <label for="equipment" class="labelText">Varustus</label>
+            <textarea type="text" id="equipment" placeholder="Varustus" v-model="equipment"></textarea>
           </div>
-          <div class="form_group_item--2">
-            <label for="price">Vuokra/kk</label>
-            <input type="text" id="price" v-model="price">
+          <div class="flex">
+            <label for="equipment" class="labelText">Keittiön varustus</label>
+            <textarea type="text" id="kitchen_equipment" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
           </div>
-
-          <div class="form_group_item--3">
-            <label for="quarantee">Vakuus</label>
-            <input type="text" id="quarantee" v-model="quarantee">
+          <div class="flex">
+            <label for="equipment" class="labelText">Kylpyhuoneen varustus</label>
+            <textarea type="text" id="bathroom_equipment" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
           </div>
-
-          <div class="form_group_item--4">
-            <CellAptRoom v-on:childToParent="onChildClickCellAptRoom"/>
+          <div class="flex">
+            <label for="equipment" class="labelText">Säilytystilat</label>
+            <textarea type="text" id="storage" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
           </div>
-
-          <div class="form_group_item--5">
-            <Services v-on:childToParent="onChildClickServices"/>
-          </div>
-
-          <div class="form_group_item--6">
-            <h3>Muut kustannukset</h3>
-          </div>
-
-          <div class="form_group_item--7">
-            <OtherExpenses v-on:childToParent="onChildClickOtherExpenses"/>
-          </div>
-
         </div>
 
       </div>
+    </form>-->
 
-      
-    </form>
-
-  </div>
 </template>
 
 <script>
@@ -199,6 +260,7 @@ export default {
       kEquipment: '',
       bEquipment: '',
       storage: '',
+      termsDescription: '',
       description: '',
       buildYear: '',
       fromChildFloorPlan: [],
@@ -217,6 +279,7 @@ export default {
       fromChildOtherExpenses: null,
       fromChildAvailablefrom: null,
       fromChildTerms: null,
+      fromChildRentIncrease: null,
       
       errors: {},
       errorList: {},
@@ -276,7 +339,8 @@ export default {
       this.fromChildAvailablefrom = value;
     },
     onChildClickTerms(value) {
-      this.fromChildTerms = value;
+      this.fromChildTerms = value.terms;
+      this.fromChildRentIncrease = value.amount;
     },
     handleFloorPlan() {
       this.showFloorPlan = !this.showFloorPlan;
@@ -291,6 +355,35 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+#rentOrBuy {
+  width: 50%;
+  margin: 1rem 0 0.5rem 0;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 33.333%;
+}
+.container .column:not(:nth-child(2)) .row {
+  background: v.$KAMGrey;
+  //border: 1px solid v.$KAMGreySemiDark;
+}
+.container .column:not(:last-child) .row {
+  margin-right: 1rem;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  background: v.$KAMBeigeLight;
+  padding: 0 0.8rem 0.5rem 0.8rem;
+  margin-bottom: 1rem;
+}
+
+//_-----------
 .section {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -308,23 +401,41 @@ h3 {
   border-width: 0.15rem;
   box-shadow: -0.5px -0.5px v.$KAMGreySemiLight;
 }
+
+div[class="textarea"] {
+  margin-top: 1rem;
+}
+
+div[class="textarea"] ~ div[class="textarea"] {
+  margin-top: 0.5rem;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+.two_items {
+  justify-content: space-between;
+  div, select {
+    width: 48%;
+  }
+}
 input[type="text"] {
   padding: 0.2rem 0.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
   width: 100%;
   box-shadow: 0.5px -0.5px v.$KAMGreySemiLight;
 }
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus, select:focus, textarea:focus {
   outline: none;
   background: v.$KAMGreenLight;
 }
 select {
   padding: 0 0.2rem !important;
-  margin: 0;
+  margin: 0.3rem 0;
   height: 1.8rem;
   width: -webkit-fill-available;
   width: 100%;
@@ -344,6 +455,13 @@ textarea {
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
   box-shadow: -0.5px -0.5px v.$KAMGreySemiLight;
+  margin: 0.3rem 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#description-arb {
+  height: 12rem;
 }
 svg {
   color: v.$KAMGreenDark;
@@ -358,10 +476,12 @@ label:hover {
     color: v.$KAMBlue;
   }
 }
+
+/*
 .form_group-grid--1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto, 1fr;
+  grid-template-rows: repeat(5, auto);//auto, 1fr, 1fr, 1fr, 1fr;
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -371,360 +491,63 @@ label:hover {
   grid-row-start: 1;
   grid-row-end: 2;
 }
-.form_group_item--1-grid {
+//Location
+.form_group-grid--1 .form_group_item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(20, 2.5rem);
+  padding: 0 0.8rem 0.4rem 0.8rem;
   background: v.$KAMGreyLight;
   border: 1px solid v.$KAMGreySemiDark;
+  margin-bottom: auto;
 }
-.form_group_item--2-grid {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(20, 2.5rem);
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-  //padding: 0.4rem 0.8rem 0.4rem 0.8rem;
-}
-.form_group_item--3-grid {
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(20, 2.5rem);
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-  //padding: 0.4rem 0.8rem 0.4rem 0.8rem;
-}
-//Location header
-.form_group_item--1-grid .form_group_item--1 {
+//Building
+.form_group-grid--1 .form_group_item--2 {
   grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  display: flex;
-  align-items: center;
-  margin-left: 0.8rem;
-  margin-right: 0.8rem;
-}
-//City
-.form_group_item--1-grid .form_group_item--2 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//Neighborhood
-.form_group_item--1-grid .form_group_item--3 {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 2;
   grid-row-start: 3;
   grid-row-end: 4;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//Address
-.form_group_item--1-grid .form_group_item--4 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 4;
-  grid-row-end: 5;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//Area code
-.form_group_item--1-grid .form_group_item--5 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 5;
-  grid-row-end: 6;
-  display: flex;
-  align-items: center;
-  margin: 0 0.4rem 0 0.8rem;
-}
-#areaCode {
-  width: 3.5rem;
-}
-//Building header
-.form_group_item--1-grid .form_group_item--6 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 6;
-  grid-row-end: 7;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-  border-top: 1px solid v.$KAMGreySemiDark;
-}
-//BuildYear
-.form_group_item--1-grid .form_group_item--7 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 7;
-  grid-row-end: 8;
-  display: flex;
-  align-items: center;
-  margin: 0 0.4rem 0 0.8rem;
-}
-//BuildingType
-.form_group_item--1-grid .form_group_item--8 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 7;
-  grid-row-end: 8;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem 0 0.4rem;
-}
-//Floor
-.form_group_item--1-grid .form_group_item--9 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 8;
-  grid-row-end: 10;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//AvailableFrom
-.form_group_item--1-grid .form_group_item--10 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 8;
-  grid-row-end: 10;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//Terms header
-.form_group_item--1-grid .form_group_item--11 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 10;
-  grid-row-end: 11;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-  border-top: 1px solid v.$KAMGreySemiDark;
+  padding: 0 0.8rem 0.4rem 0.8rem;
+  background: v.$KAMGreyLight;
+  border: 1px solid v.$KAMGreySemiDark;
+  margin-bottom: auto;
 }
 //Terms
-.form_group_item--1-grid .form_group_item--12 {
+.form_group-grid--1 .form_group_item--3 {
   grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 11;
-  grid-row-end: 13;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//Terms description
-.form_group_item--1-grid .form_group_item--13 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 13;
-  grid-row-end: 15;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//Description
-.form_group_item--1-grid .form_group_item--14 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 15;
-  grid-row-end: 17;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-
-//Apartment text
-.form_group_item--2-grid .form_group_item--1 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-//FloorPlan
-.form_group_item--2-grid .form_group_item--2 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 4;
-  margin: 0 0.8rem;
-  z-index: 2;
-  //overflow: scroll;
-}
-.form_group_item--2-grid .form_group_item--2 .moreFloorPlans {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  height: 1.5rem;
-  padding: 0.2rem 0.4rem;
-  border: 1px solid white;
-  border-radius: 0.5rem;
-  border-bottom: 0.15rem solid v.$KAMGreenDark;
-}
-.form_group_item--2-grid .form_group_item--2 label div:first-child div {
-  display: block;
-}
-.removeBorderRadius {
-  border-radius: 0.5rem 0.5rem 0 0 !important;
-  border-bottom: none !important;
-}
-.form_group_item--2-grid .form_group_item--2 p {
-  margin-bottom: 0.4rem;
-}
-.form_group_item--2-grid .form_group_item--2 label div:first-child p {
-  margin: 0;
-}
-.form_group_item--2-grid .form_group_item--3 {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 2;
   grid-row-start: 4;
-  grid-row-end: 6;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-.form_group_item--2-grid .form_group_item--4 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 6;
-  grid-row-end: 7;
-  display: flex;
-  align-items: center;
-  margin: 0 0.4rem 0 0.8rem;
-}
-.form_group_item--2-grid .form_group_item--5 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 6;
-  grid-row-end: 7;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem 0 0.4rem;
-}
-.form_group_item--2-grid .form_group_item--6 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 7;
-  grid-row-end: 9;
-  display: flex;
-  margin: 0.2rem 0.8rem;
-}
-.form_group_item--2-grid .form_group_item--7 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 9;
-  grid-row-end: 11;
-  margin: 0.2rem 0.8rem;
-}
-.form_group_item--2-grid .form_group_item--8 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 11;
-  grid-row-end: 13;
-  margin: 0.2rem 0.8rem;
-}
-.form_group_item--2-grid .form_group_item--9 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 13;
-  grid-row-end: 15;
-  margin: 0.2rem 0.8rem;
-}
-.form_group_item--2-grid .form_group_item--6 textarea, 
-.form_group_item--2-grid .form_group_item--7 textarea,
-.form_group_item--2-grid .form_group_item--8 textarea,
-.form_group_item--2-grid .form_group_item--9 textarea {
-  margin: 0.2rem 0;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-}
-.form_group_item--3-grid .form_group_item--1 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-}
-.form_group_item--3-grid .form_group_item--2 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  display: flex;
-  align-items: center;
-  margin: 0 0.4rem 0 0.8rem;
-}
-.form_group_item--3-grid .form_group_item--3 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem 0 0.4rem;
-}
-.form_group_item--3-grid .form_group_item--4 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 3;
   grid-row-end: 5;
-  display: flex;
-  align-items: center;
-  margin: 0 0.8rem;
-  div {
-    width: 100%;
+  padding: 0 0.8rem 0.4rem 0.8rem;
+  background: v.$KAMGreyLight;
+  border: 1px solid v.$KAMGreySemiDark;
+
+  div:last-child {
+    margin-top: 1rem;
+  }
+  div:last-child div {
+    display: flex;
+    margin-top: 0;
   }
 }
-.form_group_item--3-grid .form_group_item--5 {
-  grid-column-start: 1;
+.form_group-grid--1 .form_group_item--4 {
+  grid-column-start: 2;
   grid-column-end: 3;
-  grid-row-start: 5;
-  grid-row-end: 8;
-  margin: 0 0.8rem;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 0 0.8rem 0.4rem 0.8rem;
+  background: v.$KAMGreyLight;
+  border: 1px solid v.$KAMGreySemiDark;
 }
-.form_group_item--3-grid .form_group_item--6 {
-  grid-column-start: 1;
+.form_group-grid--1 .form_group_item--5 {
+  grid-column-start: 2;
   grid-column-end: 3;
-  grid-row-start: 8;
-  grid-row-end: 9;
-  margin: 0 0.8rem;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 0 0.8rem 0.4rem 0.8rem;
+  background: v.$KAMGreyLight;
+  border: 1px solid v.$KAMGreySemiDark;
 }
-.form_group_item--3-grid .form_group_item--7 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 11;
-  grid-row-end: 12;
-  margin: 0 0.8rem;
-}
-
+*/
 </style>

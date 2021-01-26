@@ -45,7 +45,7 @@ export default {
 input[type="text"] {
   padding: 0.2rem 0.5rem;
   border-radius: 0.5rem;
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;

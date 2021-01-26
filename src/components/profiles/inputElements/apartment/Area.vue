@@ -67,7 +67,7 @@ input[type="text"]:focus{
 .wrapper div {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  //justify-content: space-between;
 }
 .wrapper div div:first-child {
   margin-right: 0.35rem;

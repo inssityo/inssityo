@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
+    <p style="margin: 0.5rem 0 0.2rem 0">Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
               
     <label @click="handleFloorPlan">
       <div class="moreFloorPlans" v-bind:class="{'removeBorderRadius': showFloorPlan}">
@@ -123,8 +123,7 @@ export default {
   justify-content: space-between;
   background: white;
   height: 1.5rem;
-  padding: 0.2rem 0.4rem;
-  border: 1px solid white;
+  padding: 0.1rem 0.5rem;
   border-radius: 0.5rem;
   border-bottom: 0.15rem solid v.$KAMGreenDark;
 }

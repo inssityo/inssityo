@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'OtherExpenses',
+  name: 'OtherExpenses', //Lisää autopaikka
 
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     emitToParent () {
-      this.$emit('childToParent', this.checkedFeatures)
+      this.$emit('childToParent', this.electricity)
     },
   }
 }
