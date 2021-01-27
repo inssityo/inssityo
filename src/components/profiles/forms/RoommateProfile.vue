@@ -1,63 +1,59 @@
 <template>
-  <div class="section">  
+  <div id="roommate-profile" class="section">  
     <h2>Minkälaista kämppistä etsit:</h2>
 
-    <form id="roommate-profile">
-      <div class="form_group-grid--1">
+    <div class="form_group-grid--1">
 
-        <div class="form_group_item--1-grid">
-          <div class="form_group_item--1">
-            <RoommateImage />
-          </div>
-
-          <div class="form_group_item--2">
-            <Age v-on:childToParent="onChildClickAge" />
-          </div>
-          <div class="form_group_item--3">
-            <Gender v-on:childToParent="onChildClickGender" />
-          </div>
-
-          <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus ===1}">
-            <Status v-on:childToParent="onChildClickStatus" />
-          </div>
-          <div class="form_group_item--7" v-if="fromChildStatus === 1">
-            <WorkType v-on:childToParent="onChildClickWorkType" />
-          </div>
-
-          <div class="form_group_item--8">
-            <textarea type="text" id="description-r" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="description"></textarea>
-          </div>
+      <div class="form_group_item--1-grid">
+        <div class="form_group_item--1">
+          <RoommateImage />
         </div>
 
-        <div class="form_group_item--2-grid">
-          <div class="form_group_item--1">
-            <Hobbies id-value="R" v-on:childToParent="onChildClickHobbies" />
-          </div>
+        <div class="form_group_item--2">
+          <Age v-on:childToParent="onChildClickAge" />
+        </div>
+        <div class="form_group_item--3">
+          <Gender v-on:childToParent="onChildClickGender" />
         </div>
 
-        <div class="form_group_item--3-grid">
-          <div class="form_group_item--1">
-            <Sociality id-value="R" v-on:childToParent="onChildClickSociality" />
-          </div>
+        <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus ===1}">
+          <Status v-on:childToParent="onChildClickStatus" />
+        </div>
+        <div class="form_group_item--7" v-if="fromChildStatus === 1">
+          <WorkType v-on:childToParent="onChildClickWorkType" />
+        </div>
 
-          <div class="form_group_item--2">
-            <Traits id-value="R" v-on:childToParent="onChildClickTraits"/>
-          </div>
+        <div class="form_group_item--8">
+          <textarea type="text" id="description-r" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="description"></textarea>
+        </div>
+      </div>
 
-          <div class="form_group_item--3">
-            <Pets id-value="R" v-on:childToParent="onChildClickPets" />
-          </div>
+      <div class="form_group_item--2-grid">
+        <div class="form_group_item--1">
+          <Hobbies id-value="R" v-on:childToParent="onChildClickHobbies" />
+        </div>
+      </div>
 
-          <div class="form_group_item--4">
-            <Intoxicants id-value="R" v-on:childToParent="onChildClickIntoxicants" />
-          </div>
+      <div class="form_group_item--3-grid">
+        <div class="form_group_item--1">
+          <Sociality id-value="R" v-on:childToParent="onChildClickSociality" />
+        </div>
 
+        <div class="form_group_item--2">
+          <Traits id-value="R" v-on:childToParent="onChildClickTraits"/>
+        </div>
+
+        <div class="form_group_item--3">
+          <Pets id-value="R" v-on:childToParent="onChildClickPets" />
+        </div>
+
+        <div class="form_group_item--4">
+          <Intoxicants id-value="R" v-on:childToParent="onChildClickIntoxicants" />
         </div>
 
       </div>
 
-      
-    </form>
+    </div>
 
   </div>
 </template>
@@ -199,6 +195,7 @@ select {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
+  gap: 1rem;
 }
 .form_group_item--1-grid {
   grid-column-start: 1;
@@ -206,7 +203,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
-  background: v.$KAMGreyLight;
+  background: v.$KAMGrey;
 }
 .form_group_item--2-grid {
   grid-column-start: 2;
@@ -214,7 +211,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
-  background: v.$KAMBeigeLight;
+  background: v.$KAMBeige;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 .form_group_item--3-grid {
@@ -223,7 +220,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
-  background: v.$KAMGreyLight;
+  background: v.$KAMGrey;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 

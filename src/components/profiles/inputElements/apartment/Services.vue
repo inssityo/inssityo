@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>Lähipalvelut: <span>{{ servicesText }}</span></p>
+    <p>Lähipalvelut: <br/>{{ servicesText }}</p>
+    <!--<p v-for="(text, index) in services" :key="'p'+index">{{text.distance}} {{text.text}}</p>-->
               
     <label @click="handleServices">
       <div class="moreServices" v-bind:class="{'removeBorderRadius': showServices}">
@@ -21,17 +22,15 @@
       <div class="floorPlan" v-for="(input, index) in services" :key="index">
         <div>
           <div class="labels">
-          <label>Palvelu</label>
-          <label>km</label>
+            <label>Palvelu</label>
+            <label>metriä</label>
           </div>
           <div class="inputFields">
+            <select v-model="input.text" v-on:click="emitToParent" @click="createServicesText">
+              <option v-for="(type, index2,) in optionServices" :value="type.text" :key="index+index2">{{ type.text }}</option>
+            </select>
             
-          <select v-model="input.abbr" v-on:click="emitToParent" @click="createServicesText">
-            <option v-for="(type, index2,) in optionServices" :value="type.abbr" :key="index+index2">{{ type.text }}</option>
-          </select>
-          
-          <input type="text" v-model="input.amount" v-on:click="emitToParent" v-on:keyup="createServicesText"> <!-- Muuta v-model-->
-          
+            <input type="text" v-model="input.distance" v-on:click="emitToParent" v-on:keyup="createServicesText">
           </div>
           <div>
             <div @click="remove(index)" v-show="index || ( !index && services.length > 1)">
@@ -42,14 +41,11 @@
             </div>
           </div>
           
-          <p>{{ input.amount }}<span v-show="input.amount !== null && input.abbr !== null">/</span>{{ input.abbr }}</p>
-          
-          
         </div>
       </div>
       
     </div>
-<textarea type="text" id="description_services" placeholder="Kerro palveluista" v-model="description"></textarea>
+    <textarea type="text" id="description_services" placeholder="Kerro palveluista" v-model="description"></textarea>
   </div>
 </template>
 
@@ -61,14 +57,14 @@ export default {
     return {
       showServices: false,
       services: [
-        { text: null, descr: null }  //Muuta
+        { text: null, distance: null } 
       ],
       servicesText: '',
       optionServices: [
-        { text: 'Lähiliikenteen bussipysäkki', distance: '' },
-        { text: 'Kaukoliikenteen bussipysäkki', distance: '' },
-        { text: 'Lähiliikenteen linja-autoasema', distance: '' },
-        { text: 'Kaukoliikenteen linja-autoasema', distance: '' },
+        { text: 'Lähil. bussipysäkki', distance: '' },
+        { text: 'Kaukol. bussipysäkki', distance: '' },
+        { text: 'Lähil. linja-autoasema', distance: '' },
+        { text: 'Kaukol. linja-autoasema', distance: '' },
         { text: 'Juna-asema', distance: '' },
         { text: 'Raitiovaunupysäkki', distance: '' },
         { text: 'Metroasema', distance: '' },
@@ -89,12 +85,11 @@ export default {
   },
   methods: {
     emitToParent() {
-      console.log("text " + this.servicesText)
-      this.$emit('childToParent', { 'text': this.servicesText, 'floorPlan': this.services })
+      this.$emit('childToParent', { 'text': this.servicesText, 'services': this.services })
     },
     add() {
       this.services.push(
-        { text: null, descr: null }
+        { text: null, distance: null }
       )
     },
     remove(index) {
@@ -105,8 +100,8 @@ export default {
     createServicesText() {
       let arr = [];
       this.services.forEach(item => {
-        if (item.text !== null && item.descr !== null && item.descr !== '') { //Muuta
-          arr.push(item.text + '/' + item.descr); 
+        if (item.text !== null && item.distance !== null && item.distance !== '') {
+          arr.push(item.distance + 'm ' + item.text); 
         }
       })
       this.servicesText = arr.join(', ');
@@ -122,10 +117,30 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.floorPlan div {
-  display: flex;
-  align-items: center;
-  width: 3rem;
+.floorPlan {
+  div {
+    display: flex;
+    align-items: center;
+    width: 3rem;
+    margin-bottom: 0.5rem;
+  }
+  div .labels {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-right: 1rem;
+    label:first-child {
+      margin-bottom: 1rem;
+    }
+  }
+  div .inputFields {
+    display: block;
+    width: max-content;
+  }
+  div:last-child p {
+    margin: 0 0.5rem;
+  }
 }
 .moreServices {
   display: flex;
@@ -137,9 +152,7 @@ export default {
   border-radius: 0.5rem;
   border-bottom: 0.15rem solid v.$KAMGreenDark;
 }
-label div:first-child div {
-  display: block;
-}
+
 .removeBorderRadius {
   border-radius: 0.5rem 0.5rem 0 0 !important;
   border-bottom: none !important;
@@ -150,16 +163,14 @@ label div:first-child div {
   margin: 0;
   border-radius: 0 0 0.5rem 0.5rem;
   border-bottom: 0.15rem solid v.$KAMGreenDark;
-}
-.wrapper div:first-child {
-  display: flex;
-  align-items: center;
-}
-.wrapper div:first-child p:first-child {
-  margin-right: 0.5rem;
-}
-.wrapper div:first-child p {
-  margin: 0.2rem 0 0.2rem 0;
+  
+  div:first-child p:first-child {
+    margin-right: 0.5rem;
+  }
+  
+  div:first-child p {
+    margin: 0.2rem 0 0.2rem 0;
+  }
 }
 select {
   padding: 0 0.2rem !important;
@@ -174,43 +185,51 @@ select {
 p {
   margin-right: 0.5rem;
 }
-.wrapper .floorPlan div:last-child p {
-  margin: 0 0.5rem;
-}
-.floorPlan div .labels {
-  display: block;
-}
-.floorPlan div .inputFields {
-  display: block;
-  width: max-content;
-}
+
 svg {
   margin: 0 0 0 0.4rem; 
   color: v.$KAMGreenDark;
-}
-svg:hover {
-  cursor: pointer;
-  color: v.$KAMBlue;
+  
+  :hover {
+    cursor: pointer;
+    color: v.$KAMBlue;
+  }
 }
 label {
   letter-spacing: 0.05rem;
   cursor: pointer;
+  
+  div:first-child div {
+    display: block;
+  }
 }
 input[type="text"] {
-  padding: 0.2rem;
+  padding: 0.2rem 0.4rem;
   border-radius: 0.5rem;
   margin: 0.25rem 0.5rem 0.25rem 0;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
-  width: 1.2rem;
+  width: 3rem;
   height: 1.4rem;
-  text-align: center;
   background: v.$KAMGreyLight;
 }
-input[type="text"]:focus, input[type="select"]:focus {
+input[type="text"]:focus, input[type="select"]:focus, textarea:focus {
   outline: none;
-  background: v.$KAMGreyLight;
+  background: v.$KAMGreenLight;
+}
+textarea {
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  margin: 0.6rem 0 0.3rem 0;
+  border-style: none none solid none !important;
+  border-color: v.$KAMGreenDark !important;
+  border-width: 0.15rem;
+  height: 10.8rem;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 </style>

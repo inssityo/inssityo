@@ -1,23 +1,23 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../components/views/Home.vue";
-import Profile from "../components/views/CreateProfiles.vue";
-import Profiles from "../components/profiles/Profiles.vue";
+import CreateProfileForm from "../components/views/CreateProfileForm.vue";
+import ProfileForm from "../components/views/ProfileForm.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home,
   },
   {
     path: "/profile",
-    name: "Profile",
-    component: Profile,
+    name: "profile",
+    component: CreateProfileForm,
   },
   {
-    path: "/profile/editProfiles",
-    name: "Profiles",
-    component: Profiles,
+    path: "/profile/edit/:profileForm",
+    name: "profileform",
+    component: ProfileForm,
   },
 ];
 

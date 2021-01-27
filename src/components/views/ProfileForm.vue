@@ -7,16 +7,23 @@
         </div>
       </div>
       <div v-if="selectedGreeting">
-      <h1>{{selectedGreeting}}{{fromChildFirstName}}!</h1> 
+      <h1>{{selectedGreeting }}{{ fromChildFirstName }}!</h1> 
       </div>
     </div>
-    <AptRentBuy />
-    <i class="fas fa-sort-down" @click="goTo('personal')"></i>
-    <PersonalProfile id="personal" v-on:childToParent="onChildClick" />
-    <i class="fas fa-sort-down" @click="goTo('apt')"></i>
-    <AptProfile id="apt" />
-    <i class="fas fa-sort-down" @click="goTo('roommate')"></i>
-    <RoommateProfile id="roommate" />
+    
+    <form>
+      <AptRentBuy v-show="choice === 2 || choice === 3" />
+
+      <i class="fas fa-sort-down" v-show="choice === 1" @click="goTo('personal')"></i> <!-- lisää ankkurit -->
+      <PersonalProfile ref="personal" v-show="choice === 1" v-on:childToParent="onChildClick" />
+
+      <i class="fas fa-sort-down" v-show="choice === 1" @click="goTo('apt')"></i>
+      <AptProfile ref="apt" v-show="choice === 1" />
+
+      <i class="fas fa-sort-down" v-show="choice === 1" @click="goTo('roommate')"></i>
+      <RoommateProfile ref="roommate" v-show="choice === 1" />
+    </form>
+
   </div>
 </template>
 
@@ -29,7 +36,7 @@ import AptRentBuy from '../profiles/forms/AptRentBuy.vue'
 const TIMEOUT = 1;
 
 export default {
-  name: 'Profiles',
+  name: 'ProfileForm',
   components: {
     PersonalProfile,
     RoommateProfile,
@@ -38,6 +45,7 @@ export default {
   },
   data() {
     return {
+      choice: 1,
       selectedGreeting: null,
       greetings: [
         'Hello', //English
@@ -67,10 +75,8 @@ export default {
       this.fromChildFirstName = ', ' + value;
     },
     goTo (refName) {
-      var element = this.$refs[refName];
-      console.log(element); //ei toimi
-      var top = element.offsetTop;
-      window.scrollTo(0, top);
+      var element = this.$els[refName];
+          element.scrollIntoView();
     },
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
@@ -78,6 +84,10 @@ export default {
   },
   created() {
     this.selectedGreeting = this.randomItem(this.greetings);
+
+    if (this.$route.params.profileForm) {
+      this.choice = parseInt(this.$route.params.profileForm);
+    }
   }
 }
 
@@ -119,6 +129,11 @@ img {
   width: 2rem;
   height: 2rem;
   color: v.$KAMGreenDark;
+
+  :hover {
+    cursor: pointer;
+    color: v.$KAMBlue;
+  }
 }
 
 </style>

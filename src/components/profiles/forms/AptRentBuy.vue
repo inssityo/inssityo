@@ -1,144 +1,36 @@
 <template>
-  <div class="section">  
+  <div id="apt-rent-buy" class="section">  
     <h2>Täytä asunnon tiedot:</h2>
 
-    <form id="apt-rent-buy">
-      <div id="rentOrBuy">
-          <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
-      </div>
-      <div class="container">
-        
-        <div class="column">
-          <div class="row">
-            <h3>Sijainti</h3>
-            <div class="flex">
-              <label for="location" class="labelText">Kaupunki*</label>
-              <input type="text" id="location" v-model="location">
-            </div>
-            <div class="flex">
-              <label for="neighborhood" class="labelText">Kaupunginosa</label>
-              <input type="text" id="neighborhood" v-model="neighborhood">
-            </div>
-            <div class="flex">
-              <label for="address" class="labelText">Osoite</label>
-              <input type="text" id="address" v-model="address">
-            </div>
-            <div class="flex">
-              <label for="areaCode" class="labelText">Postinumero</label>
-              <input type="text" id="areaCode" v-model="areaCode">
-            </div>
-          </div>
+    <div id="rentOrBuy">
+      <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
+      {{ fromChildCheckedOwner }}
+    </div>
 
-          <div class="row">
-            <h3>Rakennuksen tiedot</h3>
-            <div class="flex">
-              <label for="buildYear" class="labelText">Rakennusvuosi</label>
-              <input type="text" id="buildYear" v-model="buildYear">
-            </div>
-            <div>
-              <BuildingType v-on:childToParent="onChildClickBuildingType"/>
-            </div>
-            <div class="flex two_items">
-              <div>
-                <Floor v-on:childToParent="onChildClickFloor"/>
-              </div>
-              <div>
-                <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <h3>Ehdot</h3>
-            <Terms v-on:childToParent="onChildClickTerms" />
-            <div class="textarea">
-              <label for="terms">Muita ehtoja</label>
-              <textarea type="text" id="terms" placeholder="Muita ehtoja" v-model="termsDescription"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="row">
-            <h3>Asunnon tiedot</h3>
-            <div>
-              <FloorPlan v-on:childToParent="onChildClickFloorPlan"/>
-              <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />
-              <Area v-on:childToParent="onChildClickArea"/>
-            </div>
-            <div class="flex two_items">
-              <Condition v-on:childToParent="onChildClickCondition"/>
-              <Features v-on:childToParent="onChildClickFeatures"/>
-            </div>
-    
-            <div class="textarea">
-              <label for="equipment">Keittiön varustus</label>
-              <textarea type="text" id="kitchen_equipment" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
-            </div>
-            <div class="textarea">
-              <label for="equipment">Kylpyhuoneen varustus</label>
-              <textarea type="text" id="bathroom_equipment" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
-            </div>
-            <div class="textarea">
-              <label for="equipment">Säilytystilat</label>
-              <textarea type="text" id="storage" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
-            </div>
-            <div class="textarea">
-              <label for="equipment">Muuta varustusta</label>
-              <textarea type="text" id="equipment" placeholder="Muuta" v-model="equipment"></textarea>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="column">
-          <div class="row">
-            <div class="textarea">
-              <label for="description-arb">Esittelyteksti asunnosta, sijainnista ja palveluista</label>
-              <textarea type="text" id="description-arb" placeholder="Kuvaus" v-model="description"></textarea>
-            </div>
-          </div>
-          <div class="row">
-            <h3>Palvelut</h3>
-            <Services v-on:childToParent="onChildClickServices"/>
-          </div>
-          <div class="row">
-            <h3>Kustannukset</h3>
-            <OtherExpenses v-on:childToParent="onChildClickOtherExpenses"/>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  
-    <!--<form id="apt-rent-buy">
-      <div class="form_group-grid--1">
-
-        <div class="form_group_item--0">
-          <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
-        </div>
-
-        <div class="form_group_item--1">
+    <div class="container">
+      
+      <div class="column">
+        <div class="row">
           <h3>Sijainti</h3>
           <div class="flex">
             <label for="location" class="labelText">Kaupunki*</label>
             <input type="text" id="location" v-model="location">
           </div>
           <div class="flex">
-            <label for="neighborhood" class="labelText">Kaupunginosa</label>
+            <label for="neighborhood" class="labelText">Kaupunginosa*</label>
             <input type="text" id="neighborhood" v-model="neighborhood">
           </div>
           <div class="flex">
-            <label for="address" class="labelText">Osoite</label>
+            <label for="address" class="labelText">Osoite*</label>
             <input type="text" id="address" v-model="address">
           </div>
           <div class="flex">
-            <label for="areaCode" class="labelText">Postinumero</label>
+            <label for="areaCode" class="labelText">Postinumero*</label>
             <input type="text" id="areaCode" v-model="areaCode">
           </div>
         </div>
 
-        <div class="form_group_item--2">
+        <div class="row">
           <h3>Rakennuksen tiedot</h3>
           <div class="flex">
             <label for="buildYear" class="labelText">Rakennusvuosi</label>
@@ -153,63 +45,75 @@
             </div>
             <div>
               <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
+              {{fromChildAvailablefrom}}
             </div>
           </div>
         </div>
 
-        <div class="form_group_item--3">
+        <div class="row">
           <h3>Ehdot</h3>
-          <div>
-            <Terms v-on:childToParent="onChildClickTerms" />
-          </div>
-          <div>
-            <label for="terms-arb">Ehdot</label>
-            <div>
-              <textarea type="text" id="terms-arb" placeholder="ehdot" v-model="description"></textarea>
-            </div>
-          </div>
-          
-          <div>
-            <textarea type="text" id="description-arb" placeholder="Kuvaus asunnosta" v-model="description"></textarea>
+          <Terms v-on:childToParent="onChildClickTerms" />
+          <div class="textarea">
+            <label for="terms">Muita ehtoja</label>
+            <textarea type="text" id="terms" placeholder="Mikäli vuokrasuhde päättyy ennen kuin vuosi sen alkamisesta on kulunut, peritään vuokralaiselta sopimussakko 1,24 x 1 kk vuokraa vastaava määrä." v-model="termsDescription"></textarea>
           </div>
         </div>
+      </div>
 
-        <div class="form_group_item--4">
+      <div class="column">
+        <div class="row">
           <h3>Asunnon tiedot</h3>
           <div>
             <FloorPlan v-on:childToParent="onChildClickFloorPlan"/>
-          </div>
-          <div>
-            <Area v-on:childToParent="onChildClickArea"/>
+            <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />{{fromChildCell}}
+            <Area apt-value="R" v-on:childToParent="onChildClickArea"/>
           </div>
           <div class="flex two_items">
             <Condition v-on:childToParent="onChildClickCondition"/>
             <Features v-on:childToParent="onChildClickFeatures"/>
           </div>
-        </div>
-
-        <div class="form_group_item--5">
-          <div class="flex">
-            <label for="equipment" class="labelText">Varustus</label>
-            <textarea type="text" id="equipment" placeholder="Varustus" v-model="equipment"></textarea>
-          </div>
-          <div class="flex">
-            <label for="equipment" class="labelText">Keittiön varustus</label>
+  
+          <div class="textarea">
+            <label for="equipment">Keittiön varustus</label>
             <textarea type="text" id="kitchen_equipment" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
           </div>
-          <div class="flex">
-            <label for="equipment" class="labelText">Kylpyhuoneen varustus</label>
+          <div class="textarea">
+            <label for="equipment">Kylpyhuoneen varustus</label>
             <textarea type="text" id="bathroom_equipment" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
           </div>
-          <div class="flex">
-            <label for="equipment" class="labelText">Säilytystilat</label>
+          <div class="textarea">
+            <label for="equipment">Säilytystilat</label>
             <textarea type="text" id="storage" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
+          </div>
+          <div class="textarea">
+            <label for="equipment">Muuta varustusta</label>
+            <textarea type="text" id="equipment" placeholder="Muuta" v-model="equipment"></textarea>
           </div>
         </div>
 
       </div>
-    </form>-->
 
+      <div class="column">
+        <div class="row">
+          <div class="textarea">
+            <label for="description-arb">Esittelyteksti asunnosta, sijainnista ja palveluista*</label>
+            <textarea type="text" id="description-arb" placeholder="Kuvaus" v-model="description"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <h3>Palvelut</h3>
+          <Services v-on:childToParent="onChildClickServices"/>
+          {{fromChildServices}} {{fromChildServicesText}}
+        </div>
+        <div class="row">
+          <h3>Kustannukset</h3>
+          <OtherExpenses v-on:childToParent="onChildClickOtherExpenses"/>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -255,6 +159,10 @@ export default {
  
   data() {
     return {
+      location: '',
+      neighborhood: '',
+      address: '',
+      areaCode: '',
       showFloorPlan: false,
       equipment: '',
       kEquipment: '',
@@ -265,18 +173,21 @@ export default {
       buildYear: '',
       fromChildFloorPlan: [],
       fromChildFloorPlanText: '',
-      fromChildAreaMin: null,
-      fromChildAreaMax: null,
+      fromChildFeatures: null,
+      fromChildAreaMinRoom: null,
+      fromChildAreaMaxTotal: null,
       fromChildCondition: null,
       fromChildBuildingType: null,
       fromChildCell: null,
       fromChildFloor: null,
-      fromChildOfFloors: null,
+      fromChildFloorText: '',
       price: null,
       quarantee: null,
       fromChildCheckedOwner: null,
       fromChildServices: null,
+      fromChildServicesText: '',
       fromChildOtherExpenses: null,
+      fromChildSpeed: '',
       fromChildAvailablefrom: null,
       fromChildTerms: null,
       fromChildRentIncrease: null,
@@ -304,8 +215,8 @@ export default {
       this.fromChildFloorPlan = value.floorPlan;
     },
     onChildClickArea(value) {
-      this.fromChildAreaMin = value.min;
-      this.fromChildAreaMax = value.max;
+      this.fromChildAreaMinRoom = value.minRoom;
+      this.fromChildAreaMaxTotal = value.maxTotal;
     },
     onChildClickCondition(value) {
       this.fromChildCondition = value;
@@ -318,7 +229,7 @@ export default {
     },
     onChildClickFloor(value) {
       this.fromChildFloor = value.floor;
-      this.fromChildOfFloors = value.ofFloors;
+      this.fromChildFloorText = value.text;
     },
     onChildClickPrice(value) {
       this.fromChildPrice = value;
@@ -330,10 +241,12 @@ export default {
       this.fromChildFeatures = value;
     },
     onChildClickServices(value) {
-      this.fromChildServices = value;
+      this.fromChildServicesText = value.text;
+      this.fromChildServices = value.services;
     },
     onChildClickOtherExpenses(value) {
-      this.fromChildOtherExpenses = value;
+      this.fromChildOtherExpenses = value.expenses;
+      this.fromChildSpeed = value.speed;
     },
     onChildClickAvailableFrom(value) {
       this.fromChildAvailablefrom = value;
@@ -375,10 +288,13 @@ export default {
 .container .column:not(:last-child) .row {
   margin-right: 1rem;
 }
+.container .column:first-child .row:first-child .flex:last-of-type {
+  margin-bottom: 0.2rem;
+}
 .row {
   display: flex;
   flex-direction: column;
-  background: v.$KAMBeigeLight;
+  background: v.$KAMBeige;
   padding: 0 0.8rem 0.5rem 0.8rem;
   margin-bottom: 1rem;
 }
@@ -399,7 +315,7 @@ h3 {
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
-  box-shadow: -0.5px -0.5px v.$KAMGreySemiLight;
+  //box-shadow: -0.5px -0.5px v.$KAMGreySemiDark;
 }
 
 div[class="textarea"] {
@@ -427,7 +343,7 @@ input[type="text"] {
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
   width: 100%;
-  box-shadow: 0.5px -0.5px v.$KAMGreySemiLight;
+  //box-shadow: 0.5px -0.5px 0.5px v.$KAMGreySemiDark;
 }
 input[type="text"]:focus, select:focus, textarea:focus {
   outline: none;
@@ -444,17 +360,18 @@ select {
   border-color: #016361 !important;
   border-width: 0.15rem;
   background: v.$White;
-  box-shadow: -0.5px -0.5px v.$KAMGreySemiLight;
+  //box-shadow: -0.5px -0.5px 0.5px v.$KAMGreySemiDark;
 }
 textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: -webkit-fill-available;
   width: 100%;
+  height: 4.8rem;
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
-  box-shadow: -0.5px -0.5px v.$KAMGreySemiLight;
+  //-webkit-box-shadow: -0.5px -0.5px 0.5px v.$KAMGreySemiDark;
+  //box-shadow: -0.5px -0.5px 0.5px v.$KAMGreySemiDark;
   margin: 0.3rem 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -462,6 +379,9 @@ textarea {
 }
 #description-arb {
   height: 12rem;
+}
+#terms {
+  height: 6rem;
 }
 svg {
   color: v.$KAMGreenDark;
@@ -476,78 +396,8 @@ label:hover {
     color: v.$KAMBlue;
   }
 }
+input:hover {
+  background: v.$KAMGreenLight;
+}
 
-/*
-.form_group-grid--1 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(5, auto);//auto, 1fr, 1fr, 1fr, 1fr;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-.form_group-grid--1 .form_group_item--0 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-}
-//Location
-.form_group-grid--1 .form_group_item--1 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  padding: 0 0.8rem 0.4rem 0.8rem;
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-  margin-bottom: auto;
-}
-//Building
-.form_group-grid--1 .form_group_item--2 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  padding: 0 0.8rem 0.4rem 0.8rem;
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-  margin-bottom: auto;
-}
-//Terms
-.form_group-grid--1 .form_group_item--3 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 4;
-  grid-row-end: 5;
-  padding: 0 0.8rem 0.4rem 0.8rem;
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-
-  div:last-child {
-    margin-top: 1rem;
-  }
-  div:last-child div {
-    display: flex;
-    margin-top: 0;
-  }
-}
-.form_group-grid--1 .form_group_item--4 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  padding: 0 0.8rem 0.4rem 0.8rem;
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-}
-.form_group-grid--1 .form_group_item--5 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  padding: 0 0.8rem 0.4rem 0.8rem;
-  background: v.$KAMGreyLight;
-  border: 1px solid v.$KAMGreySemiDark;
-}
-*/
 </style>

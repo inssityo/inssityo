@@ -79,7 +79,6 @@ export default {
   },
   methods: {
     emitToParent() {
-      console.log("text " + this.floorPlanText)
       this.$emit('childToParent', { 'text': this.floorPlanText, 'floorPlan': this.floorPlan })
     },
     add() {
@@ -140,16 +139,20 @@ label div:first-child div {
   margin: 0;
   border-radius: 0 0 0.5rem 0.5rem;
   border-bottom: 0.15rem solid v.$KAMGreenDark;
-}
-.wrapper div:first-child {
-  display: flex;
-  align-items: center;
-}
-.wrapper div:first-child p:first-child {
-  margin-right: 0.5rem;
-}
-.wrapper div:first-child p {
-  margin: 0.2rem 0 0.2rem 0;
+
+  div:first-child {
+    display: flex;
+    align-items: center;
+  }
+  div:first-child p:first-child {
+    margin-right: 0.5rem;
+  }
+  div:first-child p {
+    margin: 0.2rem 0 0.2rem 0;
+  }
+  .floorPlan div:last-child p {
+    margin: 0 0.5rem;
+  }
 }
 select {
   padding: 0 0.2rem !important;
@@ -164,16 +167,14 @@ select {
 p {
   margin-right: 0.5rem;
 }
-.wrapper .floorPlan div:last-child p {
-  margin: 0 0.5rem;
-}
 svg {
   margin: 0 0 0 0.4rem; 
   color: v.$KAMGreenDark;
-}
-svg:hover {
-  cursor: pointer;
-  color: v.$KAMBlue;
+
+  :hover {
+    cursor: pointer;
+    color: v.$KAMBlue;
+  }
 }
 label {
   letter-spacing: 0.05rem;

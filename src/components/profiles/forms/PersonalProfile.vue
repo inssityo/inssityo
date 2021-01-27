@@ -1,72 +1,68 @@
 <template>
-  <div class="section">  
+  <div id="personal-profile" class="section">  
     <h2>Kerro itsestäsi:</h2>
 
-    <form id="personal-profile">
-      <div class="form_group-grid--1">
+    <div class="form_group-grid--1">
 
-        <div class="form_group_item--1-grid">
-          <div class="form_group_item--1">
-            <ProfileImage v-on:childToParent="onChildClickProfileImage" />
-          </div>
-          <div class="form_group_item--2">
-            <label for="firstname">Etunimi</label>
-            <input type="text" id="firstname" v-model="firstname" v-on:keyup="emitToParent">
-          </div>
-          <div class="form_group_item--3">
-            <label for="lastname">Sukunimi</label>
-            <input type="text" id="lastname" v-model="lastname">
-          </div>
-          <div class="form_group_item--4">
-            <Age v-on:childToParent="onChildClickAge" />
-          </div>
-          <div class="form_group_item--5">
-            <Gender v-on:childToParent="onChildClickGender" />
-          </div>
-
-          <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus === 1}">
-            <Status v-on:childToParent="onChildClickStatus" />
-          </div>
-          <div class="form_group_item--7" v-if="fromChildStatus === 1">
-            <WorkType v-on:childToParent="onChildClickWorkType" />
-          </div>
-
-          <div class="form_group_item--8">
-            <textarea type="text" id="description-p" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="description"></textarea>
-          </div>
+      <div class="form_group_item--1-grid">
+        <div class="form_group_item--1">
+          <ProfileImage v-on:childToParent="onChildClickProfileImage" />
+        </div>
+        <div class="form_group_item--2">
+          <label for="firstname">Etunimi</label>
+          <input type="text" id="firstname" v-model="firstname" v-on:keyup="emitToParent">
+        </div>
+        <div class="form_group_item--3">
+          <label for="lastname">Sukunimi</label>
+          <input type="text" id="lastname" v-model="lastname">
+        </div>
+        <div class="form_group_item--4">
+          <Age v-on:childToParent="onChildClickAge" />
+        </div>
+        <div class="form_group_item--5">
+          <Gender v-on:childToParent="onChildClickGender" />
         </div>
 
-        <div class="form_group_item--2-grid">
-          <div class="form_group_item--1">
-            <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" />
-          </div>
+        <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus === 1}">
+          <Status v-on:childToParent="onChildClickStatus" />
+        </div>
+        <div class="form_group_item--7" v-if="fromChildStatus === 1">
+          <WorkType v-on:childToParent="onChildClickWorkType" />
         </div>
 
-        <div class="form_group_item--3-grid">
-          <div class="form_group_item--1">
-            <Sociality id-value="P" v-on:childToParent="onChildClickSociality" />
-          </div>
+        <div class="form_group_item--8">
+          <textarea type="text" id="description-p" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="description"></textarea>
+        </div>
+      </div>
 
-          <div class="form_group_item--2">
-            <Traits id-value="P" v-on:childToParent="onChildClickTraits"/>
-             <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
-            <li v-for="trait in filteredTraits" :key="trait.value">{{trait.value}}</li>
-          </div>
+      <div class="form_group_item--2-grid">
+        <div class="form_group_item--1">
+          <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" />
+        </div>
+      </div>
 
-          <div class="form_group_item--3">
-            <Pets id-value="P" v-on:childToParent="onChildClickPets" />
-          </div>
+      <div class="form_group_item--3-grid">
+        <div class="form_group_item--1">
+          <Sociality id-value="P" v-on:childToParent="onChildClickSociality" />
+        </div>
 
-          <div class="form_group_item--4">
-            <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" />
-          </div>
+        <div class="form_group_item--2">
+          <Traits id-value="P" v-on:childToParent="onChildClickTraits"/>
+            <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
+          <li v-for="trait in filteredTraits" :key="trait.value">{{trait.value}}</li>
+        </div>
 
+        <div class="form_group_item--3">
+          <Pets id-value="P" v-on:childToParent="onChildClickPets" />
+        </div>
+
+        <div class="form_group_item--4">
+          <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" />
         </div>
 
       </div>
 
-      
-    </form>
+    </div>
 
   </div>
 </template>
@@ -274,7 +270,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
-  background: v.$KAMBeigeLight;
+  background: v.$KAMBeige;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 .form_group_item--3-grid {

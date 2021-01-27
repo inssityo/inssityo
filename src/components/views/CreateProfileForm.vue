@@ -15,7 +15,7 @@
               <img src="../../assets/images/pexels-ketut-subiyanto-4245957-2.jpg" alt="" />
             </div>
           </div>
-          <div v-if="roommate">
+          <div v-show="roommate">
             <i class="far fa-check-circle"></i>
           </div>
         </label>
@@ -34,7 +34,7 @@
               <img src="../../assets/images/pexels-polina-zimmerman-3747426.jpg" alt="" />
             </div>
           </div>
-          <div v-if="roommate_apt">
+          <div v-show="roommate_apt">
             <i class="far fa-check-circle"></i>
           </div>
         </label>
@@ -52,30 +52,29 @@
               <img src="../../assets/images/pexels-vlada-karpovich-4451937.jpg" alt="" />
             </div>
           </div>
-          <div v-if="apt">
+          <div v-show="apt">
             <i class="far fa-check-circle"></i>
           </div>
         </label>
       </div>
     </div>
 
-    <!--Vie true tietokantaan ja hae se profiilien editointi sivulla -->
     <div class="edit_profiles">
-      <router-link to="/profile/editProfiles">Muokkaa profiilia</router-link>
+      <router-link :to="{ name: 'profileform', params: { profileForm: choice }}">Muokkaa profiilia</router-link>
     </div>
   </div>
 </template>
 
 <script>
-//import PersonalProfile from '../profiles/PersonalProfile.vue'
 
 export default {
-  name: 'Profile',
+  name: 'CreateProfileForm',
   data() {
     return {
       roommate: true,
       roommate_apt: false,
       apt: false,
+      choice: 1,
     }
   },
   methods: {
@@ -84,21 +83,21 @@ export default {
         case 'roommate':
           this.roommate_apt = false;
           this.apt = false;
+          this.choice = 1;
           break;
         case 'roommate_apt':
           this.roommate = false;
           this.apt = false;
+          this.choice = 2;
           break;
         case 'apt':
           this.roommate = false;
           this.roommate_apt = false;
+          this.choice = 3;
           break;
       }
     },
   }
-  /*components: {
-    PersonalProfile
-  }*/
 }
 </script>
 
@@ -116,7 +115,6 @@ p {
 }
 .wrapper p {
   padding: 1rem 1.5rem 2rem 1.5rem;
-  //color: v.$White;
   text-align: left;
 }
 a {
@@ -139,6 +137,7 @@ img {
   height: 100%;
   object-fit: cover;
   border-radius: 0 1.5rem 1.5rem 0;
+  opacity: 0.7;
 }
 
 .wrapper {
@@ -156,8 +155,6 @@ img {
 .wrapper_item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
-  //grid-row-start: 1;
-  //grid-row-end: 9;
 }
 .wrapper_item--2 {
   grid-column-start: 2;
@@ -205,6 +202,9 @@ img {
 }
 .checked {
   height: 17rem;
+  img {
+    opacity: 1;
+  }
 }
 label {
   position: relative;

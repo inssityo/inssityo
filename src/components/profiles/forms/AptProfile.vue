@@ -62,7 +62,7 @@
             {{fromChildLocationType}}
             {{fromChildBuildingType}}
             {{fromChildFeatures}}
-            {{fromChildCheckedRent}}
+            {{fromChildCheckedOwner}}
            </div>
             
         </div>
@@ -106,6 +106,7 @@ export default {
       location: '',
       neighborhood: '',
       address: '',
+      areaCode: '',
       fromChildCheckedOwner: null,
       fromChildLocationType: [],
       fromChildBuildingType: [],
@@ -191,6 +192,7 @@ select {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
+  gap: 1rem;
 }
 .form_group_item--1-grid {
   grid-column-start: 1;
@@ -198,7 +200,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 22.9rem);
-  background: v.$KAMGreyLight;
+  background: v.$KAMGrey;
 }
 .form_group_item--2-grid {
   grid-column-start: 2;
@@ -206,7 +208,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(7, 3rem);
-  background: v.$KAMGreyLight;
+  background: v.$KAMGrey;
   padding-bottom: 1.9rem;
 }
 .form_group_item--3-grid {
@@ -215,7 +217,7 @@ select {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(7, 3rem);
-  background: v.$KAMBeigeLight;
+  background: v.$KAMBeige;
 }
 //Image
 .form_group_item--1-grid .form_group_item--1 { 

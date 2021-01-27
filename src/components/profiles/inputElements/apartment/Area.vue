@@ -3,12 +3,16 @@
     <p>Pinta-ala</p>
     <div>
       <div>
-        <label for="min">Min</label>
-        <input type="text" id="min" v-model="min" v-on:keyup="emitToParent">
+        <label v-if="aptValue === 'S'" for="minRoom">Min</label>
+        <label v-if="aptValue === 'R'" for="minRoom">Room</label>
+        <label v-if="aptValue === 'B'" for="minRoom">Asuinpinta-ala</label>
+        <input type="text" id="minRoom" v-model="minRoom" v-on:keyup="emitToParent">
       </div>
       <div>
-        <label for="max">Max</label>
-        <input type="text" id="max" v-model="max" v-on:keyup="emitToParent">
+        <label v-if="aptValue === 'S'" for="maxTotal">Max</label>
+        <label v-if="aptValue === 'R'" for="maxTotal">Total</label>
+        <label v-if="aptValue === 'B'" for="minRoom">Kerrospinta-ala</label>
+        <input type="text" id="maxTotal" v-model="maxTotal" v-on:keyup="emitToParent">
       </div>
     </div>
   </div>
@@ -18,17 +22,18 @@
 
 export default {
   name: 'Area',
+  props: ['aptValue'],
   
   data() {
     return {
-      min: null,
-      max: null,
+      minRoom: null,
+      maxTotal: null,
     }
   },
 
   methods: {
     emitToParent() {
-      this.$emit('childToParent', {'min':this.min, 'max':this.max});
+      this.$emit('childToParent', {'minRoom':this.minRoom, 'maxTotal':this.maxTotal});
     },
   },
 }

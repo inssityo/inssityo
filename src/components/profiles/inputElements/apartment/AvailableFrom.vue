@@ -1,7 +1,7 @@
 <template>
   <div>
     <label>Vapautuu: </label>
-    <input type="date" v-model="date">
+    <input type="date" v-model="date" v-on:click="emitToParent"><!-- vaihda click -->
   </div>
 </template>
 

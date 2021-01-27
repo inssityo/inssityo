@@ -5,7 +5,7 @@
         <p v-if="idValue === 'ARB'" >Uusi ilmoitus vuokra-asunnosta vai omistusasunnosta?</p>
         <div>
           <p v-if="idValue === 'A'" v-bind:style="{ fontWeight: 'bold' }">{{ checkedOwner ? "-omistusasuntoa" : "-vuokra-asuntoa" }}</p>
-          <p v-if="idValue === 'ARB'" v-bind:style="{ fontWeight: 'bold' }">{{ checkedOwner ? "-omistusasunnosta" : "-vuokra-asunnosta" }}</p>
+          <p v-if="idValue === 'ARB'" v-bind:style="{ fontWeight: 'bold' }">{{ checkedOwner ? "omistusasunnosta" : "vuokra-asunnosta" }}</p>
           <label class="switch" v-on:click="emitToParent">
             <input type="checkbox" id="checkboxOwner" v-model="checkedOwner">
             <span class="slider round"></span>
