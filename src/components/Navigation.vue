@@ -2,9 +2,9 @@
   <header>
     <nav class="navbar" :class="{ 'navbar-hidden': !showNavbar }">
       <div class="navbar-div">
-        <router-link to="/" class="kam_logo">Kämpp</router-link> 
-        <div class="dropdown">
-          <button class="dropbtn"> 
+        <router-link to="/" class="kam-logo">Kämpp</router-link> 
+        <div class="dropdown pointer">
+          <button class="dropbtn pointer"> 
             <i class="fas fa-equals"></i>
           </button>
           <div class="dropdown-content">
@@ -61,7 +61,6 @@ export default {
   display: flex; 
   justify-content: space-between;
   align-items: center;
-  width: -webkit-fill-available;
   width: 100%;
   position: fixed;
   transform: translate3d(0, 0, 0);
@@ -80,7 +79,7 @@ export default {
   width: 100vw;
   padding: 1rem 2rem;
 }
-.kam_logo {
+.kam-logo {
   font-family: v.$KAMQuinn;
   text-transform: uppercase;
   font-size: 2.1rem!important;
@@ -88,21 +87,20 @@ export default {
 }
 .dropdown {
   overflow: hidden;
+
+  .dropbtn {
+    font-size: 1.5rem;  
+    border: none;
+    outline: none;
+    color: v.$White;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+  }
 }
-.dropdown .dropbtn {
-  font-size: 1.5rem;  
-  border: none;
-  outline: none;
-  color: v.$White;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-  padding: 0;
-}
-.dropdown:hover .dropbtn {
-  cursor: pointer;
-}
-.fa-equals {
+
+svg {
   font-size: 1.6rem;
 }
 .dropdown-content {
@@ -115,14 +113,15 @@ export default {
   z-index: 1;
   right: 0;
   padding: 1.1rem 0 0 0;
-}
-.dropdown-content a {
-  float: none;
-  color: v.$White;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  display: block;
-  text-align: left;
+  
+  a {
+    float: none;
+    color: v.$White;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
 }
 .dropdown-content a:hover {
   background-color: v.$KAMGrey;

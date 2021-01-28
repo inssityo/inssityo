@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img src="../../assets/images/pexels-maria-orlova-4906243-cropped.jpg" class="gallery_img" alt="Image 1">
-    <i class="fas fa-sort-down" @click="goTo('apt')"></i>
+    <img src="../../assets/images/pexels-maria-orlova-4906243-cropped.jpg" class="img--calc" alt="Image 1">
+    <i class="fas fa-sort-down pointer hover--blue__color" @click="goTo('apt')"></i>
   </div>
 </template>
 
@@ -14,22 +14,12 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-.fa-sort-down {
+svg {
   display: block;
   margin: 0 auto;
-  width: 2rem;
+  width: 2rem !important;
   height: 2rem;
   color: v.$KAMGreenDark;
-}
-.fa-sort-down:hover {
-  color: v.$KAMBlue;
-  cursor: pointer;
-}
-.gallery_img {
-  width: 100%;
-  max-height: calc(100vh - 0rem - 4.2rem);
-  height: 100%;
-  object-fit: cover;
 }
 
 </style>

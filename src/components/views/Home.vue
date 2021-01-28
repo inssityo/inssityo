@@ -4,9 +4,9 @@
       <HeroImage />
     </div>
     <div class="hero-body">
-      <section class="search"><SearchButtons /></section>
-      <section><SecondaryThumbnails /></section>
-      <section class="info"><InfoContainer /></section>
+      <section><SearchButtons /></section>
+      <section><FrontPageCards /></section>
+      <section><InfoContainer /></section>
     </div>
     <div class="flaticon">Icons made by
       <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>
@@ -19,7 +19,7 @@
 <script>
 import HeroImage from '../home/HeroImage.vue'
 import SearchButtons from '../home/SearchSection.vue'
-import SecondaryThumbnails from '../home/SecondaryThumbnailSection.vue'
+import FrontPageCards from '../home/FrontPageCards.vue'
 import InfoContainer from '../home/InfoContainer'
 
 export default {
@@ -27,7 +27,7 @@ export default {
   components: {
     HeroImage,
     SearchButtons,
-    SecondaryThumbnails,
+    FrontPageCards,
     InfoContainer
   }
 }
