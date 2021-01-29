@@ -1,27 +1,33 @@
 <template>
   <div>
-    <div class="profiles-header">
-      <div class="profile_img-grid">
-        <div class="profile_img_item--1"> 
-          <img src="../../assets/images/pexels-maksim-goncharenok-4352247.jpg" alt="">
-        </div>
-      </div>
-      <div v-if="selectedGreeting">
-      <h1>{{selectedGreeting }}{{ fromChildFirstName }}!</h1> 
-      </div>
+    <div class="header">
+      <img src="../../assets/images/pexels-maksim-goncharenok-4352247.jpg" class="img--calc" alt="">
+      <h1 v-show="selectedGreeting">{{ selectedGreeting }}{{ fromChildFirstName }}!</h1> 
     </div>
-    
-    <form>
+
+    <i class="fas fa-sort-down pointer hover__color--blue" v-show="choice === 1" @click="goTo('personal')"></i> <!-- lisää ankkurit, ja asuntolinkki-->
+
+    <form
+      id="profileForm"
+      @submit.prevent="handleSubmit"
+      action=""
+      method="post"
+      class="content"
+    >
       <AptRentBuy v-show="choice === 2 || choice === 3" />
 
-      <i class="fas fa-sort-down" v-show="choice === 1" @click="goTo('personal')"></i> <!-- lisää ankkurit -->
       <PersonalProfile ref="personal" v-show="choice === 1" v-on:childToParent="onChildClick" />
 
-      <i class="fas fa-sort-down" v-show="choice === 1" @click="goTo('apt')"></i>
+      <i class="fas fa-sort-down pointer hover__color--blue" v-show="choice === 1" @click="goTo('apt')"></i>
       <AptProfile ref="apt" v-show="choice === 1" />
 
-      <i class="fas fa-sort-down" v-show="choice === 1" @click="goTo('roommate')"></i>
+      <i class="fas fa-sort-down pointer hover__color--blue" v-show="choice === 1" @click="goTo('roommate')"></i>
       <RoommateProfile ref="roommate" v-show="choice === 1" />
+
+      <div class="flexbox">
+        <button type="submit" class="is-danger hover__background--blue">Submit</button>
+        <button class="hover__background--blue">Cancel</button>
+      </div>
     </form>
 
   </div>
@@ -57,6 +63,8 @@ export default {
         'Guten Tag', //German
         'Konnichiwa'],  //Japanese
       fromChildFirstName: '',
+
+      user: null,
     }
   },
   mounted() { 
@@ -70,9 +78,15 @@ export default {
     scrollTo: function (hashtag) {
       setTimeout(() => { location.href = hashtag }, TIMEOUT)
     },
-    // Triggered when 'childToParent' event is emitted by the child.
     onChildClick (value) {
-      this.fromChildFirstName = ', ' + value;
+      if (value !== null || value !== '') { //Ei toimi
+        this.fromChildFirstName = ', ' + value.firstname; //hello text
+      }
+      else {
+        this.fromChildFirstName = '';
+      }
+      this.user = value.user;
+      //console.log(JSON.stringify(this.user))
     },
     goTo (refName) {
       var element = this.$els[refName];
@@ -80,6 +94,9 @@ export default {
     },
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
+    },
+    handleSubmit() {
+
     }
   },
   created() {
@@ -97,7 +114,7 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-.profiles-header {
+.header {
   position: relative;
 }
 h1 {
@@ -109,30 +126,24 @@ h1 {
   right: 0;
   text-align: center;
 }
-.profile_img-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-}
-.profile_img_item--1 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-}
-img {
-  width: 100%;
-  max-height: calc(100vh - 0rem - 4.2rem);
-  height: 100%;
-  object-fit: cover;
-}
 .fa-sort-down {
   display: block;
   margin: 0.1rem auto 1rem auto;
   width: 2rem;
   height: 2rem;
   color: v.$KAMGreenDark;
+}
+.flexbox {
+  justify-content: center;
 
-  :hover {
-    cursor: pointer;
-    color: v.$KAMBlue;
+  button {
+    margin: 4rem 1rem 0 0;
+  }
+  button:last-of-type {
+    background: v.$KAMGreySemiDark;
+  }
+  button:last-of-type:hover {
+    background: v.$KAMGreyDark;
   }
 }
 

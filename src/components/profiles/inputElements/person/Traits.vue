@@ -3,10 +3,10 @@
     <p v-if="idValue === 'P'">Valitse luonnettasi kuvaavat sanat (max. 7)</p>
     <p v-if="idValue === 'R'">Valitse luonteenpiirteet, joita arvostaisit tulevassa kämppiksessä (max. 7)</p>
     <div class="text-danger">{{ errors.trait }}</div>
-    <div class="without_dot">
+    <div class="check__label-only">
       <div v-for="(trait, index,) in optionsTraits" :key="index">
         <input type="checkbox" :id="idValue+'t'+index" v-model="trait.checked"/>
-        <label :for="idValue+'t'+index" v-on:click="emitToParent" @click="handleTraits">{{ trait.text }}</label>
+        <label class="hover--check__label-only" :for="idValue+'t'+index" v-on:click="emitToParent" @click="handleTraits">{{ trait.text }}</label>
       </div>
     </div>
   </div>
@@ -89,8 +89,6 @@ export default {
         this.errors = {};
       
       }
-
-
       //console.log("Values of checked items: ", this.optionsTraits) //Toimii oikein
     },
   }
@@ -100,40 +98,8 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-label {
-  letter-spacing: 0.05rem;
-  cursor: pointer;
-}
-.without_dot {
-  display: flex;
-  margin-top: 0.2rem!important;
-  flex-wrap: wrap;
-}
-.without_dot div {
+.check__label-only div {
   margin: 0.15rem 0.1rem;
-}
-.without_dot input[type="radio"], .without_dot input[type="checkbox"] {
-  visibility: hidden;
-  height: 0;
-  width: 0;
-  margin: 0;
-}
-.without_dot label {
-  vertical-align: middle;
-  text-align: center;
-  background-color: v.$KAMGreyDark;
-  color: v.$White;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.2rem;
-  font-size: 0.75rem!important;
-}
-.without_dot label:hover {
-  background-color: v.$KAMBeigeLight;
-  color: v.$Black;
-  font-weight: bold;
-}
-.without_dot input[type="checkbox"]:checked + label{
-  background-color: v.$KAMGreenSemiLight;
 }
 
 </style>

@@ -1,7 +1,10 @@
 <template>
-  <div class="wrapper">  
-    <label for="price">Vuokra/kk</label>
+  <div class="flexbox">  
+    <label v-show="aptValue === 'R'" for="price" class="label__border-bottom--green">Vuokra/kk</label>
+    <label v-show="aptValue === 'B'" for="price" class="label__border-bottom--green">Myyntihinta</label>
     <input type="text" id="price" v-model="price" v-on:keyup="emitToParent">
+    <label v-show="aptValue === 'B'" for="debtFreePrice" class="label__border-bottom--green">Myyntihinta</label>
+    <input v-show="aptValue === 'B'" type="text" id="debt-free" v-model="debtFreePrice" v-on:keyup="emitToParent">
   </div>
 </template>
 
@@ -9,15 +12,17 @@
 
 export default {
   name: 'Price',
+  props: ['aptValue'],
   
   data() {
     return {
       price: null,
+      debtFreePrice: null,
     }
   },
 
   methods: {
-    emitToParent() {
+    emitToParent() { //debt-free
       this.$emit('childToParent', this.price);
     },
   },
@@ -28,34 +33,15 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 label {
-  background: v.$White;
-  padding: 0.5rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-}
-p {
-  margin-bottom: 0;
 }
 input[type="text"] {
-  padding: 0.5rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
   margin: 0.5rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
   width: 100%;
-}
-input[type="text"]:focus{
-  outline: none;
-  background: v.$KAMGreyLight;
-}
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 </style>

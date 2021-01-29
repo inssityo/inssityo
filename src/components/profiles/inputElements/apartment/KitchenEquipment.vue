@@ -1,2 +1,0 @@
-avokeittiö
-apukeittiö

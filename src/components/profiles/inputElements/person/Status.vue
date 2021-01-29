@@ -31,19 +31,5 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-label {
-  cursor: pointer;
-}
-input, select {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  border-style: none none solid none!important;
-  border-color: v.$KAMGreenDark!important;
-}
-input:focus {
-  background: v.$White;
-}
-
 
 </style>

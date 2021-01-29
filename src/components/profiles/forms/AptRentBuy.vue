@@ -1,8 +1,8 @@
 <template>
-  <div id="apt-rent-buy" class="section">  
+  <div>  
     <h2>Täytä asunnon tiedot:</h2>
 
-    <div id="rentOrBuy">
+    <div>
       <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
       {{ fromChildCheckedOwner }}
     </div>
@@ -12,51 +12,44 @@
       <div class="column">
         <div class="row">
           <h3>Sijainti</h3>
-          <div class="flex">
-            <label for="location" class="labelText">Kaupunki*</label>
-            <input type="text" id="location" v-model="location">
+          <div class="flexbox">
+            <label for="location" class="label__border-bottom--green border-radius__left">Kaupunki*</label>
+            <input type="text" id="location" class="border-radius__right" v-model="location">
           </div>
-          <div class="flex">
-            <label for="neighborhood" class="labelText">Kaupunginosa*</label>
-            <input type="text" id="neighborhood" v-model="neighborhood">
+          <div class="flexbox">
+            <label for="neighborhood" class="label__border-bottom--green border-radius__left">Kaupunginosa*</label>
+            <input type="text" id="neighborhood" class="border-radius__right" v-model="neighborhood">
           </div>
-          <div class="flex">
-            <label for="address" class="labelText">Osoite*</label>
-            <input type="text" id="address" v-model="address">
+          <div class="flexbox">
+            <label for="address" class="label__border-bottom--green border-radius__left">Osoite*</label>
+            <input type="text" id="address" class="border-radius__right" v-model="address">
           </div>
-          <div class="flex">
-            <label for="areaCode" class="labelText">Postinumero*</label>
-            <input type="text" id="areaCode" v-model="areaCode">
+          <div class="flexbox">
+            <label for="areaCode" class="label__border-bottom--green border-radius__left">Postinumero*</label>
+            <input type="text" id="areaCode" class="border-radius__right" v-model="areaCode">
           </div>
         </div>
 
         <div class="row">
           <h3>Rakennuksen tiedot</h3>
-          <div class="flex">
-            <label for="buildYear" class="labelText">Rakennusvuosi</label>
-            <input type="text" id="buildYear" v-model="buildYear">
+          <div class="flexbox">
+            <label for="buildYear" class="label__border-bottom--green border-radius__left">Rakennusvuosi</label>
+            <input type="text" id="buildYear" class="border-radius__right" v-model="buildYear">
           </div>
-          <div>
+          <div class="flexbox">
             <BuildingType v-on:childToParent="onChildClickBuildingType"/>
+            <Price apt-value="R"/> <!-- siirrä muualle -->
           </div>
-          <div class="flex two_items">
-            <div>
-              <Floor v-on:childToParent="onChildClickFloor"/>
-            </div>
-            <div>
-              <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
-              {{fromChildAvailablefrom}}
-            </div>
+          <div class="flexbox">
+            <Floor v-on:childToParent="onChildClickFloor"/>
+            <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
+            {{fromChildAvailablefrom}}
           </div>
         </div>
 
         <div class="row">
           <h3>Ehdot</h3>
           <Terms v-on:childToParent="onChildClickTerms" />
-          <div class="textarea">
-            <label for="terms">Muita ehtoja</label>
-            <textarea type="text" id="terms" placeholder="Mikäli vuokrasuhde päättyy ennen kuin vuosi sen alkamisesta on kulunut, peritään vuokralaiselta sopimussakko 1,24 x 1 kk vuokraa vastaava määrä." v-model="termsDescription"></textarea>
-          </div>
         </div>
       </div>
 
@@ -68,37 +61,32 @@
             <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />{{fromChildCell}}
             <Area apt-value="R" v-on:childToParent="onChildClickArea"/>
           </div>
-          <div class="flex two_items">
+          <div class="flexbox flexbox">
             <Condition v-on:childToParent="onChildClickCondition"/>
             <Features v-on:childToParent="onChildClickFeatures"/>
           </div>
-  
-          <div class="textarea">
-            <label for="equipment">Keittiön varustus</label>
-            <textarea type="text" id="kitchen_equipment" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
-          </div>
-          <div class="textarea">
-            <label for="equipment">Kylpyhuoneen varustus</label>
-            <textarea type="text" id="bathroom_equipment" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
-          </div>
-          <div class="textarea">
-            <label for="equipment">Säilytystilat</label>
-            <textarea type="text" id="storage" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
-          </div>
-          <div class="textarea">
-            <label for="equipment">Muuta varustusta</label>
-            <textarea type="text" id="equipment" placeholder="Muuta" v-model="equipment"></textarea>
-          </div>
+        
+          <label for="kitchen-equipment" class="description">Keittiön varustus
+            <textarea type="text" id="kitchen-equipment" class="box" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
+          </label>
+          <label for="bathroom-equipment" class="description">Kylpyhuoneen varustus
+            <textarea type="text" id="bathroom-equipment" class="box" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
+          </label>
+          <label for="storage" class="description">Säilytystilat
+            <textarea type="text" id="storage" class="box" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
+          </label>
+          <label for="equipment" class="description">Muuta varustusta
+            <textarea type="text" id="equipment" class="box" placeholder="Muuta" v-model="equipment"></textarea>
+          </label>
         </div>
 
       </div>
 
       <div class="column">
         <div class="row">
-          <div class="textarea">
-            <label for="description-arb">Esittelyteksti asunnosta, sijainnista ja palveluista*</label>
-            <textarea type="text" id="description-arb" placeholder="Kuvaus" v-model="description"></textarea>
-          </div>
+          <label for="description-arb" class="description">Esittelyteksti asunnosta, sijainnista ja palveluista*
+            <textarea type="text" id="description-arb" class="box" placeholder="Kuvaus" v-model="description"></textarea>
+          </label>
         </div>
         <div class="row">
           <h3>Palvelut</h3>
@@ -106,7 +94,7 @@
           {{fromChildServices}} {{fromChildServicesText}}
         </div>
         <div class="row">
-          <h3>Kustannukset</h3>
+          <h3>Muita kustannuksia</h3>
           <OtherExpenses v-on:childToParent="onChildClickOtherExpenses"/>
         </div>
       </div>
@@ -129,6 +117,7 @@ import Services from '../inputElements/apartment/Services.vue'
 import OtherExpenses from '../inputElements/apartment/OtherExpenses.vue'
 import AvailableFrom from '../inputElements/apartment/AvailableFrom.vue'
 import Terms from '../inputElements/apartment/Terms.vue'
+import Price from '../inputElements/apartment/Price.vue'
 
 //import ProfileImage from '../inputElements/person/ProfileImage.vue'
 
@@ -152,7 +141,7 @@ export default {
     OtherExpenses,
     AvailableFrom,
     Terms,
-    
+    Price,
     //ProfileImage,
  
   },
@@ -272,10 +261,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-#rentOrBuy {
-  width: 50%;
-  margin: 1rem 0 0.5rem 0;
-}
 .column {
   display: flex;
   flex-direction: column;
@@ -283,7 +268,6 @@ export default {
 }
 .container .column:not(:nth-child(2)) .row {
   background: v.$KAMGrey;
-  //border: 1px solid v.$KAMGreySemiDark;
 }
 .container .column:not(:last-child) .row {
   margin-right: 1rem;
@@ -297,107 +281,40 @@ export default {
   background: v.$KAMBeige;
   padding: 0 0.8rem 0.5rem 0.8rem;
   margin-bottom: 1rem;
+
+  .flexbox {
+    margin: 0.3rem 0;
+  }
 }
 
-//_-----------
-.section {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
 h3 {
   margin-bottom: 0.4rem;
 }
-.labelText {
-  background: v.$White;
+label, input, textarea {
   padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  //box-shadow: -0.5px -0.5px v.$KAMGreySemiDark;
 }
+label.description {
+  padding: 0;
+  margin-top: 1.2rem;
 
-div[class="textarea"] {
-  margin-top: 1rem;
+  textarea {
+    margin-top: 0.4rem;
+    height: 4rem;
+  }
 }
-
-div[class="textarea"] ~ div[class="textarea"] {
-  margin-top: 0.5rem;
+label[class="description"] ~ label[class="description"] {
+  margin-top: 0.8rem;
 }
-.flex {
-  display: flex;
-  align-items: center;
-}
-.two_items {
+.flexbox {
   justify-content: space-between;
+  
   div, select {
     width: 48%;
   }
 }
-input[type="text"] {
-  padding: 0.2rem 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin: 0.3rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  width: 100%;
-  //box-shadow: 0.5px -0.5px 0.5px v.$KAMGreySemiDark;
-}
-input[type="text"]:focus, select:focus, textarea:focus {
-  outline: none;
-  background: v.$KAMGreenLight;
-}
-select {
-  padding: 0 0.2rem !important;
-  margin: 0.3rem 0;
-  height: 1.8rem;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-radius: 0.5rem;
-  border-style: none none solid none !important;
-  border-color: #016361 !important;
-  border-width: 0.15rem;
-  background: v.$White;
-  //box-shadow: -0.5px -0.5px 0.5px v.$KAMGreySemiDark;
-}
-textarea {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  width: 100%;
-  height: 4.8rem;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  //-webkit-box-shadow: -0.5px -0.5px 0.5px v.$KAMGreySemiDark;
-  //box-shadow: -0.5px -0.5px 0.5px v.$KAMGreySemiDark;
-  margin: 0.3rem 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 #description-arb {
-  height: 12rem;
-}
-#terms {
-  height: 6rem;
-}
-svg {
-  color: v.$KAMGreenDark;
-}
-svg:hover {
-  cursor: pointer;
-  color: v.$KAMBlue;
-}
-label:hover {
-  cursor: pointer;
-  svg {
-    color: v.$KAMBlue;
-  }
-}
-input:hover {
-  background: v.$KAMGreenLight;
+  height: 15rem;
 }
 
 </style>

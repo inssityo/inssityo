@@ -1,7 +1,5 @@
 <template>
-  <div v-if="selectedImage">
-    <img style="width:100%" :src="require(`../../../../assets/images/${selectedImage}`)" class="grid_img" alt="Roommate Profile Image">
-  </div>
+  <img v-show="selectedImage" style="width:100%" :src="require(`../../../../assets/images/${selectedImage}`)" alt="Roommate Profile Image">
 </template>
 
 <script>
@@ -34,14 +32,5 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-div {
-  height: 100%;
-  position: relative;
-}
-.grid_img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 </style>

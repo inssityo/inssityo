@@ -1,17 +1,17 @@
 <template>
-  <div class="section">  
+  <div class="content">  
     <h1>Luo profiilisi</h1>
     <p>Valitse profiili, jota haluat käyttää. JOS EI MITÄÄN VALITTUNA, EI PÄÄSÄ LINKISTÄ</p>
-    <div class="wrapper">
-      <div class="wrapper_item wrapper_item--1">
+    <div class="container">
+      <div class="column column-item--1">
         <input type="checkbox" id="roommate" v-model="roommate" @click="handleChoice('roommate')">
         <label for="roommate">
-          <div class="wrapper_container" v-bind:class="{ checked: roommate }">
-            <div class="wrapper_container_item--left wrapper_container_item--1" v-bind:class="{ checked: roommate }">
+          <div class="container two" v-bind:class="{ checked: roommate }">
+            <div class="column column-item--1 two" v-bind:class="{ checked: roommate }">
               <h2>Kämppis</h2>
               <p>Etsitkö ainoastaan kämppistä?</p>
             </div>
-            <div class="wrapper_container_item--right wrapper_container_item--2" v-bind:class="{ checked: roommate }">
+            <div class="column-item--2 two" v-bind:class="{ checked: roommate }">
               <img src="../../assets/images/pexels-ketut-subiyanto-4245957-2.jpg" alt="" />
             </div>
           </div>
@@ -21,16 +21,16 @@
         </label>
       </div>
 
-      <div class="wrapper_item wrapper_item--2">
+      <div class="column column-item--2">
         <!--<router-link :to="{ path: '/profile/editProfiles', hash: '#roommate' }">-->
-        <input type="checkbox" id="roommate_apt" v-model="roommate_apt" @click="handleChoice('roommate_apt')">
-        <label for="roommate_apt">
-          <div class="wrapper_container" v-bind:class="{ checked: roommate_apt }">
-            <div class="wrapper_container_item--left wrapper_container_item--1" v-bind:class="{ checked: roommate_apt }">
+        <input type="checkbox" id="roommate-apt" v-model="roommate_apt" @click="handleChoice('roommate_apt')">
+        <label for="roommate-apt">
+          <div class="container two" v-bind:class="{ checked: roommate_apt }">
+            <div class="column column-item--1 two" v-bind:class="{ checked: roommate_apt }">
               <h2>Kämppis +<br/>Asunto</h2>
               <p>Etsitkö kämppistä sekä asuntoa?</p>
             </div>
-            <div class="wrapper_container_item--right wrapper_container_item--2" v-bind:class="{ checked: roommate_apt }">
+            <div class="column-item--2 two" v-bind:class="{ checked: roommate_apt }">
               <img src="../../assets/images/pexels-polina-zimmerman-3747426.jpg" alt="" />
             </div>
           </div>
@@ -40,15 +40,15 @@
         </label>
       </div>
 
-      <div class="wrapper_item wrapper_item--3">
+      <div class="column column-item--3">
         <input type="checkbox" id="apt" v-model="apt" @click="handleChoice('apt')">
         <label for="apt">
-          <div class="wrapper_container" v-bind:class="{ checked: apt }">
-            <div class="wrapper_container_item--left wrapper_container_item--1" v-bind:class="{ checked: apt }">
+          <div class="container two" v-bind:class="{ checked: apt }">
+            <div class="column column-item--1 two" v-bind:class="{ checked: apt }">
               <h2>Asunto</h2>
               <p>Etsitkö ainoastaan asuntoa?</p>
             </div>
-            <div class="wrapper_container_item--right wrapper_container_item--2" v-bind:class="{ checked: apt }">
+            <div class="column-item--2 two" v-bind:class="{ checked: apt }">
               <img src="../../assets/images/pexels-vlada-karpovich-4451937.jpg" alt="" />
             </div>
           </div>
@@ -59,9 +59,9 @@
       </div>
     </div>
 
-    <div class="edit_profiles">
-      <router-link :to="{ name: 'profileform', params: { profileForm: choice }}">Muokkaa profiilia</router-link>
-    </div>
+    <button class="box hover__background--blue">
+      <router-link :to="{ name: 'profileform', params: { profileForm: choice }}" class="hover__background--blue">Muokkaa profiilia</router-link>
+    </button>
   </div>
 </template>
 
@@ -104,110 +104,87 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-.wrapper_container_item--left h2 {
-  letter-spacing: 0.1rem;
-  padding: 3rem 1.5rem 0 1.5rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
 p {
   text-align: center;
 }
-.wrapper p {
-  padding: 1rem 1.5rem 2rem 1.5rem;
-  text-align: left;
-}
-a {
-  background: v.$KAMGreenDark;
-  color: v.$White;
-  padding: 0.5rem 0.8rem;
-  border-radius: 0.5rem;
-}
-a:hover {
-  background: v.$KAMBlue;
-  //color: v.$Black;
-}
-.edit_profiles {
-  margin-top: 4rem;
-  display: flex;
-  justify-content: center;
-}
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0 1.5rem 1.5rem 0;
-  opacity: 0.7;
-}
 
-.wrapper {
-  display: grid;
+img {
+  border-radius: 0 1.5rem 1.5rem 0;
+  opacity: 0.8;
+}
+.container {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(1, 20rem);
-  grid-gap: 2%;
+  gap: 2%;
   align-items: center;
+
+  p {
+    padding: 1rem 1.5rem 2rem 1.5rem;
+    text-align: left;
+  }
 }
-.wrapper_div {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.column {
+  label {
+    position: relative;
+    display: table-cell;
+    padding: 0.5rem;
+  }
+  input[type="checkbox"] {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+  }
+  input[type="checkbox"]:checked + label {
+    border-right: 0.25rem solid v.$KAMGreenDark;
+    border-top: 0.25rem solid v.$KAMGreenDark;
+    border-radius: 1.9rem;
+  }
 }
-.wrapper_item--1 {
+.column-item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
 }
-.wrapper_item--2 {
+.column-item--2 {
   grid-column-start: 2;
   grid-column-end: 3;
 }
-.wrapper_item--3 {
+.column-item--3 {
   grid-column-start: 3;
   grid-column-end: 4;
 }
-.wrapper_container {
-  display: grid;
+.container.two {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 15rem);
   cursor: pointer;
+  gap: 0;
+  align-items: normal;
 }
-.wrapper_container_item--1 {
+.column-item--1.two {
   grid-column-start: 1;
   grid-column-end: 2;
 }
-.wrapper_container_item--2 {
+.column-item--2.two {
   grid-column-start: 2;
   grid-column-end: 3;
 }
-
-.wrapper_container_item--left {
+.column.two {
   border-left: 0.15rem solid v.$KAMGreenDark;
   border-bottom: 0.25rem solid v.$KAMGreenDark;
   border-radius: 1.5rem 0 0 1.5rem;
   background: v.$White;
-}
-.wrapper_item input[type="checkbox"]{
-  visibility: hidden;
-  height: 0;
-  width: 0;
-}
-.wrapper_item label {
-  display: table-cell;
-  padding: 0.5rem;
-}
-.wrapper_item input[type="checkbox"]:checked + label{
-  //background-color: v.$KAMGreenDark;
-  border-right: 0.25rem solid v.$KAMGreenDark;
-  border-top: 0.25rem solid v.$KAMGreenDark;
-  border-radius: 1.9rem;
+
+  h2 {
+    letter-spacing: 0.1rem;
+    padding: 3rem 1.5rem 0 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 }
 .checked {
   height: 17rem;
   img {
     opacity: 1;
   }
-}
-label {
-  position: relative;
 }
 .fa-check-circle {
   position: absolute;

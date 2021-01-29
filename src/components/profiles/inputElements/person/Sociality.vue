@@ -1,19 +1,18 @@
 <template>
   <div>
-    <div class="slider-text">
+    <div class="flexbox">
       <p v-if="idValue === 'P'">Oletko</p> 
       <p v-if="idValue === 'R'">Haluatko kämppiksen olevan</p>
       <p>1 = yksineläjä vai 7 = laumaeläin</p>
-      
     </div>
-    <div class="slider-container">
-      <div class="sociality">
+    <div class="flexbox">
+      <div class="flexbox">
         <p>Sosiaalisuus</p>
         <p> {{ sociality }} </p>
       </div>
-      <div class="slider-div-wrapper">
-        <div class="slider-wrapper">
-          <div class="underlay">
+      <div class="slider">
+        <div class="step-container">
+          <div class="step">
             <div class="divider"></div>
             <div class="breakpoint"></div>
             <div class="divider"></div>
@@ -24,14 +23,14 @@
             <div class="breakpoint"></div>
             <div class="divider"></div>
           </div>
-          <div class="underlay2">
-            <div class="breakpoint2"></div>
+          <div class="step2">
+            <div class="breakpoint"></div>
             <div class="divider"></div>
-            <div class="breakpoint2"></div>
+            <div class="breakpoint"></div>
             <div class="divider"></div>
           </div>
         </div>
-        <input type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" v-on:click="emitToParent" />
+        <input class="box" type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" v-on:click="emitToParent" />
       </div>
     </div>
   </div>
@@ -58,67 +57,49 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.slider-text {
-  display: flex;
-  justify-content: space-between;
+.flexbox:first-of-type p {
   margin-right: 1rem;
 }
-.slider-text p {
-  margin-bottom: 0.2rem;
-}
-.slider-container {
-  display: flex;
-  align-items: center;
-}
-.slider-div-wrapper {
-  width: 100%;
-  margin: 0 1rem;
-}
-.sociality {
-  display: flex;
-  align-items: center;
+.flexbox:last-of-type .flexbox {
+  justify-content: start;
   width: 70%;
-}
-.sociality p:last-child {
-  font-size: 1.5rem !important;
-  color: v.$KAMGreenDark;
-  font-weight: bold;
-  margin: 0;
-  width: 2rem;
-  text-align: center;
-  border-radius: 50%;
-  padding-bottom: 0.3rem;
-}
-.slider-values {
-  display: flex;
-  justify-content: space-between;
-}
-.slider-wrapper {
-  position: relative;
-  width: 100%;
+
+  p:first-child {
+    margin-right: 0;
+  }
+  p:last-child {
+    font-size: 1.5rem !important;
+    color: v.$KAMGreenDark;
+    font-weight: bold;
+    margin: 0;
+    width: 2rem;
+    text-align: center;
+    border-radius: 50%;
+    padding-bottom: 0.4rem;
+  }
 }
 .slider {
   width: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0 1rem;
 }
-.underlay {
+.step-container {
+  position: relative;
+  width: 100%;
+}
+.step, .step2 {
   position: absolute;
   height: 1rem;
-  width: 62%;
   top: 0;
-  left: 4%;
   display: flex;
   z-index: 0;
 }
-.underlay2 {
-  position: absolute;
-  height: 1rem;
+.step {
+  width: 62.5%;
+  left: 4.5%;
+}
+.step2 {
   width: 30.5%;
-  top: 0;
-  left: 65%;
-  display: flex;
-  z-index: 0;
+  left: 67%;
 }
 .divider {
   width: 0.1%;
@@ -126,14 +107,13 @@ export default {
   border: 0.12rem solid v.$KAMGreyDark;
   border-radius: 0.3rem;
 }
-.breakpoint, .breakpoint2 {
+.breakpoint {
   width: 100%;
 }
 input[type='range'] {
   -webkit-appearance: none;
   overflow: hidden;
-  width: -webkit-fill-available;
-  background-color: v.$KAMBeigeLight;
+  background-color: v.$KAMBeige;
 }
 input[type='range']::-webkit-slider-runnable-track {
   height: 1.1rem;
@@ -151,9 +131,6 @@ input[type='range']::-webkit-slider-thumb {
   border-radius: 50%;
   box-shadow: -100.7rem 0 0 100rem v.$KAMGreenDark;
   z-index: 1;
-}
-input[type=range]:focus{
-  outline: none;
 }
 
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p style="margin: 0.5rem 0 0.2rem 0">Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
+    <p>Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
               
     <label @click="handleFloorPlan">
-      <div class="moreFloorPlans" v-bind:class="{'removeBorderRadius': showFloorPlan}">
+      <div class="flexbox label__border-bottom--green" v-bind:class="{'remove__border-radius': showFloorPlan}">
         <p v-show="!showFloorPlan">Lisää huonetyyppejä</p> 
         <p v-show="showFloorPlan">Sulje huoneiston kuvaus</p>
 
@@ -16,15 +16,15 @@
       </div>
     </label>
     
-    <div class="wrapper" v-show="showFloorPlan">
-      <div>
-        <p>lkm</p>
-        <p>huonetyyppi</p>
+    <div class="show-floor-plan label__border-bottom--green" v-show="showFloorPlan">
+      <div class="flexbox">
+        <label for="number-of-rooms">lkm</label>
+        <label for="floorplan">huonetyyppi</label>
       </div>
-      <div class="floorPlan" v-for="(input, index) in floorPlan" :key="index">
-        <div>
-          <input type="text" v-model="input.amount" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
-          <select v-model="input.abbr" v-on:click="emitToParent" @click="createFloorPlanText">
+      <div v-for="(input, index) in floorPlan" :key="index">
+        <div class="flexbox">
+          <input type="text" id="number-of-rooms" v-model="input.number" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
+          <select id="floorplan" v-model="input.abbr" v-on:click="emitToParent" @click="createFloorPlanText">
             <option v-for="(type, index2,) in optionFloorPlans" :value="type.abbr" :key="index+index2">{{ type.text }}</option>
           </select>
 
@@ -37,11 +37,13 @@
             </div>
           </div>
           
-          <p>{{ input.amount }}<span v-show="input.amount !== null && input.abbr !== null">/</span>{{ input.abbr }}</p>
+          <p>{{ input.number }}<span v-show="input.number !== null && input.abbr !== null">/</span>{{ input.abbr }}</p>
         </div>
       </div>
     </div>
-
+    <label for="description-floorplan">Kerro vapaasti huoneistosta
+      <textarea id="description-floorplan" class="box" type="text" placeholder="Kerro vapaasti huoneistosta" v-model="description"></textarea>
+    </label>
   </div>
 </template>
 
@@ -53,9 +55,10 @@ export default {
     return {
       showFloorPlan: false,
       floorPlan: [
-        { abbr: null, amount: null } 
+        { abbr: null, number: null } 
       ],
       floorPlanText: '',
+      description: '',
       optionFloorPlans: [ // POISTA LISTASTA AINA SE ABBR, JOKA ON JO VALITTU
         { text: 'huone', abbr: 'h', value: 1 },
         { text: 'keittiö', abbr: 'k', value: 2 },
@@ -83,7 +86,7 @@ export default {
     },
     add() {
       this.floorPlan.push(
-        { abbr: null, amount: null }
+        { abbr: null, number: null }
       )
     },
     remove(index) {
@@ -94,8 +97,8 @@ export default {
     createFloorPlanText() {
       let arr = [];
       this.floorPlan.forEach(item => {
-        if (item.amount !== null && item.abbr !== null && item.amount !== '') {
-          arr.push(item.amount + '/' + item.abbr);
+        if (item.number !== null && item.abbr !== null && item.number !== '') {
+          arr.push(item.number + '/' + item.abbr);
         }
       })
       this.floorPlanText = arr.join(', ');
@@ -111,57 +114,45 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.floorPlan div {
-  display: flex;
-  align-items: center;
-  width: 3rem;
-}
-.moreFloorPlans {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
+label .flexbox {
   height: 1.5rem;
   padding: 0.1rem 0.5rem;
-  border-radius: 0.5rem;
-  border-bottom: 0.15rem solid v.$KAMGreenDark;
+  margin-bottom: 1rem;
+
+  div:first-child div {
+    display: block;
+  }
 }
-label div:first-child div {
-  display: block;
-}
-.removeBorderRadius {
-  border-radius: 0.5rem 0.5rem 0 0 !important;
-  border-bottom: none !important;
-}
-.wrapper {
-  background: v.$White;
+.show-floor-plan {
   padding: 0.2rem 0.4rem !important;
   margin: 0;
   border-radius: 0 0 0.5rem 0.5rem;
-  border-bottom: 0.15rem solid v.$KAMGreenDark;
+  margin-bottom: 1rem;
 
-  div:first-child {
-    display: flex;
-    align-items: center;
+  .flexbox, div .flexbox {
+    justify-content: normal;
   }
-  div:first-child p:first-child {
+  //roomtype label to the right
+  div:first-child label:first-child {
     margin-right: 0.5rem;
   }
-  div:first-child p {
+  //labels
+  div:first-child label {
     margin: 0.2rem 0 0.2rem 0;
   }
-  .floorPlan div:last-child p {
+  //paragraph next to the plus icon
+  .flexbox p {
     margin: 0 0.5rem;
   }
 }
+.remove__border-radius {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+}
 select {
-  padding: 0 0.2rem !important;
   margin: 0.2rem 0.2rem 0.2rem 0;
-  height: 2rem;
-  border-radius: 0.5rem;
-  border-style: none none solid none !important;
-  border-color: #016361 !important;
-  border-width: 0.15rem;
+  width: 12rem;
   background: v.$KAMGreyLight;
 }
 p {
@@ -176,25 +167,19 @@ svg {
     color: v.$KAMBlue;
   }
 }
-label {
-  letter-spacing: 0.05rem;
-  cursor: pointer;
-}
 input[type="text"] {
   padding: 0.2rem;
   border-radius: 0.5rem;
-  margin: 0.25rem 0.5rem 0.25rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
+  margin: 0.2rem 0.5rem 0.25rem 0;
   width: 1.2rem;
-  height: 1.4rem;
+  height: 1.45rem;
   text-align: center;
   background: v.$KAMGreyLight;
 }
-input[type="text"]:focus, input[type="select"]:focus {
-  outline: none;
-  background: v.$KAMGreyLight;
+textarea {
+  margin: 0.4rem 0 0.3rem 0;
+  padding: 0.2rem 0.5rem;
+  height: 4rem;
 }
 
 </style>

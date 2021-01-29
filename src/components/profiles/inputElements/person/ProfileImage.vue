@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <label for="profile-img-input">
-      <input style="display: none" id="profile-img-input" type="file" @change="onFileSelected">
-      <p>Valitse profiilikuva</p>
-      <img id="profile-img" :src="require(`../../../../assets/images/${src}`)" class="grid_img" alt="Profile Image" v-on:click="emitToParent">
-    </label>
-  </div>
+  <label for="profile-img">
+    <input style="display: none" id="profile-img" type="file" @change="onFileSelected">
+    <p class="box">Valitse profiilikuva</p>
+    <img :src="require(`../../../../assets/images/${src}`)" alt="Profile Image" v-on:click="emitToParent">
+  </label>
 </template>
 
 <script>
@@ -46,38 +44,30 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-label {
-  cursor: pointer;
-}
 p {
-  text-align: center;
   position: absolute;
   left: 0;
   bottom: 0;
   margin: 0;
   padding: 0.3rem 0.5rem 0.5rem 0.7rem;
-  width: -webkit-fill-available;
-  border-style: none none solid none !important;
+  background: transparent;
+  border-bottom: 0.15rem solid transparent;
+  text-align: center;
+}
+label {
+  position: relative;
+  background: transparent;
+  height: 100%;
+  border-style: none !important;
   border-color: transparent !important;
-  border-width: 0.15rem;
 }
 label:hover {
   p {
     padding: 0.3rem 0.5rem 0.5rem 0.7rem;
     background: v.$White;
-    border-style: none none solid none !important;
-    border-color: v.$KAMGreenDark !important;
-    border-width: 0.15rem;
+    border-bottom: 0.15rem solid v.$KAMGreenDark !important;
+    border-radius: 0;
   }
-}
-div {
-  height: 100%;
-  position: relative;
-}
-.grid_img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div class="container">  
-    <a href="#" class="column-item--1 hover--green-background">
+    <a href="#" class="column-item--1 hover__background--green--dark">
       <i class="fab fa-twitter"></i>
     </a>
-    <a href="#"  class="column-item--2 hover--green-background">
+    <a href="#"  class="column-item--2 hover__background--green--dark">
       <i class="fab fa-instagram"></i>
     </a>
-    <a href="#"  class="column-item--3 hover--green-background">
+    <a href="#"  class="column-item--3 hover__background--green--dark">
       <i class="fab fa-linkedin-in"></i>
     </a>
   </div>

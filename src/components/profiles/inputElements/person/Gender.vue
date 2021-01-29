@@ -1,5 +1,5 @@
 <template>
-  <select id="gender" v-model="gender" v-on:click="emitToParent">
+  <select v-model="gender" v-on:click="emitToParent">
     <option value="" selected disabled hidden>Sukupuoli</option>
     <option v-for="(gender, index,) in optionGenders" :value="gender.value" :key="index">{{ gender.text }}</option>
   </select>
@@ -29,8 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
-
-
 
 
 </style>

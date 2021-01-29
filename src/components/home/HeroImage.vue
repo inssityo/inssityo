@@ -1,7 +1,7 @@
 <template>
   <div>
     <img src="../../assets/images/pexels-maria-orlova-4906243-cropped.jpg" class="img--calc" alt="Image 1">
-    <i class="fas fa-sort-down pointer hover--blue__color" @click="goTo('apt')"></i>
+    <i class="fas fa-sort-down pointer hover__color--blue" @click="goTo('apt')"></i>
   </div>
 </template>
 

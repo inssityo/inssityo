@@ -1,75 +1,65 @@
 <template>
-  <div class="section">  
+  <div>  
     <h2>Minne olet muuttamassa:</h2>
 
-    <form id="apt-profile">
-      <div class="form_group-grid--1">
+    <div class="container">
 
-        <div class="form_group_item--1-grid">
-          <div class="form_group_item--1">
-            <AptImage />
-          </div>
+      <div class="column column-item--1">
+        <div class="row-item--1">
+          <AptImage />
         </div>
-
-        <div class="form_group_item--2-grid">
-          <div class="form_group_item--1">
-            <RentBuy id-value="A" v-on:childToParent="onChildClickRentBuy" />
-          </div>
-          <div class="form_group_item--2">
-            <label for="location">Kaupunki*</label>
-            <input type="text" id="location" v-model="location">
-          </div>
-
-          <div class="form_group_item--3">
-            <label for="neighborhood">Kaupunginosa</label>
-            <input type="text" id="neighborhood" v-model="neighborhood">
-          </div>
-
-          <div class="form_group_item--4">
-            <label for="address">Osoite</label>
-            <input type="text" id="address" v-model="address">
-          </div>
-
-          <div class="form_group_item--5">
-            <label for="areaCode">Postinumero</label>
-            <input type="text" id="areaCode" v-model="areaCode">
-          </div>
-
-          <div class="form_group_item--6">
-            <Features v-on:childToParent="onChildClickFeatures" />
-          </div>
-          <div class="form_group_item--7">
-            <LocationType v-on:childToParent="onChildClickLocationType" />
-          </div>
-          <div class="form_group_item--8">
-            <BuildingType v-on:childToParent="onChildClickBuildingType" />
-          </div>
-      
-        </div>
-
-        <div class="form_group_item--3-grid">
-
-          <div class="form_group_item--1">
-            <Rooms v-on:childToParent="onChildClickRooms" />
-          </div>
-          <div class="form_group_item--2">
-            <Roommates v-on:childToParent="onChildClickRoommates" />
-          </div>
-          <div class="form_group_item--3">
-            <PriceMinMax v-on:childToParent="onChildClickPrice" />
-          </div>
-           <div class="form_group_item--4">
-            {{fromChildLocationType}}
-            {{fromChildBuildingType}}
-            {{fromChildFeatures}}
-            {{fromChildCheckedOwner}}
-           </div>
-            
-        </div>
-
       </div>
 
-    </form>
+      <div class="column column-item--2">
+        <div class="row-item--1 flexbox">
+          <RentBuy id-value="A" v-on:childToParent="onChildClickRentBuy" />
+        </div>
+        <div class="row-item--2 flexbox">
+          <label for="location" class="label__border-bottom--green">Kaupunki*</label>
+          <input type="text" id="location" class="border-radius__right" v-model="location">
+        </div>
+        <div class="row-item--3 flexbox">
+          <label for="neighborhood" class="label__border-bottom--green">Kaupunginosa</label>
+          <input type="text" id="neighborhood" class="border-radius__right" v-model="neighborhood">
+        </div>
+        <div class="row-item--4 flexbox">
+          <label for="address" class="label__border-bottom--green">Osoite</label>
+          <input type="text" id="address" class="border-radius__right" v-model="address">
+        </div>
+        <div class="row-item--5 flexbox"> <!-- tee leveämpi -->
+          <label for="area-code" class="label__border-bottom--green">Postinumero</label>
+          <input type="text" id="area-code" class="border-radius__right" v-model="areaCode">
+        </div>
+        <div class="row-item--6 flexbox">
+          <Features v-on:childToParent="onChildClickFeatures" />
+        </div>
+        <div class="row-item--7 flexbox">
+          <LocationType v-on:childToParent="onChildClickLocationType" />
+        </div>
+        <div class="row-item--8 flexbox">
+          <BuildingType v-on:childToParent="onChildClickBuildingType" />
+        </div>
+      </div>
+
+      <div class="column column-item--3">
+        <div class="row-item--1">
+          <Rooms v-on:childToParent="onChildClickRooms" />
+        </div>
+        <div class="row-item--2">
+          <Roommates v-on:childToParent="onChildClickRoommates" />
+        </div>
+        <div class="row-item--3">
+          <PriceMinMax v-on:childToParent="onChildClickPrice" />
+        </div>
+          <div class="row-item--4">
+          {{fromChildLocationType}}
+          {{fromChildBuildingType}}
+          {{fromChildFeatures}}
+          {{fromChildCheckedOwner}}
+          </div>
+      </div>
+
+    </div>
 
   </div>
 </template>
@@ -159,170 +149,124 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
-.section {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
 input[type="text"] {
   padding: 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
   margin: 0.5rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  width: 100%;
 }
-input[type="text"]:focus{
-  outline: none;
-  background: v.$KAMGreyLight;
-}
-select {
-  padding: 0 0.2rem !important;
-  margin: 0;
-  height: 2rem;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-radius: 0.5rem;
-  border-style: none none solid none !important;
-  border-color: #016361 !important;
-  border-width: 0.15rem;
-  background: v.$White;
-}
-.form_group-grid--1 {
-  display: grid;
+.container {
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
   gap: 1rem;
 }
-.form_group_item--1-grid {
+.column {
+  display: grid;
+}
+.column-item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 22.9rem);
   background: v.$KAMGrey;
 }
-.form_group_item--2-grid {
+.column-item--2 {
   grid-column-start: 2;
   grid-column-end: 3;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(7, 3rem);
   background: v.$KAMGrey;
   padding-bottom: 1.9rem;
 }
-.form_group_item--3-grid {
+.column-item--3 {
   grid-column-start: 3;
   grid-column-end: 4;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(7, 3rem);
   background: v.$KAMBeige;
 }
 //Image
-.form_group_item--1-grid .form_group_item--1 { 
+.column-item--1 .row-item--1 { 
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
 }
 //Rent or Buy
-.form_group_item--2-grid .form_group_item--1 {
+.column-item--2 .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 3;
-  display: flex;
-  align-items: center;
   margin: 0 0.8rem;
 }
-.form_group_item--2-grid .form_group_item--1 div {
+.column-item--2 .row-item--1 div {
   width: 100%;
 }
 //City
-.form_group_item--2-grid .form_group_item--2 {
+.column-item--2 .row-item--2 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 3;
   grid-row-end: 4;
-  display: flex;
-  align-items: center;
   margin: 0 0.8rem;
 }
 //Neighborhood
-.form_group_item--2-grid .form_group_item--3 {
+.column-item--2 .row-item--3 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 4;
   grid-row-end: 5;
-  display: flex;
-  align-items: center;
   margin: 0 0.8rem;
 }
 //Address
-.form_group_item--2-grid .form_group_item--4 {
+.column-item--2 .row-item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 5;
   grid-row-end: 6;
-  display: flex;
-  align-items: center;
   margin: 0 0.8rem;
 }
 //Area code
-.form_group_item--2-grid .form_group_item--5 {
+.column-item--2 .row-item--5 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 6;
   grid-row-end: 7;
-  display: flex;
-  align-items: center;
   margin: 0 0.4rem 0 0.8rem;
 }
-.form_group_item--2-grid .form_group_item--2 label, 
-.form_group_item--2-grid .form_group_item--3 label, 
-.form_group_item--2-grid .form_group_item--4 label, 
-.form_group_item--2-grid .form_group_item--5 label {
-  background: v.$White;
+.column-item--2 .row-item--2 label, 
+.column-item--2 .row-item--3 label, 
+.column-item--2 .row-item--4 label, 
+.column-item--2 .row-item--5 label {
   padding: 0.5rem;
   border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
 }
 //Features
-.form_group_item--2-grid .form_group_item--6 {
+.column-item--2 .row-item--6 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 6;
   grid-row-end: 7;
-  display: flex;
-  align-items: center;
   margin: 0 0.8rem 0 0.4rem;
 }
 //Location type
-.form_group_item--2-grid .form_group_item--7 {
+.column-item--2 .row-item--7 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 7;
   grid-row-end: 8;
-  display: flex;
-  align-items: center;
   margin: 0 0.4rem 0 0.8rem;
 }
 //Building type
-.form_group_item--2-grid .form_group_item--8 {
+.column-item--2 .row-item--8 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 7;
   grid-row-end: 8;
-  display: flex;
-  align-items: center;
   margin: 0 0.8rem 0 0.4rem;
 }
 //Rooms
-.form_group_item--3-grid .form_group_item--1 {
+.column-item--3 .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -330,7 +274,7 @@ select {
   margin: 0 0.4rem 0 0.8rem;
 }
 //Roommates
-.form_group_item--3-grid .form_group_item--2 {
+.column-item--3 .row-item--2 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -338,7 +282,7 @@ select {
   margin: 0 0.8rem 0 0.4rem;
 }
 //Price
-.form_group_item--3-grid .form_group_item--3 {
+.column-item--3 .row-item--3 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 3;
@@ -346,7 +290,7 @@ select {
   margin: 0 0.8rem;
 }
 //Tulostus
-.form_group_item--3-grid .form_group_item--4 {
+.column-item--3 .row-item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 5;
