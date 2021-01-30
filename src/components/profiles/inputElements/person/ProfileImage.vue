@@ -58,15 +58,14 @@ label {
   position: relative;
   background: transparent;
   height: 100%;
+  padding: 0;
   border-style: none !important;
   border-color: transparent !important;
 }
 label:hover {
   p {
-    padding: 0.3rem 0.5rem 0.5rem 0.7rem;
     background: v.$White;
     border-bottom: 0.15rem solid v.$KAMGreenDark !important;
-    border-radius: 0;
   }
 }
 

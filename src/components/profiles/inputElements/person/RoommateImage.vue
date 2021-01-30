@@ -1,5 +1,5 @@
 <template>
-  <img v-show="selectedImage" style="width:100%" :src="require(`../../../../assets/images/${selectedImage}`)" alt="Roommate Profile Image">
+  <img v-show="selectedImage" :src="require(`../../../../assets/images/${selectedImage}`)" alt="Roommate Profile Image">
 </template>
 
 <script>

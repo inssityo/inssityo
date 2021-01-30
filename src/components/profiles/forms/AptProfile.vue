@@ -15,19 +15,19 @@
           <RentBuy id-value="A" v-on:childToParent="onChildClickRentBuy" />
         </div>
         <div class="row-item--2 flexbox">
-          <label for="location" class="label__border-bottom--green">Kaupunki*</label>
+          <label for="location" class="label__border-bottom--green border-radius__left">Kaupunki*</label>
           <input type="text" id="location" class="border-radius__right" v-model="location">
         </div>
         <div class="row-item--3 flexbox">
-          <label for="neighborhood" class="label__border-bottom--green">Kaupunginosa</label>
+          <label for="neighborhood" class="label__border-bottom--green border-radius__left">Kaupunginosa</label>
           <input type="text" id="neighborhood" class="border-radius__right" v-model="neighborhood">
         </div>
         <div class="row-item--4 flexbox">
-          <label for="address" class="label__border-bottom--green">Osoite</label>
+          <label for="address" class="label__border-bottom--green border-radius__left">Osoite</label>
           <input type="text" id="address" class="border-radius__right" v-model="address">
         </div>
         <div class="row-item--5 flexbox"> <!-- tee leveämpi -->
-          <label for="area-code" class="label__border-bottom--green">Postinumero</label>
+          <label for="area-code" class="label__border-bottom--green border-radius__left">Postinumero</label>
           <input type="text" id="area-code" class="border-radius__right" v-model="areaCode">
         </div>
         <div class="row-item--6 flexbox">
@@ -149,6 +149,9 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
+h2 {
+  padding-top: 1rem;
+}
 input[type="text"] {
   padding: 0.5rem;
   margin: 0.5rem 0;
@@ -238,7 +241,6 @@ input[type="text"] {
 .column-item--2 .row-item--4 label, 
 .column-item--2 .row-item--5 label {
   padding: 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
 }
 //Features

@@ -58,11 +58,9 @@ div {
   //amount
   label:nth-last-of-type(2) {
     display: block;
-    margin: -1rem 0 0.5rem 1.9rem;
+    margin: -1rem 0 0.5rem 1.5rem;
     
     input {
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.5rem;
       margin: 0.3rem 0.5rem;
       width: 3rem;
     }

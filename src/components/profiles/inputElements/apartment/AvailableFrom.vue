@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label>Vapautuu: </label>
+    <label>Vapautuu:</label>
     <input type="date" class="box" v-model="date" v-on:click="emitToParent"><!-- vaihda click -->
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 input[type="date"] {
-  padding: 0.2rem 0.5rem;
   margin: 0.3rem 0 0 0;
 }
 

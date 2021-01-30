@@ -2,7 +2,7 @@
   <div>
     <p>Onko asunto solu tai sen yksi huone?</p>
     <div class="flexbox">
-      <p class="margin__topless margin__bottomless" v-bind:style="{ fontWeight: 'bold' }">{{ checkedCell ? "-kyllä" : "-ei" }}</p>
+      <p class="margin__topless margin__bottomless switch-no" v-bind:class="{'switch-yes': checkedCell}">{{ checkedCell ? "kyllä" : "ei" }}</p>
       <label class="switch" v-on:click="emitToParent">
         <input type="checkbox" id="checkbox-rent" v-model="checkedCell">
         <span class="slider round"></span>

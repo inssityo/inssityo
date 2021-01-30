@@ -51,7 +51,6 @@ div .flexbox {
   }
 }
 input[type="text"] {
-  padding: 0.2rem 0.5rem;
   margin: 0.3rem 0 0 0;
   width: 2rem;
 }

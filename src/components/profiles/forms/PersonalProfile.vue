@@ -1,68 +1,63 @@
 <template>
-  <div id="personal-profile">  
+  <div>  
     <h2>Kerro itsestäsi:</h2>
 
-    <div class="form_group-grid--1">
+    <div class="container">
 
-      <div class="form_group_item--1-grid">
-        <div class="form_group_item--1">
+      <div class="column column-item--1 container">
+        <div class="row-item--1">
           <ProfileImage v-on:childToParent="onChildClickProfileImage" v-on:click="emitToParent" />
         </div>
-        <div class="form_group_item--2">
-          <label for="firstname">Etunimi</label>
-          <input type="text" id="firstname" v-model="user.name" v-on:keyup="emitToParent">
+        <div class="row-item--2">
+          <label for="firstname" class="label__border-bottom--green border-radius__left">Etunimi</label>
+          <input type="text" id="firstname" class="border-radius__right" v-model="user.name" v-on:keyup="emitToParent">
         </div>
-        <div class="form_group_item--3">
-          <label for="lastname">Sukunimi</label>
-          <input type="text" id="lastname" v-model="user.surname" v-on:keyup="emitToParent">
+        <div class="row-item--3">
+          <label for="lastname" class="label__border-bottom--green border-radius__left">Sukunimi</label>
+          <input type="text" id="lastname" class="border-radius__right" v-model="user.surname" v-on:keyup="emitToParent">
         </div>
-        <div class="form_group_item--4">
+        <div class="row-item--4">
           <Age v-on:childToParent="onChildClickAge" v-on:click="emitToParent" />
         </div>
-        <div class="form_group_item--5">
+        <div class="row-item--5">
           <Gender v-on:childToParent="onChildClickGender" v-on:click="emitToParent" />
         </div>
-
-        <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': user.employmentStatus === 1}">
+        <div class="row-item--6" v-bind:class="{'row-item--6-2': user.employmentStatus === 1}">
           <Status v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
-        <div class="form_group_item--7" v-show="user.employmentStatus === 1">
+        <div class="row-item--7" v-show="user.employmentStatus === 1">
           <WorkType v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
         </div>
-
-        <div class="form_group_item--8">
-          <textarea type="text" id="description-p" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="user.description" v-on:keyup="emitToParent"></textarea>
+        <div class="row-item--8">
+          <label for="description-p">Kuvaus itsestäsi</label>
+          <textarea type="text" id="description-p" class="box" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="user.description" v-on:keyup="emitToParent"></textarea>
         </div>
       </div>
 
-      <div class="form_group_item--2-grid">
-        <div class="form_group_item--1">
+      <div class="column column-item--2 container">
+        <div class="row-item--1">
           <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" v-on:click="emitToParent" />
         </div>
       </div>
 
-      <div class="form_group_item--3-grid">
-        <div class="form_group_item--1">
+      <div class="column column-item--3 container">
+        <div class="row-item--1">
           <Sociality id-value="P" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent" />
         </div>
-
-        <div class="form_group_item--2">
+        <div class="row-item--2">
           <Traits id-value="P" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
             <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
           <li v-for="trait in filteredTraits" :key="trait.value">{{trait.value}}</li>
         </div>
-
-        <div class="form_group_item--3">
+        <div class="row-item--3">
           <Pets id-value="P" v-on:childToParent="onChildClickPets" v-on:click="emitToParent" />
         </div>
-
-        <div class="form_group_item--4">
+        <div class="row-item--4">
           <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" v-on:click="emitToParent" />
         </div>
-
       </div>
+      
     </div>
-
   </div>
 </template>
 
@@ -228,56 +223,54 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
+h2 {
+  padding-top: 1rem;
+}
 input[type="text"] {
   padding: 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
   margin: 0.5rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  width: 100%;
 }
 
-.form_group-grid--1 {
-  display: grid;
+.container {
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
   gap: 1rem;
 }
-.form_group_item--1-grid {
+.column {
+  margin-top: 0;
+  gap: 0;
+}
+.column-item--1.container {
   grid-column-start: 1;
   grid-column-end: 2;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGrey;
 }
-.form_group_item--2-grid {
+.column-item--2.container {
   grid-column-start: 2;
   grid-column-end: 3;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMBeige;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
-.form_group_item--3-grid {
+.column-item--3.container {
   grid-column-start: 3;
   grid-column-end: 4;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGrey;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--1 {
+.column-item--1.container .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 6;
   margin-bottom: 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--2 {
+.column-item--1.container .row-item--2 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 6;
@@ -286,7 +279,7 @@ input[type="text"] {
   align-items: center;
   margin: 0 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--3 {
+.column-item--1.container .row-item--3 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 7;
@@ -295,17 +288,13 @@ input[type="text"] {
   align-items: center;
   margin: 0 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--2 label,
-.form_group_item--1-grid .form_group_item--3 label {
+.column-item--1.container .row-item--2 label,
+.column-item--1.container .row-item--3 label {
   background: v.$White;
   padding: 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
 }
-.form_group_item--1-grid .form_group_item--4 {
+.column-item--1.container .row-item--4 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 8;
@@ -314,7 +303,7 @@ input[type="text"] {
   align-items: center;
   margin: 0 0.4rem 0 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--5 {
+.column-item--1.container .row-item--5 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 8;
@@ -323,7 +312,7 @@ input[type="text"] {
   align-items: center;
   margin: 0 0.8rem 0 0.4rem;
 }
-.form_group_item--1-grid .form_group_item--6 {
+.column-item--1.container .row-item--6 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 9;
@@ -333,10 +322,10 @@ input[type="text"] {
   margin: 0 0.8rem;
   justify-content: space-between;
 }
-.form_group_item--1-grid .form_group_item--6 div {
+.column-item--1.container .row-item--6 div {
   width: 100%;
 }
-.form_group_item--1-grid .form_group_item--6-2 {
+.column-item--1.container .row-item--6-2 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 9;
@@ -345,7 +334,7 @@ input[type="text"] {
   align-items: center;
   margin: 0 0.4rem 0 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--7 {
+.column-item--1.container .row-item--7 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 9;
@@ -354,26 +343,18 @@ input[type="text"] {
   align-items: center;
   margin: 0 0.8rem 0 0.4rem;
 }
-.form_group_item--1-grid .form_group_item--8 {
+.column-item--1.container .row-item--8 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 10;
   grid-row-end: 14;
-  display: flex;
-  align-items: center;
-  margin: 2rem 0.8rem;
+  margin: 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--8 textarea {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  height: 100%;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
+.column-item--1.container .row-item--8 textarea {
+  margin-top: 0.4rem;
+  height: 8rem;
 }
-.form_group_item--2-grid .form_group_item--1 {
+.column-item--2.container .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -381,7 +362,7 @@ input[type="text"] {
   margin-bottom: 0.8rem;
   position: relative;
 }
-.form_group_item--3-grid .form_group_item--1 {
+.column-item--3.container .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -389,21 +370,21 @@ input[type="text"] {
   margin-bottom: 0.8rem;
   position: relative;
 }
-.form_group_item--3-grid .form_group_item--2 {
+.column-item--3.container .row-item--2 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 3;
   grid-row-end: 8;
   margin-bottom: 0.8rem;
 }
-.form_group_item--3-grid .form_group_item--3 {
+.column-item--3.container .row-item--3 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
   grid-row-end: 10;
   margin-bottom: 0.8rem;
 }
-.form_group_item--3-grid .form_group_item--4 {
+.column-item--3.container .row-item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 10;

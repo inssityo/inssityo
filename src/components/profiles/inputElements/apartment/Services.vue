@@ -8,10 +8,10 @@
         <p v-show="showServices">Sulje palvelujen kuvaus</p>
 
         <div v-show="showServices">
-          <i class="fas fa-times"></i>
+          <i class="fas fa-times hover__color--blue"></i>
         </div>
         <div v-show="!showServices">
-          <i class="fas fa-plus"></i>
+          <i class="fas fa-plus hover__color--blue"></i>
         </div>
       </div>
     </label>
@@ -34,10 +34,10 @@
 
         <div>
           <div @click="remove(index)" v-show="index || ( !index && services.length > 1)">
-            <i class="fas fa-minus"></i>
+            <i class="fas fa-minus hover__color--blue"></i>
           </div>
           <div @click="add" v-show="index === services.length-1">
-            <i class="fas fa-plus"></i>
+            <i class="fas fa-plus hover__color--blue"></i>
           </div>
         </div>
         
@@ -118,13 +118,17 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-label .flexbox {
-  height: 1.5rem;
-  margin-bottom: 1rem;
-  padding: 0.1rem 0.5rem;
+label {
+  padding: 0;
+  
+  .flexbox {
+    height: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0.1rem 0.5rem;
+  }
 }
 .show-services {
-  padding: 0.2rem 0.4rem !important;
+  padding: 0.2rem 0.5rem !important;
   margin: 0 0 1rem 0;
   border-radius: 0 0 0.5rem 0.5rem;
   
@@ -161,25 +165,18 @@ p {
 svg {
   margin: 0 0 0 0.5rem; 
   color: v.$KAMGreenDark;
-  
-  :hover {
-    cursor: pointer;
-    color: v.$KAMBlue;
-  }
 }
 label:last-of-type {
   margin-top: 0.5rem;
 }
 input[type="text"] {
   margin: 0.25rem 0.5rem 0.25rem 0;
-  padding: 0.2rem 0.4rem;
   width: 3rem;
   height: 1.4rem;
   background: v.$KAMGreyLight;
 }
 textarea {
   margin: 0.4rem 0 0.3rem 0;
-  padding: 0.2rem 0.5rem;
   height: 8rem;
 }
 

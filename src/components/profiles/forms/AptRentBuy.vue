@@ -2,11 +2,8 @@
   <div>  
     <h2>Täytä asunnon tiedot:</h2>
 
-    <div>
-      <RentBuy id-value="ARB" v-on:childToParent="onChildClickRentBuy" />
-      {{ fromChildCheckedOwner }}
-    </div>
-
+    <RentBuy id-value="ARB" style="width: 50%" v-on:childToParent="onChildClickRentBuy" />
+    {{ fromChildCheckedOwner }}
     <div class="container">
       
       <div class="column">
@@ -32,7 +29,7 @@
 
         <div class="row">
           <h3>Rakennuksen tiedot</h3>
-          <div class="flexbox">
+          <div class="flexbox"> <!-- pienennä input -->
             <label for="buildYear" class="label__border-bottom--green border-radius__left">Rakennusvuosi</label>
             <input type="text" id="buildYear" class="border-radius__right" v-model="buildYear">
           </div>
@@ -257,6 +254,9 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
+h2 {
+  padding-top: 1rem;
+}
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -266,11 +266,20 @@ export default {
   flex-direction: column;
   width: 33.333%;
 }
+//Calculation of margins, so that the widths of the columns will be the same
+.container .column:first-of-type .row {
+  margin-right: 0.75rem;
+}
+.container .column:nth-of-type(2) .row {
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+.container .column:last-of-type .row {
+  margin-left: 0.75rem;
+}
+
 .container .column:not(:nth-child(2)) .row {
   background: v.$KAMGrey;
-}
-.container .column:not(:last-child) .row {
-  margin-right: 1rem;
 }
 .container .column:first-child .row:first-child .flex:last-of-type {
   margin-bottom: 0.2rem;
@@ -291,7 +300,6 @@ h3 {
   margin-bottom: 0.4rem;
 }
 label, input, textarea {
-  padding: 0.2rem 0.5rem;
   margin: auto 0;
 }
 label.description {
@@ -307,8 +315,6 @@ label[class="description"] ~ label[class="description"] {
   margin-top: 0.8rem;
 }
 .flexbox {
-  justify-content: space-between;
-  
   div, select {
     width: 48%;
   }

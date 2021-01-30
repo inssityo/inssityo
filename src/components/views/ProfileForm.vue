@@ -1,28 +1,36 @@
 <template>
   <div>
-    <div class="header">
+    <div>
       <img src="../../assets/images/pexels-maksim-goncharenok-4352247.jpg" class="img--calc" alt="">
       <h1 v-show="selectedGreeting">{{ selectedGreeting }}{{ fromChildFirstName }}!</h1> 
     </div>
-
-    <i class="fas fa-sort-down pointer hover__color--blue" v-show="choice === 1" @click="goTo('personal')"></i> <!-- lisää ankkurit, ja asuntolinkki-->
 
     <form
       id="profileForm"
       @submit.prevent="handleSubmit"
       action=""
       method="post"
-      class="content"
+      class="content__padding-sides content__padding-bottom"
     >
-      <AptRentBuy v-show="choice === 2 || choice === 3" />
+      <a v-show="choice === 2 || choice === 3" href="#apt-rent-buy">
+        <i class="fas fa-sort-down pointer hover__color--blue"></i>
+      </a>
+      <AptRentBuy id="apt-rent-buy" v-show="choice === 2 || choice === 3" />
 
-      <PersonalProfile ref="personal" v-show="choice === 1" v-on:childToParent="onChildClick" />
+      <a v-show="choice === 1" href="#personal">
+        <i class="fas fa-sort-down pointer hover__color--blue"></i>
+      </a>
+      <PersonalProfile id="personal" v-show="choice === 1" v-on:childToParent="onChildClick" />
 
-      <i class="fas fa-sort-down pointer hover__color--blue" v-show="choice === 1" @click="goTo('apt')"></i>
-      <AptProfile ref="apt" v-show="choice === 1" />
+      <a v-show="choice === 1" href="#apt">
+        <i class="fas fa-sort-down pointer hover__color--blue"></i>
+      </a>
+      <AptProfile id="apt" v-show="choice === 1" />
 
-      <i class="fas fa-sort-down pointer hover__color--blue" v-show="choice === 1" @click="goTo('roommate')"></i>
-      <RoommateProfile ref="roommate" v-show="choice === 1" />
+      <a v-show="choice === 1" href="#roommate">
+        <i class="fas fa-sort-down pointer hover__color--blue"></i>
+      </a>
+      <RoommateProfile id="roommate" v-show="choice === 1" />
 
       <div class="flexbox">
         <button type="submit" class="is-danger hover__background--blue">Submit</button>
@@ -39,7 +47,7 @@ import RoommateProfile from '../profiles/forms/RoommateProfile.vue'
 import AptProfile from '../profiles/forms/AptProfile.vue'
 import AptRentBuy from '../profiles/forms/AptRentBuy.vue'
 
-const TIMEOUT = 1;
+//const TIMEOUT = 1;
 
 export default {
   name: 'ProfileForm',
@@ -67,17 +75,19 @@ export default {
       user: null,
     }
   },
+  /*
   mounted() { 
     //handle url anchors
     if (this.$route.hash) {
       setTimeout(() => this.scrollTo(this.$route.hash), TIMEOUT)
     }
-  },
+  },*/
   methods: {
+    /*
     //handle url anchors
     scrollTo: function (hashtag) {
       setTimeout(() => { location.href = hashtag }, TIMEOUT)
-    },
+    },*/
     onChildClick (value) {
       if (value !== null || value !== '') { //Ei toimi
         this.fromChildFirstName = ', ' + value.firstname; //hello text
@@ -88,10 +98,7 @@ export default {
       this.user = value.user;
       //console.log(JSON.stringify(this.user))
     },
-    goTo (refName) {
-      var element = this.$els[refName];
-          element.scrollIntoView();
-    },
+    //random hello text
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
     },
@@ -102,6 +109,7 @@ export default {
   created() {
     this.selectedGreeting = this.randomItem(this.greetings);
 
+    //create the correct form
     if (this.$route.params.profileForm) {
       this.choice = parseInt(this.$route.params.profileForm);
     }
@@ -114,9 +122,6 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-.header {
-  position: relative;
-}
 h1 {
   position: absolute;
   top: 4rem;

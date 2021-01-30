@@ -1,60 +1,53 @@
 <template>
-  <div id="roommate-profile" class="section">  
+  <div>  
     <h2>Minkälaista kämppistä etsit:</h2>
 
-    <div class="form_group-grid--1">
+    <div class="container">
 
-      <div class="form_group_item--1-grid">
-        <div class="form_group_item--1">
+      <div class="column column-item--1 container">
+        <div class="row-item--1">
           <RoommateImage />
         </div>
-
-        <div class="form_group_item--2">
+        <div class="row-item--2">
           <Age v-on:childToParent="onChildClickAge" />
         </div>
-        <div class="form_group_item--3">
+        <div class="row-item--3">
           <Gender v-on:childToParent="onChildClickGender" />
         </div>
-
-        <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus ===1}">
+        <div class="row-item--4" v-bind:class="{'row-item--4-2': fromChildStatus ===1}">
           <Status v-on:childToParent="onChildClickStatus" />
         </div>
-        <div class="form_group_item--7" v-if="fromChildStatus === 1">
+        <div class="row-item--5" v-if="fromChildStatus === 1">
           <WorkType v-on:childToParent="onChildClickWorkType" />
         </div>
-
-        <div class="form_group_item--8">
-          <textarea type="text" id="description-r" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="description"></textarea>
+        <div class="row-item--6">
+          <label for="description-r">Kuvaus kämppiksestä</label>
+          <textarea type="text" id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="description"></textarea>
         </div>
       </div>
 
-      <div class="form_group_item--2-grid">
-        <div class="form_group_item--1">
+      <div class="column column-item--2 container">
+        <div class="row-item--1">
           <Hobbies id-value="R" v-on:childToParent="onChildClickHobbies" />
         </div>
       </div>
 
-      <div class="form_group_item--3-grid">
-        <div class="form_group_item--1">
+      <div class="column column-item--3 container">
+        <div class="row-item--1">
           <Sociality id-value="R" v-on:childToParent="onChildClickSociality" />
         </div>
-
-        <div class="form_group_item--2">
+        <div class="row-item--2">
           <Traits id-value="R" v-on:childToParent="onChildClickTraits"/>
         </div>
-
-        <div class="form_group_item--3">
+        <div class="row-item--3">
           <Pets id-value="R" v-on:childToParent="onChildClickPets" />
         </div>
-
-        <div class="form_group_item--4">
+        <div class="row-item--4">
           <Intoxicants id-value="R" v-on:childToParent="onChildClickIntoxicants" />
         </div>
-
       </div>
 
     </div>
-
   </div>
 </template>
 
@@ -162,62 +155,36 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
-.section {
+h2 {
   padding-top: 1rem;
-  //padding-bottom: 1rem;
 }
-input[type="text"] {
-  padding: 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin: 0.5rem 0;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
-  width: 100%;
-}
-input[type="text"]:focus, input[type="select"]:focus {
-  outline: none;
-  background: v.$KAMGreyLight;
-}
-select {
-  padding: 0 0.2rem !important;
-  margin: 0;
-  height: 2rem;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-radius: 0.5rem;
-  border-style: none none solid none !important;
-  border-color: #016361 !important;
-  border-width: 0.15rem;
-  background: v.$White;
-}
-.form_group-grid--1 {
-  display: grid;
+.container {
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
   gap: 1rem;
 }
-.form_group_item--1-grid {
+.column {
+  margin-top: 0;
+  gap: 0;
+}
+.column-item--1.container {
   grid-column-start: 1;
   grid-column-end: 2;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGrey;
 }
-.form_group_item--2-grid {
+.column-item--2.container {
   grid-column-start: 2;
   grid-column-end: 3;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMBeige;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
-.form_group_item--3-grid {
+.column-item--3.container {
   grid-column-start: 3;
   grid-column-end: 4;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(13, 3rem);
   background: v.$KAMGrey;
@@ -225,14 +192,14 @@ select {
 }
 
 //AptImage
-.form_group_item--1-grid .form_group_item--1 {
+.column-item--1.container .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 7;
 }
 //Age
-.form_group_item--1-grid .form_group_item--2 {
+.column-item--1.container .row-item--2 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 7;
@@ -242,7 +209,7 @@ select {
   margin: 0.8rem 0.4rem 0 0.8rem;
 }
 //Gender
-.form_group_item--1-grid .form_group_item--3 {
+.column-item--1.container .row-item--3 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 7;
@@ -251,8 +218,8 @@ select {
   align-items: center;
   margin: 0.8rem 0.8rem 0 0.4rem;
 }
-//Status
-.form_group_item--1-grid .form_group_item--6 {
+//Status large
+.column-item--1.container .row-item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
@@ -262,10 +229,8 @@ select {
   margin: 0 0.8rem;
   justify-content: space-between;
 }
-.form_group_item--1-grid .form_group_item--6 div {
-  width: 100%;
-}
-.form_group_item--1-grid .form_group_item--6-2 {
+//Status
+.column-item--1.container .row-item--4-2 {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 8;
@@ -275,7 +240,7 @@ select {
   margin: 0 0.4rem 0 0.8rem;
 }
 //WorkType
-.form_group_item--1-grid .form_group_item--7 {
+.column-item--1.container .row-item--5 {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 8;
@@ -285,27 +250,19 @@ select {
   margin: 0 0.8rem 0 0.4rem;
 }
 //Description
-.form_group_item--1-grid .form_group_item--8 {
+.column-item--1.container .row-item--6 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 9;
   grid-row-end: 14;
-  display: flex;
-  align-items: center;
-  margin: 2rem 0.8rem;
+  margin: 0.8rem;
 }
-.form_group_item--1-grid .form_group_item--8 textarea {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  height: 100%;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-style: none none solid none !important;
-  border-color: v.$KAMGreenDark !important;
-  border-width: 0.15rem;
+.column-item--1.container .row-item--6 textarea {
+  margin-top: 0.4rem;
+  height: 10.9rem;
 }
 //Hobbies
-.form_group_item--2-grid .form_group_item--1 {
+.column-item--2.container .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -314,7 +271,7 @@ select {
   position: relative;
 }
 //Sociality
-.form_group_item--3-grid .form_group_item--1 {
+.column-item--3.container .row-item--1 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -323,21 +280,21 @@ select {
   position: relative;
 }
 //Characters
-.form_group_item--3-grid .form_group_item--2 {
+.column-item--3.container .row-item--2 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 3;
   grid-row-end: 8;
   margin-bottom: 0.8rem;
 }
-.form_group_item--3-grid .form_group_item--3 {
+.column-item--3.container .row-item--3 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 8;
   grid-row-end: 10;
   margin-bottom: 0.8rem;
 }
-.form_group_item--3-grid .form_group_item--4 {
+.column-item--3.container .row-item--4 {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 10;

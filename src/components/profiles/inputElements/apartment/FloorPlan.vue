@@ -8,10 +8,10 @@
         <p v-show="showFloorPlan">Sulje huoneiston kuvaus</p>
 
         <div v-show="showFloorPlan">
-          <i class="fas fa-times"></i>
+          <i class="fas fa-times hover__color--blue"></i>
         </div>
         <div v-show="!showFloorPlan">
-          <i class="fas fa-plus"></i>
+          <i class="fas fa-plus hover__color--blue"></i>
         </div>
       </div>
     </label>
@@ -30,10 +30,10 @@
 
           <div>
             <div @click="remove(index)" v-show="index || ( !index && floorPlan.length > 1)">
-              <i class="fas fa-minus"></i>
+              <i class="fas fa-minus hover__color--blue"></i>
             </div>
             <div @click="add" v-show="index === floorPlan.length-1">
-              <i class="fas fa-plus"></i>
+              <i class="fas fa-plus hover__color--blue"></i>
             </div>
           </div>
           
@@ -114,20 +114,23 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-label .flexbox {
-  height: 1.5rem;
-  padding: 0.1rem 0.5rem;
-  margin-bottom: 1rem;
+label {
+  padding: 0;
 
-  div:first-child div {
-    display: block;
+  .flexbox {
+    height: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0.1rem 0.5rem;
+
+    div:first-child div {
+      display: block;
+    }
   }
 }
 .show-floor-plan {
-  padding: 0.2rem 0.4rem !important;
-  margin: 0;
+  padding: 0.2rem 0.5rem !important;
+  margin: 0 0 1rem 0;
   border-radius: 0 0 0.5rem 0.5rem;
-  margin-bottom: 1rem;
 
   .flexbox, div .flexbox {
     justify-content: normal;
@@ -159,17 +162,10 @@ p {
   margin-right: 0.5rem;
 }
 svg {
-  margin: 0 0 0 0.4rem; 
+  margin: 0 0 0 0.5rem; 
   color: v.$KAMGreenDark;
-
-  :hover {
-    cursor: pointer;
-    color: v.$KAMBlue;
-  }
 }
 input[type="text"] {
-  padding: 0.2rem;
-  border-radius: 0.5rem;
   margin: 0.2rem 0.5rem 0.25rem 0;
   width: 1.2rem;
   height: 1.45rem;
@@ -178,7 +174,6 @@ input[type="text"] {
 }
 textarea {
   margin: 0.4rem 0 0.3rem 0;
-  padding: 0.2rem 0.5rem;
   height: 4rem;
 }
 

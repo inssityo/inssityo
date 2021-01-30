@@ -41,14 +41,14 @@ section {
 .content {
   padding: 5rem 7rem;
 }
-.content__padding__sides {
+.content__padding-sides {
   padding-left: 7rem;
   padding-right: 7rem;
 }
-.content__top__padding {
+.content__padding-top {
   padding-top: 5rem;
 }
-.content__bottom__padding {
+.content__padding-bottom {
   padding-bottom: 5rem;
 }
 .container {
@@ -86,6 +86,7 @@ h1 {
   font-weight: bold;
   font-family: v.$KAMLouis;
   text-transform: uppercase;
+  letter-spacing: 0.1rem;
   margin-bottom: 2rem;
 }
 h2 {
@@ -112,6 +113,9 @@ label, textarea {
   letter-spacing: 0.03rem;
   cursor: pointer;
 }
+label, input[type="text"], input[type="date"], textarea {
+  padding: 0.2rem 0.4rem;
+}
 select {
   margin: 0;
   padding: 0 0.2rem !important;
@@ -126,11 +130,10 @@ input, select, textarea, button { //Muuta buttonin font-size
 a, a:hover  {
   text-decoration: none;
   cursor: pointer;
-  color: v.$Black;
+  color: v.$KAMBeige;
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
-  background: v.$KAMGreyLight;
 }
 input:hover, select:hover, textarea:hover {
   text-decoration: none;
@@ -178,21 +181,25 @@ img {
 }
 .hover__color--blue:hover {
   color: v.$KAMBlue !important;
+  cursor: pointer;
 }
 .hover__background--green--dark:hover {
   text-decoration: none;
   background-color: v.$KAMGreenDark;
   color: v.$White;
+  cursor: pointer;
 }
 .hover__background--blue:hover {
   text-decoration: none;
   background-color: v.$KAMBlue;
   color: v.$White;
+  cursor: pointer;
 }
 .hover--check__label-only:hover {
   background-color: v.$KAMGreenLight !important;
   color: v.$Black !important;
   font-weight: bold;
+  cursor: pointer;
 }
 
 // ====== checkbox and radio button with label only ====== //
@@ -225,7 +232,7 @@ img {
 .checkmark-label {
   display: block;
   position: relative;
-  padding-left: 1.8rem;
+  padding: 0 0 0 1.8rem;
   margin: 0.3rem 0;
   
   input {
@@ -289,11 +296,19 @@ button:focus {
 }
 
 // ====== switch ====== //
+.switch-yes {
+  color: v.$KAMGreenDark !important;
+}
+.switch-no {
+  font-weight: bold;
+  color: v.$KAMBlue;
+}
 .switch {
   position: relative;
   display: inline-block;
   width: 3.12rem;
   height: 1.5rem;
+  padding: 0;
 
   input {
     opacity: 0;

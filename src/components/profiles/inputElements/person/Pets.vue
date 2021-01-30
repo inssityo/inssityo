@@ -4,7 +4,7 @@
       <div class="flexbox">
         <p v-if="idValue === 'P'">Omistatko lemmikkejä?</p>
         <p v-if="idValue === 'R'">Saako kämppis omistaa lemmikkejä?</p>
-        <p v-bind:style="{ fontWeight: 'bold' }">{{ checkedPets ? "-kyllä" : "-ei" }}</p>
+        <p v-bind:class="{'switch-yes': checkedPets}" class="switch-no">{{ checkedPets ? "kyllä" : "ei" }}</p>
       </div>
       <label class="switch" @click="handleCheckedPets" v-on:click="emitToParent">
         <input type="checkbox" :id="idValue+'checkbox-pet'" checked v-model="checkedPets">

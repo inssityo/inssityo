@@ -49,13 +49,11 @@ export default {
 div {
   margin-top: 0.3rem;
 
-  //amount
+  //speed
   label:last-of-type {
-    margin-left: 1.9rem;
+    margin-left: 1.5rem;
     
     input {
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.5rem;
       margin: 0.3rem 0.5rem;
       width: 8.5rem;
     }

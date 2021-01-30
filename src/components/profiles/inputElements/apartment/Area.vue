@@ -3,16 +3,16 @@
     <p class="margin__bottomless">Pinta-ala</p>
     <div class="flexbox">
       <div>
-        <label v-show="aptValue === 'S'" for="minRoom" class="label__border-bottom--green">Min</label>
-        <label v-show="aptValue === 'R'" for="minRoom" class="label__border-bottom--green">Room</label>
-        <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green">Asuinpinta-ala</label>
-        <input type="text" id="min-room" v-model="minRoom" v-on:keyup="emitToParent">
+        <label v-show="aptValue === 'S'" for="minRoom" class="label__border-bottom--green border-radius__left">Min</label>
+        <label v-show="aptValue === 'R'" for="minRoom" class="label__border-bottom--green border-radius__left">Room</label>
+        <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green border-radius__left">Asuinpinta-ala</label>
+        <input type="text" id="min-room" class="border-radius__right" v-model="minRoom" v-on:keyup="emitToParent">
       </div>
       <div>
-        <label v-show="aptValue === 'S'" for="maxTotal" class="label__border-bottom--green">Max</label>
-        <label v-show="aptValue === 'R'" for="maxTotal" class="label__border-bottom--green">Total</label>
-        <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green">Kerrospinta-ala</label>
-        <input type="text" id="max-total" v-model="maxTotal" v-on:keyup="emitToParent">
+        <label v-show="aptValue === 'S'" for="maxTotal" class="label__border-bottom--green border-radius__left">Max</label>
+        <label v-show="aptValue === 'R'" for="maxTotal" class="label__border-bottom--green border-radius__left">Total</label>
+        <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green border-radius__left">Kerrospinta-ala</label>
+        <input type="text" id="max-total" class="border-radius__right" v-model="maxTotal" v-on:keyup="emitToParent">
       </div>
     </div>
   </div>
@@ -44,13 +44,9 @@ export default {
 
 label {
   background: v.$White;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
   margin: auto 0;
 }
 input[type="text"] {
-  padding: 0.2rem 0.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
   margin: 0.4rem 0;
   width: 1.9rem;
 }

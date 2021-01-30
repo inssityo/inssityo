@@ -1,10 +1,10 @@
 <template>
   <header>
-    <nav class="navbar" :class="{ 'navbar-hidden': !showNavbar }">
-      <div class="navbar-div">
+    <nav class="navbar flexbox" :class="{ 'navbar-hidden': !showNavbar }">
+      <div class="flexbox">
         <router-link to="/" class="kam-logo">Kämpp</router-link> 
-        <div class="dropdown pointer">
-          <button class="dropbtn pointer"> 
+        <div class="dropdown">
+          <button class="dropbtn"> 
             <i class="fas fa-equals"></i>
           </button>
           <div class="dropdown-content">
@@ -58,9 +58,6 @@ export default {
 
 .navbar {
   background-color: v.$KAMGreenDark;
-  display: flex; 
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
   position: fixed;
   transform: translate3d(0, 0, 0);
@@ -71,10 +68,7 @@ export default {
   box-shadow: none;
   transform: translate3d(0, -100%, 0);
 }
-.navbar-div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.flexbox .flexbox {
   height: 2rem;
   width: 100vw;
   padding: 1rem 2rem;
@@ -82,8 +76,13 @@ export default {
 .kam-logo {
   font-family: v.$KAMQuinn;
   text-transform: uppercase;
-  font-size: 2.1rem!important;
+  font-size: 2.1rem;
   color: v.$White;
+  letter-spacing: 0.1rem;
+}
+.kam-logo:hover {
+  letter-spacing: 0.05rem;
+  text-transform: lowercase;
 }
 .dropdown {
   overflow: hidden;
@@ -99,7 +98,6 @@ export default {
     padding: 0;
   }
 }
-
 svg {
   font-size: 1.6rem;
 }
@@ -112,7 +110,7 @@ svg {
   box-shadow: 0 0.6rem 1rem 0 rgba(0,0,0,0.2);
   z-index: 1;
   right: 0;
-  padding: 1.1rem 0 0 0;
+  padding: 1.2rem 0 0 0;
   
   a {
     float: none;
@@ -136,4 +134,5 @@ svg {
 a {
   font-size: 1rem;
 }
+
 </style>
