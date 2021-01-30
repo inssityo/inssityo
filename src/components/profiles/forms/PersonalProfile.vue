@@ -1,67 +1,66 @@
 <template>
-  <div id="personal-profile" class="section">  
+  <div id="personal-profile">  
     <h2>Kerro itsestäsi:</h2>
 
     <div class="form_group-grid--1">
 
       <div class="form_group_item--1-grid">
         <div class="form_group_item--1">
-          <ProfileImage v-on:childToParent="onChildClickProfileImage" />
+          <ProfileImage v-on:childToParent="onChildClickProfileImage" v-on:click="emitToParent" />
         </div>
         <div class="form_group_item--2">
           <label for="firstname">Etunimi</label>
-          <input type="text" id="firstname" v-model="firstname" v-on:keyup="emitToParent">
+          <input type="text" id="firstname" v-model="user.name" v-on:keyup="emitToParent">
         </div>
         <div class="form_group_item--3">
           <label for="lastname">Sukunimi</label>
-          <input type="text" id="lastname" v-model="lastname">
+          <input type="text" id="lastname" v-model="user.surname" v-on:keyup="emitToParent">
         </div>
         <div class="form_group_item--4">
-          <Age v-on:childToParent="onChildClickAge" />
+          <Age v-on:childToParent="onChildClickAge" v-on:click="emitToParent" />
         </div>
         <div class="form_group_item--5">
-          <Gender v-on:childToParent="onChildClickGender" />
+          <Gender v-on:childToParent="onChildClickGender" v-on:click="emitToParent" />
         </div>
 
-        <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': fromChildStatus === 1}">
-          <Status v-on:childToParent="onChildClickStatus" />
+        <div class="form_group_item--6" v-bind:class="{'form_group_item--6-2': user.employmentStatus === 1}">
+          <Status v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
-        <div class="form_group_item--7" v-if="fromChildStatus === 1">
-          <WorkType v-on:childToParent="onChildClickWorkType" />
+        <div class="form_group_item--7" v-show="user.employmentStatus === 1">
+          <WorkType v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
         </div>
 
         <div class="form_group_item--8">
-          <textarea type="text" id="description-p" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="description"></textarea>
+          <textarea type="text" id="description-p" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="user.description" v-on:keyup="emitToParent"></textarea>
         </div>
       </div>
 
       <div class="form_group_item--2-grid">
         <div class="form_group_item--1">
-          <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" />
+          <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" v-on:click="emitToParent" />
         </div>
       </div>
 
       <div class="form_group_item--3-grid">
         <div class="form_group_item--1">
-          <Sociality id-value="P" v-on:childToParent="onChildClickSociality" />
+          <Sociality id-value="P" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent" />
         </div>
 
         <div class="form_group_item--2">
-          <Traits id-value="P" v-on:childToParent="onChildClickTraits"/>
+          <Traits id-value="P" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
             <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
           <li v-for="trait in filteredTraits" :key="trait.value">{{trait.value}}</li>
         </div>
 
         <div class="form_group_item--3">
-          <Pets id-value="P" v-on:childToParent="onChildClickPets" />
+          <Pets id-value="P" v-on:childToParent="onChildClickPets" v-on:click="emitToParent" />
         </div>
 
         <div class="form_group_item--4">
-          <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" />
+          <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" v-on:click="emitToParent" />
         </div>
 
       </div>
-
     </div>
 
   </div>
@@ -100,131 +99,135 @@ export default {
  
   data() {
     return {
-      firstname: '',
-      lastname: '',
-      email: '',
-      description: '',
-
-      checkedPets: true,
-      fromChildAge: null,
-      fromChildGender: null,
-      fromChildStatus: null,
-      fromChildSrc: '',
-      fromChildCheckedTraitList: [],
-      fromChildCheckedHobbyList: [],
-      fromChildCheckedPets: true,
-      fromChildCheckedPetList: [],
-      fromChildCheckedIntoxidantList: [],
-      fromChildSociality: null,
-      fromChildWorkType: null,
-      
       errors: {},
       errorList: {},
       isValid: true,
+
+      user: {
+        email: '',
+        password: '',
+        creationTime: '',
+        lastActive: '',
+        __v: 0,
+
+        name: '',
+        surname: '',
+        movingDate: '',
+        img: '',
+
+        ageGroup: null,
+        gender: null,
+        location: [],
+        rentLimit: null,
+        maxRoomMates: null,
+        employmentStatus: null,
+        workType: null,
+
+        description: '',
+        alcohol: 1,
+        smoking: 1,
+        drugs: 1,
+
+        personalityTraits: [],
+        sociality: 1,
+        pets: true,
+        petTypes: [ 
+          {
+            dogs: false,
+            cats: false,
+            rodents: false,
+            birds: false,
+            fishes: false,
+            terrarium: false,
+            other: false,
+            _id: ''
+          }
+        ],
+        hobbies: [
+          {
+            collecting: 1,
+            crafts: 1,
+            informationTech: 1,
+            sports: 1,
+            music: 1,
+            games: 1,
+            reading: 1,
+            art: 1,
+            culture: 1,
+            cooking: 1,
+            travelling: 1,
+            voluntaryWork: 1,
+            _id: ''
+          }
+        ],
+
+        blockedUsers: [],
+        targetProfile: {},
+      }
     }
   },
   computed: {
-    filteredTraits() {
-      return this.fromChildCheckedTraitList.filter((trait) => { 
+    /*filteredTraits() {
+      return this.user.personalityTraits.filter((trait) => { 
         return trait.checked;
       });
-    }
+    }*/
   },
+  
 
   methods: {
     emitToParent() {
-      this.$emit('childToParent', this.firstname)
+      this.$emit('childToParent', { 'user': this.user, 'firstname': this.user.name });
     },
     onChildClickGender(value) {
-      this.fromChildGender = value;
+      this.user.gender = value;
     },
     onChildClickAge(value) {
-      this.fromChildAge = value;
+      this.user.ageGroup = value;
     },
     onChildClickStatus(value) {
-      this.fromChildStatus = value;
+      this.user.employmentStatus = value;
       this.handleWorkType();
     },
     onChildClickPets(value) {
-      this.fromChildCheckedPets = value.checked;
-      this.fromChildCheckedPetList = value.petList;
+      this.user.pets = value.checked;
+      this.user.petTypes = value.petList; //TSEKKAA OIKEA MUOTO
     },
     onChildClickProfileImage(value) {
-      this.fromChildSrc = value;
+      this.user.img = value; //TSEKKAA OIKEA MUOTO
     },
     onChildClickTraits(value) {
-      this.fromChildCheckedTraitList = value;
+      this.user.personalityTraits = value; //TSEKKAA OIKEA MUOTO
     },
     onChildClickHobbies(value) {
-      this.fromChildCheckedHobbyList = value;
+      this.user.hobbies = value;  //TSEKKAA OIKEA MUOTO
     },
-    onChildClickIntoxicants(value) {
-      this.fromChildCheckedIntoxidantList = value;
+    onChildClickIntoxicants(value) { //Toimii
+      this.user.alcohol = value[0].alcohol;
+      this.user.smoking = value[0].smoking;
+      this.user.drugs = value[0].drugs;
     },
     onChildClickSociality(value) {
-      this.fromChildSociality = value;
+      this.user.sociality = value;
     },
     onChildClickWorkType(value) {
-      this.fromChildWorkType = value;
+      this.user.workType = value;
     },
     handleWorkType() {
-      if (this.fromChildStatus !== 1) {
-        this.fromChildWorkType = null;
+      if (this.user.employmentStatus !== 1) {
+        this.user.workType = null;
       }
     }
   },
   mounted() {
 
   }
-
-  /*
-  
-  {
-  "email": "example@internet.com", req
-  "password": "secret", req
-  "lastActive" req
-  "ilmoituksen jättö" req
-  "name": "Edwin",
-  "surname": "Xample",
-  "ageGroup": 3,
-  "gender": 1,
-  "location": ["Helsinki", "Espoo", "Vantaa"],
-  "rentLimit": 900,
-  "maxRoomMates": 3,
-  "employmentStatus": 3,
-  "description": "A perfect example to live with",
-  "alcohol": 2,
-  "smoking": 1,
-  "drugs": 1,
-  "personalityTraits": ["Harkitseva", "Sopeutuvainen", "Määrätietoinen"],
-  "sociality": 2,
-  "pets": false,
-  "hobbies": {
-    "collecting": 1,
-    "crafts": 3,
-    "informationTech": 5,
-    "sports": 4,
-    "music": 1,
-    "games": 5,
-    "reading": 2,
-    "art": 3,
-    "culture": 1,
-    "cooking": 4,
-    "travelling": 1,
-    "voluntaryWork": 1
-  }
-}
-  */
 }
 </script>
 
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
-.section {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
 input[type="text"] {
   padding: 0.5rem;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -234,22 +237,7 @@ input[type="text"] {
   border-width: 0.15rem;
   width: 100%;
 }
-input[type="text"]:focus, input[type="select"]:focus {
-  outline: none;
-  background: v.$KAMGreyLight;
-}
-select {
-  padding: 0 0.2rem !important;
-  margin: 0;
-  height: 2rem;
-  width: -webkit-fill-available;
-  width: 100%;
-  border-radius: 0.5rem;
-  border-style: none none solid none !important;
-  border-color: #016361 !important;
-  border-width: 0.15rem;
-  background: v.$White;
-}
+
 .form_group-grid--1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
