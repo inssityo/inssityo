@@ -30,7 +30,7 @@
             <div class="divider"></div>
           </div>
         </div>
-        <input class="box" type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" v-on:click="emitToParent" />
+        <input class="box" type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" @change="emitToParent" />
       </div>
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    emitToParent () {
+    emitToParent() {
       this.$emit('childToParent', this.sociality)
     },
   }

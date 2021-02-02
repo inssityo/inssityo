@@ -7,20 +7,29 @@
         <p v-bind:class="{'switch-yes': checkedPets}" class="switch-no">{{ checkedPets ? "kyllä" : "ei" }}</p>
       </div>
       <label class="switch" @click="handleCheckedPets" v-on:click="emitToParent">
-        <input type="checkbox" :id="idValue+'checkbox-pet'" checked v-model="checkedPets">
+        <input type="checkbox" :id="idValue+'checkbox-pet'" checked @click="updateChecked">
         <span class="slider round"></span>
       </label>
     </div>
     <div class="check__label-only" v-if="checkedPets">
-      <div v-for="(pet, index,) in optionsPets" :key="index">
-        <input type="checkbox" :id="idValue+'p'+index" v-model="pet.checked"/>
-        <label class="hover--check__label-only" :for="idValue+'p'+index" v-on:click="emitToParent" @click="handlePets(pet.value)">{{ pet.text }}</label>
+      <div v-for="(pet, index,) in optionPets" :key="index">
+        <input type="checkbox" :id="idValue+'p'+index" />
+        <label class="hover--check__label-only" :for="idValue+'p'+index" @click="handlePets(pet.value)">{{ pet.text }}</label>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
+const DOGS ='dogs';
+const CATS = 'cats';
+const RODENTS = 'rodents';
+const BIRDS = 'birds';
+const FISHES = 'fishes';
+const TERRARIUM = 'terrarium';
+const OTHER = 'other';
+
 export default {
   name: 'Pets',
   props: ['idValue'],
@@ -28,52 +37,68 @@ export default {
   data() {
     return {
       checkedPets: true,
-      optionsPets: [
-        { text: 'Koiria', value: 'dogs', checked: false },
-        { text: 'Kissoja', value: 'cats', checked: false },
-        { text: 'Jyrsijöitä', value: 'rodents', checked: false },
-        { text: 'Lintuja', value: 'birds', checked: false },
-        { text: 'Kaloja', value: 'fishes', checked: false },
-        { text: 'Terraarioeläimiä', value: 'terrarium', checked: false },
-        { text: 'Muita eläimiä', value: 'other', checked: false }
+      optionPets: [
+        { text: 'Koiria', value: DOGS },
+        { text: 'Kissoja', value: CATS },
+        { text: 'Jyrsijöitä', value: RODENTS },
+        { text: 'Lintuja', value: BIRDS },
+        { text: 'Kaloja', value: FISHES },
+        { text: 'Terraarioeläimiä', value: TERRARIUM },
+        { text: 'Muita eläimiä', value: OTHER }
       ],
-      pets: [
-        { 
-          dogs: false,
-          cats: false,
-          rodents: false,
-          birds: false,
-          fishes: false,
-          terrarium: false,
-          other: false,
-        }
-      ]
+      pets: { 
+        dogs: false,
+        cats: false,
+        rodents: false,
+        birds: false,
+        fishes: false,
+        terrarium: false,
+        other: false,
+      },
     }
   },
   methods: {
-    emitToParent () {
-      console.log(JSON.stringify(this.pets))
-      this.$emit('childToParent', {'checked': !this.checkedPets, 'petList': this.optionsPets});
+    emitToParent() {
+      this.$emit('childToParent', {'checked': this.checkedPets, 'petList': [this.pets]});
     },
+    //if no animals allowed, set all animals false
     handleCheckedPets() {
       if(!this.checkedPets) {
-        this.optionsPets.forEach(pet => {
-          pet.checked = false;
-        });
+        for (var key in this.pets ) {
+          this.pets[key] = false;
+        }
       }
     },
-    handlePets(value) { //Ei toimi
+    handlePets(value) {
       switch(value) {
-        case 'dogs':
-          this.pets[0].dogs = true;
+        case DOGS:
+          this.pets.dogs = !this.pets.dogs;
           break;
-        case 'cats':
-          this.pets[0].cats = true;
+        case CATS:
+          this.pets.cats = !this.pets.cats;
           break;
-        case 'rodents':
-          this.pets[0].rodents = true;
+        case RODENTS:
+          this.pets.rodents = !this.pets.rodents;
+          break;
+        case BIRDS:
+          this.pets.birds = !this.pets.birds;
+          break;
+        case FISHES:
+          this.pets.fishes = !this.pets.fishes;
+          break;
+        case TERRARIUM:
+          this.pets.terrarium = !this.pets.terrarium;
+          break;
+        case OTHER:
+          this.pets.other = !this.pets.other;
           break;
       }
+      this.emitToParent();
+    },
+    updateChecked: function () {
+      this.checkedPets = !this.checkedPets;
+      this.$nextTick(function () {});
+      this.emitToParent();
     }
   }
 }

@@ -5,8 +5,8 @@
       <p v-if="idValue === 'R'">Sallitko alkoholin käytön päihtymistarkoitukseen?</p>
       <div class="check__label-only" >
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="idValue+'i0'+index" :value="use.value" v-model="intoxidants[0].alcohol" v-on:click="emitToParent"/>
-          <label class="hover--check__label-only" :for="idValue+'i0'+index" v-on:click="emitToParent" @click="handleIntoxicants(1, use.value)">{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i0'+index" :value="use.value" v-model="intoxidants.alcohol"/>
+          <label class="hover--check__label-only" :for="idValue+'i0'+index" @click="handleIntoxicants(1, use.value)">{{ use.text }}</label>
         </div>
       </div>
     </div>
@@ -16,8 +16,8 @@
       <p v-if="idValue === 'R'">Sallitko tupakoinnin?</p>
       <div class="check__label-only">
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="idValue+'i1'+index" :value="use.value" v-model="intoxidants[0].smoking" v-on:click="emitToParent"/>
-          <label class="hover--check__label-only" :for="idValue+'i1'+index" v-on:click="emitToParent" @click="handleIntoxicants(2, use.value)">{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i1'+index" :value="use.value" v-model="intoxidants.smoking" />
+          <label class="hover--check__label-only" :for="idValue+'i1'+index" @click="handleIntoxicants(2, use.value)">{{ use.text }}</label>
         </div>
       </div>
     </div>
@@ -27,8 +27,8 @@
       <p v-if="idValue === 'R'">Sallitko huumavien aineiden käytön?</p>
       <div class="check__label-only">
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="idValue+'i2'+index" :value="use.value" v-model="intoxidants[0].drugs" v-on:click="emitToParent"/>
-          <label class="hover--check__-only" :for="idValue+'i2'+index" v-on:click="emitToParent" @click="handleIntoxicants(3, use.value)">{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i2'+index" :value="use.value" v-model="intoxidants.drugs" />
+          <label class="hover--check__-only" :for="idValue+'i2'+index" @click="handleIntoxicants(3, use.value)">{{ use.text }}</label>
         </div>
       </div>
     </div>
@@ -42,13 +42,11 @@ export default {
 
   data() {
     return {
-      intoxidants: [
-        { 
-          alcohol: 1,
-          smoking: 1,
-          drugs: 1 
-        }
-      ],
+      intoxidants: { 
+        alcohol: 1,
+        smoking: 1,
+        drugs: 1 
+      },
       optionUses: [
         { text: 'En lainkaan', value: 1 },
         { text: 'Silloin tällöin', value: 2 },
@@ -63,15 +61,16 @@ export default {
     handleIntoxicants(intoxicant, value) {
       switch(intoxicant) {
         case 1:
-          this.intoxidants[0].alcohol = value;
+          this.intoxidants.alcohol = value;
           break;
         case 2:
-          this.intoxidants[0].smoking = value;
+          this.intoxidants.smoking = value;
           break;
         case 3:
-          this.intoxidants[0].drugs = value;
+          this.intoxidants.drugs = value;
           break;
       }
+      this.emitToParent();
     }
   }
 }

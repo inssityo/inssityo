@@ -5,12 +5,12 @@
       <p v-if="idValue === 'P'">En harrasta<span>-</span>Himoharrastaja</p>
       <p v-if="idValue === 'R'">Ei harrasta<span>-</span>Himoharrastaja</p>
     </div>
-    <div class="flexbox" v-for="(hobby, index) in optionsHobbies" :key="'h'+index" :id="idValue+'h'+index">  
+    <div class="flexbox" v-for="(hobby, index) in optionHobbies" :key="'h'+index" :id="idValue+'h'+index">  
       <p class="margin__nothing">{{ hobby.text }}</p>
       <div class="check__label-only" >
         <div v-for="(level, index2,) in optionLevels" :key="'l'+index2">
-          <input type="radio" :id="index+idValue+'h'+index2" :value="level.level" v-model="optionsHobbies[index].level"/>
-          <label :for="index+idValue+'h'+index2" v-on:click="emitToParent" ></label>
+          <input type="radio" :id="index+idValue+'h'+index2" :value="level.level" v-model="optionHobbies[index].level" @change="updateLevel(index)"/>
+          <label :for="index+idValue+'h'+index2"></label>
         </div>
       </div>
     </div>
@@ -18,25 +18,39 @@
 </template>
 
 <script>
+
+const READING = 'reading';
+const MUSIC = 'music';
+const CRAFTS = 'crafts';
+const SPORTS = 'sports';
+const CULTURE = 'culture';
+const ART = 'art';
+const COLLECTING = 'collecting';
+const COOKING = 'cooking';
+const GAMES = 'games';
+const VOLUNTARYWORK = 'voluntaryWork';
+const TRAVELLING = 'travelling';
+const INFORMATIONTECH = 'informationTech';
+
 export default {
   name: 'Hobbies',
   props: ['idValue'],
 
   data() {
     return {
-      optionsHobbies: [
-        { text: 'Lukeminen', value: 'reading', level: 1 },
-        { text: 'Musiikki', value: 'music', level: 1 },
-        { text: 'Kädentaidot', value: 'crafts', level: 1 },
-        { text: 'Urheilu', value: 'sports', level: 1 },
-        { text: 'Kulttuuri', value: 'culture', level: 1 },
-        { text: 'Taide', value: 'art', level: 1 },
-        { text: 'Keräily', value: 'collecting', level: 1 },
-        { text: 'Ruuanlaitto', value: 'cooking', level: 1 },
-        { text: 'Pelaaminen', value: 'games', level: 1 },
-        { text: 'Vapaaehtoistyö', value: 'voluntaryWork', level: 1 },
-        { text: 'Matkustelu', value: 'travelling', level: 1 },
-        { text: 'Tietotekniikka', value: 'informationTech', level: 1 },
+      optionHobbies: [
+        { text: 'Lukeminen', value: READING, level: 1 },
+        { text: 'Musiikki', value: MUSIC, level: 1 },
+        { text: 'Kädentaidot', value: CRAFTS, level: 1 },
+        { text: 'Urheilu', value: SPORTS, level: 1 },
+        { text: 'Kulttuuri', value: CULTURE, level: 1 },
+        { text: 'Taide', value: ART, level: 1 },
+        { text: 'Keräily', value: COLLECTING, level: 1 },
+        { text: 'Ruuanlaitto', value: COOKING, level: 1 },
+        { text: 'Pelaaminen', value: GAMES, level: 1 },
+        { text: 'Vapaaehtoistyö', value: VOLUNTARYWORK, level: 1 },
+        { text: 'Matkustelu', value: TRAVELLING, level: 1 },
+        { text: 'Tietotekniikka', value: INFORMATIONTECH, level: 1 },
       ],
       optionLevels: [
         { level: 1 },
@@ -47,46 +61,71 @@ export default {
         { level: 6 },
         { level: 7 },
       ],
-      hobbies: [
-        {
-          reading: 0,
-          music: 1,
-          crafts: 1,
-          sports: 1,
-          culture: 1,
-          art: 1,
-          collecting: 1,
-          cooking: 1,
-          games: 1,
-          voluntaryWork: 1,
-          travelling: 1,
-          informationTech: 1
-        }
-      ]
+      hobbies: {
+        reading: 0,
+        music: 1,
+        crafts: 1,
+        sports: 1,
+        culture: 1,
+        art: 1,
+        collecting: 1,
+        cooking: 1,
+        games: 1,
+        voluntaryWork: 1,
+        travelling: 1,
+        informationTech: 1
+      }
     }
   },
   methods: {
     emitToParent() {
-      /*for (let i = 0; i < this.optionsHobbies.length; i++) {
-        delete this.optionsHobbies[i].text;
-      }*/
-      /*
-      this.hobbies[0].reading = this.optionsHobbies[0].level;
-      this.hobbies[0].music = this.optionsHobbies[1].level;
-      this.hobbies[0].crafts = this.optionsHobbies[2].level;
-      this.hobbies[0].sports = this.optionsHobbies[3].level;
-      this.hobbies[0].culture = this.optionsHobbies[4].level;
-      this.hobbies[0].art = this.optionsHobbies[5].level;
-      this.hobbies[0].collecting = this.optionsHobbies[6].level;
-      this.hobbies[0].cooking = this.optionsHobbies[7].level;
-      this.hobbies[0].games = this.optionsHobbies[8].level;
-      this.hobbies[0].voluntaryWork = this.optionsHobbies[9].level;
-      this.hobbies[0].travelling = this.optionsHobbies[10].level;
-      this.hobbies[0].informationTech = this.optionsHobbies[11].level;
-      */
-      
-      this.$emit('childToParent', this.optionsHobbies)
+      this.$emit('childToParent', [this.hobbies]);
     },
+    updateLevel(index){
+      this.$nextTick(function () {});
+      this.handleHobbies(index);
+    },
+    handleHobbies(index) {
+      switch(this.optionHobbies[index].value) {
+        case READING: 
+          this.hobbies.reading = this.optionHobbies[0].level;
+          break;
+        case MUSIC: 
+          this.hobbies.music = this.optionHobbies[1].level;
+          break;
+        case CRAFTS: 
+          this.hobbies.crafts = this.optionHobbies[2].level;
+          break;
+        case SPORTS: 
+          this.hobbies.sports = this.optionHobbies[3].level;
+          break;
+        case CULTURE: 
+          this.hobbies.culture = this.optionHobbies[4].level;
+          break;
+        case ART: 
+          this.hobbies.art = this.optionHobbies[5].level;
+          break;
+        case COLLECTING: 
+          this.hobbies.collecting = this.optionHobbies[6].level;
+          break;
+        case COOKING: 
+          this.hobbies.cooking = this.optionHobbies[7].level;
+          break;
+        case GAMES: 
+          this.hobbies.games = this.optionHobbies[8].level;
+          break;
+        case VOLUNTARYWORK: 
+          this.hobbies.voluntaryWork = this.optionHobbies[9].level;
+          break;
+        case TRAVELLING: 
+          this.hobbies.travelling = this.optionHobbies[10].level;
+          break;
+        case INFORMATIONTECH: 
+          this.hobbies.informationTech = this.optionHobbies[11].level;
+          break;
+      }
+      this.emitToParent();
+    }
   }
 }
 </script>

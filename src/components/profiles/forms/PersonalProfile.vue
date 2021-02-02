@@ -26,7 +26,7 @@
           <Status v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--7" v-show="user.employmentStatus === 1">
-          <WorkType v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
+          <WorkType :employment-status="user.employmentStatus" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
         </div>
         <div class="row-item--8">
           <label for="description-p">Kuvaus itsestäsi</label>
@@ -46,8 +46,6 @@
         </div>
         <div class="row-item--2">
           <Traits id-value="P" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
-            <!--Printtaus ei toimi alaspäin, mutta filter toimii -->
-          <li v-for="trait in filteredTraits" :key="trait.value">{{trait.value}}</li>
         </div>
         <div class="row-item--3">
           <Pets id-value="P" v-on:childToParent="onChildClickPets" v-on:click="emitToParent" />
@@ -103,7 +101,6 @@ export default {
         password: '',
         creationTime: '',
         lastActive: '',
-        __v: 0,
 
         name: '',
         surname: '',
@@ -116,7 +113,7 @@ export default {
         rentLimit: null,
         maxRoomMates: null,
         employmentStatus: null,
-        workType: null,
+        workType: null, //komponentissa '', kumpi?
 
         description: '',
         alcohol: 1,
@@ -126,7 +123,7 @@ export default {
         personalityTraits: [],
         sociality: 1,
         pets: true,
-        petTypes: [ 
+        petTypes: [ //Miten handlataan tällainen vastaus?
           {
             dogs: false,
             cats: false,
@@ -135,7 +132,6 @@ export default {
             fishes: false,
             terrarium: false,
             other: false,
-            _id: ''
           }
         ],
         hobbies: [
@@ -152,7 +148,6 @@ export default {
             cooking: 1,
             travelling: 1,
             voluntaryWork: 1,
-            _id: ''
           }
         ],
 
@@ -161,15 +156,6 @@ export default {
       }
     }
   },
-  computed: {
-    /*filteredTraits() {
-      return this.user.personalityTraits.filter((trait) => { 
-        return trait.checked;
-      });
-    }*/
-  },
-  
-
   methods: {
     emitToParent() {
       this.$emit('childToParent', { 'user': this.user, 'firstname': this.user.name });
@@ -186,21 +172,22 @@ export default {
     },
     onChildClickPets(value) {
       this.user.pets = value.checked;
-      this.user.petTypes = value.petList; //TSEKKAA OIKEA MUOTO
+      this.user.petTypes = value.petList;
     },
     onChildClickProfileImage(value) {
       this.user.img = value; //TSEKKAA OIKEA MUOTO
+      console.log(JSON.stringify(this.user))
     },
     onChildClickTraits(value) {
-      this.user.personalityTraits = value; //TSEKKAA OIKEA MUOTO
+      this.user.personalityTraits = value;
     },
     onChildClickHobbies(value) {
-      this.user.hobbies = value;  //TSEKKAA OIKEA MUOTO
+      this.user.hobbies = value;
     },
-    onChildClickIntoxicants(value) { //Toimii
-      this.user.alcohol = value[0].alcohol;
-      this.user.smoking = value[0].smoking;
-      this.user.drugs = value[0].drugs;
+    onChildClickIntoxicants(value) {
+      this.user.alcohol = value.alcohol;
+      this.user.smoking = value.smoking;
+      this.user.drugs = value.drugs;
     },
     onChildClickSociality(value) {
       this.user.sociality = value;

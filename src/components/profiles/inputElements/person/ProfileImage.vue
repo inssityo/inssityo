@@ -2,7 +2,7 @@
   <label for="profile-img">
     <input style="display: none" id="profile-img" type="file" @change="onFileSelected">
     <p class="box">Valitse profiilikuva</p>
-    <img :src="require(`../../../../assets/images/${src}`)" alt="Profile Image" v-on:click="emitToParent">
+    <img :src="require(`../../../../assets/images/${src}`)" alt="Profile Image" v-on:click="emitToParent"> <!-- vaihda click -->
   </label>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     emitToParent() {
+      console.log(this.src)
       this.$emit('childToParent', this.src)
     },
     onFileSelected(event) {

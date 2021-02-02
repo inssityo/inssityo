@@ -8,7 +8,14 @@
 <script>
 export default {
   name: 'WorkType',
+  props: ['employmentStatus'],
 
+  watch: {
+    employmentStatus: function() { //(newVal, oldVal) {
+      //console.log("prop changed ", newVal, " ", oldVal)
+      this.handleWorkType();
+    }
+  },
   data() {
     return {
       type: '',
@@ -22,8 +29,14 @@ export default {
   },
   methods: {
     emitToParent () {
+      console.log("type" + this.type)
       this.$emit('childToParent', this.type)
     },
+    handleWorkType() {
+      if(this.employmentStatus !== 1) {
+        this.type = '';
+      }
+    }
   }
 }
 </script>
