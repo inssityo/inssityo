@@ -3,8 +3,8 @@
     <p>Huoneita</p>
     <div class="check__label-only">
       <div v-for="(room, index,) in optionRooms" :key="index">
-        <input type="checkbox" :id="'r'+index" v-model="room.checked"/>
-        <label :for="'r'+index" class="hover--check__label-only" v-on:click="emitToParent">{{ room.text }}</label>
+        <input type="checkbox" :id="'r'+index" />
+        <label :for="'r'+index" class="hover--check__label-only" @click="handleRooms(room.value)">{{ room.text }}</label>
       </div>
     </div>
   </div>
@@ -23,13 +23,47 @@ export default {
         { text: '4', value: 4, checked: false },
         { text: '5', value: 5, checked: false },
         { text: '6+', value: 6, checked: false }
-      ]
+      ],
+      rooms: []
     }
   },
   methods: {
-    emitToParent () {
-      this.$emit('childToParent', this.optionRooms)
+    emitToParent() {
+      this.$emit('childToParent', this.rooms);
     },
+    handleRooms(value) {
+      switch(value) {
+        case 1:
+          this.optionRooms[0].checked = !this.optionRooms[0].checked;
+          break;
+        case 2:
+          this.optionRooms[1].checked = !this.optionRooms[1].checked;
+          break;
+        case 3:
+          this.optionRooms[2].checked = !this.optionRooms[2].checked;
+          break;
+        case 4:
+          this.optionRooms[3].checked = !this.optionRooms[3].checked;
+          break;
+        case 5:
+          this.optionRooms[4].checked = !this.optionRooms[4].checked;
+          break;
+        case 6:
+         this.optionRooms[5].checked = !this.optionRooms[5].checked;
+          break;
+      }
+      this.updateRoomsArr();
+    },
+    updateRoomsArr() {
+      let arr = [];
+      this.optionRooms.forEach(room => {
+        if (room.checked) {
+          arr.push(room.value);
+        }
+      })
+      this.rooms = arr;
+      this.emitToParent();
+    }
   }
 }
 </script>

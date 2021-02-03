@@ -5,7 +5,7 @@
       <p v-if="idValue === 'R'">Sallitko alkoholin käytön päihtymistarkoitukseen?</p>
       <div class="check__label-only" >
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="idValue+'i0'+index" :value="use.value" v-model="intoxidants.alcohol"/>
+          <input type="radio" :id="idValue+'i0'+index" :value="use.value" v-model="intoxicants.alcohol"/>
           <label class="hover--check__label-only" :for="idValue+'i0'+index" @click="handleIntoxicants(1, use.value)">{{ use.text }}</label>
         </div>
       </div>
@@ -16,7 +16,7 @@
       <p v-if="idValue === 'R'">Sallitko tupakoinnin?</p>
       <div class="check__label-only">
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="idValue+'i1'+index" :value="use.value" v-model="intoxidants.smoking" />
+          <input type="radio" :id="idValue+'i1'+index" :value="use.value" v-model="intoxicants.smoking" />
           <label class="hover--check__label-only" :for="idValue+'i1'+index" @click="handleIntoxicants(2, use.value)">{{ use.text }}</label>
         </div>
       </div>
@@ -27,8 +27,8 @@
       <p v-if="idValue === 'R'">Sallitko huumavien aineiden käytön?</p>
       <div class="check__label-only">
         <div v-for="(use, index,) in optionUses" :key="index">
-          <input type="radio" :id="idValue+'i2'+index" :value="use.value" v-model="intoxidants.drugs" />
-          <label class="hover--check__-only" :for="idValue+'i2'+index" @click="handleIntoxicants(3, use.value)">{{ use.text }}</label>
+          <input type="radio" :id="idValue+'i2'+index" :value="use.value" v-model="intoxicants.drugs" />
+          <label :for="idValue+'i2'+index" class="hover--check__label-only" @click="handleIntoxicants(3, use.value)">{{ use.text }}</label>
         </div>
       </div>
     </div>
@@ -37,12 +37,12 @@
 
 <script>
 export default {
-  name: 'Intoxidants',
+  name: 'Intoxicants',
   props: ['idValue'],
 
   data() {
     return {
-      intoxidants: { 
+      intoxicants: { 
         alcohol: 1,
         smoking: 1,
         drugs: 1 
@@ -56,18 +56,18 @@ export default {
   },
   methods: {
     emitToParent() {
-      this.$emit('childToParent', this.intoxidants)
+      this.$emit('childToParent', this.intoxicants)
     },
     handleIntoxicants(intoxicant, value) {
       switch(intoxicant) {
         case 1:
-          this.intoxidants.alcohol = value;
+          this.intoxicants.alcohol = value;
           break;
         case 2:
-          this.intoxidants.smoking = value;
+          this.intoxicants.smoking = value;
           break;
         case 3:
-          this.intoxidants.drugs = value;
+          this.intoxicants.drugs = value;
           break;
       }
       this.emitToParent();

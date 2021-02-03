@@ -71,8 +71,6 @@ import Intoxicants from '../inputElements/person/Intoxicants.vue'
 import Sociality from '../inputElements/person/Sociality.vue'
 import WorkType from '../inputElements/person/WorkType.vue'
 
-//import axios from 'axios';
-
 export default {
   name: 'PersonalProfile',
   el: '#personalProfile',
@@ -97,21 +95,12 @@ export default {
       isValid: true,
 
       user: {
-        email: '',
-        password: '',
-        creationTime: '',
-        lastActive: '',
-
         name: '',
         surname: '',
-        movingDate: '',
         img: '',
 
         ageGroup: null,
         gender: null,
-        location: [],
-        rentLimit: null,
-        maxRoomMates: null,
         employmentStatus: null,
         workType: null, //komponentissa '', kumpi?
 
@@ -150,9 +139,6 @@ export default {
             voluntaryWork: 1,
           }
         ],
-
-        blockedUsers: [],
-        targetProfile: {},
       }
     }
   },
@@ -200,9 +186,6 @@ export default {
         this.user.workType = null;
       }
     }
-  },
-  mounted() {
-
   }
 }
 </script>

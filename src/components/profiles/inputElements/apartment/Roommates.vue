@@ -3,8 +3,8 @@
     <p>Kämppiksiä*</p>
     <div class="check__label-only">
       <div v-for="(mate, index,) in optionRoomMates" :key="index">
-        <input type="checkbox" :id="'rm'+index" v-model="mate.checked"/>
-        <label :for="'rm'+index" class="hover--check__label-only" v-on:click="emitToParent">{{ mate.text }}</label>
+        <input type="radio" :id="'rm'+index" :value="mate.value" v-model="roommates"/>
+        <label :for="'rm'+index" class="hover--check__label-only" v-on:click="emitToParent(mate.value)">{{ mate.text }}</label>
       </div>
     </div>
   </div>
@@ -17,19 +17,21 @@ export default {
   data() {
     return {
       optionRoomMates: [
-        { text: '1', value: 1, checked: false },
-        { text: '2', value: 2, checked: false },
-        { text: '3', value: 3, checked: false },
-        { text: '4', value: 4, checked: false },
-        { text: '5', value: 5, checked: false },
-        { text: '6+', value: 6, checked: false }
-      ]
+        { text: '1', value: 1 },
+        { text: '2', value: 2 },
+        { text: '3', value: 3 },
+        { text: '4', value: 4 },
+        { text: '5', value: 5 },
+        { text: '6+', value: 6 }
+      ],
+      roommates: null
     }
   },
   methods: {
-    emitToParent () {
-      this.$emit('childToParent', this.optionRoomMates)
-    },
+    emitToParent(value) {
+      this.roommates = value;
+      this.$emit('childToParent', this.roommates);
+    }
   }
 }
 </script>

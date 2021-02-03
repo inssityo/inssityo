@@ -3,7 +3,7 @@
     <div class="flexbox">
       <div class="flexbox">
         <p v-if="idValue === 'P'">Omistatko lemmikkejä?</p>
-        <p v-if="idValue === 'R'">Saako kämppis omistaa lemmikkejä?</p>
+        <p v-if="idValue === 'R'">Sallitko lemmikit?</p>
         <p v-bind:class="{'switch-yes': checkedPets}" class="switch-no">{{ checkedPets ? "kyllä" : "ei" }}</p>
       </div>
       <label class="switch" @click="handleCheckedPets" v-on:click="emitToParent">

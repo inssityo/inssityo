@@ -12,48 +12,46 @@
 
       <div class="column column-item--2">
         <div class="row-item--1 flexbox">
-          <RentBuy id-value="A" v-on:childToParent="onChildClickRentBuy" />
+          <RentBuy id-value="A" v-on:childToParent="onChildClickRentBuy" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--2 flexbox">
           <label for="location" class="label__border-bottom--green border-radius__left">Kaupunki*</label>
-          <input type="text" id="location" class="border-radius__right" v-model="location">
+          <input type="text" id="location" class="border-radius__right" v-model="sharedApartment.location.city" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--3 flexbox">
           <label for="neighborhood" class="label__border-bottom--green border-radius__left">Kaupunginosa</label>
-          <input type="text" id="neighborhood" class="border-radius__right" v-model="neighborhood">
+          <input type="text" id="neighborhood" class="border-radius__right" v-model="sharedApartment.location.neighborhood" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--4 flexbox">
           <label for="address" class="label__border-bottom--green border-radius__left">Osoite</label>
-          <input type="text" id="address" class="border-radius__right" v-model="address">
+          <input type="text" id="address" class="border-radius__right" v-model="sharedApartment.location.address" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--5 flexbox"> <!-- tee leveämpi -->
           <label for="area-code" class="label__border-bottom--green border-radius__left">Postinumero</label>
-          <input type="text" id="area-code" class="border-radius__right" v-model="areaCode">
+          <input type="text" id="area-code" class="border-radius__right" v-model="sharedApartment.location.areaCode" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--6 flexbox">
-          <Features v-on:childToParent="onChildClickFeatures" />
+          <Features v-on:childToParent="onChildClickFeatures" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--7 flexbox">
-          <LocationType v-on:childToParent="onChildClickLocationType" />
+          <LocationType v-on:childToParent="onChildClickLocationType" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--8 flexbox">
-          <BuildingType v-on:childToParent="onChildClickBuildingType" />
+          <BuildingType v-on:childToParent="onChildClickBuildingType" v-on:click="emitToParent"/>
         </div>
       </div>
 
       <div class="column column-item--3">
         <div class="row-item--1">
-          <Rooms v-on:childToParent="onChildClickRooms" />
+          <Rooms v-on:childToParent="onChildClickRooms" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--2">
-          <Roommates v-on:childToParent="onChildClickRoommates" />
+          <Roommates v-on:childToParent="onChildClickRoommates" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--3">
-          <PriceMinMax v-on:childToParent="onChildClickPrice" />
+          <PriceMinMax v-on:childToParent="onChildClickPrice" v-on:click="emitToParent"/>
         </div>
           <div class="row-item--4">
-          {{fromChildLocationType}}
-          {{fromChildBuildingType}}
           {{fromChildFeatures}}
           {{fromChildCheckedOwner}}
           </div>
@@ -93,44 +91,51 @@ export default {
   
   data() {
     return {
-      location: '',
-      neighborhood: '',
-      address: '',
-      areaCode: '',
+      //FIKSAA NÄMÄ
       fromChildCheckedOwner: null,
-      fromChildLocationType: [],
-      fromChildBuildingType: [],
       fromChildAreaMin: null,
       fromChildAreaMax: null,
       fromChildPriceMin: null,
       fromChildPriceMax: null,
       fromChildFeatures: [],
-      fromChildRooms: [],
-      fromChildRoommates: [],
       
       errors: {},
       errorList: {},
       isValid: true,
+
+      sharedApartment: {
+        rentLimit: null,
+        maxRoomMates: null,
+        location: {
+          city: '',
+          neighborhood: '',
+          address: '',
+          areaCode: ''
+        },
+        BuildingType: null,
+        locationType: null,
+        maxRooms: null,
+        movingDate: null,
+      }
     }
   },
 
   methods: {
-    /*
     emitToParent() {
-      this.$emit('childToParent', this.firstname)
-    },*/
+      //console.log(JSON.stringify(this.sharedApartment))
+      this.$emit('childToParent', this.sharedApartment)
+    },
     onChildClickRentBuy(value) {
       this.fromChildCheckedOwner = value;
     },
     onChildClickLocationType(value) {
-      this.fromChildLocationType = value;
-      this.handleWorkType();
+      this.sharedApartment.locationType = value;
     },
     onChildClickBuildingType(value) {
-      this.fromChildBuildingType = value;
+      this.sharedApartment.buildingType = value;
     },
-    onChildClickRooms(value) {
-      this.fromChildRooms = value;
+    onChildClickRooms(value) { //Checked
+      this.sharedApartment.maxRooms = value;
     },
     onChildClickPrice(value) {
       this.fromChildPriceMin = value.min;
@@ -139,8 +144,8 @@ export default {
     onChildClickFeatures(value) {
       this.fromChildFeatures = value;
     },
-    onChildClickRoommates(value) {
-      this.fromChildRoommates = value;
+    onChildClickRoommates(value) { //Checked
+      this.sharedApartment.maxRoomMates = value;
     },
   },
 }

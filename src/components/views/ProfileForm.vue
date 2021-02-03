@@ -20,17 +20,17 @@
       <a v-show="choice === 1" href="#personal">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
       </a>
-      <PersonalProfile id="personal" v-show="choice === 1" v-on:childToParent="onChildClick" />
+      <PersonalProfile id="personal" v-show="choice === 1" v-on:childToParent="onChildClickPersonal" />
 
       <a v-show="choice === 1" href="#apt">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
       </a>
-      <AptProfile id="apt" v-show="choice === 1" />
+      <AptProfile id="apt" v-show="choice === 1" v-on:childToParent="onChildClickApt"/>
 
       <a v-show="choice === 1" href="#roommate">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
       </a>
-      <RoommateProfile id="roommate" v-show="choice === 1" />
+      <RoommateProfile id="roommate" v-show="choice === 1" v-on:childToParent="onChildClickRoommate"/>
 
       <div class="flexbox">
         <button type="submit" class="is-danger hover__background--blue">Submit</button>
@@ -72,7 +72,25 @@ export default {
         'Konnichiwa'],  //Japanese
       fromChildFirstName: '',
 
-      user: null,
+      user: {
+        email: '',
+        password: '',
+        creationTime: '',
+        lastActive: '',
+
+        movingDate: '',
+  
+        location: [],
+        rentLimit: null,
+        maxRoomMates: null,
+        
+
+        blockedUsers: [],
+        targetProfile: {},
+      },
+      fromChildPersonalProfile: [],
+      fromChildRoommateProfile: [],
+      fromChildAptProfile: []
     }
   },
   /*
@@ -88,22 +106,53 @@ export default {
     scrollTo: function (hashtag) {
       setTimeout(() => { location.href = hashtag }, TIMEOUT)
     },*/
-    onChildClick (value) {
-      if (value !== null || value !== '') { //Ei toimi
-        this.fromChildFirstName = ', ' + value.firstname; //hello text
-      }
-      else {
+    onChildClickPersonal(value) {
+      //hello text
+      if (value.firstname === null || value.firstname === '') {
         this.fromChildFirstName = '';
       }
-      this.user = value.user;
-      //console.log(JSON.stringify(this.user))
+      else {
+        this.fromChildFirstName = ', ' + value.firstname;
+      }
+
+      //personalProfile
+      this.fromChildPersonalProfile = value.user;
+    },
+    onChildClickRoommate(value) {
+      this.fromChildRoommateProfile = value;
+      //console.log(JSON.stringify(this.fromChildRoommateProfile));
+    },
+    onChildClickApt(value) {
+      this.fromChildAptProfile = value;
+      //console.log(JSON.stringify(this.fromChildAptProfile));
     },
     //random hello text
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
     },
     handleSubmit() {
-
+      console.log("submit")
+      console.log(JSON.stringify(this.user))
+      this.updateUser();
+      console.log(JSON.stringify(this.user))
+    },
+    updateUser() {
+      //personalProfile
+      for (const [key, value] of Object.entries(this.fromChildPersonalProfile)) { //VALMIS
+        console.log(key, value);
+        this.user[key] = value;
+      }
+      //aptProfile
+      for (const [key, value] of Object.entries(this.fromChildAptProfile)) {
+        console.log(key, value);
+        this.user[key] = value;
+      }
+      //roommateProfile
+      for (const [key, value] of Object.entries(this.fromChildRoommateProfile)) {
+        console.log(key, value);
+        this.user[key] = value;
+      }
+      console.log("update")
     }
   },
   created() {

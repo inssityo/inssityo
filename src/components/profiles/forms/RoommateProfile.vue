@@ -14,15 +14,15 @@
         <div class="row-item--3">
           <Gender v-on:childToParent="onChildClickGender" />
         </div>
-        <div class="row-item--4" v-bind:class="{'row-item--4-2': fromChildStatus ===1}">
+        <div class="row-item--4" v-bind:class="{'row-item--4-2': targetProfile.employmentStatus ===1}">
           <Status v-on:childToParent="onChildClickStatus" />
         </div>
-        <div class="row-item--5" v-if="fromChildStatus === 1">
+        <div class="row-item--5" v-show="targetProfile.employmentStatus === 1">
           <WorkType v-on:childToParent="onChildClickWorkType" />
         </div>
         <div class="row-item--6">
           <label for="description-r">Kuvaus kämppiksestä</label>
-          <textarea type="text" id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="description"></textarea>
+          <textarea type="text" id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="targetProfile.description"></textarea>
         </div>
       </div>
 
@@ -84,22 +84,56 @@ export default {
  
   data() {
     return {
-      description: '',
-      checkedPets: true,
-      fromChildAge: null,
-      fromChildGender: null,
-      fromChildStatus: null,
-      fromChildCheckedTraitList: [],
-      fromChildCheckedHobbyList: [],
-      fromChildCheckedPets: true,
-      fromChildCheckedPetList: [],
-      fromChildCheckedIntoxidantList: [],
-      fromChildSociality: null,
-      fromChildWorkType: null,
-      
       errors: {},
       errorList: {},
       isValid: true,
+
+      targetProfile: {  
+        id: '',
+        ageGroup: null,
+        gender: null,
+        location: [],
+        rentLimit: null,
+        maxRoomMates: null,
+        employmentStatus: null,
+        workType: null,
+
+        description: '',
+        alcohol: 1,
+        smoking: 1,
+        drugs: 1,
+
+        personalityTraits: [],
+        sociality: 1,
+        pets: true,
+        petTypes: [
+          {
+            dogs: false,
+            cats: false,
+            rodents: false,
+            birds: false,
+            fishes: false,
+            terrarium: false,
+            other: false,
+          }
+        ],
+        hobbies: [
+          {
+            collecting: 1,
+            crafts: 1,
+            informationTech: 1,
+            sports: 1,
+            music: 1,
+            games: 1,
+            reading: 1,
+            art: 1,
+            culture: 1,
+            cooking: 1,
+            travelling: 1,
+            voluntaryWork: 1,
+          }
+        ],
+      }
     }
   },
   computed: {
@@ -107,42 +141,43 @@ export default {
   },
 
   methods: {
-    /*
     emitToParent() {
-      this.$emit('childToParent', this.firstname)
-    },*/
+      this.$emit('childToParent', this.targetProfile);
+    },
     onChildClickGender(value) {
-      this.fromChildGender = value;
+      this.targetProfile.gender = value;
     },
     onChildClickAge(value) {
-      this.fromChildAge = value;
+      this.targetProfile.ageGroup = value;
     },
     onChildClickStatus(value) {
-      this.fromChildStatus = value;
+      this.targetProfile.employmentStatus = value;
       this.handleWorkType();
     },
     onChildClickPets(value) {
-      this.fromChildCheckedPets = !value.tableOne;
-      this.fromChildCheckedPetList = value.tableTwo;
+      this.targetProfile.pets = value.checked;
+      this.targetProfile.petTypes = value.petList;
     },
     onChildClickTraits(value) {
-      this.fromChildCheckedTraitList = value;
+      this.targetProfile.personalityTraits = value;
     },
     onChildClickHobbies(value) {
-      this.fromChildCheckedHobbyList = value;
+      this.targetProfile.hobbies = value;
     },
     onChildClickIntoxicants(value) {
-      this.fromChildCheckedIntoxidantList = value;
+      this.user.alcohol = value.alcohol;
+      this.user.smoking = value.smoking;
+      this.user.drugs = value.drugs;
     },
     onChildClickSociality(value) {
-      this.fromChildSociality = value;
+      this.targetProfile.sociality = value;
     },
     onChildClickWorkType(value) {
-      this.fromChildWorkType = value;
+      this.targetProfile.workType = value;
     },
     handleWorkType() {
-      if (this.fromChildStatus !== 1) {
-        this.fromChildWorkType = null;
+      if (this.targetProfile.employmentStatus !== 1) {
+        this.targetProfile.workType = null;
       }
     }
   },
