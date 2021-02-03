@@ -59,24 +59,18 @@ export default {
       ],
       floorPlanText: '',
       description: '',
-      optionFloorPlans: [ // POISTA LISTASTA AINA SE ABBR, JOKA ON JO VALITTU
+      optionFloorPlans: [
         { text: 'huone', abbr: 'h', value: 1 },
         { text: 'keittiö', abbr: 'k', value: 2 },
         { text: 'keittokomero', abbr: 'kk', value: 3 },
         { text: 'ruokailuhuone', abbr: 'rh', value: 4 },
         { text: 'kylpyhuone', abbr: 'kh', value: 5 },
         { text: 'vessa', abbr: 'wc', value: 6 },
-        { text: 'erillinen vessa', abbr: 'erill. wc', value: 7 },
-        { text: 'sauna', abbr: 's', value: 8 },
-        { text: 'spaosasto', abbr: 'spa.os', value: 9 },
-        { text: 'takkahuone', abbr: 'tkh', value: 10 },
-        { text: 'vaatehuone', abbr: 'vh', value: 11 },
-        { text: 'kodinhoitohuone', abbr: 'khh', value: 12 },
-        { text: 'aula', abbr: 'aula', value: 13 },
-        { text: 'terassi', abbr: 'ter', value: 14 },
-        { text: 'parveke', abbr: 'parv', value: 15 },
-        { text: 'lasitettu parveke', abbr: 'l.parv', value: 16 },
-        { text: 'ranskalainenparveke', abbr: 'rp', value: 17 }
+        { text: 'sauna', abbr: 's', value: 7 },
+        { text: 'vaatehuone', abbr: 'vh', value: 8 },
+        { text: 'kodinhoitohuone', abbr: 'khh', value: 9 },
+        { text: 'terassi', abbr: 'ter', value: 10 },
+        { text: 'parveke', abbr: 'parv', value: 11 },
       ]
     }
   },

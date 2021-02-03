@@ -13,18 +13,16 @@ export default {
     return {
       checkedFeatures: '',
       optionFeatures: [
-        { text: 'Balcony', value: 1, checked: false }, //Poista listasta parveke, sauna, autotalli, kun kutsutaan AptRentBuysta
-        { text: 'Sauna', value: 2, checked: false },
-        { text: 'Lift', value: 3, checked: false },
-        { text: 'Garage', value: 4, checked: false },
-        { text: 'Hot Tub', value: 5, checked: false },
-        { text: 'Swimming Pool', value: 6, checked: false },
-        { text: 'Furnished', value: 7, checked: false }
+        { text: 'Lift', value: 1, checked: false },
+        { text: 'Garage', value: 2, checked: false },
+        { text: 'Hot Tub', value: 3, checked: false },
+        { text: 'Swimming Pool', value: 4, checked: false },
+        { text: 'Furnished', value: 5, checked: false }
       ]
     }
   },
   methods: {
-    emitToParent () {
+    emitToParent () { //multiple
       this.$emit('childToParent', this.checkedFeatures)
     },
   }
