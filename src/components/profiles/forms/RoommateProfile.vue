@@ -8,17 +8,17 @@
         <div class="row-item--1">
           <RoommateImage />
         </div>
-        <div class="row-item--2">
-          <Age v-on:childToParent="onChildClickAge" />
+        <div class="row-item--2" v-bind:class="{'remove__align-center': showAge}">
+          <Age id-value="R" v-on:childToParent="onChildClickAge" />
         </div>
-        <div class="row-item--3">
-          <Gender v-on:childToParent="onChildClickGender" />
+        <div class="row-item--3" v-bind:class="{'remove__align-center': showGender}">
+          <Gender id-value="R" v-on:childToParent="onChildClickGender" />
         </div>
-        <div class="row-item--4" v-bind:class="{'row-item--4-2': targetProfile.employmentStatus ===1}">
-          <Status v-on:childToParent="onChildClickStatus" />
+        <div class="row-item--4" v-bind:class="{'row-item--4-2': employed, 'remove__align-center': showStatus}">
+          <Status id-value="R" v-on:childToParent="onChildClickStatus" />
         </div>
-        <div class="row-item--5" v-show="targetProfile.employmentStatus === 1">
-          <WorkType v-on:childToParent="onChildClickWorkType" />
+        <div class="row-item--5" v-show="employed" v-bind:class="{'remove__align-center': showWorkType}">
+          <WorkType id-value="R" :employment-status-r="targetProfile.employed" v-on:childToParent="onChildClickWorkType" />
         </div>
         <div class="row-item--6">
           <label for="description-r">Kuvaus kämppiksestä</label>
@@ -88,11 +88,17 @@ export default {
       errorList: {},
       isValid: true,
 
+      showAge: false,
+      showGender: false,
+      showStatus: false,
+      employed: false,
+      showWorkType: false,
+
       targetProfile: {  
         id: '',
-        ageGroup: null,
-        gender: null,
-        location: [],
+        ageGroup: [],
+        gender: [],
+        location: [], //kaupunkeja ja kaupunginosia voi olla monia
         rentLimit: null,
         maxRoomMates: null,
         employmentStatus: null,
@@ -145,13 +151,18 @@ export default {
       this.$emit('childToParent', this.targetProfile);
     },
     onChildClickGender(value) {
-      this.targetProfile.gender = value;
+      this.targetProfile.gender = value.genders;
+      this.showGender = value.show;
     },
     onChildClickAge(value) {
-      this.targetProfile.ageGroup = value;
+      this.targetProfile.ageGroup = value.ages;
+      this.showAge = value.show;
     },
     onChildClickStatus(value) {
-      this.targetProfile.employmentStatus = value;
+      this.targetProfile.employmentStatus = value.statuses;
+      this.showStatus = value.show;
+
+      this.employed = this.targetProfile.employmentStatus.includes(1);
       this.handleWorkType();
     },
     onChildClickPets(value) {
@@ -173,10 +184,11 @@ export default {
       this.targetProfile.sociality = value;
     },
     onChildClickWorkType(value) {
-      this.targetProfile.workType = value;
+      this.targetProfile.workType = value.types;
+      this.showWorkType = value.show;
     },
     handleWorkType() {
-      if (this.targetProfile.employmentStatus !== 1) {
+      if (!this.employed) {
         this.targetProfile.workType = null;
       }
     }
@@ -192,6 +204,10 @@ export default {
 
 h2 {
   padding-top: 1rem;
+}
+.remove__align-center {
+  align-items: normal !important;
+  margin-top: 0.9rem !important;
 }
 .container {
   grid-template-columns: repeat(3, 1fr);
@@ -242,6 +258,7 @@ h2 {
   display: flex;
   align-items: center;
   margin: 0.8rem 0.4rem 0 0.8rem;
+  z-index: 1;
 }
 //Gender
 .column-item--1.container .row-item--3 {
@@ -252,6 +269,7 @@ h2 {
   display: flex;
   align-items: center;
   margin: 0.8rem 0.8rem 0 0.4rem;
+  z-index: 1;
 }
 //Status large
 .column-item--1.container .row-item--4 {
@@ -261,8 +279,9 @@ h2 {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.8rem;
+  margin: 0.8rem 0.8rem 0 0.8rem;
   justify-content: space-between;
+  z-index: 1;
 }
 //Status
 .column-item--1.container .row-item--4-2 {
@@ -272,7 +291,7 @@ h2 {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.4rem 0 0.8rem;
+  margin: 0.8rem 0.4rem 0 0.8rem;
 }
 //WorkType
 .column-item--1.container .row-item--5 {
@@ -282,7 +301,8 @@ h2 {
   grid-row-end: 9;
   display: flex;
   align-items: center;
-  margin: 0 0.8rem 0 0.4rem;
+  margin: 0.8rem 0.8rem 0 0.4rem;
+  z-index: 1;
 }
 //Description
 .column-item--1.container .row-item--6 {
@@ -290,11 +310,11 @@ h2 {
   grid-column-end: 3;
   grid-row-start: 9;
   grid-row-end: 14;
-  margin: 0.8rem;
+  margin: 1rem 0.8rem 0.8rem 0.8rem;
 }
 .column-item--1.container .row-item--6 textarea {
   margin-top: 0.4rem;
-  height: 10.9rem;
+  height: 10.7rem;
 }
 //Hobbies
 .column-item--2.container .row-item--1 {

@@ -34,7 +34,7 @@
             <input type="text" id="buildYear" class="border-radius__right" v-model="buildYear">
           </div>
           <div class="flexbox">
-            <BuildingType v-on:childToParent="onChildClickBuildingType"/>
+            <BuildingType id-value="ARB" v-on:childToParent="onChildClickBuildingType"/>
             <Price apt-value="R"/> <!-- siirrä muualle -->
           </div>
           <div class="flexbox">
@@ -60,7 +60,7 @@
           </div>
           <div class="flexbox flexbox">
             <Condition v-on:childToParent="onChildClickCondition"/>
-            <Features v-on:childToParent="onChildClickFeatures"/>
+            <Features id-value="ARB" v-on:childToParent="onChildClickFeatures"/>
           </div>
         
           <label for="kitchen-equipment" class="description">Keittiön varustus
@@ -116,6 +116,8 @@ import AvailableFrom from '../inputElements/apartment/AvailableFrom.vue'
 import Terms from '../inputElements/apartment/Terms.vue'
 import Price from '../inputElements/apartment/Price.vue'
 
+//LocationType puuttuu
+
 //import ProfileImage from '../inputElements/person/ProfileImage.vue'
 
 
@@ -154,7 +156,6 @@ export default {
       kEquipment: '',
       bEquipment: '',
       storage: '',
-      termsDescription: '',
       description: '',
       buildYear: '',
       fromChildFloorPlan: [],
@@ -181,6 +182,94 @@ export default {
       errors: {},
       errorList: {},
       isValid: true,
+
+      apartment: {
+        location: {
+          city: '',
+          neighborhood: '',
+          address: '',
+          areaCode: ''
+        },
+        nearbyServices: { //Listoja
+          publicTransport: [ 
+            {
+              title: '',
+              distance: null
+            }
+          ],
+          healthCare: [
+            {
+              title: '',
+              distance: null
+            }
+          ],
+          dayCare: [
+            {
+              title: '',
+              distance: null
+            }
+          ],
+          education: [
+            {
+              title: '',
+              distance: null
+            }
+          ],
+          excercise: [
+            {
+              title: '',
+              distance: null
+            }
+          ],
+          groceries: [
+            {
+              title: '',
+              distance: null
+            }
+          ]
+        },
+        images: [],
+        interestedUsers: [],
+        landLord: '',
+        description: '',
+        viewCount: 0,
+        floorPlan: '', //Mikä muoto?
+        area: null,
+        cellArea: null,
+        monthlyRent: null,
+        guarantee: '',
+        buildYear: null,
+        apartmentType: null,
+        isCellApartment: false,
+        floor: '',
+        hasElevator: false,
+
+        availableFrom: null,
+        availableUntil: null,
+        equipment: '',
+        condition: null,
+        petsAllowed: false,
+        smokingAllowed: false,
+        utilities: {
+          insurancePlan: {
+            mustHave: false,
+            monthlyPrice: null
+          },
+          parkingIncluded: false,
+          water: {
+            mustHave: false,
+            monthlyPrice: null
+          },
+          includesElectricity: {
+            mustHave: false,
+            monthlyPrice: null
+          },
+          dataConnection: {
+            isIncluded: false,
+            speed: null
+          },
+        }
+      }
     }
   },
   computed: {
@@ -197,34 +286,37 @@ export default {
       this.$emit('childToParent', this.firstname)
     },*/
     onChildClickFloorPlan(value) {
-      this.fromChildFloorPlanText = value.text;
-      this.fromChildFloorPlan = value.floorPlan;
+      this.apartment.floorPlan = value.text;
+      //this.fromChildFloorPlan = value.floorPlan;
     },
-    onChildClickArea(value) {
+    onChildClickArea(value) { //Area, ei min tai max!!!!, cellArea
       this.fromChildAreaMinRoom = value.minRoom;
       this.fromChildAreaMaxTotal = value.maxTotal;
+      //this.apartment.area = value.area;
     },
     onChildClickCondition(value) {
-      this.fromChildCondition = value;
+      this.apartment.condition = value;
     },
     onChildClickBuildingType(value) {
-      this.fromChildBuildingType = value;
+      this.apartment.BuildingType = value;
     },
     onChildClickCellAptRoom(value) {
-      this.fromChildCell = value;
+      this.apartment.isCellApartment = value;
     },
     onChildClickFloor(value) {
-      this.fromChildFloor = value.floor;
-      this.fromChildFloorText = value.text;
+      //this.fromChildFloor = value.floor;
+      this.apartment.floor = value.text;
     },
-    onChildClickPrice(value) {
+    onChildClickPrice(value) { //monthlyRent
       this.fromChildPrice = value;
+      //this.apartment.monthlyRent = value;
     },
     onChildClickRentBuy(value) {
       this.fromChildCheckedOwner = value;
     },
-    onChildClickFeatures(value) {
+    onChildClickFeatures(value) { //utilities
       this.fromChildFeatures = value;
+      this.apartment.mustHave
     },
     onChildClickServices(value) {
       this.fromChildServicesText = value.text;

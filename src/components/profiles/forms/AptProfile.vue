@@ -30,14 +30,14 @@
           <label for="area-code" class="label__border-bottom--green border-radius__left">Postinumero</label>
           <input type="text" id="area-code" class="border-radius__right" v-model="sharedApartment.location.areaCode" v-on:keyup="emitToParent">
         </div>
-        <div class="row-item--6 flexbox">
-          <Features v-on:childToParent="onChildClickFeatures" v-on:click="emitToParent"/>
+        <div class="row-item--6 flexbox" v-bind:class="{'remove__align-center': showFeatures}">
+          <Features id-value="A" v-on:childToParent="onChildClickFeatures" v-on:click="emitToParent"/>
         </div>
-        <div class="row-item--7 flexbox">
-          <LocationType v-on:childToParent="onChildClickLocationType" v-on:click="emitToParent"/>
+        <div class="row-item--7 flexbox" v-bind:class="{'remove__align-center': showLocationType}">
+          <LocationType id-value="A" v-on:childToParent="onChildClickLocationType" v-on:click="emitToParent"/>
         </div>
-        <div class="row-item--8 flexbox">
-          <BuildingType v-on:childToParent="onChildClickBuildingType" v-on:click="emitToParent"/>
+        <div class="row-item--8 flexbox" v-bind:class="{'remove__align-center': showBuildingType}">
+          <BuildingType id-value="A" v-on:childToParent="onChildClickBuildingType" v-on:click="emitToParent"/>
         </div>
       </div>
 
@@ -103,6 +103,10 @@ export default {
       errorList: {},
       isValid: true,
 
+      showLocationType: false,
+      showBuildingType: false,
+      showFeatures: false,
+
       sharedApartment: {
         rentLimit: null,
         maxRoomMates: null,
@@ -129,10 +133,12 @@ export default {
       this.fromChildCheckedOwner = value;
     },
     onChildClickLocationType(value) {
-      this.sharedApartment.locationType = value;
+      this.sharedApartment.locationType = value.types;
+      this.showLocationType = value.show;
     },
     onChildClickBuildingType(value) {
-      this.sharedApartment.buildingType = value;
+      this.sharedApartment.buildingType = value.types;
+      this.showBuildingType = value.show;
     },
     onChildClickRooms(value) { //Checked
       this.sharedApartment.maxRooms = value;
@@ -142,7 +148,8 @@ export default {
       this.fromChildPriceMax = value.max;
     },
     onChildClickFeatures(value) {
-      this.fromChildFeatures = value;
+      this.fromChildFeatures = value.features;
+      this.showFeatures = value.show;
     },
     onChildClickRoommates(value) { //Checked
       this.sharedApartment.maxRoomMates = value;
@@ -160,6 +167,10 @@ h2 {
 input[type="text"] {
   padding: 0.5rem;
   margin: 0.5rem 0;
+}
+.remove__align-center {
+  align-items: normal !important;
+  margin-top: 0.5rem !important;
 }
 .container {
   grid-template-columns: repeat(3, 1fr);
@@ -255,6 +266,7 @@ input[type="text"] {
   grid-row-start: 6;
   grid-row-end: 7;
   margin: 0 0.8rem 0 0.4rem;
+  z-index: 1;
 }
 //Location type
 .column-item--2 .row-item--7 {
@@ -263,6 +275,7 @@ input[type="text"] {
   grid-row-start: 7;
   grid-row-end: 8;
   margin: 0 0.4rem 0 0.8rem;
+  z-index: 1;
 }
 //Building type
 .column-item--2 .row-item--8 {
@@ -271,6 +284,7 @@ input[type="text"] {
   grid-row-start: 7;
   grid-row-end: 8;
   margin: 0 0.8rem 0 0.4rem;
+  z-index: 1;
 }
 //Rooms
 .column-item--3 .row-item--1 {

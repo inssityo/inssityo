@@ -17,16 +17,16 @@
           <input type="text" id="lastname" class="border-radius__right" v-model="user.surname" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--4">
-          <Age v-on:childToParent="onChildClickAge" v-on:click="emitToParent" />
+          <Age id-value="P" v-on:childToParent="onChildClickAge" v-on:click="emitToParent" />
         </div>
         <div class="row-item--5">
-          <Gender v-on:childToParent="onChildClickGender" v-on:click="emitToParent" />
+          <Gender id-value="P" v-on:childToParent="onChildClickGender" v-on:click="emitToParent" />
         </div>
         <div class="row-item--6" v-bind:class="{'row-item--6-2': user.employmentStatus === 1}">
-          <Status v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
+          <Status id-value="P" v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--7" v-show="user.employmentStatus === 1">
-          <WorkType :employment-status="user.employmentStatus" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
+          <WorkType id-value="P" :employment-status-p="user.employmentStatus" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
         </div>
         <div class="row-item--8">
           <label for="description-p">Kuvaus itsestäsi</label>
@@ -147,13 +147,13 @@ export default {
       this.$emit('childToParent', { 'user': this.user, 'firstname': this.user.name });
     },
     onChildClickGender(value) {
-      this.user.gender = value;
+      this.user.gender = value.genders;
     },
     onChildClickAge(value) {
-      this.user.ageGroup = value;
+      this.user.ageGroup = value.ages;
     },
     onChildClickStatus(value) {
-      this.user.employmentStatus = value;
+      this.user.employmentStatus = value.statuses;
       this.handleWorkType();
     },
     onChildClickPets(value) {
@@ -179,7 +179,7 @@ export default {
       this.user.sociality = value;
     },
     onChildClickWorkType(value) {
-      this.user.workType = value;
+      this.user.workType = value.types;
     },
     handleWorkType() {
       if (this.user.employmentStatus !== 1) {
