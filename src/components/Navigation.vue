@@ -8,7 +8,7 @@
             <i class="fas fa-equals"></i>
           </button>
           <div class="dropdown-content">
-            <a href="#">Kirjaudu</a>
+            <router-link to="/entry">Kirjaudu</router-link>
             <router-link to="/profile">Profiilit</router-link> 
             <a href="#">Asunnot</a>
             <a href="#">Suomi</a>
