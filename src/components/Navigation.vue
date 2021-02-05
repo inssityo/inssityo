@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav class="navbar" :class="{ 'navbar-hidden': !showNavbar }">
-      <div class="navbar-div">
-        <router-link to="/" class="kam_logo">Kämpp</router-link> 
+    <nav class="navbar flexbox" :class="{ 'navbar-hidden': !showNavbar }">
+      <div class="flexbox">
+        <router-link to="/" class="kam-logo">Kämpp</router-link> 
         <div class="dropdown">
           <button class="dropbtn"> 
             <i class="fas fa-equals"></i>
@@ -54,53 +54,51 @@ export default {
 </script>
 
 <style lang="scss" scoped >
-@use '../assets/styles/_variables.scss' as v;
+@use '../assets/styles/variables.scss' as v;
 
 .navbar {
   background-color: v.$KAMGreenDark;
-  display: flex; 
-  justify-content: space-between;
-  align-items: center;
-  width: -webkit-fill-available;
+  width: 100%;
   position: fixed;
   transform: translate3d(0, 0, 0);
   transition: 0.1s all ease-out;
+  z-index: 3;
 }
 .navbar.navbar-hidden {
   box-shadow: none;
   transform: translate3d(0, -100%, 0);
 }
-.navbar-div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.flexbox .flexbox {
   height: 2rem;
   width: 100vw;
   padding: 1rem 2rem;
 }
-.kam_logo {
+.kam-logo {
   font-family: v.$KAMQuinn;
   text-transform: uppercase;
-  font-size: 2.1rem!important;
+  font-size: 2.1rem;
   color: v.$White;
+  letter-spacing: 0.1rem;
+}
+.kam-logo:hover {
+  letter-spacing: 0.05rem;
+  text-transform: lowercase;
 }
 .dropdown {
   overflow: hidden;
+
+  .dropbtn {
+    font-size: 1.5rem;  
+    border: none;
+    outline: none;
+    color: v.$White;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+  }
 }
-.dropdown .dropbtn {
-  font-size: 1.5rem;  
-  border: none;
-  outline: none;
-  color: v.$White;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-  padding: 0;
-}
-.dropdown:hover .dropbtn {
-  cursor: pointer;
-}
-.fa-equals {
+svg {
   font-size: 1.6rem;
 }
 .dropdown-content {
@@ -112,15 +110,16 @@ export default {
   box-shadow: 0 0.6rem 1rem 0 rgba(0,0,0,0.2);
   z-index: 1;
   right: 0;
-  padding: 1.1rem 0 0 0;
-}
-.dropdown-content a {
-  float: none;
-  color: v.$White;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  display: block;
-  text-align: left;
+  padding: 1.2rem 0 0 0;
+  
+  a {
+    float: none;
+    color: v.$White;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
 }
 .dropdown-content a:hover {
   background-color: v.$KAMGrey;
@@ -135,4 +134,5 @@ export default {
 a {
   font-size: 1rem;
 }
+
 </style>

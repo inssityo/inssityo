@@ -1,0 +1,38 @@
+/* 
+   -----------------------------
+   ========= KAM Theme =========
+   ----------------------------- 
+*/
+
+@font-face {
+  font-family: "KAMLouis";
+  src: url(~@/assets/fonts/Louis-George-Cafe.ttf) format("truetype");
+}
+@font-face {
+  font-family: "KAMQuinn";
+  src: url(~@/assets/fonts/Quantify.ttf) format("truetype");
+}
+
+$KAMLouis: "KAMLouis";
+$KAMQuinn: "KAMQuinn";
+
+$KAMBeigeLight: #F4ECE4;
+$KAMBeige: #EDE0D3; //E9D9C9; #CFBBA5; dark
+$KAMPurpleLight: #F0DCED; // #F3E1F1
+$KAMBlueLight: #D6D9ED; //#E2E4F2
+//$KAMBlue: #00B0F0;
+
+$KAMGreenDark: #016361;
+$KAMGreenSemiLight: #05C179; //checked
+$KAMGreenLight: #BBD9DB; //footer text
+
+$KAMGrey: #ebebeb;
+$KAMGreySemiDark: #9f9c9c;
+$KAMGreyDark: #454545;
+$KAMGreySemiLight: #dfdfdf;
+$KAMGreyLight: #F2F2F2;
+$White: #fff;
+$Black: #000;
+
+//Effect colors:
+$KAMBlue: #4DC3FF;

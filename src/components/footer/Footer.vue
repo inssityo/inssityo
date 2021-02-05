@@ -1,9 +1,9 @@
 <template>
-  <footer class="footer">
+  <footer>
     <SoMe />  
-    <div class="section section_footer">
+    <div class="content">
       <div class="container">
-        <div class="column column_item_1">
+        <div class="column column-item--1">
           <div class="row">
             <a href="#">Vuokranantajille</a>
           </div>
@@ -14,7 +14,7 @@
             <a href="#">Yhteistyökumppaneille</a>
           </div>
         </div>
-        <div class="column column_item_2">
+        <div class="column column-item--2">
           <div class="row">
             <a href="#">Usein kysyttyä</a>
           </div>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <p class="copyright">&#169;<span>KÄMPP</span>{{date}}</p>
+      <p class="copyright margin__bottomless">&#169;<span>KÄMPP</span>{{date}}</p>
     </div>
   </footer>
 </template>
@@ -52,34 +52,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/_variables.scss' as v;
+@use '../../assets/styles/variables.scss' as v;
 
-.footer {
+footer {
   background: v.$KAMGreenDark;
 }
-.section_footer {
-  padding-top: 4rem;
-  padding-bottom: 1rem;
-}
 .container {
-  display: grid;
-  justify-content: center; //space-around;
+  justify-content: center;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
-  grid-gap: 4%;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  gap: 4%;
 }
 .column {
   width: 100%;
   height: 100%;
 }
-.column_item_1 {
+.column-item--1 {
   grid-column-start: 1;
   grid-column-end: 2;
 }
-.column_item_2 {
+.column-item--2 {
   grid-column-start: 2;
   grid-column-end: 3;
 }
