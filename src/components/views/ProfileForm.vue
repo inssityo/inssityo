@@ -15,7 +15,7 @@
       <a v-show="choice === 2 || choice === 3" href="#apt-rent-buy">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
       </a>
-      <AptRentBuy id="apt-rent-buy" v-show="choice === 2 || choice === 3" />
+      <AptRentBuy id="apt-rent-buy" v-show="choice === 1 || choice === 3" />
 
       <a v-show="choice === 1" href="#personal">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
@@ -136,22 +136,20 @@ export default {
       this.updateUser();
       console.log(JSON.stringify(this.user))
     },
+
+    //jos ei klikkaa ollenkaan jotain kolmesta profiilista, ei tule emittiä - fiksaa
     updateUser() {
       //personalProfile
       for (const [key, value] of Object.entries(this.fromChildPersonalProfile)) { //VALMIS
-        console.log(key, value);
         this.user[key] = value;
       }
       //aptProfile
       for (const [key, value] of Object.entries(this.fromChildAptProfile)) {
-        console.log(key, value);
         this.user[key] = value;
       }
       //roommateProfile
-      for (const [key, value] of Object.entries(this.fromChildRoommateProfile)) {
-        console.log(key, value);
-        this.user[key] = value;
-      }
+      this.user.targetProfile = this.fromChildRoommateProfile; //VALMIS
+
       console.log("update")
     }
   },

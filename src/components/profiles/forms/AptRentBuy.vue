@@ -58,9 +58,9 @@
             <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />{{fromChildCell}}
             <Area apt-value="R" v-on:childToParent="onChildClickArea"/>
           </div>
-          <div class="flexbox flexbox">
+          <div class="flexbox flexbox" v-bind:class="{'remove__align-center' : showFeatures}">
             <Condition v-on:childToParent="onChildClickCondition"/>
-            <Features id-value="ARB" v-on:childToParent="onChildClickFeatures"/>
+            <Features id-value="ARB" v-on:childToParent="onChildClickFeatures" v-bind:class="{'add__position-absolute' : showFeatures}"/>
           </div>
         
           <label for="kitchen-equipment" class="description">Keittiön varustus
@@ -182,6 +182,8 @@ export default {
       errors: {},
       errorList: {},
       isValid: true,
+
+      showFeatures: false,
 
       apartment: {
         location: {
@@ -315,8 +317,9 @@ export default {
       this.fromChildCheckedOwner = value;
     },
     onChildClickFeatures(value) { //utilities
-      this.fromChildFeatures = value;
-      this.apartment.mustHave
+      this.fromChildFeatures = value.features; //Muuta muuttuja
+      this.showFeatures = value.show;
+      //this.apartment.mustHave
     },
     onChildClickServices(value) {
       this.fromChildServicesText = value.text;
@@ -348,6 +351,15 @@ export default {
 
 h2 {
   padding-top: 1rem;
+}
+.remove__align-center {
+  align-items: normal !important;
+  margin-top: 0.3rem !important;
+  position: relative;
+}
+.add__position-absolute {
+  position: absolute;
+  right: 0;
 }
 .container {
   display: flex;

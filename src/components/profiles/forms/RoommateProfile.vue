@@ -9,41 +9,41 @@
           <RoommateImage />
         </div>
         <div class="row-item--2" v-bind:class="{'remove__align-center': showAge}">
-          <Age id-value="R" v-on:childToParent="onChildClickAge" />
+          <Age id-value="R" v-on:childToParent="onChildClickAge" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--3" v-bind:class="{'remove__align-center': showGender}">
-          <Gender id-value="R" v-on:childToParent="onChildClickGender" />
+          <Gender id-value="R" v-on:childToParent="onChildClickGender" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--4" v-bind:class="{'row-item--4-2': employed, 'remove__align-center': showStatus}">
-          <Status id-value="R" v-on:childToParent="onChildClickStatus" />
+          <Status id-value="R" v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--5" v-show="employed" v-bind:class="{'remove__align-center': showWorkType}">
-          <WorkType id-value="R" :employment-status-r="targetProfile.employed" v-on:childToParent="onChildClickWorkType" />
+          <WorkType id-value="R" :employment-status-r="targetProfile.employed" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--6">
           <label for="description-r">Kuvaus kämppiksestä</label>
-          <textarea type="text" id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="targetProfile.description"></textarea>
+          <textarea type="text" id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="targetProfile.description" v-on:keyup="emitToParent"></textarea>
         </div>
       </div>
 
       <div class="column column-item--2 container">
         <div class="row-item--1">
-          <Hobbies id-value="R" v-on:childToParent="onChildClickHobbies" />
+          <Hobbies id-value="R" v-on:childToParent="onChildClickHobbies" v-on:click="emitToParent"/>
         </div>
       </div>
 
       <div class="column column-item--3 container">
         <div class="row-item--1">
-          <Sociality id-value="R" v-on:childToParent="onChildClickSociality" />
+          <Sociality id-value="R" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--2">
-          <Traits id-value="R" v-on:childToParent="onChildClickTraits"/>
+          <Traits id-value="R" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--3">
-          <Pets id-value="R" v-on:childToParent="onChildClickPets" />
+          <Pets id-value="R" v-on:childToParent="onChildClickPets" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--4">
-          <Intoxicants id-value="R" v-on:childToParent="onChildClickIntoxicants" />
+          <Intoxicants id-value="R" v-on:childToParent="onChildClickIntoxicants" v-on:click="emitToParent"/>
         </div>
       </div>
 
@@ -142,10 +142,6 @@ export default {
       }
     }
   },
-  computed: {
-
-  },
-
   methods: {
     emitToParent() {
       this.$emit('childToParent', this.targetProfile);
@@ -176,9 +172,9 @@ export default {
       this.targetProfile.hobbies = value;
     },
     onChildClickIntoxicants(value) {
-      this.user.alcohol = value.alcohol;
-      this.user.smoking = value.smoking;
-      this.user.drugs = value.drugs;
+      this.targetProfile.alcohol = value.alcohol;
+      this.targetProfile.smoking = value.smoking;
+      this.targetProfile.drugs = value.drugs;
     },
     onChildClickSociality(value) {
       this.targetProfile.sociality = value;
@@ -258,7 +254,7 @@ h2 {
   display: flex;
   align-items: center;
   margin: 0.8rem 0.4rem 0 0.8rem;
-  z-index: 1;
+  z-index: 2;
 }
 //Gender
 .column-item--1.container .row-item--3 {
@@ -269,7 +265,7 @@ h2 {
   display: flex;
   align-items: center;
   margin: 0.8rem 0.8rem 0 0.4rem;
-  z-index: 1;
+  z-index: 2;
 }
 //Status large
 .column-item--1.container .row-item--4 {

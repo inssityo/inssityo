@@ -266,7 +266,7 @@ input[type="text"] {
   grid-row-start: 6;
   grid-row-end: 7;
   margin: 0 0.8rem 0 0.4rem;
-  z-index: 1;
+  z-index: 2;
 }
 //Location type
 .column-item--2 .row-item--7 {
