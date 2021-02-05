@@ -1,26 +1,26 @@
 <template>
-  <div class="card--front-page">
+  <div class="card--front-page pointer">
     <img src="../../assets/images/Thumbnail4_Large.jpg" alt="Image 1">
 
     <div class="card-body flexbox box margin__nothing">
       <section>
-        <h3 class="margin__nothing">Aleksanterinkatu 8</h3>
-        <p class="card-body--location margin__bottomless">Keskusta, Oulu</p>
+        <h3 class="margin__nothing">{{ address }}</h3>
+        <p class="card-body--location margin__bottomless">{{ neighborhood }}, {{ city }}</p>
         <div class="card-body--details flexbox">
           <p class="margin__bottomless" v-if="floorPlan.length < 8">
-            <i class="fas fa-ruler-combined"></i>42m<span>&sup2;</span>, {{ floorPlan }}
+            <i class="fas fa-ruler-combined"></i>{{ area }}m<span>&sup2;</span>, {{ floorPlan }}
           </p>
           <p class="margin__bottomless" v-else>
-            <i class="fas fa-ruler-combined"></i>42m<span>&sup2;</span>, {{ floorPlan.substring(0,8)+'..' }} <!--Katso, että katkaisee ennen + merkkiä-->
+            <i class="fas fa-ruler-combined"></i>{{ area }}m<span>&sup2;</span>, {{ floorPlan.substring(0,8)+'..' }} <!--Katso, että katkaisee ennen + merkkiä-->
           </p>
           <p class="margin__bottomless">
-            <i class="far fa-building"></i>5/8
+            <i class="far fa-building"></i>{{ floor }}
           </p>
           <p class="margin__bottomless">
-            <i class="far fa-calendar-alt"></i>02/02/22
+            <i class="far fa-calendar-alt"></i>{{ available }}
           </p>
           <p class="margin__bottomless">
-            <i class="fas fa-coins"></i>2 000 645 €/kk
+            <i class="fas fa-coins"></i>{{ handlePrice }}€/kk
           </p>
         </div>
       </section>
@@ -34,7 +34,20 @@ export default {
 
   data() {
     return {
-      floorPlan: '2h+k+s+2h+k+s+2h+k+s'
+      city: 'Oulu',
+      neighborhood: 'Keskusta',
+      address: 'Aleksanterinkatu 22 G 222',
+      area: 42,
+      floorPlan: '2h+k+s+2h+k+s+2h+k+s',
+      floor: '5/8',
+      available: '07/07/22',
+      rent: 2000,
+      price: 98706030,
+    }
+  },
+  computed: {
+    handlePrice: function () {
+      return this.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
     }
   }
 }
@@ -78,7 +91,11 @@ export default {
     }
   }
 }
-
+.card--front-page:hover {
+  img {
+    filter:brightness(70%);
+  }
+}
 
 
 </style>

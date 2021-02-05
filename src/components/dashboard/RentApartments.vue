@@ -3,7 +3,7 @@
     <h1>Vuokraa asunto, jossa onnellisuus asuu</h1>
     <div class="box">
       <div class="cards flexbox box">
-        <ApartmentCard v-for="r in cards" :key="r"/>
+        <ApartmentCard card-id="R" v-for="r in cards" :key="r"/>
       </div>
     </div>
   </div>

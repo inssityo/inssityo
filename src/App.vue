@@ -175,6 +175,7 @@ img {
   width: 100%;
   background: v.$White;
   background: rgba(255, 255, 255, 0.8);
+  z-index: 1;
 }
 
 // ====== hover ====== //
@@ -451,8 +452,7 @@ button:focus {
       width: 100%;
 
       svg {
-        padding: 0 0.2rem;
-        //color: v.$KAMGreyDark;
+        padding: 0 0.3rem 0 0.2rem;
       }
     }
     p {
