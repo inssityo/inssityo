@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <img src="../../assets/images/pexels-maria-orlova-4906243-cropped.jpg" class="img--calc" alt="Image 1">
-    <i class="fas fa-sort-down pointer hover__color--blue" @click="goTo('apt')"></i>
-  </div>
+  <img src="../../assets/images/pexels-maria-orlova-4906243-cropped.jpg" class="img--calc" alt="Image 1">
 </template>
 
 <script>
@@ -14,12 +11,6 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-svg {
-  display: block;
-  margin: 0 auto;
-  width: 2rem !important;
-  height: 2rem;
-  color: v.$KAMGreenDark;
-}
+
 
 </style>

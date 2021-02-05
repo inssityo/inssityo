@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Vapaita asuntoja</h1>
+    <h1 class="margin__nothing">Vapaita asuntoja</h1>
     <div class="container">
       <div class="column column-item--1">
         <Card />
@@ -50,7 +50,7 @@ export default {
   grid-template-rows: repeat(7, 9vw);
   gap: 1rem;
   margin: auto;
-  padding: 2rem;
+  padding: 2rem 2rem 1rem 2rem;
 }
 .column {
   width: 100%;

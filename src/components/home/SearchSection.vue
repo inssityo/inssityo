@@ -35,6 +35,9 @@ p {
   font-weight: normal;
   letter-spacing: 0.03rem;
 }
+.content {
+  padding-top: 3rem;
+}
 .container {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 32vw);

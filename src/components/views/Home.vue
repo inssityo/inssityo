@@ -2,9 +2,12 @@
   <section class="hero">  
     <div class="hero-head">
       <HeroImage />
+      <a href="#search-section">
+        <i class="fas fa-sort-down pointer hover__color--blue"></i>
+      </a>
     </div>
     <div class="hero-body">
-      <section><SearchButtons /></section>
+      <section><SearchButtons id="search-section" /></section>
       <section><FrontPageCards /></section>
       <section><InfoContainer /></section>
     </div>
@@ -44,4 +47,12 @@ export default {
 .flaticon {
   font-size: 0.2rem; //Siirrä flaticon teksti muualle
 }
+svg {
+  display: block;
+  margin: 0 auto;
+  width: 2rem !important;
+  height: 2rem;
+  color: v.$KAMGreenDark;
+}
+
 </style>

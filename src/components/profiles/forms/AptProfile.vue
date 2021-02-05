@@ -131,7 +131,7 @@ export default {
       this.sharedApartment.locationType = value.types;
       this.showLocationType = value.show;
     },
-    onChildClickBuildingType(value) { //Ei toimi
+    onChildClickBuildingType(value) {
       this.sharedApartment.buildingType = value.types;
       this.showBuildingType = value.show;
     },

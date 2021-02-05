@@ -178,10 +178,8 @@ span {
 }
 .check__label-only div:nth-child(4) label:hover,
 .check__label-only div:nth-child(4) input[type="radio"]:checked + label {
-  background: v.$KAMGrey;
-  border: 0.15rem solid v.$KAMGreyDark;
-  width: 0.25rem;
-  height: 0.25rem;
+  background: v.$KAMGreenSemiLight;
+  border: 0.1rem solid v.$KAMGreenSemiLight;
 }
 .check__label-only div:first-child label, 
 .check__label-only div:nth-child(2) label, 

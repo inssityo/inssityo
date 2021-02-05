@@ -39,6 +39,7 @@ export default {
         { checkedRentIncrease: false },
       ],
       amount: '',
+      termsDescription: '', //HUOM!
     }
   },
   methods: {

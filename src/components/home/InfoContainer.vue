@@ -56,7 +56,7 @@ export default {
 @use '../../assets/styles/variables.scss' as v;
 
 h1 {
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
 svg, span {
   font-size: 3rem;

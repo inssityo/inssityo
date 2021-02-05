@@ -2,7 +2,7 @@
   <div>
     <div class="flexbox">
       <p v-if="idValue === 'P'">Oletko</p> 
-      <p v-if="idValue === 'R'">Haluatko kämppiksen olevan</p>
+      <p v-if="idValue === 'R'">Kämppis</p>
       <p>1 = yksineläjä vai 7 = laumaeläin</p>
     </div>
     <div class="flexbox">

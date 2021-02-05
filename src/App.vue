@@ -1,10 +1,6 @@
 <template>
   <Header></Header>
-  <!--<Home />-->
-  <Footer />
-  
-  <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-  
+  <Footer v-show="!isLogin"/>
 </template>
 
 <script>
@@ -16,6 +12,11 @@ export default {
   components: {
     Header,
     Footer
+  },
+  computed: {
+    isLogin() {
+      return this.$route.name === 'entry'
+    }
   }
 }
 </script>
@@ -139,25 +140,26 @@ input:hover, select:hover, textarea:hover {
   text-decoration: none;
   background: v.$KAMGreenLight !important;
 }
+
 input, select, textarea {
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   background: v.$White;
 }
 .label__border-bottom--green {
   border-style: none none solid none !important;
   border-color: v.$KAMGreenDark !important;
   border-width: 0.15rem;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   background: v.$White;
 }
 .border-radius__right {
-  border-radius: 0 0.5rem 0.5rem 0 !important;
+  border-radius: 0 0.3rem 0.3rem 0 !important;
 }
 .border-radius__left {
-  border-radius: 0.5rem 0 0 0.5rem !important;
+  border-radius: 0.3rem 0 0 0.3rem !important;
 }
 
 // ====== image ====== //
@@ -276,13 +278,73 @@ img {
   background-color: v.$KAMGreyDark;
 }
 
+// ====== Multiselect dropdown ==== //
+.multiselect {
+  width: 100%;
+  z-index: 3;
+
+  .selectBox select:hover {
+    background-color: v.$KAMGreenLight !important; //ei toimi
+  }
+  .background--green {
+    background: v.$KAMGreenLight;
+  }
+  .selectBox {
+    position: relative;
+  }
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .check__label-only {
+    margin-top: 0 !important;
+
+    label {
+      background-color: transparent;
+      color: v.$Black;
+      font-size: 1rem !important;
+      border-radius: 0;
+      margin-left: -0.8rem;
+      text-align: left;
+      padding: 0 0 0 0.4rem;
+      width: 100%;
+    }
+  }
+  .checkboxes {
+    display: none;
+    background: v.$KAMGreenLight;
+    box-shadow: 0.2rem 0.2rem 0.6rem -0.3rem v.$KAMGreyDark;
+    border: 1px solid v.$KAMGreySemiDark;
+
+    label {
+    display: block;
+    }
+    div input:checked + label{
+      color: v.$White;
+      background: v.$KAMGreenDark;
+    }
+    .flexbox {
+      justify-content: normal;
+    }
+    .flexbox:hover {
+      background-color: v.$KAMGreyLight;
+    }
+    input {
+      width: unset;
+    }
+  }
+}
+
 // ====== button ====== //
 button {
   margin: 4rem auto 0 auto;
   padding: 0.5rem 0.8rem;
   display: flex;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   background: v.$KAMGreenDark;
   width: auto !important;
   color: v.$White;
