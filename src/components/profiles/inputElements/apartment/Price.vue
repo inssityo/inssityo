@@ -1,6 +1,6 @@
 <template>
-  <div class="flexbox">  
-    <label v-show="aptValue === 'R'" for="price" class="label__border-bottom--green border-radius__left">Vuokra/kk</label>
+  <div class="flexbox" v-bind:class="{'padding': idValue === 'A'}">  
+    <label v-show="aptValue === 'R' || idValue === 'A'" for="price" class="label__border-bottom--green border-radius__left">Vuokra/kk</label>
     <label v-show="aptValue === 'B'" for="price" class="label__border-bottom--green border-radius__left">Myyntihinta</label>
     <input type="text" id="price" class="border-radius__right" v-model="price" v-on:keyup="emitToParent">
     <label v-show="aptValue === 'B'" for="debtFreePrice" class="label__border-bottom--green border-radius__left">Myyntihinta</label>
@@ -12,7 +12,7 @@
 
 export default {
   name: 'Price',
-  props: ['aptValue'],
+  props: ['aptValue', 'idValue'],
   
   data() {
     return {
@@ -23,7 +23,7 @@ export default {
 
   methods: {
     emitToParent() { //debt-free
-      this.$emit('childToParent', this.price);
+      this.$emit('childToParent', {'price1': this.price, 'price2': this.debtFreePrice});
     },
   },
 }
@@ -37,6 +37,9 @@ label {
 }
 input[type="text"] {
   margin: 0.5rem 0;
+}
+.padding input, .padding label {
+  padding: 0.5rem;
 }
 
 </style>

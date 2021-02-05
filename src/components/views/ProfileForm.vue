@@ -140,15 +140,15 @@ export default {
     //jos ei klikkaa ollenkaan jotain kolmesta profiilista, ei tule emittiä - fiksaa
     updateUser() {
       //personalProfile
-      for (const [key, value] of Object.entries(this.fromChildPersonalProfile)) { //VALMIS
+      for (const [key, value] of Object.entries(this.fromChildPersonalProfile)) { //TOIMII
         this.user[key] = value;
       }
       //aptProfile
-      for (const [key, value] of Object.entries(this.fromChildAptProfile)) {
+      for (const [key, value] of Object.entries(this.fromChildAptProfile)) { //TOIMII
         this.user[key] = value;
       }
       //roommateProfile
-      this.user.targetProfile = this.fromChildRoommateProfile; //VALMIS
+      this.user.targetProfile = this.fromChildRoommateProfile; //TOIMII
 
       console.log("update")
     }

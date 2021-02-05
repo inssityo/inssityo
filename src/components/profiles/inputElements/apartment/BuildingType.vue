@@ -79,7 +79,7 @@ export default {
           arr.push(type.value);
         }
       })
-      this.ages = arr;
+      this.buildingTypes = arr;
       this.emitToParent();
     },
     showCheckboxes() {

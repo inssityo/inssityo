@@ -310,7 +310,7 @@ export default {
       this.apartment.floor = value.text;
     },
     onChildClickPrice(value) { //monthlyRent
-      this.fromChildPrice = value;
+      this.fromChildPrice = value.price1;
       //this.apartment.monthlyRent = value;
     },
     onChildClickRentBuy(value) {

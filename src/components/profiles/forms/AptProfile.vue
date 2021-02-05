@@ -49,7 +49,7 @@
           <Roommates v-on:childToParent="onChildClickRoommates" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--3">
-          <PriceMinMax v-on:childToParent="onChildClickPrice" v-on:click="emitToParent"/>
+          <Price id-value='A' v-on:childToParent="onChildClickPrice" v-on:click="emitToParent"/>
         </div>
           <div class="row-item--4">
           {{fromChildFeatures}}
@@ -68,7 +68,7 @@ import BuildingType from '../inputElements/apartment/BuildingType.vue'
 import LocationType from '../inputElements/apartment/LocationType.vue'
 import RentBuy from '../inputElements/apartment/RentBuy.vue'
 import Rooms from '../inputElements/apartment/Rooms.vue'
-import PriceMinMax from '../inputElements/apartment/PriceMinMax.vue'
+import Price from '../inputElements/apartment/Price.vue'
 import Features from '../inputElements/apartment/Features.vue'
 import Roommates from '../inputElements/apartment/Roommates.vue'
 
@@ -84,7 +84,7 @@ export default {
     LocationType,
     BuildingType,
     Rooms,
-    PriceMinMax,
+    Price,
     Features,
     Roommates
   },
@@ -93,11 +93,6 @@ export default {
     return {
       //FIKSAA NÄMÄ
       fromChildCheckedOwner: null,
-      fromChildAreaMin: null,
-      fromChildAreaMax: null,
-      fromChildPriceMin: null,
-      fromChildPriceMax: null,
-      fromChildFeatures: [],
       
       errors: {},
       errorList: {},
@@ -116,8 +111,9 @@ export default {
           address: '',
           areaCode: ''
         },
-        BuildingType: null,
-        locationType: null,
+        buildingType: [],
+        locationType: [],
+        features: [],
         maxRooms: null,
         movingDate: null,
       }
@@ -126,7 +122,6 @@ export default {
 
   methods: {
     emitToParent() {
-      //console.log(JSON.stringify(this.sharedApartment))
       this.$emit('childToParent', this.sharedApartment)
     },
     onChildClickRentBuy(value) {
@@ -136,22 +131,21 @@ export default {
       this.sharedApartment.locationType = value.types;
       this.showLocationType = value.show;
     },
-    onChildClickBuildingType(value) {
+    onChildClickBuildingType(value) { //Ei toimi
       this.sharedApartment.buildingType = value.types;
       this.showBuildingType = value.show;
     },
-    onChildClickRooms(value) { //Checked
+    onChildClickRooms(value) {
       this.sharedApartment.maxRooms = value;
     },
     onChildClickPrice(value) {
-      this.fromChildPriceMin = value.min;
-      this.fromChildPriceMax = value.max;
+      this.sharedApartment.rentLimit = value.price1;
     },
     onChildClickFeatures(value) {
-      this.fromChildFeatures = value.features;
+      this.sharedApartment.features = value.features;
       this.showFeatures = value.show;
     },
-    onChildClickRoommates(value) { //Checked
+    onChildClickRoommates(value) {
       this.sharedApartment.maxRoomMates = value;
     },
   },
