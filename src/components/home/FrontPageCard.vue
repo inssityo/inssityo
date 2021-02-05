@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card--front-page">
     <img src="../../assets/images/Thumbnail4_Large.jpg" alt="Image 1">
 
     <div class="card-body flexbox box margin__nothing">
@@ -43,39 +43,42 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-.card {
+.card--front-page {
   position: relative;
   height: 100%;
-}
-.card-body {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 0.9rem 0.6rem 0.7rem 0.6rem;
-  border-top: 0.15rem solid #016361;
-  background: #fff;
-  background: rgba(255, 255, 255, 0.85);
-  line-height: 0.3;
-  width: 100%;
-  
-  div {
+
+  .card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0.9rem 0.6rem 0.7rem 0.6rem;
+    border-top: 0.15rem solid #016361;
+    background: #fff;
+    background: rgba(255, 255, 255, 0.85);
+    line-height: 0.3;
     width: 100%;
+    
+    div {
+      width: 100%;
+    }
+    .card-body--location {
+      color: v.$KAMGreyDark;
+    }
+    .card-body--details {
+      padding-top: 0.1rem;
+      
+      span {
+        font-family: v.$KAMQuinn;
+      }
+      svg {
+        margin-right: 0.3rem;
+        font-size: 0.9rem;
+        color: v.$KAMGreenDark;
+      }
+    }
   }
 }
-.card-body--location {
-  color: v.$KAMGreySemiDark;
-}
-.card-body--details {
-  padding-top: 0.1rem;
-  
-  span {
-    font-family: v.$KAMQuinn;
-  }
-}
-svg {
-  margin-right: 0.3rem;
-  font-size: 0.9rem;
-  color: v.$KAMGreenDark;
-}
+
+
 
 </style>

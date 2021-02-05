@@ -419,4 +419,51 @@ button:focus {
   }
 }
 
+// ====== cards ====== //
+
+.card {
+  margin: 1.5rem;
+  height: 18rem;
+  width: 18rem;
+  position: relative;
+
+  .card-info:first-of-type {
+    top: 0;
+
+    .transparency{
+      border-bottom: 0.15rem solid v.$KAMGreenDark;
+    }
+  }
+  .card-info:last-of-type {
+    bottom: 0;
+
+    .transparency:last-of-type {
+      border-top: 0.15rem solid v.$KAMGreenDark;
+    }
+  }
+  .card-info {
+    height: 2rem;
+    width: 100%;
+    position: absolute;
+
+    .transparency {
+      height: 100%;
+      width: 100%;
+
+      svg {
+        padding: 0 0.2rem;
+        //color: v.$KAMGreyDark;
+      }
+    }
+    p {
+      margin: 0;
+      padding: 0.5rem;
+    }
+  }
+  img {
+    display: inline-block;
+    width: 100%;
+  }
+}
+
 </style>

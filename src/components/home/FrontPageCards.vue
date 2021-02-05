@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Card from './Card.vue';
+import Card from './FrontPageCard.vue';
 
 export default {
   name: 'FrontPageCards',
