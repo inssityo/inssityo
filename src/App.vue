@@ -175,6 +175,7 @@ img {
   width: 100%;
   background: v.$White;
   background: rgba(255, 255, 255, 0.8);
+  z-index: 1;
 }
 
 // ====== hover ====== //
@@ -417,6 +418,101 @@ button:focus {
   .slider.round:before {
     border-radius: 50%;
   }
+}
+
+// ====== cards ====== //
+
+.card {
+  margin: 1.5rem;
+  height: 18rem;
+  width: 18rem;
+  position: relative;
+
+  .card-info:first-of-type {
+    top: 0;
+
+    .transparency{
+      border-bottom: 0.15rem solid v.$KAMGreenDark;
+    }
+  }
+  .card-info:last-of-type {
+    bottom: 0;
+
+    .transparency:last-of-type {
+      border-top: 0.15rem solid v.$KAMGreenDark;
+    }
+  }
+  .card-info {
+    height: auto;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+
+    .transparency {
+      height: 100%;
+      width: 100%;
+
+      svg {
+        padding: 0 0.3rem 0 0.2rem;
+      }
+      span {
+        font-family: v.$KAMQuinn;
+      }
+    }
+    p {
+      margin: 0;
+      padding: 0.5rem;
+    }
+  }
+  img {
+    display: inline-block;
+    width: 100%;
+  }
+}
+.card:hover {
+  margin-top: 1rem;
+  img {
+    filter: brightness(70%);
+  }
+}
+
+// ====== tooltip ====== //
+.tooltip {
+  position: relative;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  
+  .tooltiptext {
+    visibility: hidden;
+    width: auto;
+    background: v.$Black;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.5rem 0.17rem 0.5rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    //left: 50%;
+    //margin-left: -60px;
+    //transition: opacity 0.3s;
+  }
+  .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: v.$Black transparent transparent transparent;
+  }
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 </style>

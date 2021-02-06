@@ -9,8 +9,9 @@
           </button>
           <div class="dropdown-content">
             <router-link to="/entry">Kirjaudu</router-link>
-            <router-link to="/profile">Profiilit</router-link> 
-            <a href="#">Asunnot</a>
+            <router-link to="/profile">Profiilit</router-link>
+            <router-link to="/roommates">Kämppikset</router-link> 
+            <router-link to="/apartments">Asunnot</router-link>
             <a href="#">Suomi</a>
           </div>
         </div>

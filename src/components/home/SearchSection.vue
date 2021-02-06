@@ -3,14 +3,14 @@
     <h1 class="margin__topless">Etsi ja löydä</h1>
     
     <div class="container">
-      <div class="column-item--1 pointer">
-        <div class="transparency">
+      <div class="column column-item--1 pointer">
+        <div class="transparency box">
           <p>Löydä kämppis</p>
         </div>
         <img src="../../assets/images/pexels-anna-tarazevich-4850290.jpg" alt="Image 2">
       </div>
-      <div class="column-item--2 pointer">
-        <div class="transparency">
+      <div class="column column-item--2 pointer">
+        <div class="transparency box">
           <p>Löydä asunto</p>
         </div>
         <img src="../../assets/images/pexels-kelly-ritta-4377192-2.jpg" alt="Image 3">
@@ -41,6 +41,14 @@ p {
 .container {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 32vw);
+}
+.column {
+
+}
+.column:hover {
+  img {
+    filter:brightness(70%);
+  }
 }
 .column-item--1 {
   grid-column-start: 1;
