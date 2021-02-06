@@ -443,9 +443,10 @@ button:focus {
     }
   }
   .card-info {
-    height: 2rem;
+    height: auto;
     width: 100%;
     position: absolute;
+    z-index: 1;
 
     .transparency {
       height: 100%;
@@ -453,6 +454,9 @@ button:focus {
 
       svg {
         padding: 0 0.3rem 0 0.2rem;
+      }
+      span {
+        font-family: v.$KAMQuinn;
       }
     }
     p {
@@ -464,6 +468,51 @@ button:focus {
     display: inline-block;
     width: 100%;
   }
+}
+.card:hover {
+  margin-top: 1rem;
+  img {
+    filter: brightness(70%);
+  }
+}
+
+// ====== tooltip ====== //
+.tooltip {
+  position: relative;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  
+  .tooltiptext {
+    visibility: hidden;
+    width: auto;
+    background: v.$Black;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.5rem 0.17rem 0.5rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    //left: 50%;
+    //margin-left: -60px;
+    //transition: opacity 0.3s;
+  }
+  .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: v.$Black transparent transparent transparent;
+  }
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 </style>

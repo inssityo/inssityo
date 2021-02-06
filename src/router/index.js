@@ -7,6 +7,7 @@ import Roommates from "../components/dashboard/Roommates.vue";
 import Apartments from "../components/views/Apartments.vue";
 import RentApartments from "../components/dashboard/RentApartments.vue";
 import ForSaleApartments from "../components/dashboard/ForSaleApartments.vue";
+import RoommateBio from "../components/dashboard/bio/RoommateBio.vue";
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: "/apartments/for-sale",
     name: "for-sale-apartments",
     component: ForSaleApartments,
+  },
+  {
+    path: "/roommates/id",
+    name: "roommate-bio",
+    component: RoommateBio,
   },
 ];
 
