@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ApartmentCard from "./ApartmentCard.vue"
+import ApartmentCard from "./cards/ApartmentCard.vue"
 
 export default {
   name: 'RentApartments',

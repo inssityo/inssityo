@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import RoommateCard from "./RoommateCard.vue"
+import RoommateCard from "./cards/RoommateCard.vue"
 
 export default {
   name: 'Roommates',

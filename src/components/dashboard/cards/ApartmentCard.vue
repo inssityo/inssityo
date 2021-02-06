@@ -15,7 +15,7 @@
         <p v-show="cardId === 'S'"><i class="fas fa-coins"></i>{{ handlePrice }}€</p>
       </div>
     </div>
-    <img src="../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
+    <img src="../../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
   </div>
 </template>
 
@@ -45,20 +45,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/styles/variables.scss' as v;
+@use '../../../assets/styles/variables.scss' as v;
 
 .card {
   height: 21rem;
-}
-.card:hover {
-  margin-top: 1rem;
-  img {
-    filter:brightness(70%);
-  }
-}
-.card .card-info {
-  height: auto;
-  z-index: 1;
 }
 .card .card-info:first-of-type p {
   margin: 0;
@@ -77,8 +67,6 @@ export default {
 .card .card-info:last-of-type p {
   text-align: center;
 }
-span {
-  font-family: v.$KAMQuinn;
-}
+
 
 </style>
