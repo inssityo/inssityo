@@ -1,46 +1,100 @@
 <template>
-  <div>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div>
     <h2>Täytä asunnon tiedot:</h2>
 
-    <RentBuy id-value="ARB" style="width: 50%" v-on:childToParent="onChildClickRentBuy" />
+    <RentBuy
+      id-value="ARB"
+      style="width: 50%"
+      v-on:childToParent="onChildClickRentBuy"
+    />
     {{ fromChildCheckedOwner }}
     <div class="container">
-      
       <div class="column">
         <div class="row">
           <h3>Sijainti</h3>
           <div class="flexbox">
-            <label for="location" class="label__border-bottom--green border-radius__left">Kaupunki*</label>
-            <input type="text" id="location" class="border-radius__right" v-model="location">
+            <label
+              for="location"
+              class="label__border-bottom--green border-radius__left"
+              >Kaupunki*</label
+            >
+            <input
+              type="text"
+              id="location"
+              class="border-radius__right"
+              v-model="location"
+            />
           </div>
           <div class="flexbox">
-            <label for="neighborhood" class="label__border-bottom--green border-radius__left">Kaupunginosa*</label>
-            <input type="text" id="neighborhood" class="border-radius__right" v-model="neighborhood">
+            <label
+              for="neighborhood"
+              class="label__border-bottom--green border-radius__left"
+              >Kaupunginosa*</label
+            >
+            <input
+              type="text"
+              id="neighborhood"
+              class="border-radius__right"
+              v-model="neighborhood"
+            />
           </div>
           <div class="flexbox">
-            <label for="address" class="label__border-bottom--green border-radius__left">Osoite*</label>
-            <input type="text" id="address" class="border-radius__right" v-model="address">
+            <label
+              for="address"
+              class="label__border-bottom--green border-radius__left"
+              >Osoite*</label
+            >
+            <input
+              type="text"
+              id="address"
+              class="border-radius__right"
+              v-model="address"
+            />
           </div>
           <div class="flexbox">
-            <label for="areaCode" class="label__border-bottom--green border-radius__left">Postinumero*</label>
-            <input type="text" id="areaCode" class="border-radius__right" v-model="areaCode">
+            <label
+              for="areaCode"
+              class="label__border-bottom--green border-radius__left"
+              >Postinumero*</label
+            >
+            <input
+              type="text"
+              id="areaCode"
+              class="border-radius__right"
+              v-model="areaCode"
+            />
           </div>
         </div>
 
         <div class="row">
           <h3>Rakennuksen tiedot</h3>
-          <div class="flexbox"> <!-- pienennä input -->
-            <label for="buildYear" class="label__border-bottom--green border-radius__left">Rakennusvuosi</label>
-            <input type="text" id="buildYear" class="border-radius__right" v-model="buildYear">
+          <div class="flexbox">
+            <!-- pienennä input -->
+            <label
+              for="buildYear"
+              class="label__border-bottom--green border-radius__left"
+              >Rakennusvuosi</label
+            >
+            <input
+              type="text"
+              id="buildYear"
+              class="border-radius__right"
+              v-model="buildYear"
+            />
           </div>
           <div class="flexbox">
-            <BuildingType id-value="ARB" v-on:childToParent="onChildClickBuildingType"/>
-            <Price apt-value="R"/> <!-- siirrä muualle -->
+            <BuildingType
+              id-value="ARB"
+              v-on:childToParent="onChildClickBuildingType"
+            />
+            <Price apt-value="R" />
+            <!-- siirrä muualle -->
           </div>
           <div class="flexbox">
-            <Floor v-on:childToParent="onChildClickFloor"/>
+            <Floor v-on:childToParent="onChildClickFloor" />
             <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
-            {{fromChildAvailablefrom}}
+            {{ fromChildAvailablefrom }}
           </div>
         </div>
 
@@ -54,78 +108,151 @@
         <div class="row">
           <h3>Asunnon tiedot</h3>
           <div>
-            <FloorPlan v-on:childToParent="onChildClickFloorPlan"/>
-            <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />{{fromChildCell}}
-            <Area apt-value="R" v-on:childToParent="onChildClickArea"/>
+            <FloorPlan v-on:childToParent="onChildClickFloorPlan" />
+            <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />{{
+              fromChildCell
+            }}
+            <Area apt-value="R" v-on:childToParent="onChildClickArea" />
           </div>
-          <div class="flexbox flexbox" v-bind:class="{'remove__align-center' : showFeatures}">
-            <Condition v-on:childToParent="onChildClickCondition"/>
-            <Features id-value="ARB" v-on:childToParent="onChildClickFeatures" v-bind:class="{'add__position-absolute' : showFeatures}"/>
+          <div
+            class="flexbox flexbox"
+            v-bind:class="{ 'remove__align-center': showFeatures }"
+          >
+            <Condition v-on:childToParent="onChildClickCondition" />
+            <Features
+              id-value="ARB"
+              v-on:childToParent="onChildClickFeatures"
+              v-bind:class="{ 'add__position-absolute': showFeatures }"
+            />
           </div>
-        
-          <label for="kitchen-equipment" class="description">Keittiön varustus
-            <textarea type="text" id="kitchen-equipment" class="box" placeholder="Keittiön varustus" v-model="kEquipment"></textarea>
+
+          <label for="kitchen-equipment" class="description"
+            >Keittiön varustus
+            <textarea
+              type="text"
+              id="kitchen-equipment"
+              class="box"
+              placeholder="Keittiön varustus"
+              v-model="kEquipment"
+            ></textarea>
           </label>
-          <label for="bathroom-equipment" class="description">Kylpyhuoneen varustus
-            <textarea type="text" id="bathroom-equipment" class="box" placeholder="Kylpyhuoneen varustus" v-model="bEquipment"></textarea>
+          <label for="bathroom-equipment" class="description"
+            >Kylpyhuoneen varustus
+            <textarea
+              type="text"
+              id="bathroom-equipment"
+              class="box"
+              placeholder="Kylpyhuoneen varustus"
+              v-model="bEquipment"
+            ></textarea>
           </label>
-          <label for="storage" class="description">Säilytystilat
-            <textarea type="text" id="storage" class="box" placeholder="Kerro säilytystiloista" v-model="storage"></textarea>
+          <label for="storage" class="description"
+            >Säilytystilat
+            <textarea
+              type="text"
+              id="storage"
+              class="box"
+              placeholder="Kerro säilytystiloista"
+              v-model="storage"
+            ></textarea>
           </label>
-          <label for="equipment" class="description">Muuta varustusta
-            <textarea type="text" id="equipment" class="box" placeholder="Muuta" v-model="equipment"></textarea>
+          <label for="equipment" class="description"
+            >Muuta varustusta
+            <textarea
+              type="text"
+              id="equipment"
+              class="box"
+              placeholder="Muuta"
+              v-model="equipment"
+            ></textarea>
           </label>
         </div>
-
       </div>
 
       <div class="column">
         <div class="row">
-          <label for="description-arb" class="description">Esittelyteksti asunnosta, sijainnista ja palveluista*
-            <textarea type="text" id="description-arb" class="box" placeholder="Kuvaus" v-model="description"></textarea>
+          <h3>KUVAT</h3>
+          <input
+            type="file"
+            id="file"
+            ref="file"
+            accept="image/*"
+            @change="uploadAndPreviewImage"
+            style="display:none"
+            multiple
+          />
+          <label class="uploadBtn" for="file"> Lisää kuvia</label>
+          <div id="imgParent">
+          <div v-for="(image, imgIndex) in apartment.images" :key="imgIndex" >
+            <div v-if="apartment.images.length">
+              <div class="img_controls">
+                <div class="btnDiv">
+                  <button class="upBtn" type="button" @click="moveImageInArray(imgIndex, imgIndex - 1)">
+                  <i class="fas fa-chevron-up"></i>
+                  </button>
+                  <button class="delBtn" type="button" @click="removeImage(imgIndex)">
+                    <i class="far fa-times-circle"></i>
+                  </button>
+                  <button class="downBtn" type="button" @click="moveImageInArray(imgIndex, imgIndex + 1)">
+                   <i class="fas fa-chevron-down"></i>
+                  </button>
+                </div>
+                <img :src="image" :key="imgIndex" />
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <label for="description-arb" class="description"
+            >Esittelyteksti asunnosta, sijainnista ja palveluista*
+            <textarea
+              type="text"
+              id="description-arb"
+              class="box"
+              placeholder="Kuvaus"
+              v-model="description"
+            ></textarea>
           </label>
         </div>
         <div class="row">
           <h3>Palvelut</h3>
-          <Services v-on:childToParent="onChildClickServices"/>
-          {{fromChildServices}} {{fromChildServicesText}}
+          <Services v-on:childToParent="onChildClickServices" />
+          {{ fromChildServices }} {{ fromChildServicesText }}
         </div>
         <div class="row">
           <h3>Muita kustannuksia</h3>
-          <OtherExpenses v-on:childToParent="onChildClickOtherExpenses"/>
+          <OtherExpenses v-on:childToParent="onChildClickOtherExpenses" />
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
 <script>
-import FloorPlan from '../inputElements/apartment/FloorPlan.vue'
-import Area from '../inputElements/apartment/Area.vue'
-import Condition from '../inputElements/apartment/Condition.vue'
-import BuildingType from '../inputElements/apartment/BuildingType.vue'
-import CellAptRoom from '../inputElements/apartment/CellAptRoom.vue'
-import Floor from '../inputElements/apartment/Floor.vue'
-import RentBuy from '../inputElements/apartment/RentBuy.vue'
-import Features from '../inputElements/apartment/Features.vue'
-import Services from '../inputElements/apartment/Services.vue'
-import OtherExpenses from '../inputElements/apartment/OtherExpenses.vue'
-import AvailableFrom from '../inputElements/apartment/AvailableFrom.vue'
-import Terms from '../inputElements/apartment/Terms.vue'
-import Price from '../inputElements/apartment/Price.vue'
+import FloorPlan from "../inputElements/apartment/FloorPlan.vue";
+import Area from "../inputElements/apartment/Area.vue";
+import Condition from "../inputElements/apartment/Condition.vue";
+import BuildingType from "../inputElements/apartment/BuildingType.vue";
+import CellAptRoom from "../inputElements/apartment/CellAptRoom.vue";
+import Floor from "../inputElements/apartment/Floor.vue";
+import RentBuy from "../inputElements/apartment/RentBuy.vue";
+import Features from "../inputElements/apartment/Features.vue";
+import Services from "../inputElements/apartment/Services.vue";
+import OtherExpenses from "../inputElements/apartment/OtherExpenses.vue";
+import AvailableFrom from "../inputElements/apartment/AvailableFrom.vue";
+import Terms from "../inputElements/apartment/Terms.vue";
+import Price from "../inputElements/apartment/Price.vue";
 
 //LocationType puuttuu
 
 //import ProfileImage from '../inputElements/person/ProfileImage.vue'
 
-
 //import axios from 'axios';
 
 export default {
-  name: 'AptRentBuy',
-  el: '#aptRentBuy',
+  name: "AptRentBuy",
+  el: "#aptRentBuy",
 
   components: {
     FloorPlan,
@@ -142,24 +269,23 @@ export default {
     Terms,
     Price,
     //ProfileImage,
- 
   },
- 
+
   data() {
     return {
-      location: '',
-      neighborhood: '',
-      address: '',
-      areaCode: '',
+      location: "",
+      neighborhood: "",
+      address: "",
+      areaCode: "",
       showFloorPlan: false,
-      equipment: '',
-      kEquipment: '',
-      bEquipment: '',
-      storage: '',
-      description: '',
-      buildYear: '',
+      equipment: "",
+      kEquipment: "",
+      bEquipment: "",
+      storage: "",
+      description: "",
+      buildYear: "",
       fromChildFloorPlan: [],
-      fromChildFloorPlanText: '',
+      fromChildFloorPlanText: "",
       fromChildFeatures: null,
       fromChildAreaMinRoom: null,
       fromChildAreaMaxTotal: null,
@@ -167,18 +293,18 @@ export default {
       fromChildBuildingType: null,
       fromChildCell: null,
       fromChildFloor: null,
-      fromChildFloorText: '',
+      fromChildFloorText: "",
       price: null,
       quarantee: null,
       fromChildCheckedOwner: null,
       fromChildServices: null,
-      fromChildServicesText: '',
+      fromChildServicesText: "",
       fromChildOtherExpenses: null,
-      fromChildSpeed: '',
+      fromChildSpeed: "",
       fromChildAvailablefrom: null,
       fromChildTerms: null,
       fromChildRentIncrease: null,
-      
+
       errors: {},
       errorList: {},
       isValid: true,
@@ -187,102 +313,114 @@ export default {
 
       apartment: {
         location: {
-          city: '',
-          neighborhood: '',
-          address: '',
-          areaCode: ''
+          city: "",
+          neighborhood: "",
+          address: "",
+          areaCode: "",
         },
-        nearbyServices: { //Listoja
-          publicTransport: [ 
+        nearbyServices: {
+          //Listoja
+          publicTransport: [
             {
-              title: '',
-              distance: null
-            }
+              title: "",
+              distance: null,
+            },
           ],
           healthCare: [
             {
-              title: '',
-              distance: null
-            }
+              title: "",
+              distance: null,
+            },
           ],
           dayCare: [
             {
-              title: '',
-              distance: null
-            }
+              title: "",
+              distance: null,
+            },
           ],
           education: [
             {
-              title: '',
-              distance: null
-            }
+              title: "",
+              distance: null,
+            },
           ],
           excercise: [
             {
-              title: '',
-              distance: null
-            }
+              title: "",
+              distance: null,
+            },
           ],
           groceries: [
             {
-              title: '',
-              distance: null
-            }
-          ]
+              title: "",
+              distance: null,
+            },
+          ],
         },
         images: [],
         interestedUsers: [],
-        landLord: '',
-        description: '',
+        landLord: "",
+        description: "",
         viewCount: 0,
-        floorPlan: '', //Mikä muoto?
+        floorPlan: "", //Mikä muoto?
         area: null,
         cellArea: null,
         monthlyRent: null,
-        guarantee: '',
+        guarantee: "",
         buildYear: null,
         apartmentType: null,
         isCellApartment: false,
-        floor: '',
+        floor: "",
         hasElevator: false,
 
         availableFrom: null,
         availableUntil: null,
-        equipment: '',
+        equipment: "",
         condition: null,
         petsAllowed: false,
         smokingAllowed: false,
         utilities: {
           insurancePlan: {
             mustHave: false,
-            monthlyPrice: null
+            monthlyPrice: null,
           },
           parkingIncluded: false,
           water: {
             mustHave: false,
-            monthlyPrice: null
+            monthlyPrice: null,
           },
           includesElectricity: {
             mustHave: false,
-            monthlyPrice: null
+            monthlyPrice: null,
           },
           dataConnection: {
             isIncluded: false,
-            speed: null
+            speed: null,
           },
-        }
-      }
-    }
+        },
+      },
+    };
   },
   computed: {
     filteredCharacters() {
-      return this.fromChildCheckedCharacterList.filter((character) => { 
+      return this.fromChildCheckedCharacterList.filter((character) => {
         return character.checked;
       });
-    }
+    },
   },
 
   methods: {
+    uploadAndPreviewImage() {
+      this.$refs.file.files.forEach((e, i) => this.apartment.images.push(URL.createObjectURL(this.$refs.file.files[i])));
+      console.log(this.apartment.images);
+    },
+    removeImage(index) {
+      this.apartment.images.splice(index, 1);
+    },
+    moveImageInArray(from, to) {
+      var moved = this.apartment.images.splice(from, 1)[0];
+      this.apartment.images.splice(to, 0, moved);
+    },
     /*
     emitToParent() {
       this.$emit('childToParent', this.firstname)
@@ -291,7 +429,8 @@ export default {
       this.apartment.floorPlan = value.text;
       //this.fromChildFloorPlan = value.floorPlan;
     },
-    onChildClickArea(value) { //Area, ei min tai max!!!!, cellArea
+    onChildClickArea(value) {
+      //Area, ei min tai max!!!!, cellArea
       this.fromChildAreaMinRoom = value.minRoom;
       this.fromChildAreaMaxTotal = value.maxTotal;
       //this.apartment.area = value.area;
@@ -309,14 +448,16 @@ export default {
       //this.fromChildFloor = value.floor;
       this.apartment.floor = value.text;
     },
-    onChildClickPrice(value) { //monthlyRent
+    onChildClickPrice(value) {
+      //monthlyRent
       this.fromChildPrice = value.price1;
       //this.apartment.monthlyRent = value;
     },
     onChildClickRentBuy(value) {
       this.fromChildCheckedOwner = value;
     },
-    onChildClickFeatures(value) { //utilities
+    onChildClickFeatures(value) {
+      //utilities
       this.fromChildFeatures = value.features; //Muuta muuttuja
       this.showFeatures = value.show;
       //this.apartment.mustHave
@@ -338,12 +479,10 @@ export default {
     },
     handleFloorPlan() {
       this.showFloorPlan = !this.showFloorPlan;
-    }
+    },
   },
-  mounted() {
-
-  }
-}
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>
@@ -403,7 +542,9 @@ h2 {
 h3 {
   margin-bottom: 0.4rem;
 }
-label, input, textarea {
+label,
+input,
+textarea {
   margin: auto 0;
 }
 label.description {
@@ -419,12 +560,57 @@ label[class="description"] ~ label[class="description"] {
   margin-top: 0.8rem;
 }
 .flexbox {
-  div, select {
+  div,
+  select {
     width: 48%;
   }
 }
 #description-arb {
   height: 15rem;
+}
+
+#imgParent {
+  margin-top: 1em;
+  height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.img_controls {
+  display: inline-block;
+  margin-top: 0.5em;
+  position: relative;
+  width: 100%;
+}
+
+.img_controls img {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+}
+
+.img_controls .btnDiv{
+margin-top: 1em;
+position: absolute;
+display: flex;
+flex-direction: column;
+right: 3%;
+}
+
+.btnDiv button{
+  margin: 10% auto 10% auto;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.uploadBtn {
+  background-color:v.$KAMGreenDark;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 </style>
