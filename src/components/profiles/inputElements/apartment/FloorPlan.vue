@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
+    <p>Pohja: <span>{{ floorPlanText }}</span></p>
               
     <label @click="handleFloorPlan">
       <div class="flexbox label__border-bottom--green" v-bind:class="{'remove__border-radius': showFloorPlan}">
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <label for="description-floorplan">Kerro vapaasti huoneistosta
+    <label for="description-floorplan">Kuvaus:
       <textarea id="description-floorplan" class="box" type="text" placeholder="Kerro vapaasti huoneistosta" v-model="description"></textarea>
     </label>
   </div>

@@ -1,5 +1,8 @@
 <template>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
   <div>
     <h2>Täytä asunnon tiedot:</h2>
 
@@ -23,7 +26,7 @@
               type="text"
               id="location"
               class="border-radius__right"
-              v-model="location"
+              v-model="apartment.location.city"
             />
           </div>
           <div class="flexbox">
@@ -36,7 +39,7 @@
               type="text"
               id="neighborhood"
               class="border-radius__right"
-              v-model="neighborhood"
+              v-model="apartment.location.neighborhood"
             />
           </div>
           <div class="flexbox">
@@ -49,7 +52,7 @@
               type="text"
               id="address"
               class="border-radius__right"
-              v-model="address"
+              v-model="apartment.location.address"
             />
           </div>
           <div class="flexbox">
@@ -62,7 +65,7 @@
               type="text"
               id="areaCode"
               class="border-radius__right"
-              v-model="areaCode"
+              v-model="apartment.location.areaCode"
             />
           </div>
         </div>
@@ -72,7 +75,7 @@
           <div class="flexbox">
             <!-- pienennä input -->
             <label
-              for="buildYear"
+              for="apartment.buildYear"
               class="label__border-bottom--green border-radius__left"
               >Rakennusvuosi</label
             >
@@ -80,21 +83,37 @@
               type="text"
               id="buildYear"
               class="border-radius__right"
-              v-model="buildYear"
+              v-model="apartment.buildYear"
             />
           </div>
           <div class="flexbox">
+            <label
+              for="apartment.housingAssociation"
+              class="label__border-bottom--green border-radius__left"
+              >Taloyhtiö</label
+            >
+            <input
+              type="text"
+              id="housingAssociation"
+              class="border-radius__right"
+              v-model="apartment.housingAssociation"
+            />
+          </div>
+          <div class="flexbox" id="typeAndFloor">
             <BuildingType
               id-value="ARB"
               v-on:childToParent="onChildClickBuildingType"
             />
-            <Price apt-value="R" />
+            <Floor v-on:childToParent="onChildClickFloor" />
+
             <!-- siirrä muualle -->
           </div>
-          <div class="flexbox">
-            <Floor v-on:childToParent="onChildClickFloor" />
+          <div>
             <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
-            {{ fromChildAvailablefrom }}
+            <AvailableTo v-on:childToParent="onChildClickAvailableTo" />
+          </div>
+          <div class="flexbox">
+            <Price apt-value="R" />
           </div>
         </div>
 
@@ -167,6 +186,11 @@
             ></textarea>
           </label>
         </div>
+
+        <div class="row">
+                <Yard v-on:childToParent="onYardChange"/>
+        </div>
+        
       </div>
 
       <div class="column">
@@ -178,40 +202,58 @@
             ref="file"
             accept="image/*"
             @change="uploadAndPreviewImage"
-            style="display:none"
+            style="display: none"
             multiple
           />
           <label class="uploadBtn" for="file"> Lisää kuvia</label>
-          <div id="imgParent">
-          <div v-for="(image, imgIndex) in apartment.images" :key="imgIndex" >
-            <div v-if="apartment.images.length">
-              <div class="img_controls">
-                <div class="btnDiv">
-                  <button class="upBtn" type="button" @click="moveImageInArray(imgIndex, imgIndex - 1)">
-                  <i class="fas fa-chevron-up"></i>
-                  </button>
-                  <button class="delBtn" type="button" @click="removeImage(imgIndex)">
-                    <i class="far fa-times-circle"></i>
-                  </button>
-                  <button class="downBtn" type="button" @click="moveImageInArray(imgIndex, imgIndex + 1)">
-                   <i class="fas fa-chevron-down"></i>
-                  </button>
+          <div
+            id="imgParent"
+            v-bind:style="[
+              apartment.images.length === 0
+                ? { height: 'auto' }
+                : { 'max-height': '500px' },
+            ]"
+          >
+            <div v-for="(image, imgIndex) in apartment.images" :key="imgIndex">
+              <div v-if="apartment.images.length">
+                <div class="img_controls">
+                  <div class="btnDiv">
+                    <button
+                      class="upBtn"
+                      type="button"
+                      @click="moveImageInArray(imgIndex, imgIndex - 1)"
+                    >
+                      <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <button
+                      class="delBtn"
+                      type="button"
+                      @click="removeImage(imgIndex)"
+                    >
+                      <i class="far fa-times-circle"></i>
+                    </button>
+                    <button
+                      class="downBtn"
+                      type="button"
+                      @click="moveImageInArray(imgIndex, imgIndex + 1)"
+                    >
+                      <i class="fas fa-chevron-down"></i>
+                    </button>
+                  </div>
+                  <img :src="image" :key="imgIndex" />
                 </div>
-                <img :src="image" :key="imgIndex" />
               </div>
             </div>
           </div>
-          </div>
         </div>
         <div class="row">
-          <label for="description-arb" class="description"
-            >Esittelyteksti asunnosta, sijainnista ja palveluista*
+          <label for="description-arb" class="description">
+            Esittelyteksti asunnosta, sijainnista ja palveluista*
             <textarea
-              type="text"
               id="description-arb"
               class="box"
               placeholder="Kuvaus"
-              v-model="description"
+              v-model="apartment.description"
             ></textarea>
           </label>
         </div>
@@ -241,8 +283,10 @@ import Features from "../inputElements/apartment/Features.vue";
 import Services from "../inputElements/apartment/Services.vue";
 import OtherExpenses from "../inputElements/apartment/OtherExpenses.vue";
 import AvailableFrom from "../inputElements/apartment/AvailableFrom.vue";
+import AvailableTo from "../inputElements/apartment/AvailableTo.vue";
 import Terms from "../inputElements/apartment/Terms.vue";
 import Price from "../inputElements/apartment/Price.vue";
+import Yard from '../inputElements/apartment/Yard.vue';
 
 //LocationType puuttuu
 
@@ -266,8 +310,10 @@ export default {
     Services,
     OtherExpenses,
     AvailableFrom,
+    AvailableTo,
     Terms,
     Price,
+    Yard,
     //ProfileImage,
   },
 
@@ -301,7 +347,6 @@ export default {
       fromChildServicesText: "",
       fromChildOtherExpenses: null,
       fromChildSpeed: "",
-      fromChildAvailablefrom: null,
       fromChildTerms: null,
       fromChildRentIncrease: null,
 
@@ -362,20 +407,61 @@ export default {
         landLord: "",
         description: "",
         viewCount: 0,
-        floorPlan: "", //Mikä muoto?
+        floorPlan: {
+          regular: { amount: null },
+          kitchen: { amount: null },
+          kitchenette: { amount: null },
+          diningRoom: { amount: null },
+          bathRoom: { amount: null },
+          toilet: { amount: null },
+          sauna: { amount: null },
+          wardrobe: { amount: null },
+          utilityRoom: { amount: null },
+        },
         area: null,
         cellArea: null,
         monthlyRent: null,
+        price: { salePrice: null, debtFreePrice: null },
         guarantee: "",
         buildYear: null,
         apartmentType: null,
         isCellApartment: false,
+        isFurnished: false,
         floor: "",
+        propertyFloors: "",
+        sights: "",
         hasElevator: false,
-
+        housingAssociation: "",
+        buildingManager: "",
+        maintainer: "",
+        yard: "",
+        allowedBuildArea: 0,
+        zoning: "",
+        balcony: { exists: false, description: "" },
+        patio: { exists: false, description: "" },
+        propertyDescription: "",
+        totalAmountOfAptsOnProperty: null,
+        businessesOnProperty: null,
+        buildMaterial: "",
+        roofType: "",
+        roofLining: "",
+        renovationDescription: "",
+        energyClass: "",
+        limitations: "",
         availableFrom: null,
         availableUntil: null,
-        equipment: "",
+        equipment: {
+          kitchen: "",
+          bathroom: "",
+          storage: "",
+          heating: "",
+          plumbing: "",
+          water: "",
+          garbage: "",
+          airConditioning: "",
+          common: "",
+          other: "",
+        },
         condition: null,
         petsAllowed: false,
         smokingAllowed: false,
@@ -384,7 +470,12 @@ export default {
             mustHave: false,
             monthlyPrice: null,
           },
-          parkingIncluded: false,
+          parking: {
+            exists: false,
+            description: "",
+            supportsElectric: false,
+            type: null,
+          },
           water: {
             mustHave: false,
             monthlyPrice: null,
@@ -411,8 +502,11 @@ export default {
 
   methods: {
     uploadAndPreviewImage() {
-      this.$refs.file.files.forEach((e, i) => this.apartment.images.push(URL.createObjectURL(this.$refs.file.files[i])));
-      console.log(this.apartment.images);
+      this.$refs.file.files.forEach((e, i) =>
+        this.apartment.images.push(
+          URL.createObjectURL(this.$refs.file.files[i])
+        )
+      );
     },
     removeImage(index) {
       this.apartment.images.splice(index, 1);
@@ -450,11 +544,12 @@ export default {
     },
     onChildClickPrice(value) {
       //monthlyRent
-      this.fromChildPrice = value.price1;
+      this.apartment.price.salePrice = value.price1;
+      this.apartment.price.debtFreePrice = value.price2;
       //this.apartment.monthlyRent = value;
     },
     onChildClickRentBuy(value) {
-      this.fromChildCheckedOwner = value;
+      this.apartment.isForSale = value;
     },
     onChildClickFeatures(value) {
       //utilities
@@ -464,18 +559,25 @@ export default {
     },
     onChildClickServices(value) {
       this.fromChildServicesText = value.text;
-      this.fromChildServices = value.services;
+      this.apartment.nearbyServices = value.services;
     },
     onChildClickOtherExpenses(value) {
       this.fromChildOtherExpenses = value.expenses;
       this.fromChildSpeed = value.speed;
     },
     onChildClickAvailableFrom(value) {
-      this.fromChildAvailablefrom = value;
+      this.apartment.availableFrom = value;
+    },
+    onChildClickAvailableTo(value) {
+      this.apartment.availableUntil = value;
     },
     onChildClickTerms(value) {
       this.fromChildTerms = value.terms;
       this.fromChildRentIncrease = value.amount;
+    },
+    onYardChange(value) {
+      this.apartment.propertyArea = value.yardArea;
+      this.apartment.yard = value.yardDescription
     },
     handleFloorPlan() {
       this.showFloorPlan = !this.showFloorPlan;
@@ -589,22 +691,22 @@ label[class="description"] ~ label[class="description"] {
   overflow: auto;
 }
 
-.img_controls .btnDiv{
-margin-top: 1em;
-position: absolute;
-display: flex;
-flex-direction: column;
-right: 3%;
+.img_controls .btnDiv {
+  margin-top: 1em;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 3%;
 }
 
-.btnDiv button{
+.btnDiv button {
   margin: 10% auto 10% auto;
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
 
 .uploadBtn {
-  background-color:v.$KAMGreenDark;
+  background-color: v.$KAMGreenDark;
   color: white;
   padding: 0.5rem;
   border-radius: 0.3rem;
@@ -613,4 +715,7 @@ right: 3%;
   margin-top: 1rem;
 }
 
+#typeAndFloor {
+  margin-bottom: auto;
+}
 </style>

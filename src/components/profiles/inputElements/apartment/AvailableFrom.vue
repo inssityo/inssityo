@@ -1,14 +1,14 @@
 <template>
   <div>
     <label>Vapautuu:</label>
-    <input type="date" class="box" v-model="date" v-on:click="emitToParent"><!-- vaihda click -->
+    <input type="date" class="box" v-model="date" v-on:input="emitToParent"><!-- vaihda click -->
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'AvalableFrom', //Heti vapaa?
+  name: 'AvailableFrom', //Heti vapaa?
   
   data() {
     return {

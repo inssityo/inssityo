@@ -34,10 +34,13 @@ export default {
     return {
       optionBuildingTypes: [
         { text: 'Kerrostalo', value: 1, checked: false }, //High-Rise
-        { text: 'Omakotitalo', value: 2, checked: false }, //Detached House
-        { text: 'Erillistalo', value: 3, checked: false }, //
-        { text: 'Rivitalo', value: 4, checked: false }, //Terraced House
-        { text: 'Paritalo', value: 5, checked: false }, //Semi-Detached House
+        { text: 'Rivitalo', value: 2, checked: false }, //Terraced house
+        { text: 'Paritalo', value: 3, checked: false }, //Detached house
+        { text: 'Omakotitalo', value: 4, checked: false }, //Terraced House
+        { text: 'Ketjutalo', value: 5, checked: false }, //Semi-Detached House
+        { text: 'Luhtitalo', value: 6, checked: false }, //Luhtitalo
+        { text: 'Puutalo-osake', value: 7, checked: false }, //Wooden house share
+        { text: 'Muu', value: 8, checked: false }, //Other
       ],
       buildingType: '',
       buildingTypes: [],
