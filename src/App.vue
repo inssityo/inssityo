@@ -100,8 +100,13 @@ h2 {
 }
 h3 {
   font-size: 1.2rem;
-  font-weight: bold;
   color: v.$KAMGreenDark;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+h4 {
+  font-family: v.$KAMLouisLight;
+  font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
 }
@@ -131,7 +136,8 @@ input, select, textarea, button { //Muuta buttonin font-size
 a, a:hover  {
   text-decoration: none;
   cursor: pointer;
-  color: v.$KAMBeige;
+  color: v.$Black;
+  //color: v.$KAMBeige;
 }
 input:focus, select:focus, textarea:focus {
   outline: none;

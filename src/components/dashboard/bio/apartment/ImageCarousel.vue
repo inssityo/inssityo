@@ -1,7 +1,7 @@
 <template>
   <div class="card-carousel">
     <div class="card-img">
-      <img :src="require(`../../../assets/images/${currentImage}`)" alt="">
+      <img :src="require(`../../../../assets/images/${currentImage}`)" class="img--calc" alt="">
      
       <span @click="nextImage">
         <i class="fas fa-caret-right pointer"></i>
@@ -18,7 +18,7 @@
         :class="['thumbnail-image', (activeImage == index) ? 'active' : '']"
         @click="activateImage(index)"
       >
-      <img :src="require(`../../../assets/images/${image}`)">
+        <img :src="require(`../../../../assets/images/${image}`)">
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../../assets/styles/variables.scss' as v;
+@use '../../../../assets/styles/variables.scss' as v;
 
 .fa-caret-left, .fa-caret-right {
   position: absolute;
@@ -97,10 +97,10 @@ export default {
   transition: all 250ms;
 }
 .fa-caret-left:hover {
-  left: 0;
+  left: 0.2rem;
 }
 .fa-caret-right:hover {
-  right: 0;
+  right: 0.2rem;
 }
 
 .card-carousel {
@@ -120,12 +120,12 @@ export default {
   }
   .thumbnail-image > img {
     width: 100%;
-    height: auto;
+    max-height: 5rem;
     transition: all 250ms;
   }
   .thumbnail-image:hover > img, 
   .thumbnail-image.active > img {
-    filter: brightness(70%);
+    filter: brightness(50%);
   }
   .card-img {
     position: relative;
