@@ -69,8 +69,6 @@ export default {
         { text: 'sauna', abbr: 's', value: 7 },
         { text: 'vaatehuone', abbr: 'vh', value: 8 },
         { text: 'kodinhoitohuone', abbr: 'khh', value: 9 },
-        { text: 'terassi', abbr: 'ter', value: 10 },
-        { text: 'parveke', abbr: 'parv', value: 11 },
       ]
     }
   },

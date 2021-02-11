@@ -88,7 +88,7 @@
           </div>
           <div class="flexbox">
             <label
-              for="apartment.housingAssociation"
+              for="housingAssociation"
               class="label__border-bottom--green border-radius__left"
               >Taloyhtiö</label
             >
@@ -105,8 +105,34 @@
               v-on:childToParent="onChildClickBuildingType"
             />
             <Floor v-on:childToParent="onChildClickFloor" />
+          </div>
 
-            <!-- siirrä muualle -->
+          <div class="flexbox" id="aptsBusinesses">
+            <label
+              for="totalAmountOfAptsOnProperty"
+              class="label__border-bottom--green border-radius__left"
+              id="aptsLabel"
+            >
+              Asuinhuoneistojen määrä rakennuksessa:
+              <input
+                type="text"
+                id="totalAmountOfAptsOnProperty"
+                class="border-radius__right"
+                v-model="apartment.totalAmountOfAptsOnProperty"
+            /></label>
+
+            <label
+              for="businessesOnProperty"
+              class="label__border-bottom--green border-radius__left"
+              id="businessesLabel"
+            >
+              Liiketilojen määrä rakennuksessa:
+              <input
+                type="text"
+                id="businessesOnProperty"
+                class="border-radius__right"
+                v-model="apartment.businessesOnProperty"
+            /></label>
           </div>
           <div>
             <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
@@ -114,6 +140,33 @@
           </div>
           <div class="flexbox">
             <Price apt-value="R" />
+          </div>
+          <div class="flexbox">
+            <label
+              for="buildingManager"
+              class="label__border-bottom--green border-radius__left"
+            >
+              Isännöitsijä</label
+            >
+            <input
+              type="text"
+              id="buildingManager"
+              class="border-radius__right"
+              v-model="apartment.buildingManager"
+            />
+          </div>
+          <div class="flexbox">
+            <label
+              for="maintainer"
+              class="label__border-bottom--green border-radius__left"
+              >Kunnossapitovastuu</label
+            >
+            <input
+              type="text"
+              id="maintainer"
+              class="border-radius__right"
+              v-model="apartment.maintainer"
+            />
           </div>
         </div>
 
@@ -145,28 +198,32 @@
             />
           </div>
 
+          <div class="flexbox">
+            <BalconyPatio v-on:childToParent="onBalconyPatio" />
+          </div>
+
           <label for="kitchen-equipment" class="description"
-            >Keittiön varustus
+            >Keittiö
             <textarea
               type="text"
               id="kitchen-equipment"
               class="box"
-              placeholder="Keittiön varustus"
+              placeholder="Keittiön varusteet"
               v-model="kEquipment"
             ></textarea>
           </label>
           <label for="bathroom-equipment" class="description"
-            >Kylpyhuoneen varustus
+            >Kylpyhuone:
             <textarea
               type="text"
               id="bathroom-equipment"
               class="box"
-              placeholder="Kylpyhuoneen varustus"
+              placeholder="Kylpyhuoneen varusteet"
               v-model="bEquipment"
             ></textarea>
           </label>
           <label for="storage" class="description"
-            >Säilytystilat
+            >Säilytystilat:
             <textarea
               type="text"
               id="storage"
@@ -176,21 +233,20 @@
             ></textarea>
           </label>
           <label for="equipment" class="description"
-            >Muuta varustusta
+            >Muuta:
             <textarea
               type="text"
               id="equipment"
               class="box"
-              placeholder="Muuta"
+              placeholder="Muuta huomionarvoista asunnosta"
               v-model="equipment"
             ></textarea>
           </label>
         </div>
 
         <div class="row">
-                <Yard v-on:childToParent="onYardChange"/>
+          <Yard v-on:childToParent="onYardChange" />
         </div>
-        
       </div>
 
       <div class="column">
@@ -286,7 +342,8 @@ import AvailableFrom from "../inputElements/apartment/AvailableFrom.vue";
 import AvailableTo from "../inputElements/apartment/AvailableTo.vue";
 import Terms from "../inputElements/apartment/Terms.vue";
 import Price from "../inputElements/apartment/Price.vue";
-import Yard from '../inputElements/apartment/Yard.vue';
+import Yard from "../inputElements/apartment/Yard.vue";
+import BalconyPatio from "../inputElements/apartment/BalconyPatio.vue";
 
 //LocationType puuttuu
 
@@ -314,6 +371,7 @@ export default {
     Terms,
     Price,
     Yard,
+    BalconyPatio,
     //ProfileImage,
   },
 
@@ -450,6 +508,12 @@ export default {
         limitations: "",
         availableFrom: null,
         availableUntil: null,
+        property: {
+          rented: false,
+          owner: "",
+          propertyRent: null,
+          contractExpiresAt: null,
+        },
         equipment: {
           kitchen: "",
           bathroom: "",
@@ -577,7 +641,18 @@ export default {
     },
     onYardChange(value) {
       this.apartment.propertyArea = value.yardArea;
-      this.apartment.yard = value.yardDescription
+      this.apartment.yard = value.yardDescription;
+      this.apartment.allowedBuildArea = value.buildArea;
+      this.apartment.zoning = value.zoningDescription;
+      this.apartment.property.rented = value.propertyIsRental;
+      this.apartment.property.owner = value.propertyOwner;
+    },
+
+    onBalconyPatio(value) {
+      this.apartment.balcony.exists = value.balconyExists;
+      this.apartment.balcony.description = value.balconyDesc;
+      this.apartment.patio.exists = value.patioExists;
+      this.apartment.patio.description = value.patioDesc;
     },
     handleFloorPlan() {
       this.showFloorPlan = !this.showFloorPlan;
@@ -717,5 +792,21 @@ label[class="description"] ~ label[class="description"] {
 
 #typeAndFloor {
   margin-bottom: auto;
+}
+
+#aptsLabel {
+  margin-right: 1em;
+}
+
+#businessesLabel {
+  margin-left: 1em;
+}
+
+#aptsBusinesses {
+  margin-top: 2em;
+}
+
+#aptsBusinesses input {
+  max-width: 97%;
 }
 </style>
