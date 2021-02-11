@@ -1,14 +1,9 @@
 <template>
-   <div>
-    <img src="../../../assets/images/pexels-nathan-cowley-1300510.jpg" class="img--calc" alt="">
-    <div class="container">
+    <div class="content container">
       <div  class="column column-item--1 flexbox">
-        <img src="../../../assets/images/pexels-philip-warp-6142740.jpg" class="profile-img" alt="">
+        <img src="../../../assets/images/pexels-philip-warp-6142740.jpg" alt="">
 
-        <div class="tooltip chat-icon pointer">
-          <i class="fas fa-dove"></i>
-          <span class="tooltiptext">Aloita chat</span>
-        </div>
+        <Icon icon="fas fa-dove" tooltip-text="Aloita chat" />
       </div>
       <div class="column column-item--2">
 
@@ -40,18 +35,27 @@
    
       </div>
     </div>
-   </div>
+
 
   
 </template>
 
 <script>
+import Icon from './Icon.vue';
+import axios from 'axios';
+
 export default {
 
   name: 'RoommateDetails',
 
+  components: {
+    Icon
+  },
+
   data() {
     return {
+      userData: {},
+
       user: {
         email: '',
         password: '',
@@ -99,9 +103,27 @@ export default {
           { text: 'Tietotekniikka', value: 'it', level: 1 }
         ],
         blockedUsers: [],
-        targetProfile: []
+        targetProfile: [],
+        loading: false,
       }
+    }
+  },
+  async created() {
+    if (this.$route.params.id) {
+      let userData = this.$route.params.users;
+      let userId = this.$route.params.id
 
+      if (userData){
+        this.userData = userData;
+      } else {
+        this.loading = true;
+        let res = await axios.get(`/users/${userId}`);
+        this.userData = res.data;
+        this.loading = false;
+      }
+    }
+    if (this.$route.params.id) {
+      this.userData = parseInt(this.$route.params.id);
     }
   },
 }
@@ -110,17 +132,6 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
-.img--calc {
-  max-width: 100%;
-  max-height: 100vh;
-  position: relative;
-  opacity: 0.5;
-  filter: brightness(50%);
-}
-.profile-img {
-  height: 113%;
-  width: 100%;
-}
 h1 {
   letter-spacing: 0.1rem;
   font-weight: bold;
@@ -132,15 +143,7 @@ a {
 }
 .container {
   grid-template-columns: 28rem 37rem;
-  grid-template-rows: repeat(1, 33rem);
   gap: 0;
-  position: absolute;
-  top: 50%;
-  left: 35%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  width: 55%;
-  height: 60%;
 }
 .column-item--1 {
   grid-column-start: 1;
@@ -150,19 +153,11 @@ a {
 
   .chat-icon {
     position: absolute;
-    bottom: -0.5rem;
-    right: 0.8rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
   }
-  svg {
-    padding: 1.2rem;
-    background: v.$KAMPurple;
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    color: v.$White;
-  }
-  .pointer:hover {
-    bottom: 0;
+  .chat-icon:hover {
+    bottom: 2rem;
   }
 }
 .column-item--2 {
@@ -170,6 +165,7 @@ a {
   grid-column-end: 3;
   background: v.$KAMGreenDark;
   color: v.$White;
+  margin: 3rem 0;
 
   h1 {
     color: v.$White;
@@ -193,13 +189,6 @@ a {
       border-bottom: 1px solid v.$White;
       margin-bottom: 1rem;
     }
-  }
-}
-.tooltip {
-  width: 6rem;
-
-  .tooltiptext {
-    opacity: 0.7;
   }
 }
 

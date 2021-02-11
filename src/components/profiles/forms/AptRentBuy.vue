@@ -274,13 +274,6 @@ export default {
       }
     }
   },
-  computed: {
-    filteredCharacters() {
-      return this.fromChildCheckedCharacterList.filter((character) => { 
-        return character.checked;
-      });
-    }
-  },
 
   methods: {
     /*

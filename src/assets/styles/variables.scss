@@ -9,11 +9,16 @@
   src: url(~@/assets/fonts/Louis-George-Cafe.ttf) format("truetype");
 }
 @font-face {
+  font-family: "KAMLouisLight";
+  src: url(~@/assets/fonts/Louis-George-Cafe-Light.ttf) format("truetype");
+}
+@font-face {
   font-family: "KAMQuinn";
   src: url(~@/assets/fonts/Quantify.ttf) format("truetype");
 }
 
 $KAMLouis: "KAMLouis";
+$KAMLouisLight: "KAMLouisLight";
 $KAMQuinn: "KAMQuinn";
 
 $KAMBeigeLight: #F4ECE4;
