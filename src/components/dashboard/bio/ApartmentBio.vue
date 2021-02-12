@@ -215,7 +215,7 @@ export default {
       liked: false,
       apartment: {
         images: [
-          'pexels-julia-kuzenkov-1974596.jpg',
+          'pexels-alexander-zvir-4252510.jpg',
           'pexels-vlada-karpovich-4451937.jpg',
           'pexels-kate-trifo-4123921.jpg',
           'pexels-thgusstavo-santana-2102587.jpg',
@@ -362,10 +362,6 @@ h3 {
 }
 p {
   margin: 0.2rem 0;
-}
-
-img {
-  height: auto;
 }
 
 .container {

@@ -260,5 +260,9 @@ button {
   border: 1px solid v.$White;
   background: transparent;
 }
+.secondary-button:hover {
+  background: v.$KAMPurple;
+  border: 1px solid v.$KAMGreenDark;
+}
 
 </style>
