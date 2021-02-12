@@ -1,29 +1,29 @@
 <template>
-  <div class="flexbox">
-    
+  <div>
+    <img v-show="selectedImage" :src="require(`../../assets/images/${selectedImage}`)" class="img--calc" alt="Sea and beach.">
     <div class="container">
 
-      <div id="secondary-column" v-bind:class="{'column-item--1-2': !loginView}" class="column-item--1">
+      <div id="secondary-column" v-bind:class="{'column-item--1-2': !loginView}" class="column column-item--1 flexbox">
         <div class="transparency">
           <div>
-          <div v-if="loginView">
-            <h2>Welcome back!</h2>
-            <h3 class="margin__topless">To keep connected with us please login with your personal info</h3>
-            <p>Don't have an account?</p>
-            <button class="secondary-button" @click="toggleLoginSignup">Sign up</button>
-          </div>
-          <div v-else>
-            <h2>Adventure starts here</h2>
-            <h3 class="margin__topless">Create an account to join us</h3>
-            <p>Already have an account?</p>
-            <button class="secondary-button" @click="toggleLoginSignup">Login</button>
-          </div>
+            <div v-if="loginView" class="box">
+              <h2>Welcome back!</h2>
+              <h3 class="margin__topless">To keep connected with us please login with your personal info</h3>
+              <p>Don't have an account?</p>
+              <button class="secondary-button" @click="toggleLoginSignup">Sign up</button>
+            </div>
+            <div v-else class="box">
+              <h2>Adventure starts here</h2>
+              <h3 class="margin__topless">Create an account to join us</h3>
+              <p>Already have an account?</p>
+              <button class="secondary-button" @click="toggleLoginSignup">Login</button>
+            </div>
           </div>
         </div>
       </div>
-      
-      <div id="main-column" v-bind:class="{'column-item--2-2': !loginView}" class="column-item--2">
-        <div class="">
+
+      <div id="main-column" v-bind:class="{'column-item--2-2': !loginView}" class="column column-item--2 flexbox">
+        <div>
           <h1 v-show="loginView" class="margin__topless">Login</h1>
           <h1 v-show="!loginView" class="margin__topless">Sign up</h1>
 
@@ -58,13 +58,13 @@
               <input type="checkbox" id="show-password" @click="showPassword">
               <span class="checkmark"></span>
             </label>
+
             <button type="submit" class="hover__background--blue">Sign up</button>
           </form>
         </div>
       </div>
 
     </div>
-    <img v-show="selectedImage" :src="require(`../../assets/images/${selectedImage}`)" class="img--calc" alt="Sea and beach.">
   </div>
 </template>
 
@@ -77,6 +77,7 @@ export default {
       email: '',
       password: '',
       loginView: true,
+      checked: true,
 
       images: [
         'pexels-pixabay-462162.jpg',
@@ -144,22 +145,85 @@ export default {
   max-height: 100vh;
   position: relative;
 }
-.flexbox .flexbox label, .flexbox .flexbox input {
-  background: v.$KAMGrey;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
+h1 {
+  margin-bottom: 1rem;
 }
-.checkmark-label {
-  margin: 0.5rem 0 1.5rem 0;
-  font-size: 0.8rem !important;
+h2 {
+  letter-spacing: 0.1rem;
+  padding: 1rem 1.5rem 0 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+.container {
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(1, 20rem); //1fr
+  cursor: pointer;
+  gap: 0;
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-55%, -40%);
+  z-index: 1;
+  width: 40%;
+  height: 60%;
 
-  .checkmark {
-    top: -0.1rem;
+  p {
+    padding: 1rem 0 0.5rem 0;
+    text-align: center;
   }
+}
+.column div {
+  width: 100%;
+}
+.column-item--1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  color: v.$White;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+
+  h2 {
+    color: v.$White;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    color: v.$White;
+    font-size: 1rem !important;
+    text-transform: none;
+    margin-bottom: 1.5rem;
+  }
+}
+.column-item--1-2 {
+  grid-column-start: 4;
+  grid-column-end: 6;
+}
+
+.column-item--2 {
+  grid-column-start: 3;
+  grid-column-end: 6;
+  background: v.$White;
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    color: v.$White;
+  }
+}
+.column-item--2-2 {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+form {
+  padding: 0 2%;
 }
 .transparency {
   background: v.$KAMGreenDark;
-  background: rgba(1, 99, 97, 0.7);
+  //background: v.$KAMGreenTRN;
   height: 100%;
   position: absolute;
   top: 0;
@@ -173,61 +237,28 @@ export default {
     padding: 0.5rem;
   }
 }
+.flexbox .flexbox label, .flexbox .flexbox input {
+  background: v.$KAMGrey;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+.checkmark-label {
+  margin: 0.5rem 0 1.5rem 0;
+  font-size: 0.8rem !important;
+
+  .checkmark {
+    top: -0.1rem;
+  }
+}
 button {
-  margin: 1rem auto 0.2rem auto;
+  margin: 1rem auto 1rem auto;
   background: v.$KAMGreenDark;
   color: v.$White;
 }
+
 .secondary-button {
   border: 1px solid v.$White;
   background: transparent;
-}
-.container {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -45%);
-  z-index: 1;
-  width: 55%;
-  height: 60%;
-}
-.column-item--1 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  color: v.$White;
-  position: relative;
-  text-align: center;
-  overflow: hidden;
-
-  h2 {
-    color: v.$White;
-    margin-bottom: 1rem;
-  }
-  h3 {
-    color: v.$White;
-    text-transform: none;
-    margin-bottom: 2rem;
-  }
-}
-.column-item--1-2 {
-  grid-column-start: 3;
-  grid-column-end: 4;
-}
-.column-item--2 {
-  grid-column-start: 2;
-  grid-column-end: 4;
-  background: v.$White;
-  padding: 1rem;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.column-item--2-2 {
-  grid-column-start: 1;
-  grid-column-end: 3;
 }
 
 </style>
