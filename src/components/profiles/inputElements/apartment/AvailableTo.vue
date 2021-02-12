@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <label>Voimassa:</label>
+  <div id="parent">
+
     <div class="flexbox">
-      Toistaiseksi:
+          <h4>Voimassa:</h4>
+      <label>Toistaiseksi:</label>
       <label class="switch">
         <input type="checkbox" v-model="forNow" v-on:click="clickForNow">
         <span class="slider round"  v-bind:class="{'switch-yes': forNow}"></span>
@@ -49,7 +50,4 @@ input[type="date"] {
   margin: 0.3rem, 0 0 0;
 }
 
-.switch {
-    margin-bottom: 1em;
-}
 </style>

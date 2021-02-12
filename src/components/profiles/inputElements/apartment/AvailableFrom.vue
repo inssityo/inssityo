@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label>Vapautuu:</label>
+    <h4>Vapautuu:</h4>
     <input type="date" class="box" v-model="date" v-on:input="emitToParent"><!-- vaihda click -->
   </div>
 </template>

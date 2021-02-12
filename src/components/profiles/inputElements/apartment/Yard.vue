@@ -38,9 +38,11 @@
           id="yardArea"
           class="border-radius__right"
         />
+                        <label class="label__border-bottom--green border-radius__right"
+          >m2</label>
       </div>
 
-      <div>
+      <div id="buildAreaDiv">
         <label
           for="yardBuildArea"
           class="label__border-bottom--green border-radius__left"
@@ -53,6 +55,8 @@
           id="yardArea"
           class="border-radius__right"
         />
+                <label class="label__border-bottom--green border-radius__right"
+          >m2</label>
       </div>
     </div>
 
@@ -208,7 +212,7 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 #yardArea {
-  width: 50%;
+  width: 30%;
 }
 
 #yardParent {
@@ -241,6 +245,12 @@ export default {
 
 #rentPriceDiv {
   max-width: 15%;
+}
+
+#buildAreaDiv {
+  white-space: nowrap;
+  margin-right: 10em;
+  max-width: 8em;
 }
 
 #rentExpiresDiv {

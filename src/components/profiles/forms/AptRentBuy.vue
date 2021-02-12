@@ -110,7 +110,6 @@
           <div class="flexbox" id="aptsBusinesses">
             <label
               for="totalAmountOfAptsOnProperty"
-              class="label__border-bottom--green border-radius__left"
               id="aptsLabel"
             >
               Asuinhuoneistojen määrä rakennuksessa:
@@ -123,7 +122,6 @@
 
             <label
               for="businessesOnProperty"
-              class="label__border-bottom--green border-radius__left"
               id="businessesLabel"
             >
               Liiketilojen määrä rakennuksessa:
@@ -134,14 +132,36 @@
                 v-model="apartment.businessesOnProperty"
             /></label>
           </div>
+          <div v-if="!apartment.isForSale" class="flexbox" id="availableDiv">
+            <AvailableFrom
+              v-on:childToParent="onChildClickAvailableFrom"
+              id="available-content"
+            />
+            <AvailableTo
+              v-on:childToParent="onChildClickAvailableTo"
+              id="available-content"
+            />
+          </div>
+          <div v-else class="flexbox" id="availableDiv">
+            <AvailableFrom
+              v-on:childToParent="onChildClickAvailableFrom"
+              id="available-content"
+            />
+          </div>
+
+          <h3>Hinta ja kulut</h3>
+
           <div>
-            <AvailableFrom v-on:childToParent="onChildClickAvailableFrom" />
-            <AvailableTo v-on:childToParent="onChildClickAvailableTo" />
+            <Price
+              v-if="apartment.isForSale"
+              apt-value="B"
+              v-on:childToParent="onChildSetSalePrice"
+            />
+            <Price v-else apt-value="R" v-on:childToParent="onChildSetRent" />
           </div>
+          <h4>Yhtiö:</h4>
           <div class="flexbox">
-            <Price apt-value="R" />
-          </div>
-          <div class="flexbox">
+
             <label
               for="buildingManager"
               class="label__border-bottom--green border-radius__left"
@@ -168,10 +188,27 @@
               v-model="apartment.maintainer"
             />
           </div>
+          <div class="flexbox" id="taxDiv">
+            <label
+              for="propertyTax"
+              class="label__border-bottom--green border-radius__left"
+              >Kiinteistövero</label
+            >
+            <input
+              type="text"
+              id="propertyTax"
+              class="border-radius__right"
+              v-model="apartment.propertyTax"
+            />
+            <label id="euroLabel" for="propertyTax">€/vuosi</label>
+          </div>
+              <label for="renovationDesc" class="description"> Remonttihistoria ja tulevat remontit:
+      <textarea id="renovationDesc" class="box" type="text" placeholder="Kerro menneistä ja tiedetyistä tulevista remonteista" v-model="apartment.renovationDescription"></textarea>
+    </label>
         </div>
 
         <div class="row">
-          <h3>Ehdot</h3>
+          <h3>Sopimusehdot</h3>
           <Terms v-on:childToParent="onChildClickTerms" />
         </div>
       </div>
@@ -309,7 +346,7 @@
               id="description-arb"
               class="box"
               placeholder="Kuvaus"
-              v-model="apartment.description"
+              v-model="apartment.propertyDescription"
             ></textarea>
           </label>
         </div>
@@ -421,6 +458,7 @@ export default {
           address: "",
           areaCode: "",
         },
+        isForSale: true,
         nearbyServices: {
           //Listoja
           publicTransport: [
@@ -585,13 +623,14 @@ export default {
     },*/
     onChildClickFloorPlan(value) {
       this.apartment.floorPlan = value.text;
-      //this.fromChildFloorPlan = value.floorPlan;
+      this.apartment.floorPlanText = value.text;
+      this.apartment.sights = value.sights;
     },
     onChildClickArea(value) {
       //Area, ei min tai max!!!!, cellArea
       this.fromChildAreaMinRoom = value.minRoom;
       this.fromChildAreaMaxTotal = value.maxTotal;
-      //this.apartment.area = value.area;
+
     },
     onChildClickCondition(value) {
       this.apartment.condition = value;
@@ -606,15 +645,19 @@ export default {
       //this.fromChildFloor = value.floor;
       this.apartment.floor = value.text;
     },
-    onChildClickPrice(value) {
-      //monthlyRent
-      this.apartment.price.salePrice = value.price1;
-      this.apartment.price.debtFreePrice = value.price2;
+    onChildSetSalePrice(value) {
+      this.apartment.price.salePrice = value.salePrice;
+      this.apartment.price.debtFreePrice = value.debtFreePrice;
       //this.apartment.monthlyRent = value;
     },
     onChildClickRentBuy(value) {
       this.apartment.isForSale = value;
     },
+
+    onChildSetRent(value) {
+      this.apartment.monthlyRent = value.monthlyRent;
+    },
+
     onChildClickFeatures(value) {
       //utilities
       this.fromChildFeatures = value.features; //Muuta muuttuja
@@ -809,4 +852,9 @@ label[class="description"] ~ label[class="description"] {
 #aptsBusinesses input {
   max-width: 97%;
 }
+
+#euroLabel {
+  font-weight: bold;
+}
+
 </style>

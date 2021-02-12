@@ -42,8 +42,13 @@
       </div>
     </div>
     <label for="description-floorplan">Kuvaus:
-      <textarea id="description-floorplan" class="box" type="text" placeholder="Kerro vapaasti huoneistosta" v-model="description"></textarea>
+      <textarea id="description-floorplan" class="box" type="text" placeholder="Kerro vapaasti asunnosta." v-model="description"></textarea>
     </label>
+
+        <label for="description-floorplan">Näkymät:
+      <textarea id="description-floorplan" class="box" type="text" placeholder="Kuvaile asunnosta avautuvia näkymiä." v-model="sights"></textarea>
+    </label>
+
   </div>
 </template>
 
@@ -53,6 +58,7 @@ export default {
 
   data() {
     return {
+      sights:"",
       showFloorPlan: false,
       floorPlan: [
         { abbr: null, number: null } 
@@ -74,7 +80,7 @@ export default {
   },
   methods: {
     emitToParent() {
-      this.$emit('childToParent', { 'text': this.floorPlanText, 'floorPlan': this.floorPlan })
+      this.$emit('childToParent', { 'text': this.floorPlanText, 'floorPlan': this.floorPlan, sights:this.sights})
     },
     add() {
       this.floorPlan.push(

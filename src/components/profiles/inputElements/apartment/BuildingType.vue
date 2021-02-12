@@ -1,7 +1,8 @@
 <template>
   <div v-bind:class="{'width100': idValue !== 'ARB'}">
+    <h4>Talotyyppi</h4>
     <select v-if="idValue === 'ARB'" v-model="buildingType" v-on:click="emitToParent">
-      <option value="" selected disabled hidden>Talotyyppi</option>
+      <option value="" selected disabled hidden>Valitse...</option>
       <option v-for="(type, index,) in optionBuildingTypes" :value="type.value" :key="index">{{ type.text }}</option>
     </select>
 
