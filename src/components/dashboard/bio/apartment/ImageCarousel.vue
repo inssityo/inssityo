@@ -68,6 +68,10 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
+.img--calc {
+  max-height: calc(100vh - 0rem - 1rem);
+}
+
 .fa-caret-left, .fa-caret-right {
   position: absolute;
   top: 50%;
@@ -120,13 +124,18 @@ export default {
   }
   .thumbnail-image > img {
     width: 100%;
-    max-height: 5rem;
+    max-height: 6rem;
     transition: all 250ms;
   }
-  .thumbnail-image:hover > img, 
+  .thumbnail-image:hover > img {
+    //max-height: 100%;
+    //filter: brightness(110%);
+    filter: brightness(50%);
+  }
   .thumbnail-image.active > img {
     filter: brightness(50%);
   }
+  
   .card-img {
     position: relative;
     margin-bottom: 1rem;
