@@ -2,16 +2,16 @@
   <router-link :to="{ name: 'roommate-bio', params: { id: id, users: users }}" class="card pointer">
     <div class="card-info">
       <div class="transparency flexbox">
-        <p>{{ users.name }}</p>
+        <p>{{ users[userIndex].name }}</p>
         <p>{{ handleAge }}</p>
         <p> {{ handleGender }}</p>
       </div>
     </div>
     <div class="card-info">
       <div class="transparency flexbox">
-        <p><i class="fas fa-coins"></i>{{ users.rentLimit }}€</p>
+        <p><i class="fas fa-coins"></i>{{ users[userIndex].rentLimit }}€</p>
         <p><i class="fas fa-door-open"></i>{{ handleStatus }}</p>
-        <p><i class="fas fa-walking"></i>{{ users.maxRoomMates }}</p>
+        <p><i class="fas fa-walking"></i>{{ users[userIndex].maxRoomMates }}</p>
       </div>
     </div>
     <img src="../../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
@@ -21,12 +21,12 @@
 <script>
 export default {
   name: 'RoommateCard',
-  props: ['userData'],
+  props: ['userData', 'userIndex'],
 
   data() {
     return {
       users: this.userData,
-      id: this.userData._id,
+      id: this.userData[this.userIndex]._id,
       
       modifiedAge: '',
       modifiedGender: '',
@@ -36,7 +36,7 @@ export default {
   computed: {
     handleAge() {
       let age = '';
-      switch(this.users.ageGroup) {
+      switch(this.users[this.userIndex].ageGroup) {
         case 1:
           age = 'under 20';
           break;
@@ -66,7 +66,7 @@ export default {
     },
     handleGender() {
       let gender = '';
-      switch(this.users.gender) {
+      switch(this.users[this.userIndex].gender) {
         case 1:
           gender = 'mies';
           break;
@@ -81,7 +81,7 @@ export default {
     },
     handleStatus() {
       let status = '';
-      switch(this.users.employmentStatus) {
+      switch(this.users[this.userIndex].employmentStatus) {
         case 1:
           status = 'työssäkäyvä';
           break;

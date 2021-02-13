@@ -42,7 +42,7 @@
 
 <script>
 import Icon from './Icon.vue';
-import axios from 'axios';
+//import UserService from '../../../api-services/user.service.js';
 
 export default {
 
@@ -54,8 +54,6 @@ export default {
 
   data() {
     return {
-      userData: {},
-
       user: {
         email: '',
         password: '',
@@ -111,16 +109,20 @@ export default {
   async created() {
     if (this.$route.params.id) {
       let userData = this.$route.params.users;
-      let userId = this.$route.params.id
+      //let userId = this.$route.params.id
 
-      if (userData){
-        this.userData = userData;
-      } else {
+      //Template tarvii eri muodon!!
+      if (userData) { 
+        this.user = userData;
+      } /*else {
         this.loading = true;
-        let res = await axios.get(`/users/${userId}`);
-        this.userData = res.data;
+        UserService.get(userId).then((response) => {
+          this.user = response.data;
+        }).catch((error) => {
+          console.log("user data error: " + error.response.data);
+        });
         this.loading = false;
-      }
+      }*/
     }
     if (this.$route.params.id) {
       this.userData = parseInt(this.$route.params.id);

@@ -2,16 +2,16 @@
   <router-link :to="{name: 'apartment-rent-bio', params: { id: id, apartments: apartments }}" v-if="handleUrl" class="card pointer">
     <div class="card-info">
       <div class="transparency">
-        <h3>{{ apartments.location.neighborhood }}, {{ apartments.location.city }}</h3>
-        <p>{{ apartments.apartmentType }} {{apartments.buildYear }}</p>
+        <h3>{{ apartments[apartmentIndex].location.neighborhood }}, {{ apartments[apartmentIndex].location.city }}</h3>
+        <p>{{ apartments[apartmentIndex].apartmentType }} {{apartments[apartmentIndex].buildYear }}</p>
       </div>
     </div>
     <div class="card-info">
       <div class="transparency flexbox">
-        <p class="align-center"><i class="fas fa-ruler-combined"></i>{{ apartments.cellArea }}m<span>&sup2;</span></p>
-        <p class="align-center"><i class="far fa-building"></i>{{ apartments.floor }}</p>
-        <p class="align-center"><i class="far fa-calendar-alt"></i>{{ apartments.availableFrom }}</p>
-        <p class="align-center"><i class="fas fa-coins"></i>{{ apartments.monthlyRent }}€</p>
+        <p class="align-center"><i class="fas fa-ruler-combined"></i>{{ apartments[apartmentIndex].cellArea }}m<span>&sup2;</span></p>
+        <p class="align-center"><i class="far fa-building"></i>{{ apartments[apartmentIndex].floor }}</p>
+        <p class="align-center"><i class="far fa-calendar-alt"></i>{{ apartments[apartmentIndex].availableFrom }}</p>
+        <p class="align-center"><i class="fas fa-coins"></i>{{ apartments[apartmentIndex].monthlyRent }}€</p>
       </div>
     </div>
     <img src="../../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
@@ -20,8 +20,8 @@
   <router-link :to="{name: 'apartment-for-sale-bio', params:{id: id, apartment: apartments }}" v-else class="card pointer">
     <div class="card-info">
       <div class="transparency">
-        <h3>{{ apartments.location.neighborhood }}, {{ apartments.location.city }}</h3>
-        <p>{{ apartments.apartmentType }} {{apartments.buildYear }}</p>
+        <h3>{{ apartments[apartmentIndex].location.neighborhood }}, {{ apartments[apartmentIndex].location.city }}</h3>
+        <p>{{ apartments[apartmentIndex].apartmentType }} {{apartments[apartmentIndex].buildYear }}</p>
       </div>
     </div>
     <div class="card-info">
@@ -31,8 +31,8 @@
           <p><i class="fas fa-expand"></i>2h + k + s + vh</p>
         </div>
         <div>
-          <p><i class="fas fa-ruler-combined"></i>{{ apartments.livingArea }}m<span>&sup2;</span></p>
-          <p><i class="fas fa-layer-group"></i>{{ apartments.propertyFloors }}</p>
+          <p><i class="fas fa-ruler-combined"></i>{{ apartments[apartmentIndex].livingArea }}m<span>&sup2;</span></p>
+          <p><i class="fas fa-layer-group"></i>{{ apartments[apartmentIndex].floor }}</p>
         </div>
         
       </div>
@@ -44,12 +44,12 @@
 <script>
 export default {
   name: 'ApartmentCard',
-  props: ['cardId', 'apartmentData'],
+  props: ['cardId', 'apartmentData', 'apartmentIndex'],
   
   data() {
     return {
       apartments: this.apartmentData,
-      id: this.apartmentData._id
+      id: this.apartmentData[this.apartmentIndex]._id
     }
   },
   computed: {
@@ -65,10 +65,10 @@ export default {
     handlePrice: function() {
       let price;
       if (this.cardId === 'S') {
-        price = this.apartments.price.salePrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        price = this.apartments[this.apartmentIndex].price.salePrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       else if (this.cardId === 'R') {
-        price = this.apartments.monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        price = this.apartments[this.apartmentIndex].monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       return price;
     }
