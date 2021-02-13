@@ -17,9 +17,9 @@ export default {
     return axios.delete(`${process.env.VUE_APP_APARTMENTS_URL}/${id}`);
   },
   getByLocation(data) {
-    axios.get(`${process.env.VUE_APP_APARTMENTS_URL}${process.env.VUE_APP_LOCATION_URL}`, data);
+    return axios.get(`${process.env.VUE_APP_APARTMENTS_URL}${process.env.VUE_APP_LOCATION_URL}`, data);
   },
   getByASingleLandlord(id) {
-    axios.get(`${process.env.VUE_APP_LANDLORD_APARTMENTS_URL}/${id}`);
+    return axios.get(`${process.env.VUE_APP_LANDLORD_APARTMENTS_URL}/${id}`);
   }
 };
