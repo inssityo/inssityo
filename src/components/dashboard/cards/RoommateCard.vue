@@ -1,17 +1,17 @@
 <template>
-  <router-link :to="{ name: 'roommate-bio', params: { id: id, users: users }}" class="card pointer">
+  <router-link :to="{ name: 'roommate-bio', params: { id: id, user: userUrl }}" class="card pointer">
     <div class="card-info">
       <div class="transparency flexbox">
-        <p>{{ users[userIndex].name }}</p>
+        <p>{{ user.name }}</p>
         <p>{{ handleAge }}</p>
         <p> {{ handleGender }}</p>
       </div>
     </div>
     <div class="card-info">
       <div class="transparency flexbox">
-        <p><i class="fas fa-coins"></i>{{ users[userIndex].rentLimit }}€</p>
+        <p><i class="fas fa-coins"></i>{{ user.rentLimit }}€</p>
         <p><i class="fas fa-door-open"></i>{{ handleStatus }}</p>
-        <p><i class="fas fa-walking"></i>{{ users[userIndex].maxRoomMates }}</p>
+        <p><i class="fas fa-walking"></i>{{ user.maxRoomMates }}</p>
       </div>
     </div>
     <img src="../../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
@@ -21,12 +21,13 @@
 <script>
 export default {
   name: 'RoommateCard',
-  props: ['userData', 'userIndex'],
+  props: ['userData'],
 
   data() {
     return {
-      users: this.userData,
-      id: this.userData[this.userIndex]._id,
+      user: this.userData,
+      id: this.userData._id,
+      userUrl: JSON.stringify(this.userData),
       
       modifiedAge: '',
       modifiedGender: '',
@@ -36,7 +37,7 @@ export default {
   computed: {
     handleAge() {
       let age = '';
-      switch(this.users[this.userIndex].ageGroup) {
+      switch(this.user.ageGroup) {
         case 1:
           age = 'under 20';
           break;
@@ -66,7 +67,7 @@ export default {
     },
     handleGender() {
       let gender = '';
-      switch(this.users[this.userIndex].gender) {
+      switch(this.user.gender) {
         case 1:
           gender = 'mies';
           break;
@@ -81,7 +82,7 @@ export default {
     },
     handleStatus() {
       let status = '';
-      switch(this.users[this.userIndex].employmentStatus) {
+      switch(this.user.employmentStatus) {
         case 1:
           status = 'työssäkäyvä';
           break;

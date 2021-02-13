@@ -36,85 +36,34 @@
       </div>
     </div>
 
-
-  
 </template>
 
 <script>
 import Icon from './Icon.vue';
-//import UserService from '../../../api-services/user.service.js';
+import UserService from '../../../api-services/user.service.js';
 
 export default {
-
   name: 'RoommateDetails',
 
   components: {
     Icon
   },
-
   data() {
     return {
-      user: {
-        email: '',
-        password: '',
-        creationTime: '',
-        lastActive: '',
-        name: 'Emilia',
-        surname: 'Esimerkki',
-        movingDate: '1.1.2021',
-        img: null,
-        ageGroup: 1,
-        gender: 2,
-        location: [],
-        rentLimit: 500,
-        maxRoomMates: 4,
-        employmentStatus: 4,
-        workType: null,
-        description: '"Olen kotoisin Pirkanmaalta, ja minulla on sanottu olevan sisua pienen kylän verran. Ystäväni kutsuvat minua empaattiseksi duracell-pupuksi. Minusta on mukavampi olla yhteydessä ihmisiin livenä kuin netin kautta. Olen tyytyväinen elämääni ja osaan kääntää vastoinkäymiset voimavaroiksi. Pidän maastopyöräilystä, vuorilla vaeltelusta ja matkustelusta"',
-        alcohol: 1,
-        smoking: 1,
-        drugs: 1,
-        personalityTraits: { type:[], validate:[] },
-        sociality: 1,
-        pets: true,
-        petTypes: {
-          dogs: false,
-          cats: false,
-          rodents: false,
-          birds: false,
-          fishes: false,
-          terrarium: false,
-          other: false
-        },
-        hobbies: [
-          { text: 'Lukeminen', value: 'reading', level: 7 },
-          { text: 'Musiikki', value: 'music', level: 1 },
-          { text: 'Kädentaidot', value: 'handcrafts', level: 1 },
-          { text: 'Urheilu', value: 'sport',level: 5},
-          { text: 'Kulttuuri', value: 'culture',level: 1},
-          { text: 'Taide', value: 'art', level: 1 },
-          { text: 'Keräily', value: 'collecting', level: 1 },
-          { text: 'Ruuanlaitto', value: 'cooking', level: 5 },
-          { text: 'Pelaaminen', value: 'playing', level: 1 },
-          { text: 'Vapaaehtoistyö', value: 'volunteering', level: 1 },
-          { text: 'Matkustelu', value: 'traveling', level: 5 },
-          { text: 'Tietotekniikka', value: 'it', level: 1 }
-        ],
-        blockedUsers: [],
-        targetProfile: [],
-        loading: false,
-      }
+      test: null,
+      user: {}
     }
   },
   async created() {
     if (this.$route.params.id) {
-      let userData = this.$route.params.users;
-      //let userId = this.$route.params.id
+      let userData = this.$route.params.user;
+      let userId = this.$route.params.id
 
-      //Template tarvii eri muodon!!
-      if (userData) { 
-        this.user = userData;
-      } /*else {
+      if (userData) {
+        this.user = JSON.parse(userData);
+      } 
+      //Required when the page is refreshed
+      else {
         this.loading = true;
         UserService.get(userId).then((response) => {
           this.user = response.data;
@@ -122,10 +71,7 @@ export default {
           console.log("user data error: " + error.response.data);
         });
         this.loading = false;
-      }*/
-    }
-    if (this.$route.params.id) {
-      this.userData = parseInt(this.$route.params.id);
+      }
     }
   },
 }

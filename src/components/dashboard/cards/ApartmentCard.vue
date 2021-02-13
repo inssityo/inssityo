@@ -1,27 +1,27 @@
 <template>
-  <router-link :to="{name: 'apartment-rent-bio', params: { id: id, apartments: apartments }}" v-if="handleUrl" class="card pointer">
+  <router-link :to="{name: 'apartment-rent-bio', params: { id: id, apartment: apartmentUrl }}" v-if="handleUrl" class="card pointer">
     <div class="card-info">
       <div class="transparency">
-        <h3>{{ apartments[apartmentIndex].location.neighborhood }}, {{ apartments[apartmentIndex].location.city }}</h3>
-        <p>{{ apartments[apartmentIndex].apartmentType }} {{apartments[apartmentIndex].buildYear }}</p>
+        <h3>{{ apartment.location.neighborhood }}, {{ apartment.location.city }}</h3>
+        <p>{{ apartment.apartmentType }} {{apartment.buildYear }}</p>
       </div>
     </div>
     <div class="card-info">
       <div class="transparency flexbox">
-        <p class="align-center"><i class="fas fa-ruler-combined"></i>{{ apartments[apartmentIndex].cellArea }}m<span>&sup2;</span></p>
-        <p class="align-center"><i class="far fa-building"></i>{{ apartments[apartmentIndex].floor }}</p>
-        <p class="align-center"><i class="far fa-calendar-alt"></i>{{ apartments[apartmentIndex].availableFrom }}</p>
-        <p class="align-center"><i class="fas fa-coins"></i>{{ apartments[apartmentIndex].monthlyRent }}€</p>
+        <p class="align-center"><i class="fas fa-ruler-combined"></i>{{ apartment.cellArea }}m<span>&sup2;</span></p>
+        <p class="align-center"><i class="far fa-building"></i>{{ apartment.floor }}</p>
+        <p class="align-center"><i class="far fa-calendar-alt"></i>{{ apartment.availableFrom }}</p>
+        <p class="align-center"><i class="fas fa-coins"></i>{{ apartment.monthlyRent }}€</p>
       </div>
     </div>
     <img src="../../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
   </router-link>
 
-  <router-link :to="{name: 'apartment-for-sale-bio', params:{id: id, apartment: apartments }}" v-else class="card pointer">
+  <router-link :to="{name: 'apartment-for-sale-bio', params:{id: id, apartment: apartmentUrl }}" v-else class="card pointer">
     <div class="card-info">
       <div class="transparency">
-        <h3>{{ apartments[apartmentIndex].location.neighborhood }}, {{ apartments[apartmentIndex].location.city }}</h3>
-        <p>{{ apartments[apartmentIndex].apartmentType }} {{apartments[apartmentIndex].buildYear }}</p>
+        <h3>{{ apartment.location.neighborhood }}, {{ apartment.location.city }}</h3>
+        <p>{{ apartment.apartmentType }} {{apartment.buildYear }}</p>
       </div>
     </div>
     <div class="card-info">
@@ -31,8 +31,8 @@
           <p><i class="fas fa-expand"></i>2h + k + s + vh</p>
         </div>
         <div>
-          <p><i class="fas fa-ruler-combined"></i>{{ apartments[apartmentIndex].livingArea }}m<span>&sup2;</span></p>
-          <p><i class="fas fa-layer-group"></i>{{ apartments[apartmentIndex].floor }}</p>
+          <p><i class="fas fa-ruler-combined"></i>{{ apartment.livingArea }}m<span>&sup2;</span></p>
+          <p><i class="fas fa-layer-group"></i>{{ apartment.floor }}</p>
         </div>
         
       </div>
@@ -44,12 +44,13 @@
 <script>
 export default {
   name: 'ApartmentCard',
-  props: ['cardId', 'apartmentData', 'apartmentIndex'],
+  props: ['cardId', 'apartmentData'],
   
   data() {
     return {
-      apartments: this.apartmentData,
-      id: this.apartmentData[this.apartmentIndex]._id
+      apartment: this.apartmentData,
+      id: this.apartmentData._id,
+      apartmentUrl: JSON.stringify(this.apartmentData)
     }
   },
   computed: {
@@ -65,10 +66,10 @@ export default {
     handlePrice: function() {
       let price;
       if (this.cardId === 'S') {
-        price = this.apartments[this.apartmentIndex].price.salePrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        price = this.apartment.price.salePrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       else if (this.cardId === 'R') {
-        price = this.apartments[this.apartmentIndex].monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        price = this.apartment.monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       return price;
     }

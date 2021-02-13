@@ -3,7 +3,7 @@
     <h1>Vuokraa asunto, jossa onnellisuus asuu</h1>
     <div class="box">
       <div class="cards flexbox box">
-        <ApartmentCard card-id="R" :apartment-data="apartments" :apartment-index="index" v-for="(apt, index) in apartments" :key="index"/>
+        <ApartmentCard card-id="R" :apartment-data="apartments[index]" v-for="(apt, index) in apartments" :key="index"/>
       </div>
     </div>
   </div>

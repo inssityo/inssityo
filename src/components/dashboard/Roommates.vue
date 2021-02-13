@@ -3,7 +3,7 @@
     <h1>Löydä itsellesi sopiva kämppis</h1>
     <div class="box">
       <div class="roommate-cards flexbox box">
-        <RoommateCard :user-data="users" :user-index="index" v-for="(user, index) in users" :key="index"/>
+        <RoommateCard :user-data="users[index]" v-for="(user, index) in users" :key="index"/>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <h1>Osta asunto, josta tarinat alkavat</h1>
     <div class="box">
       <div class="cards flexbox box">
-        <ApartmentCard card-id="S" :apartment-data="apartments" :apartment-index="index" v-for="(apt, index) in apartments" :key="index"/>
+        <ApartmentCard card-id="S" :apartment-data="apartments[index]" v-for="(apt, index) in apartments" :key="index"/>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ImageCarousel :images="apartment.images" /> <!-- handlaa, jos ei ole kuvia -->
+    <!--<ImageCarousel :images="apartment.images" />--> <!-- handlaa, jos ei ole kuvia -->
     <div class="content">
 
       <div class="container">
@@ -194,115 +194,27 @@
 </template>
 
 <script>
-import ImageCarousel from './apartment/ImageCarousel.vue';
+//import ImageCarousel from './apartment/ImageCarousel.vue';
 import ListingThumbnails from './apartment/ListingThumbnails.vue';
 import Icon from './Icon.vue';
-//import ApartmentService from '../../../api-services/apartment.service.js';
+import ApartmentService from '../../../api-services/apartment.service.js';
+
+//Kun asuntosivua päivittää, ja sen jälkeen menee edelliselle sivulle, sivunäkymä ei päivity automaattisesti!!
 
 export default {
   components: { 
-    ImageCarousel,
+    //ImageCarousel, //Handlaa kuvat
     ListingThumbnails,
     Icon
   },
 
-  name: 'RoommateDetails',
+  name: 'ApartmentDetails',
 
   data() {
     return {
       liked: false,
-      apartment: {
-        images: [
-          'pexels-alexander-zvir-4252510.jpg',
-          'pexels-vlada-karpovich-4451937.jpg',
-          'pexels-kate-trifo-4123921.jpg',
-          'pexels-thgusstavo-santana-2102587.jpg',
-          'pexels-the-lazy-artist-gallery-1642125.jpg'
-        ], //Nuolet, jos on enemmän kuin yksi kuva
-        _id: '600a9347a9dede27fc51f4b1',
-        isForSale:  false,
-        housingAssociation: '',
+      apartment: {},
 
-        description: 'Keskeiseltä paikalta Kannelmäestä seitsemännen kerroksen päädystä maisemayksiö, missä koko asunnon levyinen ikkuna. Juna-asema ja Kauppakeskus Kaari kävelymatkan päässä, bussipysäkki talon edustalla ja tien toiselle puolelle rakenteilla jo osittain valmistunut uusi ostari. Kylpyhuone uudistettu putkisaneerauksen yhteydessä ja seinät maalattu. Vuokraan kuuluu taloyhtiön laajakaistayhteys. Asunnossa iso komerohuone hyllyineen sekä uusi jääkaappipakastin ja hella. Taloyhtiössä on sauna, pesukoneet, kuivaushuone, kerhohuone sekä kuntosali.',
-        isFurnished: false,
-        viewCount: 12000,
-
-        floorPlan:{ regular:{ title:{type:String, default:"regular"}, amount:{ type:Number } },
-        kitchen:{ title:{type:String, default:"kitchen"}, amount:{ type:Number } },
-        kitchenette:{ title:{type:String, default:"kitchenette"}, amount:{ type:Number } },
-        diningRoom: { title:{type:String, default:"diningRoom"}, amount:{ type:Number } },
-        bathRoom:{ title:{type:String, default:"bathRoom"}, amount:{ type:Number } },
-        toilet: { title:{type:String, default:"toilet"}, amount:{ type:Number } },
-        sauna:{ title:{type:String, default:"sauna" }, amount:{ type:Number } },
-        wardrobe:{ title:{type:String, default:"wardrobe"}, amount:{ type:Number } },
-        utilityRoom:{ title:{type:String, default:"utility room"}, amount:{ type:Number } },
-        patio:{ title:{type:String, default:"patio"}, amount:{ type:Number } },
-        balcony:{ title:{type:String, default:"balcony"}, amount:{ type:Number } } },
-
-        totalArea: 60,
-        livingArea: 50,
-        cellArea: 10,
-        propertyArea: 150,
-
-        location: {
-          city: 'Helsinki',
-          neighborhood: 'Kontula',
-          address: 'Kontulankatu 14 A 20',
-          areaCode: 444444,
-        },
-
-        hasGarage: false,
-        hasHotTub: false,
-        hasPool: true,
-        monthlyRent: 480,
-        propertyRent: 250,
-
-        price: { 
-          salePrice: 280000, 
-          debtFreePrice: 130500 
-        },
-
-        maintenanceCosts: 300,
-        guarantee: '',
-        buildYear: 2010,
-        apartmentType: 1,
-        isCellApartment: true,
-        floor: '4/5',
-        hasElevator: true,
-        availableFrom: '01/04/2022',
-        availableUntil: '01/07/2022',
-        equipment: '',
-        condition: 1,
-        petsAllowed: true,
-        smokingAllowed: false,
-
-        utilities: {
-          insurancePlan: {
-            mustHave: { type: Boolean },
-            monthlyPrice: { type: Number },
-          },
-          parkingIncluded: { type: Boolean },
-          water: { mustHave: { type: Boolean }, monthlyPrice: { type: Number } },
-          includesElectricity: {
-            mustHave: { type: Boolean },
-            monthlyPrice: { type: Number },
-          },
-          dataConnection: {
-            isIncluded: { type: Boolean },
-            speed: { type: Number },
-          },
-        },
-
-        distance: 400,
-        nearbyServices: {
-          publicTransport: [{ title: { type: String }, distance: { type: Number } }],
-          groceries: [{ title: { type: String }, distance: { type: Number } }],
-          healthCare: [{ title: { type: String }, distance: { type: Number } }],
-          dayCare: [{ title: { type: String }, distance: { type: Number } }],
-          education: [{ title: { type: String }, distance: { type: Number } }],
-          excercise: [{ title: { type: String }, distance: { type: Number } }],
-        },
-      },
       currentIndex: 0,
       timer: null,
       cardId: null,
@@ -311,23 +223,22 @@ export default {
   },
   async created() {
     if (this.$route.params.id) {
-      let apartmentData = this.$route.params.apartments;
-      //let apartmentId = this.$route.params.id
+      let aptData = this.$route.params.apartment;
+      let aptId = this.$route.params.id
 
-      //Template tarvii eri muodon!!
-      if (apartmentData) { 
-        this.apartment = apartmentData;
-      } /*else {
+      if (aptData) {
+        this.apartment = JSON.parse(aptData);
+      } 
+      //Required when the page is refreshed
+      else {
         this.loading = true;
-        ApartmentService.get(apartmentId).then((response) => {
+        ApartmentService.get(aptId).then((response) => {
           this.apartment = response.data;
         }).catch((error) => {
           console.log("apartment data error: " + error.response.data);
         });
         this.loading = false;
-      }*/
-      
-      console.log("props"+this.$route.params.apartments + JSON.stringify(this.$route.params.apartments) + this.apartmentData)
+      }
     }
   },
   computed: {
