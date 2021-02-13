@@ -17,7 +17,10 @@ export default {
     isLogin() {
       return this.$route.name === 'entry'
     }
-  }
+  },
+  mounted() {
+    console.log(`Working on '${process.env.VUE_APP_MODE}' mode`)
+  },
 }
 </script>
 
