@@ -132,6 +132,11 @@
                 v-model="apartment.businessesOnProperty"
             /></label>
           </div>
+
+          <div>
+            <Materials v-on:childToParent="onChildMaterials" />
+          </div>
+
           <div v-if="!apartment.isForSale" class="flexbox" id="availableDiv">
             <AvailableFrom
               v-on:childToParent="onChildClickAvailableFrom"
@@ -203,12 +208,15 @@
             <label id="euroLabel" for="propertyTax">€/vuosi</label>
           </div>
               <label for="renovationDesc" class="description"> Remonttihistoria ja tulevat remontit:
-      <textarea id="renovationDesc" class="box" type="text" placeholder="Kerro menneistä ja tiedetyistä tulevista remonteista" v-model="apartment.renovationDescription"></textarea>
+      <textarea id="renovationDesc" class="box"  placeholder="Kerro menneistä ja tiedetyistä tulevista remonteista" v-model="apartment.renovationDescription"></textarea>
     </label>
+
+    <h3> Ylläpito </h3>
+    <Utilities v-on:childToParent="onChildUtilities" />
         </div>
 
-        <div class="row">
-          <h3>Sopimusehdot</h3>
+        <div class="row" v-if="!apartment.isForSale">
+          <h3>Vuokra-asunnon Sopimusehdot</h3>
           <Terms v-on:childToParent="onChildClickTerms" />
         </div>
       </div>
@@ -242,7 +250,6 @@
           <label for="kitchen-equipment" class="description"
             >Keittiö
             <textarea
-              type="text"
               id="kitchen-equipment"
               class="box"
               placeholder="Keittiön varusteet"
@@ -252,7 +259,6 @@
           <label for="bathroom-equipment" class="description"
             >Kylpyhuone:
             <textarea
-              type="text"
               id="bathroom-equipment"
               class="box"
               placeholder="Kylpyhuoneen varusteet"
@@ -262,7 +268,6 @@
           <label for="storage" class="description"
             >Säilytystilat:
             <textarea
-              type="text"
               id="storage"
               class="box"
               placeholder="Kerro säilytystiloista"
@@ -272,7 +277,6 @@
           <label for="equipment" class="description"
             >Muuta:
             <textarea
-              type="text"
               id="equipment"
               class="box"
               placeholder="Muuta huomionarvoista asunnosta"
@@ -351,6 +355,9 @@
           </label>
         </div>
         <div class="row">
+          <Parking v-on:childToParent="onChildParking"/>
+        </div>
+        <div class="row">
           <h3>Palvelut</h3>
           <Services v-on:childToParent="onChildClickServices" />
           {{ fromChildServices }} {{ fromChildServicesText }}
@@ -381,6 +388,9 @@ import Terms from "../inputElements/apartment/Terms.vue";
 import Price from "../inputElements/apartment/Price.vue";
 import Yard from "../inputElements/apartment/Yard.vue";
 import BalconyPatio from "../inputElements/apartment/BalconyPatio.vue";
+import Utilities from "../inputElements/apartment/Utilities.vue"
+import Materials from '../inputElements/apartment/Materials.vue';
+import Parking from '../inputElements/apartment/Parking.vue'
 
 //LocationType puuttuu
 
@@ -409,6 +419,9 @@ export default {
     Price,
     Yard,
     BalconyPatio,
+    Utilities,
+    Materials,
+    Parking
     //ProfileImage,
   },
 
@@ -436,7 +449,7 @@ export default {
       fromChildFloor: null,
       fromChildFloorText: "",
       price: null,
-      quarantee: null,
+      guarantee: null,
       fromChildCheckedOwner: null,
       fromChildServices: null,
       fromChildServicesText: "",
@@ -621,19 +634,41 @@ export default {
     emitToParent() {
       this.$emit('childToParent', this.firstname)
     },*/
+    onChildMaterials(value) {
+      this.apartment.buildMaterial = value.buildMaterial;
+      this.apartment.energyClass = value.energyClass;
+      this.apartment.roofType = value.roofType;
+      this.apartment.roofLining = value.roofLining;
+
+    },
     onChildClickFloorPlan(value) {
       this.apartment.floorPlan = value.text;
       this.apartment.floorPlanText = value.text;
       this.apartment.sights = value.sights;
     },
+    onChildUtilities(value) {
+      this.apartment.equipment.heating = value.heating;
+      this.apartment.equipment.plumbing = value.plumbing;
+      this.apartment.equipment.water = value.water;
+      this.apartment.equipment.garbage = value.garbage;
+      this.apartment.equipment.airConditioning = value.airConditioning;
+      this.apartment.equipment.common = value.common;
+    },
     onChildClickArea(value) {
-      //Area, ei min tai max!!!!, cellArea
+      //Area, ei min tai max!!!!, cellArea - KYSY SUVILTA
       this.fromChildAreaMinRoom = value.minRoom;
       this.fromChildAreaMaxTotal = value.maxTotal;
+      this.apartment.propertyFloors = value.aptFloorAmt;
 
     },
     onChildClickCondition(value) {
       this.apartment.condition = value;
+    },
+    onChildParking (value) {
+      //tukeeko skeema arrayta?
+      this.apartment.parking.options = value.options;
+      this.apartment.parking.supportsElectric = value.supportsElectric;
+      this.apartment.parking.description = value.description;
     },
     onChildClickBuildingType(value) {
       this.apartment.BuildingType = value;
@@ -644,6 +679,7 @@ export default {
     onChildClickFloor(value) {
       //this.fromChildFloor = value.floor;
       this.apartment.floor = value.text;
+      this.apartment.hasElevator = value.hasElevator
     },
     onChildSetSalePrice(value) {
       this.apartment.price.salePrice = value.salePrice;
@@ -681,6 +717,7 @@ export default {
     onChildClickTerms(value) {
       this.fromChildTerms = value.terms;
       this.fromChildRentIncrease = value.amount;
+      this.guarantee = value.guarantee;
     },
     onYardChange(value) {
       this.apartment.propertyArea = value.yardArea;
@@ -856,5 +893,4 @@ label[class="description"] ~ label[class="description"] {
 #euroLabel {
   font-weight: bold;
 }
-
 </style>

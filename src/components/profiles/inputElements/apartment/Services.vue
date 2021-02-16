@@ -44,7 +44,7 @@
       </div>
     </div>
     <label for="description-services">Kerro vapaasti palveluista
-      <textarea id="description-services" class="box" type="text" placeholder="Kerro palveluista" v-model="description"></textarea>
+      <textarea id="description-services" class="box" placeholder="Kerro palveluista" v-model="description"></textarea>
     </label>
   </div>
 </template>

@@ -11,6 +11,7 @@
 <script>
 export default {
   name: 'Condition',
+  emits: ['childToParent'],
 
   data() {
     return {

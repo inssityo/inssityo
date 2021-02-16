@@ -93,7 +93,7 @@ export default {
     margin-top: 0.5em;
 }
 
-.patioText{
+.patioText {
   margin-right: 1em;
 }
 

@@ -32,6 +32,7 @@
 export default {
   name: 'Price',
   props: ['aptValue', 'idValue'],
+  emits: ['childToParent'],
   
   data() {
     return {
@@ -44,7 +45,7 @@ export default {
   },
 
   methods: {
-    emitToParent() { //debt-free
+    emitToParent() {
       this.$emit('childToParent', {salePrice:this.price, debtFreePrice:this.debtFreePrice, monthlyRent:this.monthlyRent, upkeep:this.upkeep, financing:this.financing});
     },
   },

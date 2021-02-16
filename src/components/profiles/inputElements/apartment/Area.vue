@@ -14,6 +14,9 @@
         <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green border-radius__left">Kerrospinta-ala</label>
         <input type="text" id="max-total" class="border-radius__right" v-model="maxTotal" v-on:keyup="emitToParent">
       </div>
+      <label id="floorAmtLabel" class="label__border-bottom--green border-radius__left">Asunnon kerroslukumäärä:</label>
+      <input type="number" id="floorNumberInput" class="border-radius__right" v-model="apartmentFloorAmt" v-on:input="emitToParent">
+
     </div>
   </div>
 </template>
@@ -28,12 +31,13 @@ export default {
     return {
       minRoom: null,
       maxTotal: null,
+      apartmentFloorAmt: null
     }
   },
 
   methods: {
     emitToParent() {
-      this.$emit('childToParent', {'minRoom':this.minRoom, 'maxTotal':this.maxTotal});
+      this.$emit('childToParent', {'minRoom':this.minRoom, 'maxTotal':this.maxTotal, aptFloorAmt:this.apartmentFloorAmt});
     },
   },
 }
@@ -46,10 +50,19 @@ label {
   background: v.$White;
   margin: auto 0;
 }
-input[type="text"] {
+input {
   margin: 0.4rem 0;
   width: 1.9rem;
 }
+
+#floorNumberInput {
+  height: 1.5em;
+}
+
+#floorAmtLabel {
+  margin-left: 0.4rem;
+}
+
 .flexbox {
   justify-content: normal;
   
