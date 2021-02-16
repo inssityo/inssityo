@@ -34,7 +34,7 @@
             </div>
             <div class="flexbox">
               <label for="password-login" class="label__border-bottom--green border-radius__left">Password</label>
-              <input id="password-login" class="border-radius__right" type="password" minlength="8" required v-model="password">
+              <input id="password-login" class="border-radius__right" type="password" minlength="5" required v-model="password">
             </div>
             
             <label for="show-password" class="checkmark-label">Show Password
@@ -44,7 +44,7 @@
             <button type="submit" class="hover__background--blue">Login</button>
           </form>
 
-          <form v-else @submit.prevent="signup">
+          <form v-else @submit.prevent="register">
             <div class="flexbox">
               <label for="email-login" class="label__border-bottom--green border-radius__left">Email</label>
               <input id="email-login" class="border-radius__right" type="email" required v-model="email">
@@ -69,6 +69,9 @@
 </template>
 
 <script>
+import store from '@/store'
+import router from '@/router'
+
 export default {
   name: 'Entry',
 
@@ -117,15 +120,24 @@ export default {
       let main = document.getElementById("main-column");
       main.insertAdjacentElement('beforebegin', secondary);
     },
-    login() {/*
-      const { username, password} = this;
-      this.$store.dispatch(AUTH_REQUIEST, { username, password }).then(() => {
-        this.$router.push('/');
-      })
-      //https://blog.sqreen.com/authentication-best-practices-vue/*/
+    login() {
+      const credentials = {
+        type: 'landlord',
+        email: this.email,
+        password: this.password,
+      };
+      store.dispatch('login', credentials)
+      .then(() => router.push('/'))
+      .catch(error => console.log("error " + error))
     },
-    signup() {
-      
+    register() {
+      store.dispatch("register", {
+        type: 'user',
+        email: this.email,
+        password: this.password
+      })
+      .then(() => router.push({name: 'home'}))
+      .catch (error => console.log(error))
     },
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];

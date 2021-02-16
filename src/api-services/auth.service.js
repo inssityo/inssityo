@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 export default {
-  createLogin(data) {
+  entry(data) {
     return axios.post(process.env.VUE_APP_LOGIN_URL, data);
   },
-  createToken(data) {
+  token(data) {
     return axios.post(process.env.VUE_APP_TOKEN_URL, data);
   },
-  createLogout(data) {
+  logout(data) {
     return axios.post(process.env.VUE_APP_LOGOUT_URL, data);
   }
 };
