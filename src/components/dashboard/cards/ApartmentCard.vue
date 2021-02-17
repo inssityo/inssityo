@@ -50,7 +50,7 @@ export default {
     return {
       apartment: this.apartmentData,
       id: this.apartmentData._id,
-      apartmentUrl: JSON.stringify(this.apartmentData)
+      apartmentUrl: JSON.stringify(this.apartmentData),
     }
   },
   computed: {
@@ -66,12 +66,21 @@ export default {
     handlePrice: function() {
       let price;
       if (this.cardId === 'S') {
-        price = this.apartment.price.salePrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        price = this.handleUndefinedSellingPrice().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       else if (this.cardId === 'R') {
         price = this.apartment.monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       return price;
+    }
+  },
+  methods: {
+    handleUndefinedSellingPrice() {
+      let t = "no selling price given ";
+      if (this.apartment?.price?.salePrice !== undefined) { 
+        t = this.apartment?.price?.salePrice
+      }
+      return t;
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div>
     <h4 class="margin__topless">Omakotitalo</h4>
-    <h1>{{ apartment.location.neighborhood }}, {{ apartment.location.city }}</h1>
-    <h4 class="margin__topless">{{ apartment.location.address }}</h4>
+    <h1>{{ location.neighborhood }}, {{ location.city }}</h1>
+    <h4 class="margin__topless">{{ location.address }}</h4>
 
     <p class="listing-basics__description">{{ apartment.description }}</p>
 
@@ -59,11 +59,12 @@
 <script>
 export default {
   name: 'ListingThumbnails',
-  props: ['data'],
+  props: ['data', 'locationData'],
 
   data() {
     return {
-      apartment: this.data
+      apartment: this.data,
+      location: this.locationData
     }
   },
   computed: {

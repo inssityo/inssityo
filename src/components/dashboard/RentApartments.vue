@@ -26,11 +26,12 @@ export default {
     }
   },
   async created() {
-    ApartmentService.getAll().then((response) => {
+    try {
+      const response =  await ApartmentService.getAll();
       this.apartments = response.data;
-    }).catch((error) => {
-      console.log("apartment data error: " + error.response.data);
-    });
+    } catch (err) {
+      console.log("apartment data error: " + err);
+    }
   }
 }
 

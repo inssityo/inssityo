@@ -21,7 +21,7 @@
         
         <div class="column column-item--2 listing-basics">
           
-          <ListingThumbnails :data="apartment" />
+          <ListingThumbnails :data="apartment" :locationData="location"/>
 
           <div class="listing-data__title">
             <h2>Perustiedot</h2>
@@ -32,7 +32,7 @@
               </div>
               <div class="row flexbox">
                 <p>Sijainti</p>
-                <p>{{ apartment.location.address }}, {{ apartment.location.neighborhood }}, {{ apartment.location.city }}</p>
+                <p>{{ handleAddress }}, {{ handleNeighborhood }}, {{ handleCity }}</p>
               </div>
               <div class="row flexbox">
                 <p>Talotyyppi</p>
@@ -199,8 +199,6 @@ import ListingThumbnails from './apartment/ListingThumbnails.vue';
 import Icon from './Icon.vue';
 import ApartmentService from '../../../api-services/apartment.service.js';
 
-//Kun asuntosivua päivittää, ja sen jälkeen menee edelliselle sivulle, sivunäkymä ei päivity automaattisesti!!
-
 export default {
   components: { 
     //ImageCarousel, //Handlaa kuvat
@@ -214,6 +212,7 @@ export default {
     return {
       liked: false,
       apartment: {},
+      location: {address: "", neighborhood: "", city: ""},
 
       currentIndex: 0,
       timer: null,
@@ -222,24 +221,24 @@ export default {
     }
   },
   async created() {
+    
     if (this.$route.params.id) {
-      let aptData = this.$route.params.apartment;
       let aptId = this.$route.params.id
 
-      if (aptData) {
-        this.apartment = JSON.parse(aptData);
+      if (this.$route.params.apartment) {
+        this.apartment = JSON.parse(this.$route.params.apartment);
       } 
       //Required when the page is refreshed
       else {
-        this.loading = true;
-        ApartmentService.get(aptId).then((response) => {
+        try {
+          const response =  await ApartmentService.get(aptId);
           this.apartment = response.data;
-        }).catch((error) => {
-          console.log("apartment data error: " + error.response.data);
-        });
-        this.loading = false;
+        } catch (err) {
+          console.log("apartment data error: " + err);
+        }
       }
     }
+    
   },
   computed: {
     handleUrl() {
@@ -251,11 +250,48 @@ export default {
       }
       return rent;
     },
+    
+    /*
+      Handling undefined nested object values: 
+      floorPlan, utilities, location, price, nearbyServices, 
+      balcony, patio, property, maintenanceCosts, equipment
+    */
+    handleAddress() {
+      return this.handleUndefined("address");
+    },
+    handleNeighborhood() {
+      return this.handleUndefined("neighborhood");
+    },
+    handleCity() {
+      return this.handleUndefined("city");
+    }
   },
   methods: {
     like() {
       this.liked = !this.liked;
-    }
+    },
+    handleUndefined(name) {
+      let type = "";
+      let t = "no " + name + " given ";
+      switch(name) {
+        case "address":
+          type = this.apartment?.location?.address;
+          if (type !== undefined) { t = type }
+          this.location.address = t;
+          break;
+        case "neighborhood":
+          type = this.apartment?.location?.neighborhood;
+          if (type !== undefined) { t = type }
+          this.location.neighborhood = t;
+          break;
+        case "city":
+          type = this.apartment?.location?.city;
+          if (type !== undefined) { t = type }
+          this.location.city = t;
+          break;
+      }
+      return t;
+    },
   }
 }
 </script>
