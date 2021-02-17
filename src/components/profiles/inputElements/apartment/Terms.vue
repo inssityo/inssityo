@@ -62,9 +62,10 @@ div {
   margin-top: 0.3rem;
 
   //amount
-  label:nth-last-of-type(2) {
+  #amount {
     display: block;
     margin: 1rem 0 0.5rem;
+    width: 24em;
     
     input {
       margin: 0.3rem 0.5rem;

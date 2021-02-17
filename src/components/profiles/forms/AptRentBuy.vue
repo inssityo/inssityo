@@ -123,7 +123,7 @@
                 type="number"
                 min="0"
                 id="totalAmountOfAptsOnProperty"
-                class="border-radius__right"
+                class="border-radius"
                 v-model="apartment.totalAmountOfAptsOnProperty"
             /></label>
 
@@ -135,13 +135,13 @@
                 type="number"
                 min="0"
                 id="businessesOnProperty"
-                class="border-radius__right"
+                class="border-radius"
                 v-model="apartment.businessesOnProperty"
             />
           </div>
 
           <div>
-            <Materials v-on:childToParent="onChildMaterials" />
+            <Materials v-if="apartment.isForSale" v-on:childToParent="onChildMaterials" />
           </div>
 
           <div v-if="!apartment.isForSale" class="flexbox" id="availableDiv">
@@ -200,7 +200,7 @@
               v-model="apartment.maintainer"
             />
           </div>
-          <div class="flexbox" id="taxDiv">
+          <div v-if="apartment.isForSale" class="flexbox" id="taxDiv">
             <label
               for="propertyTax"
               class="label__border-bottom--green border-radius__left"
@@ -238,7 +238,7 @@
             <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />{{
               fromChildCell
             }}
-            <Area apt-value="R" v-on:childToParent="onChildClickArea" />
+            <Area apt-value="B" v-on:childToParent="onChildClickArea" />
           </div>
           <div
             class="flexbox flexbox"
@@ -257,7 +257,7 @@
           </div>
 
           <label for="kitchen-equipment" class="description"
-            >Keittiö
+            >Keittiö:
             <textarea
               id="kitchen-equipment"
               class="box"

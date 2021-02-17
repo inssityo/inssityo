@@ -14,7 +14,7 @@
         <label id="euroLabel" for="debtFreePrice">€</label>
     </div>
   </div>
-  <div id="maintenanceCosts">
+  <div v-if="aptValue === 'B'" id="maintenanceCosts">
     <h4>Yhtiövastike:</h4>
     <form oninput="result.value=parseFloat(upkeep.value) + parseFloat(financing.value) || 0">
   <label for="upkeep" class="description">Hoitovastike:</label> 

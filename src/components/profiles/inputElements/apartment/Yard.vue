@@ -114,9 +114,9 @@
       </label>
     </div>
 
-    <div v-if="showRentalDetails && showYardDetails"  id="ownerDiv">
+    <div v-if="showRentalDetails && showYardDetails"  id="ownerDiv" class="flexbox">
       <label
-        for="yardBuildArea"
+        for="yardOwner"
         class="label__border-bottom--green border-radius__left"
         >Tontin omistaja:</label>
 
@@ -124,7 +124,7 @@
         type="text"
         v-model="yardOwner"
         v-on:input="emitToParent"
-        id="yardArea"
+        id="yardOwner"
         class="border-radius__right"
       />
       </div>
@@ -262,6 +262,13 @@ input[type="date"] {
   max-width: 15%;
 }
 
+#ownerDiv {
+  margin-right: 1em;
+  label {
+  white-space: nowrap;
+}
+}
+
 input[type="number"] {
   height: 1.45em;
   width: 5em;
@@ -274,6 +281,6 @@ input[type="number"] {
 
 #rentExpiresDiv {
   margin-top: 1em;
-}
+} 
 
 </style>

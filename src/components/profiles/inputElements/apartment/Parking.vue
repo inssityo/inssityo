@@ -2,6 +2,7 @@
   <div>
     <div class="flexbox">
       <h3>Pysäköinti</h3>
+      <div class="flexbox">
       <p
         class="margin__topless margin__bottomless switch-no"
         id="parkingText"
@@ -20,6 +21,7 @@
           v-bind:class="{ 'switch-yes': exists }"
         ></span>
       </label>
+      </div>
     </div>
 
     <div v-if="exists" class="multiselect">
@@ -51,7 +53,9 @@
     </div>
 
     <div class="flexbox" v-if="exists">
-        <p>Sähköauton latauspiste</p>
+              <p>Sähköauton latauspiste</p>
+      <div class="flexbox">
+
         <p
         class="margin__topless margin__bottomless switch-no"
         id="parkingText"
@@ -70,11 +74,12 @@
           v-bind:class="{ 'switch-yes': supportsElectric }"
         ></span>
       </label>
+      </div>
     </div>
 
     <div v-if="exists">
                   <label for="description-parking" class="description">
-           Kuvaus           <textarea
+           Kuvaus:       <textarea
               id="description-parking"
               class="box"
               placeholder="Tietoa kohteen pysäköintimahdollisuuksista."
@@ -152,7 +157,14 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.parkingText {
-    padding-right: 25em;
+input[type="text"] {
+  padding-top: 14em;
+}
+.switch{
+  margin-left: 1em;
+}
+
+textarea {
+  height: 5em;
 }
 </style>

@@ -29,7 +29,7 @@
             <option v-for="(type, index2,) in optionServices" :value="type.text" :key="index+index2">{{ type.text }}</option>
           </select>
           
-          <input type="text" id="meters" v-model="input.distance" v-on:click="emitToParent" v-on:keyup="createServicesText">
+          <input type="number" min="0" oninput="validity.valid||(value=0);" id="meters" v-model="input.distance" v-on:click="emitToParent" v-on:keyup="createServicesText">
         </div>
 
         <div>
@@ -169,7 +169,7 @@ svg {
 label:last-of-type {
   margin-top: 0.5rem;
 }
-input[type="text"] {
+input[type="number"] {
   margin: 0.25rem 0.5rem 0.25rem 0;
   width: 3rem;
   height: 1.4rem;
