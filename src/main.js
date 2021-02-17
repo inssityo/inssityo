@@ -14,9 +14,9 @@ if (accessToken) {
 }
 axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT;
 
-
 const app = createApp(App);
-  
+app.provide('$store', store);
+app.provide('$router', router);
 app.use(router, axios, vueAxios, store, vuex)
 app.mount('#app');
 

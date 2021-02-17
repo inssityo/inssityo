@@ -41,6 +41,13 @@
               <input type="checkbox" id="show-password" @click="showPassword">
               <span class="checkmark"></span>
             </label>
+
+            <label class="switch flexbox">
+              <p v-bind:class="{'switch-yes': checkedUser}" class="switch-no">{{ checkedUser ? "asiakas" : "välittäjä" }}</p>
+              <input type="checkbox" id="checkedUser" checked v-model="checkedUser">
+              <span class="slider round"></span>
+            </label>
+
             <button type="submit" class="hover__background--blue">Login</button>
           </form>
 
@@ -69,18 +76,17 @@
 </template>
 
 <script>
-import store from '@/store'
-import router from '@/router'
 
 export default {
   name: 'Entry',
+  inject: ['$store', '$router'],
 
   data() {
     return {
       email: '',
       password: '',
       loginView: true,
-      checked: true,
+      checkedUser: true,
 
       images: [
         'pexels-pixabay-462162.jpg',
@@ -113,30 +119,33 @@ export default {
     swapMainBefore() {
       let secondary = document.getElementById("secondary-column");
       let main = document.getElementById("main-column");
-      secondary.insertAdjacentElement('beforebegin', main);
+      secondary.insertAdjacentElement("beforebegin", main);
     },
     swapSecondaryBefore() {
       let secondary = document.getElementById("secondary-column");
       let main = document.getElementById("main-column");
-      main.insertAdjacentElement('beforebegin', secondary);
+      main.insertAdjacentElement("beforebegin", secondary);
     },
     login() {
+      let type = "user";
+      if (!this.checkedUser) {
+        type = "landlord";
+      }
       const credentials = {
-        type: 'landlord',
+        type: type,
         email: this.email,
         password: this.password,
       };
-      store.dispatch('login', credentials)
-      .then(() => router.push('/'))
+      this.$store.dispatch("login", credentials)
+      .then(() => this.$router.push("/"))
       .catch(error => console.log("error " + error))
     },
     register() {
-      store.dispatch("register", {
-        type: 'user',
+      this.$store.dispatch("register", {
         email: this.email,
         password: this.password
       })
-      .then(() => router.push({name: 'home'}))
+      .then(() => this.$router.push({name: "home"}))
       .catch (error => console.log(error))
     },
     randomItem (items) {
@@ -267,7 +276,6 @@ button {
   background: v.$KAMGreenDark;
   color: v.$White;
 }
-
 .secondary-button {
   border: 1px solid v.$White;
   background: transparent;
@@ -276,5 +284,17 @@ button {
   background: v.$KAMPurple;
   border: 1px solid v.$KAMGreenDark;
 }
-
+.switch {
+  display: flex;
+}
+.switch p {
+  margin-left: 4rem;
+  padding-bottom: 1rem;
+}
+.switch-yes {
+  color: v.$KAMPurple !important;
+}
+.switch input:checked + .slider {
+  background-color: v.$KAMPurple;
+}
 </style>
