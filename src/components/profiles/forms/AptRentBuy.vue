@@ -72,20 +72,7 @@
 
         <div class="row">
           <h3>Rakennuksen tiedot</h3>
-          <div class="flexbox">
-            <!-- pienennä input -->
-            <label
-              for="apartment.buildYear"
-              class="label__border-bottom--green border-radius__left"
-              >Rakennusvuosi</label
-            >
-            <input
-              type="text"
-              id="buildYear"
-              class="border-radius__right"
-              v-model="apartment.buildYear"
-            />
-          </div>
+
           <div class="flexbox">
             <label
               for="housingAssociation"
@@ -99,6 +86,25 @@
               v-model="apartment.housingAssociation"
             />
           </div>
+
+                    <div>
+            <!-- pienennä input -->
+            <label
+              for="apartment.buildYear"
+              class="label__border-bottom--green border-radius__left"
+              >Rakennusvuosi</label
+            >
+            <input
+              type="number"
+              min="0"
+              :max="new Date().getFullYear()"
+              oninput="validity.valid||(value=0);"
+              id="buildYear"
+              class="border-radius__right"
+              v-model="apartment.buildYear"
+            />
+          </div>
+
           <div class="flexbox" id="typeAndFloor">
             <BuildingType
               id-value="ARB"
@@ -114,7 +120,8 @@
             >
               Asuinhuoneistojen määrä rakennuksessa:
               <input
-                type="text"
+                type="number"
+                min="0"
                 id="totalAmountOfAptsOnProperty"
                 class="border-radius__right"
                 v-model="apartment.totalAmountOfAptsOnProperty"
@@ -122,15 +129,15 @@
 
             <label
               for="businessesOnProperty"
-              id="businessesLabel"
-            >
-              Liiketilojen määrä rakennuksessa:
+              id="businessesLabel">
+              Liiketilojen määrä rakennuksessa:</label>
               <input
-                type="text"
+                type="number"
+                min="0"
                 id="businessesOnProperty"
                 class="border-radius__right"
                 v-model="apartment.businessesOnProperty"
-            /></label>
+            />
           </div>
 
           <div>
@@ -200,7 +207,9 @@
               >Kiinteistövero</label
             >
             <input
-              type="text"
+              type="number"
+              min="0"
+              oninput="validity.valid||(value=0);"
               id="propertyTax"
               class="border-radius__right"
               v-model="apartment.propertyTax"
@@ -216,7 +225,7 @@
         </div>
 
         <div class="row" v-if="!apartment.isForSale">
-          <h3>Vuokra-asunnon Sopimusehdot</h3>
+          <h3>Vuokra-asunnon sopimusehdot</h3>
           <Terms v-on:childToParent="onChildClickTerms" />
         </div>
       </div>
@@ -531,6 +540,7 @@ export default {
         cellArea: null,
         monthlyRent: null,
         price: { salePrice: null, debtFreePrice: null },
+        maintenanceCosts: {upkeep: null, financing:null},
         guarantee: "",
         buildYear: null,
         apartmentType: null,
@@ -614,7 +624,6 @@ export default {
       });
     },
   },
-
   methods: {
     uploadAndPreviewImage() {
       this.$refs.file.files.forEach((e, i) =>
@@ -630,16 +639,11 @@ export default {
       var moved = this.apartment.images.splice(from, 1)[0];
       this.apartment.images.splice(to, 0, moved);
     },
-    /*
-    emitToParent() {
-      this.$emit('childToParent', this.firstname)
-    },*/
     onChildMaterials(value) {
       this.apartment.buildMaterial = value.buildMaterial;
       this.apartment.energyClass = value.energyClass;
       this.apartment.roofType = value.roofType;
       this.apartment.roofLining = value.roofLining;
-
     },
     onChildClickFloorPlan(value) {
       this.apartment.floorPlan = value.text;
@@ -659,13 +663,12 @@ export default {
       this.fromChildAreaMinRoom = value.minRoom;
       this.fromChildAreaMaxTotal = value.maxTotal;
       this.apartment.propertyFloors = value.aptFloorAmt;
-
     },
     onChildClickCondition(value) {
       this.apartment.condition = value;
     },
     onChildParking (value) {
-      //tukeeko skeema arrayta?
+      //tukeeko skeema options arrayta?
       this.apartment.parking.options = value.options;
       this.apartment.parking.supportsElectric = value.supportsElectric;
       this.apartment.parking.description = value.description;
@@ -684,16 +687,15 @@ export default {
     onChildSetSalePrice(value) {
       this.apartment.price.salePrice = value.salePrice;
       this.apartment.price.debtFreePrice = value.debtFreePrice;
-      //this.apartment.monthlyRent = value;
+      this.apartment.maintenanceCosts.upkeep = value.upkeep;
+      this.apartment.maintenanceCosts.financing = value.financing;
     },
     onChildClickRentBuy(value) {
       this.apartment.isForSale = value;
     },
-
     onChildSetRent(value) {
       this.apartment.monthlyRent = value.monthlyRent;
     },
-
     onChildClickFeatures(value) {
       //utilities
       this.fromChildFeatures = value.features; //Muuta muuttuja
@@ -727,7 +729,6 @@ export default {
       this.apartment.property.rented = value.propertyIsRental;
       this.apartment.property.owner = value.propertyOwner;
     },
-
     onBalconyPatio(value) {
       this.apartment.balcony.exists = value.balconyExists;
       this.apartment.balcony.description = value.balconyDesc;
@@ -777,7 +778,6 @@ h2 {
 .container .column:last-of-type .row {
   margin-left: 0.75rem;
 }
-
 .container .column:not(:nth-child(2)) .row {
   background: v.$KAMGrey;
 }
@@ -795,7 +795,6 @@ h2 {
     margin: 0.3rem 0;
   }
 }
-
 h3 {
   margin-bottom: 0.4rem;
 }
@@ -825,27 +824,23 @@ label[class="description"] ~ label[class="description"] {
 #description-arb {
   height: 15rem;
 }
-
 #imgParent {
   margin-top: 1em;
   height: 500px;
   overflow: scroll;
   overflow-x: hidden;
 }
-
 .img_controls {
   display: inline-block;
   margin-top: 0.5em;
   position: relative;
   width: 100%;
 }
-
 .img_controls img {
   width: 100%;
   height: auto;
   overflow: auto;
 }
-
 .img_controls .btnDiv {
   margin-top: 1em;
   position: absolute;
@@ -853,13 +848,11 @@ label[class="description"] ~ label[class="description"] {
   flex-direction: column;
   right: 3%;
 }
-
 .btnDiv button {
   margin: 10% auto 10% auto;
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
-
 .uploadBtn {
   background-color: v.$KAMGreenDark;
   color: white;
@@ -869,28 +862,35 @@ label[class="description"] ~ label[class="description"] {
   text-align: center;
   margin-top: 1rem;
 }
-
 #typeAndFloor {
   margin-bottom: auto;
 }
-
 #aptsLabel {
   margin-right: 1em;
 }
-
 #businessesLabel {
   margin-left: 1em;
 }
-
 #aptsBusinesses {
   margin-top: 2em;
 }
-
 #aptsBusinesses input {
   max-width: 97%;
 }
-
 #euroLabel {
   font-weight: bold;
+}
+#taxDiv{
+  width: 40%;
+}
+#propertyTax {
+  height: 1.45em;
+}
+#businessesOnProperty, #totalAmountOfAptsOnProperty {
+  width: 3em;
+}
+#buildYear {
+  height: 1.45em;
+  width: 4em;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
-  <div id="parent">  
+  <div id="parent" class="flexbox">  
     <label>Kerros</label>
     <div class="flexbox">
-      <input type="text" id="floor" v-model="floor[0].floor" v-on:keyup="emitToParent">
+      <input type="number" min="0" oninput="validity.valid||(value='');" id="floor" v-model="floor[0].floor" v-on:keyup="emitToParent">
       <p class="margin__nothing">/</p>
-      <input type="text" id="of-floors" v-model="floor[0].ofFloors" v-on:keyup="emitToParent">
+      <input type="number"  min="0" oninput="validity.valid||(value='');" id="of-floors" v-model="floor[0].ofFloors" v-on:keyup="emitToParent">
     </div>
 
-          <div class="flexbox">
+          <div class="flexbox" id="elevatorDiv">
             <label class="description"> Hissi
       </label>
       <label class="switch">
@@ -53,7 +53,8 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 #parent {
-  margin-left: 4em;
+  padding-top: 4em;
+  padding-right: 5em;
 }
 
 div .flexbox {
@@ -70,9 +71,14 @@ div .flexbox {
     margin-bottom: 1em;
   }
 }
-input[type="text"] {
-  margin: 0.3rem 0 0 0;
+input[type="text"], input[type="number"] {
+  margin: 0.5rem 0 0 0;
   width: 2rem;
+}
+
+#elevatorDiv {
+  margin-left: 4em;
+  margin-right: 1em;
 }
 
 #elevatorText {

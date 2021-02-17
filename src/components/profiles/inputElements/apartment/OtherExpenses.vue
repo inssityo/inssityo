@@ -16,7 +16,8 @@
     </label>
 
     <label v-show="expenses[2].checkedDataConnection" for="speed">Nopeus
-      <input type="text" id="speed" v-model="speed" v-on:keyup="emitToParent">
+      <input type="number" id="speed" oninput="validity.valid||(value=0);" v-model="speed" v-on:keyup="emitToParent">
+      mbit/s
     </label>
   </div>
 </template>
@@ -55,7 +56,7 @@ div {
     
     input {
       margin: 0.3rem 0.5rem;
-      width: 8.5rem;
+      width: 3rem;
     }
   }
 }

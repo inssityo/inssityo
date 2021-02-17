@@ -34,16 +34,13 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 .materialInput {
-    width: 25em;
     align-content: center;
     margin-bottom: 1em;
 }
 
 .materialInput-right {
-    width: 50em;
     align-content: center;
     margin-bottom: 1em;
-    float: right;
 }
 
 label {    white-space: nowrap;

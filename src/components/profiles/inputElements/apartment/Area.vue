@@ -6,16 +6,16 @@
         <label v-show="aptValue === 'S'" for="minRoom" class="label__border-bottom--green border-radius__left">Min</label>
         <label v-show="aptValue === 'R'" for="minRoom" class="label__border-bottom--green border-radius__left">Room</label>
         <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green border-radius__left">Asuinpinta-ala</label>
-        <input type="text" id="min-room" class="border-radius__right" v-model="minRoom" v-on:keyup="emitToParent">
+        <input type="number" min="0" id="min-room" class="border-radius__right" v-model="minRoom" v-on:keyup="emitToParent">
       </div>
       <div>
         <label v-show="aptValue === 'S'" for="maxTotal" class="label__border-bottom--green border-radius__left">Max</label>
         <label v-show="aptValue === 'R'" for="maxTotal" class="label__border-bottom--green border-radius__left">Liveable</label>
         <label v-show="aptValue === 'B'" for="minRoom" class="label__border-bottom--green border-radius__left">Kerrospinta-ala</label>
-        <input type="text" id="max-total" class="border-radius__right" v-model="maxTotal" v-on:keyup="emitToParent">
+        <input type="number" min="0" id="max-total" class="border-radius__right" v-model="maxTotal" v-on:keyup="emitToParent">
       </div>
       <label id="floorAmtLabel" class="label__border-bottom--green border-radius__left">Asunnon kerroslukumäärä:</label>
-      <input type="number" id="floorNumberInput" class="border-radius__right" v-model="apartmentFloorAmt" v-on:input="emitToParent">
+      <input type="number" id="floorNumberInput" min="0" class="border-radius__right" v-model="apartmentFloorAmt" v-on:input="emitToParent">
 
     </div>
   </div>
@@ -53,6 +53,11 @@ label {
 input {
   margin: 0.4rem 0;
   width: 1.9rem;
+}
+
+input[type="number"] {
+  height: 1.5em;
+  width: 4em;
 }
 
 #floorNumberInput {

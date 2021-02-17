@@ -23,7 +23,7 @@
       </div>
       <div v-for="(input, index) in floorPlan" :key="index">
         <div class="flexbox">
-          <input type="text" id="number-of-rooms" v-model="input.number" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
+          <input type="number" min="0" id="number-of-rooms" oninput="validity.valid||(value=0);" v-model="input.number" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
           <select id="floorplan" v-model="input.abbr" v-on:click="emitToParent" @click="createFloorPlanText">
             <option v-for="(type, index2,) in optionFloorPlans" :value="type.abbr" :key="index+index2">{{ type.text }}</option>
           </select>
@@ -96,7 +96,7 @@ export default {
       let arr = [];
       this.floorPlan.forEach(item => {
         if (item.number !== null && item.abbr !== null && item.number !== '') {
-          arr.push(item.number + '/' + item.abbr);
+          arr.push(item.number + '' + item.abbr);
         }
       })
       this.floorPlanText = arr.join(', ');
@@ -163,9 +163,9 @@ svg {
   margin: 0 0 0 0.5rem; 
   color: v.$KAMGreenDark;
 }
-input[type="text"] {
+input[type="text"], input[type="number"] {
   margin: 0.2rem 0.5rem 0.25rem 0;
-  width: 1.2rem;
+  width: 2rem;
   height: 1.45rem;
   text-align: center;
   background: v.$KAMGreyLight;

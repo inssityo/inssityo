@@ -32,7 +32,9 @@
           >Ala</label>
 
         <input
-          type="text"
+          type="number"
+          min="0"
+          oninput="validity.valid||(value=0);"
           v-model="yardArea"
           v-on:input="emitToParent"
           id="yardArea"
@@ -49,7 +51,9 @@
           >Sallittu rakennusala</label
         >
         <input
-          type="text"
+          type="number"
+          min="0"
+          oninput="validity.valid||(value=0);"
           v-model="yardBuildArea"
           v-on:input="emitToParent"
           id="yardArea"
@@ -125,7 +129,7 @@
       />
       </div>
     
-    <div id="rentDiv" class="flexbox" v-if="showRentalDetails && showYardDetails" >
+    <div id="rentDiv" v-if="showRentalDetails && showYardDetails" >
       
       <div id="rentPriceDiv">
         
@@ -135,10 +139,12 @@
           >Tonttivuokra:</label>
 
         <input
-          type="text"
+          type="number"
+          min="0"
+          oninput="validity.valid||(value=0);"
           v-model="propertyRent"
           v-on:input="emitToParent"
-          id="yardArea"
+          id="yardRentAmt"
           class="border-radius__right"
         />
 
@@ -146,21 +152,18 @@
           >€ / vuosi</label>
       </div>
       
-      <div id="rentExpiresDiv" v-if="showRentalDetails && showYardDetails" >
+      <div id="rentExpiresDiv" v-if="showRentalDetails && showYardDetails">
         
-        <label
-          for="propertyRentExpires"
-          class="label__border-bottom--green border-radius__left"
-          >Sopimus voimassa:</label
-        >
-        
-        <input
+        <label for="yardRentUntil" class="description" id="rentUntil">Vuokrasopimus voimassa:
+          <input
           type="date"
           v-model="propertyRentExpires"
           v-on:input="emitToParent"
-          id="yardArea"
-          class="border-radius__right"
-        />
+          id="yardRentUntil"
+          class="border-radius"
+        /></label>
+        
+
       </div>
     </div>
   </div>
@@ -212,7 +215,15 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 #yardArea {
-  width: 30%;
+  width: 20%;
+}
+
+#yardRentUntil{
+height: auto;
+}
+
+#rentUntil {
+  margin-right: 1em;
 }
 
 #yardParent {
@@ -233,6 +244,10 @@ export default {
   width: 100%;
 }
 
+input[type="date"] {
+  width: 10em;
+}
+
 .switch {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -247,15 +262,18 @@ export default {
   max-width: 15%;
 }
 
+input[type="number"] {
+  height: 1.45em;
+  width: 5em;
+}
+
 #buildAreaDiv {
   white-space: nowrap;
-  margin-right: 10em;
-  max-width: 8em;
+  max-width:16em;
 }
 
 #rentExpiresDiv {
-  margin-right: 4em;
-  max-width: 40%;
+  margin-top: 1em;
 }
 
 </style>

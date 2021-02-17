@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="{'width100': idValue !== 'ARB'}">
+  <div v-bind:class="{'width50': idValue !== 'ARB'}">
     <h4>Talotyyppi</h4>
     <select v-if="idValue === 'ARB'" v-model="buildingType" v-on:click="emitToParent">
       <option value="" selected disabled hidden>Valitse...</option>
@@ -105,7 +105,11 @@ export default {
 @use '../../../../assets/styles/variables.scss' as v;
 
 .width100 {
-  width: 100%;
+  width: 50%;
+}
+
+select {
+  max-width: 75%;
 }
 
 </style>
