@@ -112,6 +112,10 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
+#number-of-rooms {
+  height: 1.75em;
+}
+
 label {
   padding: 0;
 

@@ -92,7 +92,7 @@ width: 6em;
 }
 
 #monthlyRent {
-  width: 6em;
+  width: 4em;
 }
 
 #debtfreeLabel {

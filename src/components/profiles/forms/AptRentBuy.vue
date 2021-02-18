@@ -460,8 +460,6 @@ export default {
       price: null,
       guarantee: null,
       fromChildCheckedOwner: null,
-      fromChildServices: null,
-      fromChildServicesText: "",
       fromChildOtherExpenses: null,
       fromChildSpeed: "",
       fromChildTerms: null,
@@ -703,8 +701,8 @@ export default {
       //this.apartment.mustHave
     },
     onChildClickServices(value) {
-      this.fromChildServicesText = value.text;
-      this.apartment.nearbyServices = value.services;
+      this.apartment.nearbyServices = value.nearbyServices;
+      this.apartment.serviceDescription = value.description
     },
     onChildClickOtherExpenses(value) {
       this.fromChildOtherExpenses = value.expenses;

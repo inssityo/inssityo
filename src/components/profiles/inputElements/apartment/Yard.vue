@@ -128,8 +128,8 @@
         class="border-radius__right"
       />
       </div>
-    
-    <div id="rentDiv" v-if="showRentalDetails && showYardDetails" >
+
+    <div id="rentDiv" v-if="showRentalDetails && showYardDetails" class="flexbox">
       
       <div id="rentPriceDiv">
         
@@ -150,9 +150,6 @@
 
         <label class="label__border-bottom--green border-radius__right"
           >€ / vuosi</label>
-      </div>
-      
-      <div id="rentExpiresDiv" v-if="showRentalDetails && showYardDetails">
         
         <label for="yardRentUntil" class="description" id="rentUntil">Vuokrasopimus voimassa:
           <input
@@ -163,10 +160,9 @@
           class="border-radius"
         /></label>
         
-
+      </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -223,7 +219,7 @@ height: auto;
 }
 
 #rentUntil {
-  margin-right: 1em;
+  margin-left: 5em;
 }
 
 #yardParent {
@@ -263,7 +259,6 @@ input[type="date"] {
 }
 
 #ownerDiv {
-  margin-right: 1em;
   label {
   white-space: nowrap;
 }
@@ -278,9 +273,5 @@ input[type="number"] {
   white-space: nowrap;
   max-width:16em;
 }
-
-#rentExpiresDiv {
-  margin-top: 1em;
-} 
 
 </style>
