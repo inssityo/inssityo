@@ -1,7 +1,7 @@
 <template>
-  <div> <label>Lämmitysjärjestelmä:</label> <input class="utilInput" type="text" v-model="heating"/> <label>Ilmanvaihto:</label> <input class="utilInput" type="text" v-model="airConditioning" /></div>
-  <div> <label>Vesi:</label> <input class="utilInput" v-model="water" type="text"/> <label>Viemäröinti:</label> <input class="utilInput" type="text" v-model="plumbing" /> </div>
-  <div> <label>Jätehuolto:</label> <input class="utilInput" v-model="garbage" type="text"/> <label>Yhteiset tilat:</label> <input class="utilInput" v-model="common" type="text"/> </div>
+  <div> <label>Lämmitysjärjestelmä:</label> <input class="utilInput" type="text" v-model="heating" v-on:input="emitToParent"/> <label>Ilmanvaihto:</label> <input class="utilInput" type="text" v-model="airConditioning" v-on:input="emitToParent"/></div>
+  <div> <label>Vesi:</label> <input class="utilInput" v-model="water" type="text" v-on:input="emitToParent"/> <label>Viemäröinti:</label> <input class="utilInput" type="text" v-model="plumbing" v-on:input="emitToParent"/> </div>
+  <div> <label>Jätehuolto:</label> <input class="utilInput" v-model="garbage" type="text" v-on:input="emitToParent"/> <label>Yhteiset tilat:</label> <input class="utilInput" v-model="common" type="text" v-on:input="emitToParent"/> </div>
 </template>
 
 <script>
@@ -31,7 +31,7 @@ export default {
     @use '../../../../assets/styles/variables.scss' as v;
 
 .utilInput{
-   width: 97%;
+   width: 98%;
    margin-bottom: 0.5em;
    margin-top: 0.25em;
 }

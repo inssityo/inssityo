@@ -96,7 +96,6 @@ width: 6em;
 }
 
 #debtfreeLabel {
-  float: right;
   width: 7em;
   margin-left: 1em;
 }

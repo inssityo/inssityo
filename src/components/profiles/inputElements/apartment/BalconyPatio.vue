@@ -5,14 +5,14 @@
       <label class="description"> Parveke
       </label>
       <label class="switch">
-          <input type="checkbox" v-model="balconyExists" v-on:click="toggleBalcony">
+          <input type="checkbox" v-model="balconyExists" v-on:click="toggleBalcony" v-on:input="emitToParent">
           <span class="slider round" v-bind:class="{'switch-yes': balconyExists}"></span>
       </label>
       </div>
 
   <div class="balcText">
       <label for="balconyDescText" v-if="balconyExists" class="description">Parvekkeen kuvaus
-      <input type="text" id="balconyDescText" v-model="balconyDesc">
+      <input type="text" id="balconyDescText" v-model="balconyDesc" v-on:input="emitToParent">
       </label>
   </div>
 
@@ -24,13 +24,13 @@
             <label class="description"> Terassi
       </label>
       <label class="switch">
-          <input type="checkbox" v-model="patioExists" v-on:click="togglePatio">
+          <input type="checkbox" v-model="patioExists" v-on:click="togglePatio" v-on:input="emitToParent">
           <span class="slider round" v-bind:class="{'switch-yes': patioExists}"></span>
       </label>
             </div>
             <div class="patioText">
             <label for="patioDescText" v-if="patioExists" class="description">Terassin kuvaus
-      <input type="text" id="patioDescText" v-model="patioDesc">
+      <input type="text" id="patioDescText" v-model="patioDesc" v-on:input="emitToParent">
       </label>
     </div>
   </div>

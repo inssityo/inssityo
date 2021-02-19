@@ -77,7 +77,7 @@
             <label
               for="housingAssociation"
               class="label__border-bottom--green border-radius__left"
-              >Taloyhtiö</label
+              >Taloyhtiö:</label
             >
             <input
               type="text"
@@ -85,25 +85,27 @@
               class="border-radius__right"
               v-model="apartment.housingAssociation"
             />
-          </div>
 
-                    <div>
+                             <div>
             <!-- pienennä input -->
             <label
               for="apartment.buildYear"
               class="label__border-bottom--green border-radius__left"
-              >Rakennusvuosi</label
+              >Rakennusvuosi:</label
             >
             <input
               type="number"
               min="0"
-              :max="new Date().getFullYear()"
               oninput="validity.valid||(value=0);"
               id="buildYear"
               class="border-radius__right"
               v-model="apartment.buildYear"
             />
           </div>
+
+          </div>
+
+ 
 
           <div class="flexbox" id="typeAndFloor">
             <BuildingType
@@ -449,7 +451,6 @@ export default {
       buildYear: "",
       fromChildFloorPlan: [],
       fromChildFloorPlanText: "",
-      fromChildFeatures: null,
       fromChildAreaMinRoom: null,
       fromChildAreaMaxTotal: null,
       fromChildCondition: null,
@@ -672,7 +673,8 @@ export default {
       this.apartment.parking.description = value.description;
     },
     onChildClickBuildingType(value) {
-      this.apartment.BuildingType = value;
+      this.apartment.BuildingType = value.types;
+      console.log(this.apartment.BuildingType)
     },
     onChildClickCellAptRoom(value) {
       this.apartment.isCellApartment = value;
@@ -696,7 +698,6 @@ export default {
     },
     onChildClickFeatures(value) {
       //utilities
-      this.fromChildFeatures = value.features; //Muuta muuttuja
       this.showFeatures = value.show;
       //this.apartment.mustHave
     },
@@ -888,7 +889,12 @@ label[class="description"] ~ label[class="description"] {
   width: 3em;
 }
 #buildYear {
-  height: 1.45em;
+  height: 1.5em;
   width: 4em;
+}
+
+#housingAssociation {
+  width: 100%;
+  margin-right: 1em;
 }
 </style>

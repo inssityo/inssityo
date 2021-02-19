@@ -70,7 +70,7 @@
         </div>
       </div>
     <label for="description-services"
-      >Kerro vapaasti palveluista
+      >Kerro vapaasti palveluista:
       <textarea
         id="description-services"
         class="box"
@@ -84,6 +84,7 @@
 <script>
 export default {
   name: "Services",
+  emits: ["childToParent"],
 
   data() {
     return {

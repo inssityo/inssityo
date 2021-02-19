@@ -1,7 +1,7 @@
 <template>
   <div>  
     <p class="margin__bottomless">Pinta-ala</p>
-    <div class="flexbox">
+    <div class="flexbox" id="parent">
       <div>
         <label v-show="aptValue === 'S'" for="minRoom" class="label__border-bottom--green border-radius__left">Min</label>
         <label v-show="aptValue === 'R'" for="minRoom" class="label__border-bottom--green border-radius__left">Room</label>

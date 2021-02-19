@@ -67,7 +67,7 @@
         <input
           type="checkbox"
           v-model="supportsElectric"
-          v-on:click="setSupportsElectric"
+          v-on:click="setSupportsElectric "
         />
         <span
           class="slider round"
@@ -119,9 +119,11 @@ export default {
     },
     setParkingDetails() {
       this.exists = !this.exists;
+      this.emitToParent()
     },
     setSupportsElectric(){
         this.supportsElectric = !this.supportsElectric
+        this.emitToParent()
     },
     handleOptions(value) {
       this.parkingOptions[value].checked = !this.parkingOptions[value].checked;
@@ -165,6 +167,7 @@ input[type="text"] {
 }
 
 textarea {
+  margin-top: 0.5em;
   height: 5em;
 }
 </style>

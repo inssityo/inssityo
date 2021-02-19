@@ -5,7 +5,7 @@
           <h4>Voimassa:</h4>
       <label>Toistaiseksi:</label>
       <label class="switch">
-        <input type="checkbox" v-model="forNow" v-on:click="clickForNow">
+        <input type="checkbox" v-model="forNow" v-on:click="clickForNow" v-on:input="emitToParent">
         <span class="slider round"  v-bind:class="{'switch-yes': forNow}"></span>
       </label>
     </div>

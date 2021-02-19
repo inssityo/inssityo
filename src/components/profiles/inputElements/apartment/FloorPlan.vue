@@ -42,11 +42,11 @@
       </div>
     </div>
     <label for="description-floorplan">Kuvaus:
-      <textarea id="description-floorplan" class="box" type="text" placeholder="Kerro vapaasti asunnosta." v-model="description"></textarea>
+      <textarea id="description-floorplan" class="box"  placeholder="Kerro vapaasti asunnosta." v-model="description" v-on:input="emitToParent"></textarea>
     </label>
 
-        <label for="description-floorplan">Näkymät:
-      <textarea id="description-floorplan" class="box" type="text" placeholder="Kuvaile asunnosta avautuvia näkymiä." v-model="sights"></textarea>
+        <label for="description-sights">Näkymät:
+      <textarea id="description-sights" class="box" placeholder="Kuvaile asunnosta avautuvia näkymiä." v-model="sights" v-on:input="emitToParent"></textarea>
     </label>
 
   </div>

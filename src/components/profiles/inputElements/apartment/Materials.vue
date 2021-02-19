@@ -1,8 +1,8 @@
 <template>
     <div id="parent">
         <div>
-              <div class="flexbox"> <label>Rakennusmateriaali:</label> <input class="materialInput" type="text" v-model="buildMaterial"/> <label>Energiatodistus:</label> <input class="materialInput-right" type="text" v-model="energyClass" /></div>
-              <div class="flexbox"> <label>Kattotyyppi:</label> <input class="materialInput" type="text" v-model="roofType"/> <label>Katon pintamateriaali:</label> <input class="materialInput-right" type="text" v-model="roofLining" /></div>
+              <div class="flexbox"> <label>Rakennusmateriaali:</label> <input class="materialInput" type="text" v-model="buildMaterial" v-on:input="emitToParent"/> <label>Energiatodistus:</label> <input class="materialInput-right" type="text" v-model="energyClass" v-on:input="emitToParent" /></div>
+              <div class="flexbox"> <label>Kattotyyppi:</label> <input class="materialInput" type="text" v-model="roofType" v-on:input="emitToParent"/> <label>Katon pintamateriaali:</label> <input class="materialInput-right" type="text" v-model="roofLining" v-on:input="emitToParent"/></div>
   
         </div>
     </div>

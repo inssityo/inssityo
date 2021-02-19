@@ -11,7 +11,7 @@
             <label class="description"> Hissi
       </label>
       <label class="switch">
-          <input type="checkbox" v-model="hasElevator" v-on:click="toggleElevator">
+          <input type="checkbox" v-model="hasElevator" v-on:click="toggleElevator" v-on:input="emitToParent">
           <span class="slider round" v-bind:class="{'switch-yes': hasElevator}"></span>
       </label>
                 <p class="margin__topless margin__bottomless switch-no" id="elevatorText" v-bind:class="{'switch-yes': hasElevator}">{{ hasElevator ? "kyllä" : "ei" }}</p>
