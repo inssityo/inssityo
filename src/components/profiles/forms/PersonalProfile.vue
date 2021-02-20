@@ -104,7 +104,7 @@ export default {
         employmentStatus: null,
         workType: null, //komponentissa '', kumpi?
 
-        description: '',
+        description: '', //Aseta max merkkimäärä!!
         alcohol: 1,
         smoking: 1,
         drugs: 1,

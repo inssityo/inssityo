@@ -1,5 +1,5 @@
 <template>
-  <img src="../../assets/images/pexels-maria-orlova-4906243-cropped.jpg" class="img--calc" alt="Image 1">
+  <img src="../../assets/images/pexels-alessio-cesario-1906795-cropped.jpg" class="img--calc" alt="Image 1">
 </template>
 
 <script>

@@ -33,8 +33,8 @@
       <RoommateProfile id="roommate" v-show="choice === 1" v-on:childToParent="onChildClickRoommate"/>
 
       <div class="flexbox">
-        <button type="submit" class="is-danger hover__background--blue">Submit</button>
         <button class="hover__background--blue">Cancel</button>
+        <button type="submit" class="is-danger hover__background--blue">Submit</button>
       </div>
     </form>
 
@@ -191,11 +191,11 @@ h1 {
   button {
     margin: 4rem 1rem 0 0;
   }
-  button:last-of-type {
-    background: v.$KAMGreySemiDark;
-  }
-  button:last-of-type:hover {
+  button:first-of-type {
     background: v.$KAMGreyDark;
+  }
+  button:first-of-type:hover {
+    background: v.$KAMGreySemiDark;
   }
 }
 
