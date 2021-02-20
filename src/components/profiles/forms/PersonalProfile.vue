@@ -30,7 +30,7 @@
         </div>
         <div class="row-item--8">
           <label for="description-p">Kuvaus itsestäsi</label>
-          <textarea type="text" id="description-p" class="box" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="user.description" v-on:keyup="emitToParent"></textarea>
+          <textarea id="description-p" class="box" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="user.description" v-on:keyup="emitToParent"></textarea>
         </div>
       </div>
 

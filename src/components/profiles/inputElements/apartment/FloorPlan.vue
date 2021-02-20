@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Huoneiston kuvaus: <span>{{ floorPlanText }}</span></p>
+    <p>Pohja: <span>{{ floorPlanText }}</span></p>
               
     <label @click="handleFloorPlan">
       <div class="flexbox label__border-bottom--green" v-bind:class="{'remove__border-radius': showFloorPlan}">
@@ -23,7 +23,7 @@
       </div>
       <div v-for="(input, index) in floorPlan" :key="index">
         <div class="flexbox">
-          <input type="text" id="number-of-rooms" v-model="input.number" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
+          <input type="number" min="0" id="number-of-rooms" oninput="validity.valid||(value=0);" v-model="input.number" v-on:click="emitToParent" v-on:keyup="createFloorPlanText">
           <select id="floorplan" v-model="input.abbr" v-on:click="emitToParent" @click="createFloorPlanText">
             <option v-for="(type, index2,) in optionFloorPlans" :value="type.abbr" :key="index+index2">{{ type.text }}</option>
           </select>
@@ -41,9 +41,14 @@
         </div>
       </div>
     </div>
-    <label for="description-floorplan">Kerro vapaasti huoneistosta
-      <textarea id="description-floorplan" class="box" type="text" placeholder="Kerro vapaasti huoneistosta" v-model="description"></textarea>
+    <label for="description-floorplan">Kuvaus:
+      <textarea id="description-floorplan" class="box"  placeholder="Kerro vapaasti asunnosta." v-model="description" v-on:input="emitToParent"></textarea>
     </label>
+
+        <label for="description-sights">Näkymät:
+      <textarea id="description-sights" class="box" placeholder="Kuvaile asunnosta avautuvia näkymiä." v-model="sights" v-on:input="emitToParent"></textarea>
+    </label>
+
   </div>
 </template>
 
@@ -53,6 +58,7 @@ export default {
 
   data() {
     return {
+      sights:"",
       showFloorPlan: false,
       floorPlan: [
         { abbr: null, number: null } 
@@ -69,14 +75,12 @@ export default {
         { text: 'sauna', abbr: 's', value: 7 },
         { text: 'vaatehuone', abbr: 'vh', value: 8 },
         { text: 'kodinhoitohuone', abbr: 'khh', value: 9 },
-        { text: 'terassi', abbr: 'ter', value: 10 },
-        { text: 'parveke', abbr: 'parv', value: 11 },
       ]
     }
   },
   methods: {
     emitToParent() {
-      this.$emit('childToParent', { 'text': this.floorPlanText, 'floorPlan': this.floorPlan })
+      this.$emit('childToParent', { 'text': this.floorPlanText, 'floorPlan': this.floorPlan, sights:this.sights})
     },
     add() {
       this.floorPlan.push(
@@ -92,7 +96,7 @@ export default {
       let arr = [];
       this.floorPlan.forEach(item => {
         if (item.number !== null && item.abbr !== null && item.number !== '') {
-          arr.push(item.number + '/' + item.abbr);
+          arr.push(item.number + '' + item.abbr);
         }
       })
       this.floorPlanText = arr.join(', ');
@@ -107,6 +111,10 @@ export default {
 
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
+
+#number-of-rooms {
+  height: 1.75em;
+}
 
 label {
   padding: 0;
@@ -159,9 +167,9 @@ svg {
   margin: 0 0 0 0.5rem; 
   color: v.$KAMGreenDark;
 }
-input[type="text"] {
+input[type="text"], input[type="number"] {
   margin: 0.2rem 0.5rem 0.25rem 0;
-  width: 1.2rem;
+  width: 2rem;
   height: 1.45rem;
   text-align: center;
   background: v.$KAMGreyLight;

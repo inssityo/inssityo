@@ -19,9 +19,13 @@
     <label v-show="terms[3].checkedRentIncrease" for="amount">Määrä
       <input type="text" id="amount" v-model="amount" v-on:keyup="emitToParent">
     </label>
+
+    <label for="guarantee">Vuokravakuus
+            <textarea class="box" placeholder="Kahden kuukauden vuokrahinta ennen asuntoon muuttamista." v-model="termsDescription"></textarea>
+    </label>
   
     <label for="terms">Muita ehtoja
-      <textarea type="text" id="terms-description" class="box" placeholder="Mikäli vuokrasuhde päättyy ennen kuin vuosi sen alkamisesta on kulunut, peritään vuokralaiselta sopimussakko 1,24 x 1 kk vuokraa vastaava määrä." v-model="termsDescription"></textarea>
+      <textarea id="terms-description" class="box" placeholder="Mikäli vuokrasuhde päättyy ennen kuin vuosi sen alkamisesta on kulunut, peritään vuokralaiselta sopimussakko 1,24 x 1 kk vuokraa vastaava määrä." v-model="guarantee"></textarea>
     </label>
   </div>
 </template>
@@ -38,13 +42,14 @@ export default {
         { insurance: false },
         { checkedRentIncrease: false },
       ],
+      guarantee:'',
       amount: '',
       termsDescription: '', //HUOM!
     }
   },
   methods: {
     emitToParent () {
-      this.$emit('childToParent', {'terms': this.terms, 'amount': this.amount})
+      this.$emit('childToParent', {'terms': this.terms, 'amount': this.amount, guarantee:this.guarantee})
     },
   }
 }
@@ -57,9 +62,10 @@ div {
   margin-top: 0.3rem;
 
   //amount
-  label:nth-last-of-type(2) {
+  #amount {
     display: block;
-    margin: -1rem 0 0.5rem 1.5rem;
+    margin: 1rem 0 0.5rem;
+    width: 24em;
     
     input {
       margin: 0.3rem 0.5rem;
