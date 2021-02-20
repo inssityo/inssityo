@@ -34,17 +34,24 @@
             </div>
             <div class="flexbox">
               <label for="password-login" class="label__border-bottom--green border-radius__left">Password</label>
-              <input id="password-login" class="border-radius__right" type="password" minlength="8" required v-model="password">
+              <input id="password-login" class="border-radius__right" type="password" minlength="5" required v-model="password">
             </div>
             
             <label for="show-password" class="checkmark-label">Show Password
               <input type="checkbox" id="show-password" @click="showPassword">
               <span class="checkmark"></span>
             </label>
+
+            <label class="switch flexbox">
+              <p v-bind:class="{'switch-yes': checkedUser}" class="switch-no">{{ checkedUser ? "asiakas" : "välittäjä" }}</p>
+              <input type="checkbox" id="checkedUser" checked v-model="checkedUser">
+              <span class="slider round"></span>
+            </label>
+
             <button type="submit" class="hover__background--blue">Login</button>
           </form>
 
-          <form v-else @submit.prevent="signup">
+          <form v-else @submit.prevent="register">
             <div class="flexbox">
               <label for="email-login" class="label__border-bottom--green border-radius__left">Email</label>
               <input id="email-login" class="border-radius__right" type="email" required v-model="email">
@@ -69,15 +76,17 @@
 </template>
 
 <script>
+
 export default {
   name: 'Entry',
+  inject: ['$store', '$router'],
 
   data() {
     return {
       email: '',
       password: '',
       loginView: true,
-      checked: true,
+      checkedUser: true,
 
       images: [
         'pexels-pixabay-462162.jpg',
@@ -110,22 +119,42 @@ export default {
     swapMainBefore() {
       let secondary = document.getElementById("secondary-column");
       let main = document.getElementById("main-column");
-      secondary.insertAdjacentElement('beforebegin', main);
+      secondary.insertAdjacentElement("beforebegin", main);
     },
     swapSecondaryBefore() {
       let secondary = document.getElementById("secondary-column");
       let main = document.getElementById("main-column");
-      main.insertAdjacentElement('beforebegin', secondary);
+      main.insertAdjacentElement("beforebegin", secondary);
     },
-    login() {/*
-      const { username, password} = this;
-      this.$store.dispatch(AUTH_REQUIEST, { username, password }).then(() => {
-        this.$router.push('/');
+    login() {
+      let type = "user";
+      if (!this.checkedUser) {
+        type = "landlord";
+      }
+      const credentials = {
+        type: type,
+        email: this.email,
+        password: this.password,
+      };
+      this.$store.dispatch("login", credentials)
+      .then(() => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let param = "/";
+        if (urlParams.get('redirect') !== "") {
+          param = urlParams.get('redirect');
+        }
+        this.$router.push(param);
       })
-      //https://blog.sqreen.com/authentication-best-practices-vue/*/
+      .catch(error => console.log("error " + error))
     },
-    signup() {
-      
+    register() {
+      this.$store.dispatch("register", {
+        email: this.email,
+        password: this.password
+      })
+      .then(() => this.$router.push({name: "home"}))
+      .catch (error => console.log(error))
     },
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
@@ -157,13 +186,13 @@ h2 {
 }
 .container {
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(1, 20rem); //1fr
+  grid-template-rows: repeat(1, 23rem);
   cursor: pointer;
   gap: 0;
   position: absolute;
   top: 53%;
   left: 50%;
-  transform: translate(-55%, -40%);
+  transform: translate(-57%, -40%);
   z-index: 1;
   width: 40%;
   height: 60%;
@@ -204,7 +233,7 @@ h2 {
   grid-column-start: 3;
   grid-column-end: 6;
   background: v.$White;
-  padding: 1rem;
+  padding: 2rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -223,7 +252,6 @@ form {
 }
 .transparency {
   background: v.$KAMGreenDark;
-  //background: v.$KAMGreenTRN;
   height: 100%;
   position: absolute;
   top: 0;
@@ -255,7 +283,6 @@ button {
   background: v.$KAMGreenDark;
   color: v.$White;
 }
-
 .secondary-button {
   border: 1px solid v.$White;
   background: transparent;
@@ -264,5 +291,17 @@ button {
   background: v.$KAMPurple;
   border: 1px solid v.$KAMGreenDark;
 }
-
+.switch {
+  display: flex;
+}
+.switch p {
+  margin-left: 4rem;
+  padding-bottom: 1rem;
+}
+.switch-yes {
+  color: v.$KAMPurple !important;
+}
+.switch input:checked + .slider {
+  background-color: v.$KAMPurple;
+}
 </style>

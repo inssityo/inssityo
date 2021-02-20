@@ -1,310 +1,219 @@
 <template>
-  
-  <ImageCarousel :images="apartment.images" /> <!-- handlaa, jos ei ole kuvia -->
-  <div class="content">
+  <div>
+    <!--<ImageCarousel :images="apartment.images" />--> <!-- handlaa, jos ei ole kuvia -->
+    <div class="content">
 
-    <div class="container">
-      
-      <div  class="column column-item--1">
-        <div class="flexbox">
-          <Icon icon="far fa-play-circle" tooltip-text="Katso esittelyvideo" />
-          <Icon icon="fas fa-map-marker-alt" tooltip-text="Asunnon sijainti" />
-          <Icon icon="fas fa-expand" tooltip-text="Katso pohjakuva" />
-        </div>
-        <div class="flexbox">
-          <Icon icon="far fa-heart" tooltip-text="Tykkää" v-show="!liked" @click="like" />
-          <Icon icon="fas fa-heart" tooltip-text="Älä tykkää" v-show="liked" @click="like" />
-          <Icon icon="fas fa-dove" tooltip-text="Aloita chat" />
-        </div>
-        <h3>Katsottu {{ apartment.viewCount }} kertaa</h3>
-      </div>
-      
-      <div class="column column-item--2 listing-basics">
+      <div class="container">
         
-        <ListingThumbnails :data="apartment" />
-
-        <div class="listing-data__title">
-          <h2>Perustiedot</h2>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Kohdenumero</p>
-              <p>{{ apartment._id }}</p>
-            </div>
-            <div class="row flexbox">
-              <p>Sijainti</p>
-              <p>{{ apartment.location.address }}, {{ apartment.location.neighborhood }}, {{ apartment.location.city }}</p>
-            </div>
-            <div class="row flexbox">
-              <p>Talotyyppi</p>
-              <p>Omakotitalo</p>
-            </div>
-            <div class="row flexbox">
-              <p>Omistusmuoto</p>
-              <p>omistus</p>
-            </div>
+        <div  class="column column-item--1">
+          <div class="flexbox">
+            <Icon icon="far fa-play-circle" tooltip-text="Katso esittelyvideo" />
+            <Icon icon="fas fa-map-marker-alt" tooltip-text="Asunnon sijainti" />
+            <Icon icon="fas fa-expand" tooltip-text="Katso pohjakuva" />
           </div>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Huoneet</p>
-              <p>2h + k + s + vh</p>
-            </div>
-            <div class="row flexbox">
-              <p>Asuinpinta-ala</p>
-              <p>200m</p>
-            </div>
-            <div class="row flexbox">
-              <p>Kokonaispinta-ala</p>
-              <p>250m</p>
-            </div>
-            <div class="row flexbox">
-              <p>Kerros/kerroksia</p> <!-- if omakotitalo=kerroksia -->
-              <p>2</p>
-            </div>
-            <div class="row flexbox">
-              <p>Rakennusvuosi</p>
-              <p>2020</p>
-            </div>
-            
-            <div class="row flexbox">
-              <p>Lisäominaisuudet</p>
-              <p>sauna</p>
-            </div>
+          <div class="flexbox">
+            <Icon icon="far fa-heart" tooltip-text="Tykkää" v-show="!liked" @click="like" />
+            <Icon icon="fas fa-heart" tooltip-text="Älä tykkää" v-show="liked" @click="like" />
+            <Icon icon="fas fa-dove" tooltip-text="Aloita chat" />
           </div>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Näköalat</p>
-              <p>Pihalle</p>
-            </div>
-            <div class="row flexbox">
-              <p>Tontin pinta-ala</p>
-              <p>1000m</p>
-            </div>
-            <div class="row flexbox">
-              <p>Tontin kuvaus</p>
-              <p>Iso piha. Pihalla omenapuita. Kiinteistöön kuuluu peltoa ja metsää.</p>
-            </div>
-          </div>
+          <h3>Katsottu {{ apartment.viewCount }} kertaa</h3>
         </div>
-
         
+        <div class="column column-item--2 listing-basics">
+          
+          <ListingThumbnails :data="apartment" :locationData="location"/>
 
-        <div class="listing-data__title">
-          <h2>Varustus</h2>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Keittiö</p>
-              <p>Keittiötila on luontevasti olohuoneen yhteydessä. Keittiötilassa on jääkaappipakastin, erillisuuni (induktioliesitasolla), liesituuletin, astianpesukone. Keittiötilassa on Puustellin kaapistot.</p>
+          <div class="listing-data__title">
+            <h2>Perustiedot</h2>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Kohdenumero</p>
+                <p>{{ apartment._id }}</p>
+              </div>
+              <div class="row flexbox">
+                <p>Sijainti</p>
+                <p>{{ handleAddress }}, {{ handleNeighborhood }}, {{ handleCity }}</p>
+              </div>
+              <div class="row flexbox">
+                <p>Talotyyppi</p>
+                <p>Omakotitalo</p>
+              </div>
+              <div class="row flexbox">
+                <p>Omistusmuoto</p>
+                <p>omistus</p>
+              </div>
             </div>
-            <div class="row flexbox">
-              <p>Pesutilat</p>
-              <p>Tyylikkäästi laatoitetussa kylpyhuoneessa on Pukkilan laatat. Kylpyhuoneessa on suihku ja kääntyvä suihkuseinä, peili- ja allaskaappi, pesukoneliitäntä (pesutornivaraus). Koko kodissa on vesikiertoinen lattialämmitys.</p>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Huoneet</p>
+                <p>2h + k + s + vh</p>
+              </div>
+              <div class="row flexbox">
+                <p>Asuinpinta-ala</p>
+                <p>200m</p>
+              </div>
+              <div class="row flexbox">
+                <p>Kokonaispinta-ala</p>
+                <p>250m</p>
+              </div>
+              <div class="row flexbox">
+                <p>Kerros/kerroksia</p> <!-- if omakotitalo=kerroksia -->
+                <p>2</p>
+              </div>
+              <div class="row flexbox">
+                <p>Rakennusvuosi</p>
+                <p>2020</p>
+              </div>
+              
+              <div class="row flexbox">
+                <p>Lisäominaisuudet</p>
+                <p>sauna</p>
+              </div>
             </div>
-            <div class="row flexbox">
-              <p>Säilytystilat</p>
-              <p>Lämmin irtamistovarasto yhtiön tiloissa, kaapistot</p>
-            </div>
-            <div class="row flexbox">
-              <p>Muu varustus</p>
-              <p>Lämmin irtamistovarasto yhtiön tiloissa, kaapistot</p>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Näköalat</p>
+                <p>Pihalle</p>
+              </div>
+              <div class="row flexbox">
+                <p>Tontin pinta-ala</p>
+                <p>1000m</p>
+              </div>
+              <div class="row flexbox">
+                <p>Tontin kuvaus</p>
+                <p>Iso piha. Pihalla omenapuita. Kiinteistöön kuuluu peltoa ja metsää.</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="listing-data__title">
-          <h2>Materiaalit</h2>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Rakennusmateriaali</p>
-              <p>hirsi</p>
-            </div>
-            <div class="row flexbox">
-              <p>Lattia</p>
-              <p>parketti</p>
-            </div>
-            <div class="row flexbox">
-              <p>Seinät</p>
-              <p>Seinät maalattu, osittain tapetoitu. Kylpyhuoneet kaakeloitu.</p>
+          <div class="listing-data__title">
+            <h2>Varustus</h2>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Keittiö</p>
+                <p>Keittiötila on luontevasti olohuoneen yhteydessä. Keittiötilassa on jääkaappipakastin, erillisuuni (induktioliesitasolla), liesituuletin, astianpesukone. Keittiötilassa on Puustellin kaapistot.</p>
+              </div>
+              <div class="row flexbox">
+                <p>Pesutilat</p>
+                <p>Tyylikkäästi laatoitetussa kylpyhuoneessa on Pukkilan laatat. Kylpyhuoneessa on suihku ja kääntyvä suihkuseinä, peili- ja allaskaappi, pesukoneliitäntä (pesutornivaraus). Koko kodissa on vesikiertoinen lattialämmitys.</p>
+              </div>
+              <div class="row flexbox">
+                <p>Säilytystilat</p>
+                <p>Lämmin irtamistovarasto yhtiön tiloissa, kaapistot</p>
+              </div>
+              <div class="row flexbox">
+                <p>Muu varustus</p>
+                <p>Lämmin irtamistovarasto yhtiön tiloissa, kaapistot</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="listing-data__title">
-          <h2>Asunnon järjestelmät</h2>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Vesi</p>
-              <p>kunnan</p>
-            </div>
-            <div class="row flexbox">
-              <p>Ilmanvaihto</p>
-              <p>Painovoimainen, kosteissa tiloissa ilmastointi</p>
-            </div>
-            <div class="row flexbox">
-              <p>Lämmitys</p>
-              <p>Ilmalämpöpumppu</p>
-            </div>
-            <div class="row flexbox">
-              <p>Jätevesi</p>
-              <p>Kiinteistöllä on oma jätevesipumppaamo, joka pumppaa jätevedet kunnalliseen verkostoon</p>
+          <div class="listing-data__title">
+            <h2>Materiaalit</h2>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Rakennusmateriaali</p>
+                <p>hirsi</p>
+              </div>
+              <div class="row flexbox">
+                <p>Lattia</p>
+                <p>parketti</p>
+              </div>
+              <div class="row flexbox">
+                <p>Seinät</p>
+                <p>Seinät maalattu, osittain tapetoitu. Kylpyhuoneet kaakeloitu.</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="listing-data__title">
-          <h2>Hintatiedot</h2>
-          <div class="listing-data__content">
-            <div class="row flexbox">
-              <p>Velaton hinta</p>
-              <p>2 000 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Myyntihinta</p>
-              <p>1 000 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Lainaosuus</p>
-              <p>1 000 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Neliöhinta</p>
-              <p>200 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Hoitovastike</p>
-              <p>2 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Rahoitusvastike</p>
-              <p>1 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Yhtiövastike</p>
-              <p>3 000 €</p>
-            </div>
-            <div class="row flexbox">
-              <p>Vesimaksu</p>
-              <p>20 €</p>
+          <div class="listing-data__title">
+            <h2>Asunnon järjestelmät</h2>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Vesi</p>
+                <p>kunnan</p>
+              </div>
+              <div class="row flexbox">
+                <p>Ilmanvaihto</p>
+                <p>Painovoimainen, kosteissa tiloissa ilmastointi</p>
+              </div>
+              <div class="row flexbox">
+                <p>Lämmitys</p>
+                <p>Ilmalämpöpumppu</p>
+              </div>
+              <div class="row flexbox">
+                <p>Jätevesi</p>
+                <p>Kiinteistöllä on oma jätevesipumppaamo, joka pumppaa jätevedet kunnalliseen verkostoon</p>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-      
-    </div> 
+          <div class="listing-data__title">
+            <h2>Hintatiedot</h2>
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Velaton hinta</p>
+                <p>2 000 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Myyntihinta</p>
+                <p>1 000 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Lainaosuus</p>
+                <p>1 000 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Neliöhinta</p>
+                <p>200 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Hoitovastike</p>
+                <p>2 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Rahoitusvastike</p>
+                <p>1 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Yhtiövastike</p>
+                <p>3 000 €</p>
+              </div>
+              <div class="row flexbox">
+                <p>Vesimaksu</p>
+                <p>20 €</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+      </div> 
+    </div>
   </div>
 </template>
 
 <script>
-import ImageCarousel from './apartment/ImageCarousel.vue';
+//import ImageCarousel from './apartment/ImageCarousel.vue';
 import ListingThumbnails from './apartment/ListingThumbnails.vue';
 import Icon from './Icon.vue';
-import axios from 'axios';
+import ApartmentService from '../../../api-services/apartment.service.js';
 
 export default {
   components: { 
-    ImageCarousel,
+    //ImageCarousel, //Handlaa kuvat
     ListingThumbnails,
     Icon
   },
 
-  name: 'RoommateDetails',
+  name: 'ApartmentDetails',
 
   data() {
     return {
-      apartmentData: {},
       liked: false,
-      apartment: {
-        images: [
-          'pexels-alexander-zvir-4252510.jpg',
-          'pexels-vlada-karpovich-4451937.jpg',
-          'pexels-kate-trifo-4123921.jpg',
-          'pexels-thgusstavo-santana-2102587.jpg',
-          'pexels-the-lazy-artist-gallery-1642125.jpg'
-        ], //Nuolet, jos on enemmän kuin yksi kuva
-        _id: '600a9347a9dede27fc51f4b1',
-        isForSale:  false,
-        housingAssociation: '',
+      apartment: {},
+      location: {address: "", neighborhood: "", city: ""},
 
-        description: 'Keskeiseltä paikalta Kannelmäestä seitsemännen kerroksen päädystä maisemayksiö, missä koko asunnon levyinen ikkuna. Juna-asema ja Kauppakeskus Kaari kävelymatkan päässä, bussipysäkki talon edustalla ja tien toiselle puolelle rakenteilla jo osittain valmistunut uusi ostari. Kylpyhuone uudistettu putkisaneerauksen yhteydessä ja seinät maalattu. Vuokraan kuuluu taloyhtiön laajakaistayhteys. Asunnossa iso komerohuone hyllyineen sekä uusi jääkaappipakastin ja hella. Taloyhtiössä on sauna, pesukoneet, kuivaushuone, kerhohuone sekä kuntosali.',
-        isFurnished: false,
-        viewCount: 12000,
-
-        floorPlan:{ regular:{ title:{type:String, default:"regular"}, amount:{ type:Number } },
-        kitchen:{ title:{type:String, default:"kitchen"}, amount:{ type:Number } },
-        kitchenette:{ title:{type:String, default:"kitchenette"}, amount:{ type:Number } },
-        diningRoom: { title:{type:String, default:"diningRoom"}, amount:{ type:Number } },
-        bathRoom:{ title:{type:String, default:"bathRoom"}, amount:{ type:Number } },
-        toilet: { title:{type:String, default:"toilet"}, amount:{ type:Number } },
-        sauna:{ title:{type:String, default:"sauna" }, amount:{ type:Number } },
-        wardrobe:{ title:{type:String, default:"wardrobe"}, amount:{ type:Number } },
-        utilityRoom:{ title:{type:String, default:"utility room"}, amount:{ type:Number } },
-        patio:{ title:{type:String, default:"patio"}, amount:{ type:Number } },
-        balcony:{ title:{type:String, default:"balcony"}, amount:{ type:Number } } },
-
-        totalArea: 60,
-        livingArea: 50,
-        cellArea: 10,
-        propertyArea: 150,
-
-        location: {
-          city: 'Helsinki',
-          neighborhood: 'Kontula',
-          address: 'Kontulankatu 14 A 20',
-          areaCode: 444444,
-        },
-
-        hasGarage: false,
-        hasHotTub: false,
-        hasPool: true,
-        monthlyRent: 480,
-        propertyRent: 250,
-
-        price: { 
-          salePrice: 280000, 
-          debtFreePrice: 130500 
-        },
-
-        maintenanceCosts: 300,
-        guarantee: '',
-        buildYear: 2010,
-        apartmentType: 1,
-        isCellApartment: true,
-        floor: '4/5',
-        hasElevator: true,
-        availableFrom: '01/04/2022',
-        availableUntil: '01/07/2022',
-        equipment: '',
-        condition: 1,
-        petsAllowed: true,
-        smokingAllowed: false,
-
-        utilities: {
-          insurancePlan: {
-            mustHave: { type: Boolean },
-            monthlyPrice: { type: Number },
-          },
-          parkingIncluded: { type: Boolean },
-          water: { mustHave: { type: Boolean }, monthlyPrice: { type: Number } },
-          includesElectricity: {
-            mustHave: { type: Boolean },
-            monthlyPrice: { type: Number },
-          },
-          dataConnection: {
-            isIncluded: { type: Boolean },
-            speed: { type: Number },
-          },
-        },
-
-        distance: 400,
-        nearbyServices: {
-          publicTransport: [{ title: { type: String }, distance: { type: Number } }],
-          groceries: [{ title: { type: String }, distance: { type: Number } }],
-          healthCare: [{ title: { type: String }, distance: { type: Number } }],
-          dayCare: [{ title: { type: String }, distance: { type: Number } }],
-          education: [{ title: { type: String }, distance: { type: Number } }],
-          excercise: [{ title: { type: String }, distance: { type: Number } }],
-        },
-      },
       currentIndex: 0,
       timer: null,
       cardId: null,
@@ -312,21 +221,24 @@ export default {
     }
   },
   async created() {
+    
     if (this.$route.params.id) {
-      let apartmentData = this.$route.params.apartments;
-      let apartmentId = this.$route.params.id
+      let aptId = this.$route.params.id
 
-      if (apartmentData){
-        this.apartmentData = apartmentData;
-      } else {
-        this.loading = true	
-        let res = await axios.get(`/apartments/${apartmentId}`)
-        this.apartmentData = res.data
-        this.loading = false	
+      if (this.$route.params.apartment) {
+        this.apartment = JSON.parse(this.$route.params.apartment);
+      } 
+      //Required when the page is refreshed
+      else {
+        try {
+          const response =  await ApartmentService.get(aptId);
+          this.apartment = response.data;
+        } catch (err) {
+          console.log("apartment data error: " + err);
+        }
       }
-      
-      console.log("props"+this.$route.params.apartments + JSON.stringify(this.$route.params.apartments) + this.apartmentData)
     }
+    
   },
   computed: {
     handleUrl() {
@@ -338,11 +250,48 @@ export default {
       }
       return rent;
     },
+    
+    /*
+      Handling undefined nested object values: 
+      floorPlan, utilities, location, price, nearbyServices, 
+      balcony, patio, property, maintenanceCosts, equipment
+    */
+    handleAddress() {
+      return this.handleUndefined("address");
+    },
+    handleNeighborhood() {
+      return this.handleUndefined("neighborhood");
+    },
+    handleCity() {
+      return this.handleUndefined("city");
+    }
   },
   methods: {
     like() {
       this.liked = !this.liked;
-    }
+    },
+    handleUndefined(name) {
+      let type = "";
+      let t = "no " + name + " given ";
+      switch(name) {
+        case "address":
+          type = this.apartment?.location?.address;
+          if (type !== undefined) { t = type }
+          this.location.address = t;
+          break;
+        case "neighborhood":
+          type = this.apartment?.location?.neighborhood;
+          if (type !== undefined) { t = type }
+          this.location.neighborhood = t;
+          break;
+        case "city":
+          type = this.apartment?.location?.city;
+          if (type !== undefined) { t = type }
+          this.location.city = t;
+          break;
+      }
+      return t;
+    },
   }
 }
 </script>

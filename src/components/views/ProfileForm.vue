@@ -33,8 +33,8 @@
       <RoommateProfile id="roommate" v-show="choice === 1" v-on:childToParent="onChildClickRoommate"/>
 
       <div class="flexbox">
-        <button class="hover__background--blue">Cancel</button>
         <button type="submit" class="is-danger hover__background--blue">Submit</button>
+        <button class="hover__background--blue">Cancel</button>
       </div>
     </form>
 
@@ -90,7 +90,9 @@ export default {
       },
       fromChildPersonalProfile: [],
       fromChildRoommateProfile: [],
-      fromChildAptProfile: []
+      fromChildAptProfile: [],
+
+      isValid: false,
     }
   },
   /*
@@ -130,13 +132,6 @@ export default {
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
     },
-    handleSubmit() {
-      console.log("submit")
-      console.log(JSON.stringify(this.user))
-      this.updateUser();
-      console.log(JSON.stringify(this.user))
-    },
-
     //jos ei klikkaa ollenkaan jotain kolmesta profiilista, ei tule emittiä - fiksaa
     updateUser() {
       //personalProfile
@@ -151,7 +146,24 @@ export default {
       this.user.targetProfile = this.fromChildRoommateProfile; //TOIMII
 
       console.log("update")
-    }
+    },
+    handleSubmit() {
+      console.log("submit")
+      console.log(JSON.stringify(this.user))
+      this.updateUser();
+      console.log(JSON.stringify(this.user))
+
+      if (this.isValid) {
+        /*
+        axios.post(process.env.USERS_URL)
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });*/
+      }
+    },
   },
   created() {
     this.selectedGreeting = this.randomItem(this.greetings);
@@ -191,11 +203,11 @@ h1 {
   button {
     margin: 4rem 1rem 0 0;
   }
-  button:first-of-type {
-    background: v.$KAMGreyDark;
-  }
-  button:first-of-type:hover {
+  button:last-of-type {
     background: v.$KAMGreySemiDark;
+  }
+  button:last-of-type:hover {
+    background: v.$KAMGreyDark;
   }
 }
 

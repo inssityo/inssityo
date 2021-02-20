@@ -8,9 +8,10 @@
             <i class="fas fa-equals"></i>
           </button>
           <div class="dropdown-content">
-            <router-link to="/entry">Kirjaudu</router-link>
-            <router-link to="/profile">Profiilit</router-link>
-            <router-link to="/roommates">Kämppikset</router-link> 
+            <a href="#" v-if="isLoggedIn" @click="logout">Logout</a> 
+            <router-link to="/entry" v-else>Kirjaudu</router-link>
+            <router-link to="/profile" v-show="isLoggedIn">Profiilit</router-link>
+            <router-link to="/roommates" v-show="isLoggedIn">Kämppikset</router-link>
             <router-link to="/apartments">Asunnot</router-link>
             <a href="#">Suomi</a>
           </div>
@@ -22,8 +23,10 @@
 </template>
 
 <script>
+
 export default {
   name: "NavigationBar",
+  inject: ['$store', '$router'],
 
   data () {
     return {
@@ -37,10 +40,20 @@ export default {
   beforeUnmount () {
     window.removeEventListener('scroll', this.onScroll)
   },
+  computed: {
+    isLoggedIn(){ 
+      return this.$store.getters.isLoggedIn;
+    }
+  },
   methods: {
+    logout: function () {
+      this.$store.dispatch('logout')
+      .then(() => {
+        this.$router.push({name: 'entry'})
+      })
+    },
     onScroll () {
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-
       if (currentScrollPosition < 0) {
         return
       }
