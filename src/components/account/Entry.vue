@@ -141,7 +141,7 @@ export default {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         let param = "/";
-        if (urlParams.get('redirect') !== "") {
+        if (urlParams.get('redirect') !== null) {
           param = urlParams.get('redirect');
         }
         this.$router.push(param);
