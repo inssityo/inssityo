@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import AuthService from '../api-services/auth.service';
 import UserService from '../api-services/user.service';
-import axios from 'axios'
+import LocalStorageService from '../plugins/localStorage.service';
 
 const AUTH_REQUEST = 'auth_request';
 const AUTH_SUCCESS = 'auth_success';
@@ -12,77 +12,72 @@ export default createStore({
   state() {
     return {
       status: '',
-      token: localStorage.getItem('token') || '',
+      accessToken: localStorage.getItem('accessToken') || '',
     }
   },
   mutations: {
-    [AUTH_REQUEST](state){
+    [AUTH_REQUEST](state) {
       state.status = 'loading'
     },
-    [AUTH_SUCCESS](state, token){
+    [AUTH_SUCCESS](state, accessToken) {
       state.status = 'success'
-      state.token = token
+      state.accessToken = accessToken
     },
-    [AUTH_ERROR](state){
+    [AUTH_ERROR](state) {
       state.status = 'error'
     },
-    [LOGOUT](state){
+    [LOGOUT](state) {
       state.status = ''
-      state.token = ''
+      state.accessToken = ''
     },
   },
   getters : {
     isLoggedIn: state => {
-      return state.token;
+      return state.accessToken;
     },
     authStatus: state => state.status,
   },
   actions: {
-    login({commit}, credentials){
+    login({commit}, credentials) {
       return new Promise((resolve, reject) => {
         commit(AUTH_REQUEST)
         AuthService.entry(credentials)
         .then(res => {
-          console.log("resp " + JSON.stringify(res.data))
-          const token = res.data.accessToken
-          localStorage.setItem('token', token)
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-          commit(AUTH_SUCCESS, token)
+          const accessToken = res.data.accessToken
+          LocalStorageService.setToken(accessToken)
+          commit(AUTH_SUCCESS, accessToken)
           resolve(res)
         })
         .catch(err => {
           commit(AUTH_ERROR)
-          localStorage.removeItem('token')
+          LocalStorageService.clearToken()
           reject(err)
         })
       })
     },
-    register({commit}, credentials){
+    register({commit}, credentials) {
       return new Promise((resolve, reject) => {
         commit(AUTH_REQUEST)
-        console.log("register " + JSON.stringify(credentials))
         UserService.create(credentials)
         .then(resp => {
-          const token = resp.data.token
-          localStorage.setItem('token', token)
-          axios.defaults.headers.common['Authorization'] = token
-          commit(AUTH_SUCCESS, token)
+          const accessToken = resp.data.accessToken
+          LocalStorageService(accessToken)
+          commit(AUTH_SUCCESS, accessToken)
           resolve(resp)
         })
         .catch(err => {
-          commit('auth_error', err)
-          localStorage.removeItem('token')
+          commit(AUTH_ERROR, err)
+          LocalStorageService.clearToken()
           reject(err)
         })
       })
     },
-    logout({commit}){
+    logout({commit}) {
       return new Promise((resolve, reject) => {
-        AuthService.logout(localStorage.getItem('token'))
+        AuthService.logout(LocalStorageService.getAccessToken())
         .then(() => {
           commit(LOGOUT)
-          localStorage.removeItem('token')
-          delete axios.defaults.headers.common['Authorization']
+          LocalStorageService.clearToken()
           resolve()
         })
         .catch(err => {
@@ -90,6 +85,25 @@ export default createStore({
           reject(err)
         })
       })
-    }
+    },
+    /*
+    refreshToken({commit}) {
+      return new Promise((resolve, reject) => {
+        commit(AUTH_REQUEST)
+        const refreshToken = LocalStorageService.getRefreshToken()
+        AuthService.tokenRefresh({'refreshToken': refreshToken})
+        .then(res => {
+          LocalStorageService.setToken(refreshToken)
+          //axios.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken
+          commit(AUTH_SUCCESS, accessToken)
+          resolve(res)
+        })
+        .catch(err => {
+          commit(AUTH_ERROR)
+          LocalStorageService.clearToken()
+          reject(err)
+        })
+      })
+    }*/
   },
 })
