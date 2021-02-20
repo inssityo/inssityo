@@ -137,7 +137,15 @@ export default {
         password: this.password,
       };
       this.$store.dispatch("login", credentials)
-      .then(() => this.$router.push("/"))
+      .then(() => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let param = "/";
+        if (urlParams.get('redirect') !== "") {
+          param = urlParams.get('redirect');
+        }
+        this.$router.push(param);
+      })
       .catch(error => console.log("error " + error))
     },
     register() {
@@ -178,13 +186,13 @@ h2 {
 }
 .container {
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(1, 20rem); //1fr
+  grid-template-rows: repeat(1, 23rem);
   cursor: pointer;
   gap: 0;
   position: absolute;
   top: 53%;
   left: 50%;
-  transform: translate(-55%, -40%);
+  transform: translate(-57%, -40%);
   z-index: 1;
   width: 40%;
   height: 60%;
@@ -225,7 +233,7 @@ h2 {
   grid-column-start: 3;
   grid-column-end: 6;
   background: v.$White;
-  padding: 1rem;
+  padding: 2rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -244,7 +252,6 @@ form {
 }
 .transparency {
   background: v.$KAMGreenDark;
-  //background: v.$KAMGreenTRN;
   height: 100%;
   position: absolute;
   top: 0;
