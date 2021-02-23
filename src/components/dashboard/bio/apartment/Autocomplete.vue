@@ -14,7 +14,9 @@
           class="autocomplete-result"
           v-for="(result, i) in uniqueCities"
           :key="i"
-          @click.prevent="emitToParent(this.results.cityMatch, result,'city')"
+          @click.prevent="
+            emitToParent(this.results.cityMatch, result, 'Kaupunki')
+          "
         >
           {{ result }}
         </li>
@@ -26,7 +28,14 @@
           class="autocomplete-result"
           v-for="(result, i) in uniqueNeighborhoods"
           :key="i"
-          @click.prevent="emitToParent(this.results.neighborhoodMatch, result.location.neighborhood ,'neighborhood')"
+          @click.prevent="
+            emitToParent(
+              this.results.neighborhoodMatch,
+              result.location.neighborhood,
+              'Asuinalue',
+              result.location.city
+            )
+          "
         >
           {{ result.location.neighborhood }}, {{ result.location.city }}
         </li>
@@ -38,7 +47,14 @@
           class="autocomplete-result"
           v-for="(result, i) in uniqueAddresses"
           :key="i"
-          @click.prevent="emitToParent(this.results.addressMatch, result.location.address ,'address')"
+          @click.prevent="
+            emitToParent(
+              this.results.addressMatch,
+              result.location.address,
+              'Osoite',
+              result.location.city
+            )
+          "
         >
           {{ result.location.address }}, {{ result.location.city }}
         </li>
@@ -50,7 +66,14 @@
           class="autocomplete-result"
           v-for="(result, i) in uniqueAreaCodes"
           :key="i"
-          @click.prevent="emitToParent(this.results.areaCodeMatch, result.location.areaCode ,'areaCode')"
+          @click.prevent="
+            emitToParent(
+              this.results.areaCodeMatch,
+              result.location.areaCode,
+              'Postinumero',
+              result.location.city
+            )
+          "
         >
           {{ result.location.areaCode }}, {{ result.location.city }}
         </li>
@@ -62,7 +85,7 @@
 <script>
 export default {
   name: "autocomplete",
-  emits:['childToParent'],
+  emits: ["childToParent"],
   computed: {
     uniqueCities: function () {
       return [
@@ -74,8 +97,7 @@ export default {
       let unique = {};
       return this.results.neighborhoodMatch.filter(
         (obj) =>
-          !unique[obj.location.city] &&
-          (unique[obj.location.city] = true)
+          !unique[obj.location.city] && (unique[obj.location.city] = true)
       );
     },
     uniqueAddresses: function () {
@@ -87,10 +109,9 @@ export default {
     },
     uniqueAreaCodes: function () {
       let unique = {};
-      return this.results.neighborhoodMatch.filter(
+      return this.results.areaCodeMatch.filter(
         (obj) =>
-          !unique[obj.location.city] &&
-          (unique[obj.location.city] = true)
+          !unique[obj.location.city] && (unique[obj.location.city] = true)
       );
     },
   },
@@ -105,19 +126,24 @@ export default {
         neighborhoodMatch: [],
         addressMatch: [],
         areaCodeMatch: [],
-        wantedApts:[]
+        wantedApts: [],
       },
       isOpen: false,
     };
   },
   methods: {
     onChange() {
-      if (this.search) {
+      if (this.search.length > 1) {
         this.isOpen = true;
         this.filterResults();
       } else {
+        console.log("close");
         this.isOpen = false;
+        this.emitClose();
       }
+    },
+    emitClose() {
+      this.$emit("childToParent", { wantedApts: null });
     },
     filterResults() {
       this.results.cityMatch = this.items.filter(
@@ -149,38 +175,44 @@ export default {
         this.isOpen = false;
       }
     },
-      emitToParent(filteredApts, optionValue, filterType) {
-      console.log("k")
-    let selected;
-    switch (filterType) {
-      case "city":
-          console.log("city")
-        selected = filteredApts.filter(
-            (item => item.location.city === optionValue)
-        );
-        break;
-      case "neighborhood":
-        selected = filteredApts.filter(
-          (item => item.location.neighborhood === optionValue)
-        );
-        break;
-      case "address":
-        selected = filteredApts.filter(
-          (item => item.location.address === optionValue)
-        );
-        break;
-      case "areaCode":
-        selected = filteredApts.filter(
-          (item => item.location.areaCode === optionValue)
-        );
-        break;
-    }
-    this.$emit("childToParent", {
-      wantedApts: selected,
-      filterType:filterType,
-      optionValue:optionValue
-    });
-  },
+    emitToParent(filteredApts, optionValue, filterType, givenCity) {
+      let selected;
+      switch (filterType) {
+        case "Kaupunki":
+          selected = filteredApts.filter(
+            (item) => item.location.city === optionValue
+          );
+          break;
+        case "Asuinalue":
+          console.log(optionValue, givenCity);
+          selected = filteredApts.filter(
+            (item) =>
+              item.location.neighborhood === optionValue &&
+              item.location.city === givenCity
+          );
+          break;
+        case "Osoite":
+          selected = filteredApts.filter(
+            (item) =>
+              item.location.address === optionValue &&
+              item.location.city === givenCity
+          );
+          break;
+        case "Postinumero":
+          selected = filteredApts.filter(
+            (item) =>
+              item.location.areaCode === optionValue &&
+              item.location.city === givenCity
+          );
+          break;
+      }
+      this.$emit("childToParent", {
+        wantedApts: selected,
+        filterType: filterType,
+        optionValue: optionValue,
+        givenCity: givenCity,
+      });
+    },
   },
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
@@ -193,7 +225,7 @@ export default {
 
 <style>
 .autocomplete {
-  width: 50em;
+  width: 25em;
 }
 
 ul {
