@@ -65,9 +65,9 @@ export default {
     bottom: 0;
     left: 0;
     padding: 0.9rem 0.6rem 0.7rem 0.6rem;
-    border-top: 0.15rem solid #016361;
-    background: #fff;
-    background: rgba(255, 255, 255, 0.85);
+    border-top: 0.15rem solid v.$KAMGreenDark;
+    background: v.$White;
+    background: v.$KAMWhiteTRN8;
     line-height: 0.3;
     width: 100%;
     

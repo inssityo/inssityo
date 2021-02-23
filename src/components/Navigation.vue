@@ -83,7 +83,7 @@ export default {
   transform: translate3d(0, -100%, 0);
 }
 .flexbox .flexbox {
-  height: 2rem;
+  height: 2.3rem;
   width: 100vw;
   padding: 1rem 2rem;
 }
@@ -124,7 +124,7 @@ svg {
   box-shadow: 0 0.6rem 1rem 0 rgba(0,0,0,0.2);
   z-index: 1;
   right: 0;
-  padding: 1.2rem 0 0 0;
+  padding: 1.35rem 0 0 0;
   
   a {
     float: none;
@@ -133,6 +133,8 @@ svg {
     text-decoration: none;
     display: block;
     text-align: left;
+    font-size: 1.2rem;
+    letter-spacing: 0.03rem;
   }
 }
 .dropdown-content a:hover {

@@ -167,7 +167,6 @@ a, a:hover  {
   text-decoration: none;
   cursor: pointer;
   color: v.$Black;
-  //color: v.$KAMBeige;
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
@@ -210,7 +209,7 @@ img {
 .transparency {
   width: 100%;
   background: v.$White;
-  background: rgba(255, 255, 255, 0.8);
+  background: v.$KAMWhiteTRN8;
   z-index: 1;
 }
 
@@ -254,7 +253,7 @@ img {
   background-color: v.$KAMGreyDark;
   color: v.$White;
   padding: 0.2rem 0.4rem;
-  font-size: 0.75rem!important;
+  font-size: 0.75rem !important;
   border-radius: 0.2rem;
 }
 .check__label-only input {
