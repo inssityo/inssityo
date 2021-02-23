@@ -52,7 +52,25 @@
               type="text"
               id="address"
               class="border-radius__right"
-              v-model="apartment.location.address"
+              placeholder="esim. Puistokatu"
+              v-model="apartment.location.address.streetName"
+            />
+          </div>
+
+          <div class="flexbox">
+            
+            <label
+            id="houseNumberLabel"
+              for="address"
+              class="label__border-bottom--green border-radius__left"
+              >Talon, rapun ja asunnon numero</label
+            >
+            <input
+              type="text"
+              id="address"
+              placeholder="esim. 5 A 1"
+              class="border-radius__right"
+              v-model="apartment.location.address.houseNumber"
             />
           </div>
           <div class="flexbox">
@@ -476,7 +494,9 @@ export default {
         location: {
           city: "",
           neighborhood: "",
-          address: "",
+          address: {
+            streetName:"", houseNumber:""
+          },
           areaCode: "",
         },
         isForSale: true,
@@ -884,6 +904,10 @@ label[class="description"] ~ label[class="description"] {
 #buildYear {
   height: 1.5em;
   width: 4em;
+}
+
+#houseNumberLabel {
+  white-space: nowrap;
 }
 
 #housingAssociation {

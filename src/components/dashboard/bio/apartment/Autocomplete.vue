@@ -50,13 +50,13 @@
           @click.prevent="
             emitToParent(
               this.results.addressMatch,
-              result.location.address,
+              result.location.address.streetName,
               'Osoite',
               result.location.city
             )
           "
         >
-          {{ result.location.address }}, {{ result.location.city }}
+          {{ result.location.address.streetName }}, {{ result.location.city }}
         </li>
       </ul>
 
@@ -159,7 +159,7 @@ export default {
       );
       this.results.addressMatch = this.items.filter(
         (item) =>
-          item.location.address
+          item.location.address.streetName
             .toLowerCase()
             .indexOf(this.search.toLowerCase()) > -1
       );
@@ -194,7 +194,7 @@ export default {
         case "Osoite":
           selected = filteredApts.filter(
             (item) =>
-              item.location.address === optionValue &&
+              item.location.address.streetName === optionValue.streetName &&
               item.location.city === givenCity
           );
           break;
@@ -206,6 +206,7 @@ export default {
           );
           break;
       }
+      this.isOpen=false
       this.$emit("childToParent", {
         wantedApts: selected,
         filterType: filterType,
