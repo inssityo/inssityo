@@ -1,36 +1,33 @@
 <template>
-
   <div>
-
     <div class="flexbox">
-      
       <h3>Piha ja tontti</h3>
-      
-      <label class="switch">
-        <input
-          type="checkbox"
-          v-model="showYardDetails"
-          v-on:click="setYardDetails"
-        />
-
-        <span
-          class="slider round"
-          v-bind:class="{ 'switch-yes': showYardDetails }"
-        ></span>
-      </label>
+      <div class="flexbox">
+        <p
+          class="margin__topless margin__bottomless switch-no"
+          v-bind:class="{ 'switch-yes': showYardDetails }">
+          {{ showYardDetails ? "kyllä" : "ei" }}
+        </p>
+        <label class="switch switch__margin-left">
+          <input
+            type="checkbox"
+            v-model="showYardDetails"
+            v-on:click="setYardDetails"
+          />
+          <span
+            class="slider round"
+            v-bind:class="{ 'switch-yes': showYardDetails }"
+          ></span>
+        </label>
+      </div>
     </div>
     
-    <h4 v-if="showYardDetails" class="description">
-      Yleistä tietoa pihasta ja tontista:
-    </h4>
-    
-    <div class="flexbox" v-if="showYardDetails" id="yardParent">
-      <div>
+    <div id="yard-areas" class="flexbox" v-if="showYardDetails">
+      <div class="flexbox margin-bottom__025">
         <label
           for="yardArea"
-          class="label__border-bottom--green border-radius__left"
-          >Ala</label>
-
+          class="label__border-bottom--green border-radius__left label__nowrap"
+          >Ala m2:</label>
         <input
           type="number"
           min="0"
@@ -40,16 +37,14 @@
           id="yardArea"
           class="border-radius__right"
         />
-                        <label class="label__border-bottom--green border-radius__right"
-          >m2</label>
       </div>
 
-      <div id="buildAreaDiv">
+      <div class="flexbox margin-bottom__025">
         <label
           for="yardBuildArea"
-          class="label__border-bottom--green border-radius__left"
-          >Sallittu rakennusala</label
-        >
+          class="label__border-bottom--green border-radius__left label__nowrap">
+          Sallittu rakennusala m2:
+        </label>
         <input
           type="number"
           min="0"
@@ -59,85 +54,77 @@
           id="yardArea"
           class="border-radius__right"
         />
-                <label class="label__border-bottom--green border-radius__right"
-          >m2</label>
       </div>
     </div>
 
-    <div class="flexbox" v-if="showYardDetails">
-      <label for="yardDesc" class="description"
-        >Kuvaus
-        <textarea
-          v-on:input="emitToParent"
-          placeholder="Kuvaile pihaa"
-          v-model="yardDescription"
-          id="yardDesc"
-          class="box"
-        />
-      </label>
+    <div v-if="showYardDetails" class="margin-top__025">
+      <label for="yard-description" class="label__padding__leftless">Kuvaus:</label>
+      <textarea
+        v-on:input="emitToParent"
+        placeholder="Kuvaile pihaa"
+        v-model="yardDescription"
+        id="yard-description"
+        class="box margin-top__025"
+      />
     </div>
 
-    <div class="flexbox" v-if="showYardDetails">
-      <label for="zoningDesc" class="description"
-        >Kaavoitus
-        <textarea
-          v-on:input="emitToParent"
-          placeholder="Tontin kaavoitustiedot"
-          v-model="zoningDescription"
-          id="zoningDesc"
-          class="box"
-        />
-      </label>
+    <div v-if="showYardDetails" class="margin-top__025">
+      <label for="zoning-description" class="label__padding__leftless">Kaavoitus:</label>
+      <textarea
+        v-on:input="emitToParent"
+        placeholder="Tontin kaavoitustiedot"
+        v-model="zoningDescription"
+        id="zoning-description"
+        class="box margin-top__025"
+      />
     </div>
 
-    <div class="flexbox" v-if="showYardDetails">
+    <div class="flexbox margin-bottom__025" v-if="showYardDetails">
       <p>Tontti on vuokratontti:</p>
-      
-      <p
-        id="rentalAnswer"
-        class="margin__topless margin__bottomless switch-no"
-        v-bind:class="{ 'switch-yes': showRentalDetails }">
-        {{ showRentalDetails ? "kyllä" : "ei" }}
+
+      <div class="flexbox">
+        <p
+          class="margin__topless margin__bottomless switch-no"
+          v-bind:class="{ 'switch-yes': showRentalDetails }">
+          {{ showRentalDetails ? "kyllä" : "ei" }}
         </p>
 
-      <label class="switch">
-        <input
-          type="checkbox"
-          v-model="showRentalDetails"
-          v-on:click="setRentalDetails"
-        />
-
-        <span
-          class="slider round"
-          v-bind:class="{ 'switch-yes': showRentalDetails }"
-        ></span>
-      </label>
+        <label class="switch switch__margin-left">
+          <input
+            type="checkbox"
+            v-model="showRentalDetails"
+            v-on:click="setRentalDetails"
+          />
+          <span
+            class="slider round"
+            v-bind:class="{ 'switch-yes': showRentalDetails }"
+          ></span>
+        </label>
+      </div>
     </div>
 
-    <div v-if="showRentalDetails && showYardDetails"  id="ownerDiv" class="flexbox">
+    <div v-if="showRentalDetails && showYardDetails" class="flexbox margin-bottom__05">
       <label
-        for="yardOwner"
-        class="label__border-bottom--green border-radius__left"
+        for="yard-owner"
+        class="label__border-bottom--green border-radius__left label__nowrap"
         >Tontin omistaja:</label>
 
       <input
         type="text"
         v-model="yardOwner"
         v-on:input="emitToParent"
-        id="yardOwner"
+        id="yard-owner"
         class="border-radius__right"
       />
       </div>
 
-    <div id="rentDiv" v-if="showRentalDetails && showYardDetails" class="flexbox">
-      
-      <div id="rentPriceDiv">
-        
+    <div v-if="showRentalDetails && showYardDetails">
+      <div>
         <label
           for="propertyRent"
-          class="label__border-bottom--green border-radius__left"
-          >Tonttivuokra:</label>
-
+          class="label__border-bottom--green border-radius__left label__nowrap"
+          >Tonttivuokra €/v:
+        </label>
         <input
           type="number"
           min="0"
@@ -147,22 +134,21 @@
           id="yardRentAmt"
           class="border-radius__right"
         />
+      </div>
 
-        <label class="label__border-bottom--green border-radius__right"
-          >€ / vuosi</label>
-        
-        <label for="yardRentUntil" class="description" id="rentUntil">Vuokrasopimus voimassa:
-          <input
+      <div class="flexbox margin-top__025">
+        <label for="yardRentUntil" class="label__padding__leftless">Vuokrasopimus voimassa:</label>
+        <input
           type="date"
           v-model="propertyRentExpires"
           v-on:input="emitToParent"
           id="yardRentUntil"
           class="border-radius"
-        /></label>
-        
-      </div>
+        />
       </div>
     </div>
+      
+  </div>
 </template>
 
 <script>
@@ -181,9 +167,8 @@ export default {
       yardOwner: "",
       propertyRent: null,
       propertyRentExpires:null
-    };
+    }
   },
-
   methods: {
     setYardDetails() {
       this.showYardDetails = !this.showYardDetails;
@@ -210,68 +195,26 @@ export default {
 <style lang='scss' scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-#yardArea {
-  width: 20%;
+h3 {
+  margin-bottom: 0.8rem;
 }
-
-#yardRentUntil{
-height: auto;
-}
-
-#rentUntil {
-  margin-left: 5em;
-}
-
-#yardParent {
-  margin-bottom: 1em;
-}
-
-#yardDesc {
-  margin-top: 0.5em;
-  width: 100%;
-}
-
-#rentalAnswer {
-  float: right;
-  width: 60%;
-}
-
-.description {
-  width: 100%;
-}
-
-input[type="date"] {
-  width: 10em;
-}
-
 .switch {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin: 0.9rem 0 0.5rem 0.5rem;
 }
-
-#rentDiv {
-  margin-top: 1em;
-  white-space: nowrap;
+.flexbox:first-of-type .flexbox {
+  margin-top: 0.4rem;
 }
-
-#rentPriceDiv {
-  max-width: 15%;
+.flexbox .flexbox .switch {
+  margin: 0.5rem 0 0.5rem 0.5rem;
 }
-
-#ownerDiv {
-  label {
-  white-space: nowrap;
+#yard-areas .flexbox {
+  justify-content: normal;
 }
+input[type="date"] {
+  width: 10rem;
 }
-
 input[type="number"] {
-  height: 1.45em;
-  width: 5em;
-}
-
-#buildAreaDiv {
-  white-space: nowrap;
-  max-width:16em;
+  width: 4rem;
 }
 
 </style>

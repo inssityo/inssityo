@@ -7,14 +7,14 @@
 
     <div v-else class="multiselect">
 
-      <div class="selectBox pointer" @click="showCheckboxes()">
+      <div class="select-box pointer" @click="showCheckboxes()">
         <select v-bind:class="{'background--green': expanded}">
           <option>Sijainnin tyyppi</option>
         </select>
-        <div class="overSelect"></div>
+        <div class="over-select"></div>
       </div>
 
-      <div id="checkboxes-locationtype" class="checkboxes check__label-only">
+      <div id="checkboxes-location-type" class="checkboxes check__label-only">
         <div v-for="(type, index,) in optionLocationTypes" :key="index" class="flexbox pointer">
           <input type="checkbox" :id="idValue+'l'+index" />
           <label :for="idValue+'l'+index" @click="handleAges(type.value)">{{ type.text }}</label>
@@ -87,7 +87,7 @@ export default {
       this.emitToParent();
     },
     showCheckboxes() {
-      let checkboxes = document.getElementById("checkboxes-locationtype");
+      let checkboxes = document.getElementById("checkboxes-location-type");
       if (!this.expanded) {
         checkboxes.style.display = "block";
         this.expanded = true;
