@@ -27,7 +27,7 @@ axios.interceptors.response.use(
   },
   function (err) {
     const originalRequest = err.config;
-    if (err.response.status === 403 && originalRequest.url === process.env.VUE_APP_TOKEN_REFRESH_URL) {
+  if (err.response.status === 403 && originalRequest.url === `${process.env.VUE_APP_API_ENDPOINT}${process.env.VUE_APP_TOKEN_REFRESH_URL}`) {
       router.push({ name: "entry"});
       return Promise.reject(err);
     }
