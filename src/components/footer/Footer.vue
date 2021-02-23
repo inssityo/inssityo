@@ -86,6 +86,9 @@ a {
   letter-spacing: 0.1rem;
   font-size: 0.8rem;
 }
+a:hover {
+  color: v.$KAMBeige;
+}
 .copyright {
   color: v.$KAMGreenLight;
   text-transform: uppercase;

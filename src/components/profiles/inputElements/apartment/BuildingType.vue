@@ -1,21 +1,20 @@
 <template>
-  <div v-bind:class="{'width50': idValue !== 'ARB'}">
-    <h4>Talotyyppi</h4>
+  <div class="box flexbox" v-bind:class="{'width__50': idValue === 'ARB','remove__align-center2': expanded}">
+    <label class="label__padding__leftless" v-bind:class="{'margin-top__025': expanded}">Talotyyppi:</label>
     <select v-if="idValue === 'ARB'" v-model="buildingType" v-on:click="emitToParent">
       <option value="" selected disabled hidden>Valitse...</option>
       <option v-for="(type, index,) in optionBuildingTypes" :value="type.value" :key="index">{{ type.text }}</option>
     </select>
 
     <div v-else class="multiselect">
-
-      <div class="selectBox pointer" @click="showCheckboxes()">
+      <div class="select-box pointer" @click="showCheckboxes()">
         <select v-bind:class="{'background--green': expanded}">
-          <option>Talotyyppi</option>
+          <option>Valitse...</option>
         </select>
-        <div class="overSelect"></div>
+        <div class="over-select"></div>
       </div>
 
-      <div id="checkboxes-buildingtype" class="checkboxes check__label-only">
+      <div :id="idValue+'-checkboxes-building-type'" class="checkboxes check__label-only">
         <div v-for="(type, index,) in optionBuildingTypes" :key="index" class="flexbox pointer">
           <input type="checkbox" :id="idValue+'b'+index" />
           <label :for="idValue+'b'+index" @click="handleBuildingTypes(type.value)">{{ type.text }}</label>
@@ -50,7 +49,7 @@ export default {
   },
   methods: {
     emitToParent() {
-      if (this.idValue === 'P') {
+      if (this.idValue === 'ARB') {
         this.$emit('childToParent', {'types': this.buildingType, 'show': false});
       } else {
         this.$emit('childToParent', {'types': this.buildingTypes, 'show': this.expanded})
@@ -87,7 +86,7 @@ export default {
       this.emitToParent();
     },
     showCheckboxes() {
-      let checkboxes = document.getElementById("checkboxes-buildingtype");
+      let checkboxes = document.getElementById(this.idValue+"-checkboxes-building-type");
       if (!this.expanded) {
         checkboxes.style.display = "block";
         this.expanded = true;
@@ -104,12 +103,11 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.width100 {
-  width: 50%;
+.remove__align-center2 {
+  align-items: normal !important;
 }
-
-select {
-  max-width: 75%;
+.margin-top__025 {
+  margin-top: 0.2rem;
 }
 
 </style>

@@ -1,15 +1,15 @@
 <template>
-  <div v-bind:class="{'width-100': idValue === 'A'}">
+  <div v-bind:class="{'width__100': idValue === 'A'}" class="width__50">
     <div class="multiselect">
 
-      <div class="selectBox pointer" @click="showCheckboxes()">
+      <div class="select-box pointer" @click="showCheckboxes()">
         <select v-bind:class="{'background--green': expanded}">
           <option>Lisäominaisuudet</option>
         </select>
-        <div class="overSelect"></div>
+        <div class="over-select"></div>
       </div>
 
-      <div :id="idValue+'checkboxes-feature'" class="checkboxes check__label-only">
+      <div :id="idValue+'-checkboxes-feature'" class="checkboxes check__label-only">
         <div v-for="(feature, index,) in optionFeatures" :key="index" class="flexbox pointer">
           <input type="checkbox" :id="idValue+'fe'+index" />
           <label :for="idValue+'fe'+index" @click="handleFeatures(feature.value)">{{ feature.text }}</label>
@@ -73,7 +73,7 @@ export default {
       this.emitToParent();
     },
     showCheckboxes() {
-      let checkboxes = document.getElementById(this.idValue+"checkboxes-feature");
+      let checkboxes = document.getElementById(this.idValue+"-checkboxes-feature");
       if (!this.expanded) {
         checkboxes.style.display = "block";
         this.expanded = true;
@@ -90,7 +90,7 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.width-100 {
+.width__100 {
   width: 100%;
 }
 
