@@ -120,10 +120,7 @@
               v-model="apartment.buildYear"
             />
           </div>
-
           </div>
-
- 
 
           <div class="flexbox" id="typeAndFloor">
             <BuildingType
@@ -679,11 +676,11 @@ export default {
     onChildClickCondition(value) {
       this.apartment.condition = value;
     },
-    onChildParking (value) {
-      //tukeeko skeema options arrayta?
-      this.apartment.parking.options = value.options;
-      this.apartment.parking.supportsElectric = value.supportsElectric;
-      this.apartment.parking.description = value.description;
+    onChildParking(value) {
+      this.apartment.utilities.parking.exists = value.exists
+      this.apartment.utilities.parking.type = value.options;
+      this.apartment.utilities.parking.supportsElectric = value.supportsElectric;
+      this.apartment.utilities.parking.description = value.description;
     },
     onChildClickBuildingType(value) {
       this.apartment.BuildingType = value.types;

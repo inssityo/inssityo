@@ -10,7 +10,7 @@
       />
     </div>
           <button v-if="filterActive" @click="removeFilter">
-        {{ filterType }}: {{ optionValue }} {{givenCity}} ({{filteredApartments.length}} osumaa)<i id="icon" class="far fa-times-circle"></i>
+        {{ typeOptions}} {{ filterType }}: {{ optionValue }} {{givenCity}} ({{filteredApartments.length}} osumaa)<i id="icon" class="far fa-times-circle"></i>
       </button>
     <div class="box">
       <div v-if="!filterActive" class="cards flexbox box">
@@ -37,15 +37,12 @@
 import ApartmentCard from "./cards/ApartmentCard.vue";
 import ApartmentService from "../../api-services/apartment.service.js";
 import Autocomplete from "../../components/dashboard/bio/apartment/Autocomplete.vue";
-
 export default {
   name: "RentApartments",
-
   components: {
     ApartmentCard,
     Autocomplete,
   },
-
   data() {
     return {
       apartments: {},
@@ -53,7 +50,10 @@ export default {
       filterActive: false,
       filterType: "",
       optionValue: "",
+      houseFilterType:"",
+      houseOptionValue:"",
       givenCity:"",
+      typeOptions:[],
     };
   },
   async created() {
@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     updateFilteredApartments(value) {
+      console.log(value)
       if (value.wantedApts) {
       console.log(value)
       this.filteredApartments = value.wantedApts;
@@ -87,7 +88,6 @@ export default {
 
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
-
 h1 {
   margin-top: 3rem;
   margin-bottom: 4rem;

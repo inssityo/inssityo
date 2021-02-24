@@ -112,6 +112,7 @@ export default {
   methods: {
     emitToParent() {
       this.$emit("childToParent", {
+        exists:this.exists,
         options: this.options,
         description: this.description,
         supportsElectric: this.supportsElectric,

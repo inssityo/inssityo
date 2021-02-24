@@ -275,8 +275,9 @@ export default {
       let t = "no " + name + " given ";
       switch(name) {
         case "address":
-          type = this.apartment?.location?.address;
-          if (type !== undefined) { t = type }
+          type = this.apartment?.location?.address.streetName + " " + this.apartment?.location?.address.houseNumber;
+          if (type !== undefined) { t = type
+          }
           this.location.address = t;
           break;
         case "neighborhood":
