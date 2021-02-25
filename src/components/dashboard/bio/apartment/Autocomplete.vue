@@ -1,6 +1,8 @@
 <template>
+<div class="flexbox">
+  <p>Hae kohteita:</p>
   <div class="autocomplete">
-    <p>Hae kohteita:</p>
+    
     <input
       type="text"
       placeholder="Kirjoita sijainti..."
@@ -103,6 +105,7 @@
       >
     </div>
   </div>
+  </div>
 </div>
 </template>
 
@@ -204,7 +207,7 @@ export default {
       }
     },
     filterByType(arr) {
-      if(this.options.length > 0) {
+      if(this.options && this.options.length > 0) {
       return arr.filter((item) => this.options.includes(item.apartmentType))
       }
       return arr
@@ -308,11 +311,16 @@ export default {
 
 <style>
 .autocomplete {
-  width: 25em;
+  width: 25em; margin-right: 10em;
+  margin-left: 2em;
 }
 
 ul {
   padding-inline-start: 0;
+}
+
+.multiselect{
+  margin-bottom: 0;
 }
 
 .autocomplete-results {
@@ -343,6 +351,10 @@ ul {
   padding: 4px 2px;
   cursor: pointer;
   font-weight: bold;
+}
+
+p {
+  white-space: nowrap;
 }
 
 .autocomplete-result:hover {
