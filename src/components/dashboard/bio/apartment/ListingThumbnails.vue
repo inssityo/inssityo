@@ -32,7 +32,9 @@
           <div>
             <p class="margin__bottomless">Huonejako</p>
             <!-- <i class="fas fa-layer-group"></i> -->
-            <p id="roomPlan" class="margin__bottomless">{{ handleFloorPlan }}</p>
+            <p id="roomPlan" class="margin__bottomless">
+              {{ handleFloorPlan }}
+            </p>
           </div>
         </div>
       </div>
@@ -42,7 +44,17 @@
           <i class="fas fa-hourglass-half"></i>
           <div>
             <p class="margin__bottomless">Rakennusvuosi</p>
-            <p class="margin__bottomless">{{apartment.buildYear}}</p>
+            <p class="margin__bottomless">{{ apartment.buildYear }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column flexbox">
+        <div class="flexbox">
+          <i class="fas fa-hourglass-half"></i>
+          <div>
+            <p class="margin__bottomless">Ilmoitus jätetty</p>
+            <p class="margin__bottomless">{{ handleDates }}</p>
           </div>
         </div>
       </div>
@@ -52,7 +64,9 @@
           <i class="fas fa-ruler-combined"></i>
           <div>
             <p class="margin__bottomless">Asuinpinta-ala</p>
-            <p class="margin__bottomless">{{apartment.livingArea}} &#13217;</p>
+            <p class="margin__bottomless">
+              {{ apartment.livingArea }} &#13217;
+            </p>
           </div>
         </div>
       </div>
@@ -72,47 +86,57 @@ export default {
     };
   },
   computed: {
-     handleFloorPlan() {
+    handleFloorPlan() {
       let floorPlanString = "";
-      let values = Object.values(this.data.floorPlan)
-      let entries = values.filter(item => item.amount)
-      entries.forEach(entry => {
+      let values = Object.values(this.data.floorPlan);
+      let entries = values.filter((item) => item.amount);
+      entries.forEach((entry) => {
         switch (entry.title) {
           case "regular":
             floorPlanString += `${entry.amount}h`;
             break;
           case "kitchen":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}k`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}k`;
             break;
           case "kitchenette":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}kk`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}kk`;
             break;
           case "diningRoom":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}rh`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}rh`;
             break;
           case "bathRoom":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}kh`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}kh`;
             break;
           case "toilet":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}wc`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}wc`;
             break;
           case "sauna":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}sauna`
+            floorPlanString += `, ${
+              entry.amount === 1 ? "" : entry.amount
+            }sauna`;
             break;
           case "wardrobe":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}vh`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}vh`;
             break;
           case "utility room":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}khh`
+            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}khh`;
             break;
-      }})
-            if (this.apartment.balcony?.exists) {
+        }
+      });
+      if (this.apartment.balcony?.exists) {
         floorPlanString += ", parveke";
       }
       if (this.apartment.patio?.exists) {
         floorPlanString += ", terassi";
       }
-      return floorPlanString
+      return floorPlanString;
+    },
+    handleDates: function () {
+      const dbDate = this.apartment.creationTime;
+      var d = new Date(dbDate);
+      const dateString =
+        d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+      return dateString;
     },
     handleUrl() {
       let rent;
