@@ -88,7 +88,9 @@ export default {
   computed: {
     handleFloorPlan() {
       let floorPlanString = "";
+      if (this.data && this.data.floorPlan) {
       let values = Object.values(this.data.floorPlan);
+
       let entries = values.filter((item) => item.amount);
       entries.forEach((entry) => {
         switch (entry.title) {
@@ -99,7 +101,7 @@ export default {
             floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}k`;
             break;
           case "kitchenette":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}kk`;
+            floorPlanString += `, ${entry?.amount === 1 ? "" : entry.amount}kk`;
             break;
           case "diningRoom":
             floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}rh`;
@@ -128,6 +130,7 @@ export default {
       }
       if (this.apartment.patio?.exists) {
         floorPlanString += ", terassi";
+      }
       }
       return floorPlanString;
     },
