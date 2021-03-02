@@ -117,6 +117,4 @@ export default {
 .align-center {
   text-align: center;
 }
-
-
 </style>

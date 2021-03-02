@@ -53,17 +53,29 @@
               </div>
               <div class="row flexbox">
                 <p>Talotyyppi</p>
-                <p>{{ handleApartmentType }}</p>
+                <p>{{ handleAptType }}</p>
               </div>
+
+              <div v-if="apartment.isCellApartment" class="row flexbox">
+                <p>Soluasunto</p>
+                <p>Kyllä</p>
+              </div>
+
               <div class="row flexbox">
                 <p>Omistusmuoto</p>
                 <p>{{ handleIsForSale }}</p>
               </div>
             </div>
 
-            <div class="row flexbox">
+            <div
+              v-if="
+                apartment.floorPlan &&
+                Object.values(apartment.floorPlan).some((val) => val.amount)
+              "
+              class="row flexbox"
+            >
               <p>Huoneet</p>
-              <p>{{ handleFloorPlan }}</p>
+              <p>{{ handleAptFloorPlan }}</p>
             </div>
             <div class="row flexbox">
               <p>Asuinpinta-ala</p>
@@ -79,6 +91,11 @@
               <p>{{ apartment.housingAssociation }}</p>
             </div>
 
+            <div v-if="apartment.hasElevator !== null" class="row flexbox">
+              <p>Hissi</p>
+              <p>{{ apartment.hasElevator ? "Kyllä" : "Ei" }}</p>
+            </div>
+
             <div v-if="apartment.buildingManager" class="row flexbox">
               <p>Isännöitsijä</p>
               <p>{{ apartment.buildingManager }}</p>
@@ -89,19 +106,41 @@
               <p>{{ apartment.maintainer }}</p>
             </div>
 
-            <div class="row flexbox">
+            <div v-if="apartment.floor" class="row flexbox">
               <p v-if="apartment.apartmentType === 1">Kerros</p>
               <p v-else>Kerroksia</p>
               <p>{{ apartment.floor }}</p>
             </div>
-            <div class="row flexbox">
+            <div v-if="apartment.buildYear" class="row flexbox">
               <p>Rakennusvuosi</p>
               <p>{{ apartment.buildYear }}</p>
             </div>
 
-            <div class="row flexbox">
+            <div
+              v-if="apartment.totalAmountOfAptsOnProperty"
+              class="row flexbox"
+            >
+              <p>Asuinhuoneistojen määrä tontilla</p>
+              <p>{{ apartment.totalAmountOfAptsOnProperty }}</p>
+            </div>
+
+            <div v-if="apartment.businessesOnProperty" class="row flexbox">
+              <p>Liikehuoneistojen määrä tontilla</p>
+              <p>{{ apartment.businessesOnProperty }}</p>
+            </div>
+
+            <div
+              v-if="
+                (apartment.balcony && apartment.balcony.exists) ||
+                (apartment.patio && apartment.patio.exists) ||
+                apartment.hasGarage ||
+                apartment.hasHotTub ||
+                apartment.hasPool
+              "
+              class="row flexbox"
+            >
               <p>Lisäominaisuudet</p>
-              <p>{{ handleBalconyPatio }}</p>
+              <p>{{ handleBalconyPatioGarageTubPool }}</p>
             </div>
 
             <div v-if="apartment.sights" class="row flexbox">
@@ -129,7 +168,17 @@
               <p>{{ makeDateString(apartment.availableTo) }}</p>
             </div>
 
-            <div v-if="apartment.propertyArea || apartment.allowedBuildArea || apartment.zoning || apartment.propertyDescription || apartment.yard || apartment.property" class="listing-data__title">
+            <div
+              v-if="
+                apartment.propertyArea ||
+                apartment.allowedBuildArea ||
+                apartment.zoning ||
+                apartment.propertyDescription ||
+                apartment.yard ||
+                apartment.property
+              "
+              class="listing-data__title"
+            >
               <h2>Tontti</h2>
               <div v-if="apartment.propertyArea" class="row flexbox">
                 <p>Tontin pinta-ala</p>
@@ -148,12 +197,24 @@
 
               <div v-if="apartment.property" class="row flexbox">
                 <p>Tontin omistus</p>
-                <p v-if="apartment.property && apartment.property.rented">Vuokratontti</p>
-                <p v-else-if="apartment.property && apartment.property.rented === false">Oma tontti</p>
+                <p v-if="apartment.property && apartment.property.rented">
+                  Vuokratontti
+                </p>
+                <p
+                  v-else-if="
+                    apartment.property && apartment.property.rented === false
+                  "
+                >
+                  Oma tontti
+                </p>
               </div>
 
               <div
-                v-if="apartment.property && !apartment.property.rented && apartment.propertyTax"
+                v-if="
+                  apartment.property &&
+                  !apartment.property.rented &&
+                  apartment.propertyTax
+                "
                 class="row flexbox"
               >
                 <p>Kiinteistövero</p>
@@ -161,7 +222,11 @@
               </div>
 
               <div
-                v-if="apartment.property && apartment.property.rented && handlePropertyOwner"
+                v-if="
+                  apartment.property &&
+                  apartment.property.rented &&
+                  handlePropertyOwner
+                "
                 class="row flexbox"
               >
                 <p>Tontin omistaja</p>
@@ -169,7 +234,11 @@
               </div>
 
               <div
-                v-if="apartment.property && apartment.property.rented && handlePropertyRent"
+                v-if="
+                  apartment.property &&
+                  apartment.property.rented &&
+                  handlePropertyRent
+                "
                 class="row flexbox"
               >
                 <p>Tonttivuokra</p>
@@ -177,7 +246,11 @@
               </div>
 
               <div
-                v-if="apartment.property && apartment.property.rented && handleContractExpiration"
+                v-if="
+                  apartment.property &&
+                  apartment.property.rented &&
+                  handleContractExpiration
+                "
                 class="row flexbox"
               >
                 <p>Tontin vuokrasopimus erääntyy</p>
@@ -204,7 +277,7 @@
                   {{ apartment.equipment.kitchen }}
                 </p>
               </div>
-              <div  v-if="apartment.equipment.bathroom" class="row flexbox">
+              <div v-if="apartment.equipment.bathroom" class="row flexbox">
                 <p>Pesutilat</p>
                 <p>
                   {{ apartment.equipment.bathroom }}
@@ -226,7 +299,15 @@
             </div>
           </div>
 
-          <div v-if="apartment.buildMaterial || apartment.roofType || apartment.roofMaterial || apartment.renovationDescription" class="listing-data__title">
+          <div
+            v-if="
+              apartment.buildMaterial ||
+              apartment.roofType ||
+              apartment.roofMaterial ||
+              apartment.renovationDescription
+            "
+            class="listing-data__title"
+          >
             <h2>Materiaalit ja kunto</h2>
             <div class="listing-data__content">
               <div v-if="apartment.buildMaterial" class="row flexbox">
@@ -250,9 +331,15 @@
             </div>
           </div>
 
-          <div v-if="apartment.equipment" class="listing-data__title">
+          <div
+            v-if="
+              apartment.equipment &&
+              Object.values(apartment.equipment).some((val) => val)
+            "
+            class="listing-data__title"
+          >
             <h2>Asunnon järjestelmät</h2>
-            <div  class="listing-data__content">
+            <div class="listing-data__content">
               <div v-if="apartment.equipment.water" class="row flexbox">
                 <p>Vesi</p>
                 <p>{{ apartment.equipment.water }}</p>
@@ -287,12 +374,23 @@
             </div>
           </div>
 
-          <div class="listing-data__title">
+          <div
+            v-if="
+              (apartment.price && apartment.price.salePrice) ||
+              apartment.monthlyRent
+            "
+            class="listing-data__title"
+          >
             <h2>Hintatiedot</h2>
             <div v-if="!apartment.isForSale" class="listing-data__content">
               <div v-if="apartment.monthlyRent" class="row flexbox">
                 <p>Vuokra</p>
                 <p>{{ apartment.monthlyRent }}€/kk</p>
+              </div>
+
+              <div v-if="apartment.guarantee" class="row flexbox">
+                <p>Vuokratakuu</p>
+                <p>{{ apartment.guarantee }}</p>
               </div>
             </div>
 
@@ -315,21 +413,14 @@
                 class="row flexbox"
               >
                 <p>Lainaosuus</p>
-                <p>
-                  {{calculateDebtFree
-                  }}€
-                </p>
+                <p>{{ calculateDebtFree }}€</p>
               </div>
               <div
                 v-if="apartment.price.salePrice && apartment.totalArea"
                 class="row flexbox"
               >
                 <p>Neliöhinta</p>
-                <p>
-                  {{
-                    calculatePricePerMeter
-                  }}€/&#13217;
-                </p>
+                <p>{{ calculatePricePerMeter }}€/&#13217;</p>
               </div>
               <div
                 v-if="
@@ -362,7 +453,7 @@
                 <p>Yhtiövastike</p>
                 <p>
                   {{
-                    calculatePlus(
+                    calculateTotalCosts(
                       apartment.maintenanceCosts.upkeep,
                       apartment.maintenanceCosts.financing
                     )
@@ -371,7 +462,8 @@
               </div>
             </div>
             <div
-              v-if=" apartment.utilities &&
+              v-if="
+                apartment.utilities &&
                 apartment.utilities.water &&
                 apartment.utilities.water.mustHave &&
                 !apartment.isForSale
@@ -394,7 +486,7 @@
             </div>
             <div
               v-if="
-              apartment.utilities &&
+                apartment.utilities &&
                 apartment.utilities.includesElectricity &&
                 apartment.utilities.includesElectricity.mustHave &&
                 !apartment.isForSale
@@ -412,7 +504,7 @@
             </div>
             <div
               v-if="
-              apartment.utilities &&
+                apartment.utilities &&
                 apartment.utilities.includesElectricity &&
                 apartment.utilities.includesElectricity.monthlyPrice
               "
@@ -425,7 +517,7 @@
             </div>
             <div
               v-if="
-              apartment.utilities && 
+                apartment.utilities &&
                 apartment.utilities.insurancePlan &&
                 apartment.utilities.insurancePlan.mustHave &&
                 !apartment.isForSale
@@ -440,7 +532,8 @@
               </p>
             </div>
             <div
-              v-if="apartment.utilities &&
+              v-if="
+                apartment.utilities &&
                 apartment.utilities.insurancePlan &&
                 apartment.utilities.insurancePlan.monthlyPrice &&
                 !apartment.isForSale
@@ -450,16 +543,122 @@
               <p>Arvioitu kotivakuutus</p>
               <p>{{ apartment.utilities.insurancePlan.monthlyPrice }}€/kk</p>
             </div>
+
+            <div
+              v-if="
+                apartment.utilities &&
+                apartment.utilities.dataConnection &&
+                apartment.utilities.dataConnection.isIncluded !== null
+              "
+              class="row flexbox"
+            >
+              <p>Kauppaan sisältyy internet-yhteys</p>
+              <p>
+                {{
+                  apartment.utilities.dataConnection.isIncluded ? "Kyllä" : "Ei"
+                }}
+              </p>
+            </div>
+
+            <div
+              v-if="
+                apartment.utilities &&
+                apartment.utilities.dataConnection &&
+                apartment.utilities.dataConnection.speed
+              "
+              class="row flexbox"
+            >
+              <p>Internet-yhteyden-nopeus</p>
+              <p>{{ apartment.utilities.dataConnection.speed }} Mbit/s</p>
+            </div>
           </div>
 
           <div
-            v-if="apartment.nearbyServices"
+            v-if="
+              apartment.smokingAllowed ||
+              apartment.petsAllowed ||
+              apartment.rentIncrease
+            "
+            class="listing-data__title"
+          >
+            <h2>Vuokralaisen ehdot</h2>
+
+            <div v-if="apartment.smokingAllowed" class="row flexbox">
+              <p>Tupakointi sallittu</p>
+              <p>{{ apartment.smokingAllowed ? "Kyllä" : "Ei" }}</p>
+            </div>
+
+            <div v-if="apartment.petsAllowed" class="row flexbox">
+              <p>Lemmikit sallittu</p>
+              <p>{{ apartment.petsAllowed ? "Kyllä" : "Ei" }}</p>
+            </div>
+
+            <div v-if="apartment.rentIncrease" class="row flexbox">
+              <p>Vuokraa korotetaan vuosittain</p>
+              <p>{{ apartment.rentIncrease ? "Kyllä" : "Ei" }}</p>
+            </div>
+
+            <div v-if="apartment.rentIncreaseAmount" class="row flexbox">
+              <p>Vuosittaiskorotuksen määrä</p>
+              <p>{{ apartment.rentIncreaseAmount }}</p>
+            </div>
+          </div>
+
+          <div v-if="apartment.parking" class="listing-data__title">
+            <h2>Kohteen pysäköintimahdollisuudet</h2>
+
+            <div
+              v-if="apartment.parking && apartment.parking.type"
+              class="row flexbox"
+            >
+              <p>Tyyppi</p>
+              <p>{{ handleParkingTypes }}</p>
+            </div>
+
+            <div
+              v-if="apartment.parking && apartment.parking.description"
+              class="row flexbox"
+            >
+              <p>Kuvaus</p>
+              <p>{{ apartment.parking.description }}</p>
+            </div>
+
+            <div
+              v-if="
+                apartment.parking && apartment.parking.supportsElectric !== null
+              "
+              class="row flexbox"
+            >
+              <p>Tuki sähköautolle</p>
+              <p>{{ apartment.parking.supportsElectric ? "Kyllä" : "Ei" }}</p>
+            </div>
+          </div>
+
+          <div
+            v-if="
+              (apartment.nearbyServices &&
+                Object.values(apartment.nearbyServices).some((val) =>
+                  Object.values(val).some((childVal) => childVal.title)
+                )) ||
+              apartment.serviceDescription
+            "
             class="listing-data__title"
           >
             <h2>Lähialueen palvelut</h2>
 
+            <div v-if="apartment.serviceDescription" class="row flexbox">
+              <p>Kuvaus alueen palveluista</p>
+              <p>
+                {{ apartment.serviceDescription }}
+              </p>
+            </div>
+
             <div
-              v-if="apartment.nearbyServices.publicTransport"
+              v-if="
+                Object.values(apartment.nearbyServices.publicTransport).some(
+                  (val) => val.title
+                )
+              "
               class="row flexbox"
             >
               <p>Julkinen liikenne</p>
@@ -469,52 +668,72 @@
             </div>
 
             <div
-              v-if="apartment.nearbyServices.groceries"
+              v-if="
+                Object.values(apartment.nearbyServices.groceries).some(
+                  (val) => val.title
+                )
+              "
               class="row flexbox"
             >
               <p>Ruokakaupat</p>
               <p v-for="item of nearbyGroceries" :key="item._id">
-                {{ item.title }}, {{ item.distance }}m <br>
+                {{ item.title }}, {{ item.distance }}m <br />
               </p>
             </div>
 
-                        <div
-              v-if="apartment.nearbyServices.healthCare"
+            <div
+              v-if="
+                Object.values(apartment.nearbyServices.healthCare).some(
+                  (val) => val.title
+                )
+              "
               class="row flexbox"
             >
               <p>Terveydenhoito</p>
               <p v-for="item of nearbyHealthcare" :key="item._id">
-                {{ item.title }}, {{ item.distance }}m <br>
+                {{ item.title }}, {{ item.distance }}m <br />
               </p>
             </div>
 
             <div
-              v-if="apartment.nearbyServices.dayCare"
+              v-if="
+                Object.values(apartment.nearbyServices.dayCare).some(
+                  (val) => val.title
+                )
+              "
               class="row flexbox"
             >
               <p>Päivähoito</p>
               <p v-for="item of nearbyDayCare" :key="item._id">
-                {{ item.title }}, {{ item.distance }}m <br>
-              </p>
-            </div>
-
-                        <div
-              v-if="apartment.nearbyServices.education"
-              class="row flexbox"
-            >
-              <p>Koulut ja opistot</p>
-              <p v-for="item of nearbyEducation" :key="item._id">
-                {{ item.title }}, {{ item.distance }}m <br>
+                {{ item.title }}, {{ item.distance }}m <br />
               </p>
             </div>
 
             <div
-              v-if="apartment.nearbyServices.excercise"
+              v-if="
+                Object.values(apartment.nearbyServices.education).some(
+                  (val) => val.title
+                )
+              "
+              class="row flexbox"
+            >
+              <p>Koulut ja opistot</p>
+              <p v-for="item of nearbyEducation" :key="item._id">
+                {{ item.title }}, {{ item.distance }}m <br />
+              </p>
+            </div>
+
+            <div
+              v-if="
+                Object.values(apartment.nearbyServices.excercise).some(
+                  (val) => val.title
+                )
+              "
               class="row flexbox"
             >
               <p>Liikuntapaikat</p>
               <p v-for="item of nearbyExcercise" :key="item._id">
-                {{ item.title }}, {{ item.distance }}m <br>
+                {{ item.title }}, {{ item.distance }}m <br />
               </p>
             </div>
           </div>
@@ -526,6 +745,10 @@
 
 <script>
 //import ImageCarousel from './apartment/ImageCarousel.vue';
+import {
+  handleApartmentType,
+  handleFloorPlan,
+} from "./apartment/ApartmentHelpers.js";
 import ListingThumbnails from "./apartment/ListingThumbnails.vue";
 import Icon from "./Icon.vue";
 import ApartmentService from "../../../api-services/apartment.service.js";
@@ -570,95 +793,46 @@ export default {
     }
   },
   computed: {
-    handleKitchen () {
-      return this.apartment.equipment.kitchen
+    handleAptFloorPlan() {
+      return handleFloorPlan(this.apartment);
+    },
+    handleAptEquipment() {
+      return this.apartment.equipment;
+    },
+    handleAptType() {
+      return handleApartmentType(this.apartment);
+    },
+    handleKitchen() {
+      return this.apartment.equipment.kitchen;
     },
     nearbyGroceries() {
-      return this.apartment.nearbyServices.groceries
+      return this.apartment.nearbyServices.groceries;
     },
     nearbyStops() {
       return this.apartment.nearbyServices.publicTransport;
     },
     nearbyHealthcare() {
-      return this.apartment.nearbyServices.healthCare
+      return this.apartment.nearbyServices.healthCare;
     },
     nearbyDayCare() {
-      return this.apartment.nearbyServices.dayCare
+      return this.apartment.nearbyServices.dayCare;
     },
     nearbyEducation() {
-      return this.apartment.nearbyServices.education
+      return this.apartment.nearbyServices.education;
     },
     nearbyExcercise() {
-      return this.apartment.nearbyServices.excercise
+      return this.apartment.nearbyServices.excercise;
     },
     calculatePricePerMeter() {
       return this.apartment.price.salePrice / this.apartment.totalArea;
     },
     calculateDebtFree() {
-      return this.apartment.price.debtFreePrice - this.apartment.price.salePrice;
+      return (
+        this.apartment.price.debtFreePrice - this.apartment.price.salePrice
+      );
     },
-    calculatePlus(upkeep, financing) {
+    calculateTotalCosts(upkeep, financing) {
       return upkeep + financing;
-    },
-    handleFloorPlan() {
-      let floorPlanString = "";
-      if (this.apartment.floorPlan) {
-        let values = Object.values(this.apartment.floorPlan);
-
-        let entries = values.filter((item) => item.amount);
-        entries.forEach((entry) => {
-          switch (entry.title) {
-            case "regular":
-              floorPlanString += `${entry.amount}h`;
-              break;
-            case "kitchen":
-              floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}k`;
-              break;
-            case "kitchenette":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }kk`;
-              break;
-            case "diningRoom":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }rh`;
-              break;
-            case "bathRoom":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }kh`;
-              break;
-            case "toilet":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }wc`;
-              break;
-            case "sauna":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }sauna`;
-              break;
-            case "wardrobe":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }vh`;
-              break;
-            case "utility room":
-              floorPlanString += `, ${
-                entry.amount === 1 ? "" : entry.amount
-              }khh`;
-              break;
-          }
-        });
-        if (this.apartment.balcony?.exists) {
-          floorPlanString += ", parveke";
-        }
-        if (this.apartment.patio?.exists) {
-          floorPlanString += ", terassi";
-        }
-      }
-      return floorPlanString;
     },
     handleIsForSale() {
       if (this.apartment.isForSale) {
@@ -667,7 +841,30 @@ export default {
         return "Vuokra";
       }
     },
-    handleBalconyPatio() {
+    handleParkingTypes() {
+      let parkingString = "";
+      if (this.apartment.parking && this.apartment.parking.type) {
+        this.apartment.parking.type.forEach((type) => {
+          switch (type) {
+            case 1:
+              parkingString += "ulkopaikka ";
+              break;
+            case 2:
+              parkingString += "autokatos ";
+              break;
+            case 3:
+              parkingString += "autotalli ";
+              break;
+            case 4:
+              parkingString += "parkkihalli ";
+              break;
+          }
+        });
+        return parkingString;
+      }
+      return parkingString;
+    },
+    handleBalconyPatioGarageTubPool() {
       let balconyPatioString = "";
       if (this.apartment.balcony && this.apartment.balcony.exists) {
         balconyPatioString += `Parveke: ${this.apartment.balcony.description} `;
@@ -712,38 +909,6 @@ export default {
       }
       return rent;
     },
-    handleApartmentType() {
-      const type = this.apartment.apartmentType;
-      let typeString;
-      switch (type) {
-        case 1:
-          typeString = "Kerrostaloasunto";
-          break;
-        case 2:
-          typeString = "Rivitalo";
-          break;
-        case 3:
-          typeString = "Paritalo";
-          break;
-        case 4:
-          typeString = "Omakotitalo";
-          break;
-        case 5:
-          typeString = "Ketjutalo";
-          break;
-        case 6:
-          typeString = "Luhtitalo";
-          break;
-        case 7:
-          typeString = "Puutalo-osake";
-          break;
-        case 8:
-          typeString = "Muu";
-          break;
-      }
-      return typeString;
-    },
-
     /*
       Handling undefined nested object values: 
       floorPlan, utilities, location, price, nearbyServices, 
@@ -762,7 +927,7 @@ export default {
       return this.handleUndefined("areaCode");
     },
     handlePropertyRented() {
-      console.log(this.handleUndefined("rented"))
+      console.log(this.handleUndefined("rented"));
       return this.handleUndefined("rented");
     },
     handlePropertyOwner() {
@@ -779,7 +944,7 @@ export default {
     like() {
       this.liked = !this.liked;
     },
-
+    //create listing availability information. Returns "heti" if date param is already in the past.
     makeDateString(date) {
       let dateString;
       var d = new Date(date);

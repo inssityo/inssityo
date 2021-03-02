@@ -112,7 +112,6 @@ export default {
   methods: {
     emitToParent() {
       //vie description
-      console.log("ser" + JSON.stringify(this.nearbyServices));
       this.$emit("childToParent", {
         nearbyServices: this.nearbyServices,
         description: this.description,

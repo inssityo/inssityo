@@ -1,23 +1,23 @@
 <template>
   <div>
     <label for="smoking" class="checkmark-label">Asunnossa ei saa tupakoida
-      <input type="checkbox" id="smoking" v-model="terms[0].smoking" v-on:click="emitToParent">
+      <input type="checkbox" id="smoking" v-model="smokingAllowed" v-on:click="handleSmokeClick">
       <span class="checkmark"></span>
     </label>
     <label for="pets" class="checkmark-label">Asunnossa ei saa pitää lemmikkejä
-      <input type="checkbox" id="pets" v-model="terms[1].pets" v-on:click="emitToParent"> <!--lisää idValue -->
+      <input type="checkbox" id="pets" v-model="petsAllowed" v-on:click="handlePetsClick"> <!--lisää idValue -->
       <span class="checkmark"></span>
     </label>
     <label for="insurance" class="checkmark-label">Kotivakuutus vaaditaan
-      <input type="checkbox" id="insurance" v-model="terms[2].insurance" v-on:click="emitToParent"> <!--lisää idValue -->
+      <input type="checkbox" id="insurance" v-model="terms[2].insurance" v-on:click="handleInsuranceClick"> <!--lisää idValue -->
       <span class="checkmark"></span>
     </label>
     <label for="rent-increase" class="checkmark-label">Vuokraa korotetaan vuosittain
-      <input type="checkbox" id="rent-increase" v-model="terms[3].checkedRentIncrease" v-on:click="emitToParent">
+      <input type="checkbox" id="rent-increase" v-model="checkedRentIncrease" v-on:click="emitToParent">
       <span class="checkmark"></span>
     </label>
-    <label v-show="terms[3].checkedRentIncrease" for="amount">Määrä
-      <input type="text" id="amount" v-model="amount" v-on:keyup="emitToParent">
+    <label v-show="checkedRentIncrease" for="amount">Määrä
+      <input type="text" id="amount" v-model="amount" v-on:input="emitToParent">
     </label>
 
     <label for="guarantee">Vuokravakuus
@@ -36,12 +36,10 @@ export default {
 
   data() {
     return {
-      terms: [
-        { smoking: false },//true: Tupakointi kielletty
-        { pets: false }, //false: Lemmikit sallittuja
-        { insurance: false },
-        { checkedRentIncrease: false },
-      ],
+      smokingAllowed: false,//true: Tupakointi kielletty
+      petsAllowed: false , //false: Lemmikit sallittuja
+      insuranceRequired: false,
+      checkedRentIncrease:"",
       guarantee:'',
       amount: '',
       termsDescription: '', //HUOM!
@@ -49,8 +47,20 @@ export default {
   },
   methods: {
     emitToParent () {
-      this.$emit('childToParent', {'terms': this.terms, 'amount': this.amount, guarantee:this.guarantee})
+      this.$emit('childToParent', {smokingAllowed:this.smokingAllowed, petsAllowed:this.petsAllowed, insuranceRequired:this.insuranceRequired, rentIncrease:this.checkedRentIncrease, 'amount': this.amount, guarantee:this.guarantee, termsDescription:this.termsDescription})
     },
+    handleSmokeClick () {
+      this.smokingAllowed = !this.smokingAllowed
+      this.emitToParent()
+    },
+    handlePetsClick () {
+      this.petsAllowed = !this.petsAllowed
+      this.emitToParent()
+    },
+    handleInsuranceClick () {
+      this.insuranceRequired =!this.insuranceRequired
+      this.emitToParent()
+    }
   }
 }
 </script>

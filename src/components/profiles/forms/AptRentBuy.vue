@@ -565,6 +565,8 @@ export default {
         floor: "",
         propertyFloors: "",
         sights: "",
+        rentIncrease:false,
+        rentIncreaseAmount:"",
         hasElevator: false,
         housingAssociation: "",
         buildingManager: "",
@@ -585,6 +587,7 @@ export default {
         limitations: "",
         availableFrom: null,
         availableUntil: null,
+        serviceDescription: "",
         property: {
           rented: false,
           owner: "",
@@ -726,8 +729,11 @@ export default {
       this.apartment.availableUntil = value;
     },
     onChildClickTerms(value) {
-      this.fromChildTerms = value.terms;
-      this.fromChildRentIncrease = value.amount;
+      this.smokingAllowed = value.smokingAllowed;
+      this.petsAllowed = value.petsAllowed;
+      this.utilities.insurancePlan.mustHave = value.insuranceRequired;
+      this.rentIncrease = value.rentIncrease;
+      this.rentIncreaseAmount = value.amount;
       this.guarantee = value.guarantee;
     },
     onYardChange(value) {

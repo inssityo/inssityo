@@ -1,26 +1,26 @@
 <template>
   <div>
-    <h4 class="margin__topless">Omakotitalo</h4>
+    <h4 class="margin__topless">{{  handleAptType  }}</h4>
     <h1>{{ location.neighborhood }}, {{ location.city }}</h1>
     <h4 class="margin__topless">{{ location.address }}</h4>
 
-    <p class="listing-basics__description">{{ apartment.description }}</p>
+    <p class="listing-basics__description">{{ data.description }}</p>
 
     <div class="listing-basics__content flexbox">
       <div class="column flexbox">
         <div class="flexbox">
           <i class="fas fa-coins"></i>
 
-          <div v-if="apartment.monthlyRent">
+          <div v-if="!apartment.isForSale">
             <p class="margin__bottomless">Vuokra/kk</p>
             <!-- tai myyntihinta -->
-            <p class="margin__bottomless">{{ apartment.monthlyRent }} €</p>
+            <p class="margin__bottomless">{{ data.monthlyRent }} €</p>
           </div>
           <div v-else>
             <p class="margin__bottomless">Velaton hinta</p>
             <!-- tai myyntihinta -->
             <p class="margin__bottomless">
-              {{ apartment?.price?.debtFreePrice }} €
+              {{ data?.price?.debtFreePrice }} €
             </p>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <p class="margin__bottomless">Huonejako</p>
             <!-- <i class="fas fa-layer-group"></i> -->
             <p id="roomPlan" class="margin__bottomless">
-              {{ handleFloorPlan }}
+              {{ handleAptFloorPlan }}
             </p>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <i class="fas fa-hourglass-half"></i>
           <div>
             <p class="margin__bottomless">Rakennusvuosi</p>
-            <p class="margin__bottomless">{{ apartment.buildYear }}</p>
+            <p class="margin__bottomless">{{ data.buildYear }}</p>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
           <div>
             <p class="margin__bottomless">Asuinpinta-ala</p>
             <p class="margin__bottomless">
-              {{ apartment.livingArea }} &#13217;
+              {{ data.livingArea }} &#13217;
             </p>
           </div>
         </div>
@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import { handleFloorPlan, handleApartmentType } from "./ApartmentHelpers.js";
 export default {
   name: "ListingThumbnails",
   props: ["data", "locationData"],
@@ -86,56 +87,22 @@ export default {
     };
   },
   computed: {
-    handleFloorPlan() {
-      let floorPlanString = "";
+    handleAptType: function () {
+      if (this.data && this.data.apartmentType) {
+      let typeString = handleApartmentType(this.data);
+      return typeString;
+      }
+      return "Määrittelemätön talotyyppi";
+    },
+    handleAptFloorPlan: function () {
       if (this.data && this.data.floorPlan) {
-      let values = Object.values(this.data.floorPlan);
-
-      let entries = values.filter((item) => item.amount);
-      entries.forEach((entry) => {
-        switch (entry.title) {
-          case "regular":
-            floorPlanString += `${entry.amount}h`;
-            break;
-          case "kitchen":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}k`;
-            break;
-          case "kitchenette":
-            floorPlanString += `, ${entry?.amount === 1 ? "" : entry.amount}kk`;
-            break;
-          case "diningRoom":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}rh`;
-            break;
-          case "bathRoom":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}kh`;
-            break;
-          case "toilet":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}wc`;
-            break;
-          case "sauna":
-            floorPlanString += `, ${
-              entry.amount === 1 ? "" : entry.amount
-            }sauna`;
-            break;
-          case "wardrobe":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}vh`;
-            break;
-          case "utility room":
-            floorPlanString += `, ${entry.amount === 1 ? "" : entry.amount}khh`;
-            break;
-        }
-      });
-      if (this.apartment.balcony?.exists) {
-        floorPlanString += ", parveke";
-      }
-      if (this.apartment.patio?.exists) {
-        floorPlanString += ", terassi";
-      }
-      }
+      let floorPlanString = handleFloorPlan(this.data);
       return floorPlanString;
+      }
+      return "Pohjapiirrosta ei löydetty!";
     },
     handleDates: function () {
-      const dbDate = this.apartment.creationTime;
+      const dbDate = this.data.creationTime;
       var d = new Date(dbDate);
       const dateString =
         d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
