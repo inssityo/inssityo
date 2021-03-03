@@ -30,15 +30,29 @@
     </div>
     <div class="flexbox margin-top__05 margin-bottom__05">
       <label
-        :for="aptValue + 'address'"
-        class="label__border-bottom--green border-radius__left"
-        >Osoite:*</label
+        :for="aptValue + 'streetName'"
+        class="label__nowrap label__border-bottom--green border-radius__left"
+        >Osoitteen nimi:*</label
       >
       <input
         type="text"
-        :id="aptValue + 'address'"
+        :id="aptValue + 'streetName'"
         class="border-radius__right"
-        v-model="address"
+        v-model="streetName"
+        v-on:input="emitToParent"
+      />
+    </div>
+    <div class="flexbox margin-top__05 margin-bottom__05">
+      <label
+        :for="aptValue + 'houseNumber'"
+        class="label__nowrap label__border-bottom--green border-radius__left"
+        >Talon numero:*</label
+      >
+      <input
+        type="text"
+        :id="aptValue + 'houseNumber'"
+        class="border-radius__right"
+        v-model="houseNumber"
         v-on:input="emitToParent"
       />
     </div>
@@ -68,7 +82,8 @@ export default {
     return {
       city: "",
       neighborhood: "",
-      address: "",
+      streetName: "",
+      houseNumber: "",
       areaCode: ""
     }
   },
@@ -77,7 +92,8 @@ export default {
       this.$emit('childToParent', {
         'city': this.city, 
         'neighborhood': this.neighborhood,
-        'address': this.address,
+        'streetName': this.streetName,
+        'houseNumber': this.houseNumber,
         'areaCode': this.areaCode
       });
     },

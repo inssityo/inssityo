@@ -135,6 +135,26 @@ h4 {
   letter-spacing: 0.05rem;
 }
 
+.alert-danger {
+  color: #e60020;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+}
+.info-text {
+  color: v.$KAMGreyDark;
+  display: flex;
+
+  .fa-info-circle {
+    color: v.$KAMGreySemiDark;
+    margin-right: 0.5rem;
+    padding-top: 0.2rem;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 // ====== label, input, select, textarea ====== //
 p, label, input, select, textarea, button {
   font-size: 1rem!important;
