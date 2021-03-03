@@ -6,6 +6,7 @@
       id-value="ARB"
       style="width: 50%"
       v-on:childToParent="onChildClickRentBuy"
+      v-on:click="emitToParent"
     />
 
     <div class="container">
@@ -13,7 +14,7 @@
       <div class="column">
         <div class="row">
           <h3>Sijainti</h3>
-          <Location id-value="ARB" v-on:childToParent="onChildClickLocation"/>
+          <Location id-value="ARB" v-on:childToParent="onChildClickLocation" v-on:click="emitToParent"/>
         </div>
 
         <div class="row">
@@ -21,16 +22,19 @@
             <AvailableFrom
               v-on:childToParent="onChildClickAvailableFrom"
               id="available-content"
+              v-on:click="emitToParent"
             />
             <AvailableTo
               v-on:childToParent="onChildClickAvailableTo"
               id="available-content"
+              v-on:click="emitToParent"
             />
           </div>
           <div v-else class="flexbox">
             <AvailableFrom
               v-on:childToParent="onChildClickAvailableFrom"
               id="available-content"
+              v-on:click="emitToParent"
             />
           </div>
         </div>
@@ -41,28 +45,30 @@
             v-if="apartment.isForSale"
             apt-value="B"
             v-on:childToParent="onChildSetSalePrice"
+            v-on:click="emitToParent"
           />
           <MaintenanceCost 
             v-if="apartment.isForSale"
             apt-value="B"
             v-on:childToParent="onChildSetMaintenanceCost"
+            v-on:click="emitToParent"
           />
-          <Price v-else apt-value="R" v-on:childToParent="onChildSetRent" />
+          <Price v-else apt-value="R" v-on:childToParent="onChildSetRent" v-on:click="emitToParent"/>
         </div>
 
         <div class="row">
           <h3>Muita kustannuksia</h3>
-          <OtherExpenses v-on:childToParent="onChildClickOtherExpenses" />
+          <OtherExpenses v-on:childToParent="onChildClickOtherExpenses" v-on:click="emitToParent"/>
         </div>
 
         <div class="row">
           <h3>Kuvat</h3>
-          <Images v-on:childToParent="onChildImages"/>
+          <Images v-on:childToParent="onChildImages" v-on:click="emitToParent"/>
         </div>   
 
         <div class="row">
           <h3>Palvelut</h3>
-          <Services v-on:childToParent="onChildClickServices" />
+          <Services v-on:childToParent="onChildClickServices" v-on:click="emitToParent"/>
           {{ fromChildServices }} {{ fromChildServicesText }}
         </div>     
       </div>
@@ -78,16 +84,17 @@
             id="description-arb"
             class="box margin-bottom__025"
             placeholder="Kuvaus"
-            v-model="apartment.propertyDescription"
+            v-model="apartment.description"
+            v-on:input="emitToParent"
           ></textarea>
         </div>
 
         <div class="row">
           <h3>Asunnon pohja</h3>
-          <FloorPlan v-on:childToParent="onChildClickFloorPlan" />
-          <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" />
-          <Area apt-value="B" v-on:childToParent="onChildClickArea" />
-          <FloorCount v-on:childToParent="onChildClickFloorCount" />
+          <FloorPlan v-on:childToParent="onChildClickFloorPlan" v-on:click="emitToParent"/>
+          <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" v-on:click="emitToParent"/>
+          <Area apt-value="B" v-on:childToParent="onChildClickArea" v-on:click="emitToParent"/>
+          <FloorCount v-on:childToParent="onChildClickFloorCount" v-on:click="emitToParent"/>
         </div>
 
         <div class="row">
@@ -96,52 +103,56 @@
             class="flexbox"
             v-bind:class="{ 'remove__align-center': showFeatures }"
           >
-            <Condition v-on:childToParent="onChildClickCondition" />
+            <Condition v-on:childToParent="onChildClickCondition" v-on:click="emitToParent"/>
             <Features
               id-value="ARB"
               v-on:childToParent="onChildClickFeatures"
               v-bind:class="{ 'add__position-absolute': showFeatures }"
+              v-on:click="emitToParent"
             />
           </div>
 
-          <BalconyPatio v-on:childToParent="onBalconyPatio" />
+          <BalconyPatio v-on:childToParent="onBalconyPatio" v-on:click="emitToParent"/>
          
           <label for="kitchen-equipment" class="label__padding__leftless">Keittiö:</label>
           <textarea
             id="kitchen-equipment"
             class="box margin-top__025 margin-bottom__025"
             placeholder="Keittiön varusteet"
-            v-model="kEquipment"
+            v-model="apartment.equipment.kitchen"
+            v-on:input="emitToParent"
           ></textarea>
-          
           <label for="bathroom-equipment" class="label__padding__leftless">Kylpyhuone:</label>
           <textarea
             id="bathroom-equipment"
             class="box margin-top__025 margin-bottom__025"
             placeholder="Kylpyhuoneen varusteet"
-            v-model="bEquipment"
+            v-model="apartment.equipment.bathroom"
+            v-on:input="emitToParent"
           ></textarea>
           <label for="storage" class="label__padding__leftless">Säilytystilat:</label>
           <textarea
             id="storage"
             class="box margin-top__025 margin-bottom__025"
             placeholder="Kerro säilytystiloista"
-            v-model="storage"
+            v-model="apartment.equipment.storage"
+            v-on:input="emitToParent"
           ></textarea>
           <label for="equipment" class="label__padding__leftless">Muuta:</label>
           <textarea
             id="equipment"
             class="box margin-top__025 margin-bottom__025"
             placeholder="Muuta huomionarvoista asunnosta"
-            v-model="equipment"
+            v-model="apartment.equipment.other"
+            v-on:input="emitToParent"
           ></textarea>
         </div>
 
         <div class="row">
-          <Yard v-on:childToParent="onYardChange" />
+          <Yard v-on:childToParent="onYardChange" v-on:click="emitToParent"/>
         </div>
         <div class="row">
-          <Parking v-on:childToParent="onChildParking"/>
+          <Parking v-on:childToParent="onChildParking" v-on:click="emitToParent"/>
         </div>
       </div>
 
@@ -162,17 +173,19 @@
                 id="build-year"
                 class="border-radius__right"
                 v-model="apartment.buildYear"
+                v-on:input="emitToParent"
               />
             </div>
             <BuildingType
               id-value="ARB"
-              v-on:childToParent="onChildClickBuildingType"
+              v-on:childToParent="onChildClickApartmentType"
+              v-on:click="emitToParent"
             />
           </div>
       
           <div class="flexbox">  
-            <Floor v-on:childToParent="onChildClickFloor" />
-            <Elevator v-on:childToParent="onChildClickElevator" />
+            <Floor v-on:childToParent="onChildClickFloor" v-on:click="emitToParent"/>
+            <Elevator v-on:childToParent="onChildClickElevator" v-on:click="emitToParent"/>
           </div>
 
           <div class="margin-bottom__025">
@@ -187,6 +200,7 @@
               id="total-amount-of-apts-on-property"
               class="border-radius box"
               v-model="apartment.totalAmountOfAptsOnProperty"
+              v-on:input="emitToParent"
             />
           </div>
           <div>
@@ -201,6 +215,7 @@
               id="businesses-on-property"
               class="border-radius box"
               v-model="apartment.businessesOnProperty"
+              v-on:input="emitToParent"
             />
           </div>
         </div>
@@ -218,6 +233,7 @@
               id="housing-association"
               class="border-radius__right"
               v-model="apartment.housingAssociation"
+              v-on:input="emitToParent"
             />
           </div>
 
@@ -233,6 +249,7 @@
               id="buildingManager"
               class="border-radius__right"
               v-model="apartment.buildingManager"
+              v-on:input="emitToParent"
             />
           </div>
           <div class="flexbox">
@@ -246,6 +263,7 @@
               id="maintainer"
               class="border-radius__right"
               v-model="apartment.maintainer"
+              v-on:input="emitToParent"
             />
           </div>
           <div v-if="apartment.isForSale" class="flexbox" id="tax-div">
@@ -260,6 +278,7 @@
               oninput="validity.valid||(value=0);"
               id="property-tax"
               v-model="apartment.propertyTax"
+              v-on:input="emitToParent"
             />
           </div>
           <label for="renovationDesc" class="label__padding__leftless margin-top__025">Remonttihistoria ja tulevat remontit:</label>
@@ -269,17 +288,17 @@
 
         <div v-if="apartment.isForSale" class="row">
           <h3>Materiaalit</h3>
-          <Materials v-on:childToParent="onChildMaterials" />
+          <Materials v-on:childToParent="onChildMaterials" v-on:click="emitToParent"/>
         </div>
 
         <div class="row">
           <h3>Ylläpito</h3>
-          <Utilities v-on:childToParent="onChildUtilities" />
+          <Utilities v-on:childToParent="onChildUtilities" v-on:click="emitToParent"/>
         </div>
 
         <div class="row" v-if="!apartment.isForSale">
           <h3>Vuokra-asunnon sopimusehdot</h3>
-          <Terms v-on:childToParent="onChildClickTerms" />
+          <Terms v-on:childToParent="onChildClickTerms" v-on:click="emitToParent"/>
         </div>
       </div>
       
@@ -350,31 +369,15 @@ export default {
 
   data() {
     return {
-      location: "",
-      neighborhood: "",
-      address: "",
-      areaCode: "",
+
       showFloorPlan: false,
-      equipment: "",
-      kEquipment: "",
-      bEquipment: "",
-      storage: "",
-      description: "",
-      buildYear: "",
-      fromChildFloorPlan: [],
+      showFeatures: false,
+
       fromChildFloorPlanText: "",
       fromChildAreaMinRoom: null,
       fromChildAreaMaxTotal: null,
-      fromChildCondition: null,
-      fromChildBuildingType: null,
-      fromChildCell: null,
-      fromChildFloor: null,
       fromChildFloorText: "",
-      price: null,
-      guarantee: null,
-      fromChildCheckedOwner: null,
       fromChildOtherExpenses: null,
-      fromChildSpeed: "",
       fromChildTerms: null,
       fromChildRentIncrease: null,
 
@@ -382,13 +385,14 @@ export default {
       errorList: {},
       isValid: true,
 
-      showFeatures: false,
-
       apartment: {
         location: {
           city: "",
           neighborhood: "",
-          address: "",
+          address: {
+            streetName: "", 
+            houseNumber: ""
+          },
           areaCode: "",
         },
         isForSale: true,
@@ -433,7 +437,7 @@ export default {
         },
         images: [],
         interestedUsers: [],
-        landLord: "",
+        landLord: "600abf197d242c30d8a0a151",
         description: "",
         viewCount: 0,
         floorPlan: {
@@ -447,11 +451,13 @@ export default {
           wardrobe: { amount: null },
           utilityRoom: { amount: null },
         },
-        area: null,
+        totalArea: null,
+        livingArea: null,
         cellArea: null,
+        propertyArea: null,
         monthlyRent: null,
         price: { salePrice: null, debtFreePrice: null },
-        maintenanceCosts: {upkeep: null, financing:null},
+        maintenanceCosts: { upkeep: null, financing:null },
         guarantee: "",
         buildYear: null,
         apartmentType: null,
@@ -510,7 +516,7 @@ export default {
             exists: false,
             description: "",
             supportsElectric: false,
-            type: null,
+            options: [],
           },
           water: {
             mustHave: false,
@@ -529,6 +535,9 @@ export default {
     };
   },
   methods: {
+     emitToParent() {
+      this.$emit('childToParent', this.apartment);
+    },
     onChildMaterials(value) {
       this.apartment.buildMaterial = value.buildMaterial;
       this.apartment.energyClass = value.energyClass;
@@ -537,7 +546,7 @@ export default {
     },
     onChildClickFloorPlan(value) {
       this.apartment.floorPlan = value.text;
-      this.apartment.floorPlanText = value.text;
+      this.apartment.floorPlanText = value.text; //Ei ole tällaista
       this.apartment.sights = value.sights;
     },
     onChildUtilities(value) {
@@ -550,8 +559,8 @@ export default {
     },
     onChildClickArea(value) {
       //Area, ei min tai max!!!!, cellArea - KYSY SUVILTA
-      this.fromChildAreaMinRoom = value.minRoom;
-      this.fromChildAreaMaxTotal = value.maxTotal;
+      this.apartment.totalArea = value.minRoom;
+      this.apartment.livingArea = value.maxTotal;
     },
     onChildClickFloorCount(value) {
       this.apartment.propertyFloors = value;
@@ -561,13 +570,14 @@ export default {
     },
     onChildParking (value) {
       //tukeeko skeema options arrayta?
-      this.apartment.parking.options = value.options;
+      this.apartment.parking.exists = value.exists;
       this.apartment.parking.supportsElectric = value.supportsElectric;
       this.apartment.parking.description = value.description;
+      this.apartment.parking.options = value.options;
     },
-    onChildClickBuildingType(value) {
-      this.apartment.BuildingType = value.types;
-      console.log(this.apartment.BuildingType)
+    onChildClickApartmentType(value) {
+      this.apartment.apartmentType = value.types;
+      console.log(this.apartment.apartmentType)
     },
     onChildClickCellAptRoom(value) {
       this.apartment.isCellApartment = value;
@@ -604,7 +614,7 @@ export default {
     },
     onChildClickOtherExpenses(value) {
       this.fromChildOtherExpenses = value.expenses;
-      this.fromChildSpeed = value.speed;
+      this.apartment.utilities.dataConnection.speed = value.speed;
     },
     onChildClickAvailableFrom(value) {
       this.apartment.availableFrom = value;
@@ -615,7 +625,7 @@ export default {
     onChildClickTerms(value) {
       this.fromChildTerms = value.terms;
       this.fromChildRentIncrease = value.amount;
-      this.guarantee = value.guarantee;
+      this.apartment.guarantee = value.guarantee;
     },
     onYardChange(value) {
       this.apartment.propertyArea = value.yardArea;
@@ -633,13 +643,23 @@ export default {
     },
     onChildClickLocation(value) {
       this.apartment.location.city = value.city;
-      this.apartment.location.address = value.address;
+      this.apartment.location.address.streetName = value.streetName;
+      this.apartment.location.address.houseNumber = value.houseNumber;
       this.apartment.location.neighborhood = value.neighborhood;
       this.apartment.location.areaCode = value.areaCode;
     },
     onChildImages(value) {
       console.log("image " + JSON.stringify(value));
       this.apartment.images = value;
+      /*
+      this.apartment.images.foreach((img) => {
+        var file = img.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function() {
+          console.log("result ", reader.result);
+        }
+        reader.readAsDataURL(file);
+      })*/
       console.log("image2 " + JSON.stringify(this.apartment.images));
     },
     handleFloorPlan() {

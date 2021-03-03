@@ -1,5 +1,13 @@
 <template>
   <div class="flexbox">
+    <p v-if="invalidMessage !== ''" class="alert-danger">{{ invalidMessage }}</p>
+    <div class="info-text margin-top__025">
+      <i class="fas fa-info-circle"></i>
+      <p>
+      Kuvat jpg tai png formaatissa.<br/>
+      Max kuvakoko 16MB.
+      </p>
+    </div>
     <input
       type="file"
       id="file"
@@ -11,21 +19,21 @@
     />
     <label for="file" class="margin-bottom__025">Lisää kuvia</label>
     <div v-bind:class="{'image-container margin-top__05' : images.length !== 0}">
-      <div v-for="(image, imgIndex) in images" :key="imgIndex">
+      <div v-for="(image, index) in images" :key="index">
         <div v-if="images.length">
           <div class="image-row">
             <div>
-              <button type="button" @click="moveImageInArray(imgIndex, imgIndex - 1)">
+              <button type="button" @click="moveImageInArray(index, index - 1)">
                 <i class="fas fa-chevron-up"></i>
               </button>
-              <button type="button" @click="removeImage(imgIndex)">
+              <button type="button" @click.prevent="images.splice(index, 1)">
                 <i class="far fa-times-circle"></i>
               </button>
-              <button type="button" @click="moveImageInArray(imgIndex, imgIndex + 1)">
+              <button type="button" @click="moveImageInArray(index, index + 1)">
                 <i class="fas fa-chevron-down"></i>
               </button>
             </div>
-            <img :src="image" :key="imgIndex" />
+            <img :src="image" :key="index" />
           </div>
         </div>
       </div>
@@ -40,6 +48,7 @@ export default {
   data() {
     return {
       images: [],
+      invalidMessage: ""
     };
   },
   methods: {
@@ -47,20 +56,45 @@ export default {
       this.$emit('childToParent', this.images);
     },
     uploadAndPreviewImage() {
-      this.$refs.file.files.forEach((e, i) =>
-        this.images.push(
-          URL.createObjectURL(this.$refs.file.files[i])
-        )
-      );
+      const files = this.$refs.file.files;
+      this.invalidMessage = "";
+
+      files.forEach((e, i) => {
+        let msg = this.validate(files[i]);
+        if (msg !== "") {
+          msg = "Error:\n" + "One or more of the images were\n" + msg.concat(".\n");
+        }
+        this.invalidMessage = this.invalidMessage.concat(msg);
+
+        //push the images that have passed the validation
+        if (msg === "") {
+          this.images.push(URL.createObjectURL(files[i]));
+        }
+      });
+
       this.emitToParent();
     },
+    /*
     removeImage(index) {
       this.images.splice(index, 1);
-    },
+    },*/
     moveImageInArray(from, to) {
       var moved = this.images.splice(from, 1)[0];
       this.images.splice(to, 0, moved);
     },
+    validate(file) {
+      console.log("validate ", file.size, file.type)
+      const MAX_SIZE = 16000000;
+      const allowedTypes = ["image/jpeg", "image/png"];
+
+      if (file.size > MAX_SIZE) {
+        return `too large. Max size: ${MAX_SIZE/1000}Kb`; //16 000 kB = 16 MB
+      }
+      if (!allowedTypes.includes(file.type)) {
+        return "not in jpg or png format";
+      }
+      return "";
+    }
   }
 };
 </script>

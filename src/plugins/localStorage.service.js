@@ -5,11 +5,13 @@ export default {
   getRefreshToken() {
     return localStorage.getItem('refreshToken')
   },
-  setToken(token) {
+  setAccessToken(token) {
     localStorage.setItem('accessToken', token);
+  },
+  setRefreshToken(token) {
     localStorage.setItem('refreshToken', token);
   },
-  clearToken() {
+  clearTokens() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   }
