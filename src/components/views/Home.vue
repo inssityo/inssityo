@@ -2,12 +2,13 @@
   <section class="hero">  
     <div class="hero-head">
       <HeroImage />
-      <SearchButtons id="search-section" class="box" />
+      <HeroText />
+      <SearchButtons />
     </div>
     <div class="hero-body">
-      
-      <section><FrontPageCards /></section>
       <section><InfoContainer /></section>
+      <section><FrontPageCards /></section>
+      
     </div>
     <div class="flaticon">Icons made by
       <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>
@@ -22,6 +23,7 @@ import HeroImage from '../home/HeroImage.vue'
 import SearchButtons from '../home/SearchSection.vue'
 import FrontPageCards from '../home/FrontPageCards.vue'
 import InfoContainer from '../home/InfoContainer'
+import HeroText from '../home/HeroText.vue'
 
 export default {
   name: 'Section',
@@ -29,7 +31,8 @@ export default {
     HeroImage,
     SearchButtons,
     FrontPageCards,
-    InfoContainer
+    InfoContainer,
+    HeroText
   }
 }
 </script>
@@ -53,13 +56,6 @@ svg {
   width: 2rem !important;
   height: 2rem;
   color: v.$KAMGreenDark;
-}
-#search-section {
-  position: absolute;
-  top: 57%;
-  left: 50%;
-  transform: translate(-50%, -30%);
-  width: 60%;
 }
 
 </style>
