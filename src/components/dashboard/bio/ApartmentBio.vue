@@ -12,8 +12,8 @@
             <Icon icon="fas fa-expand" tooltip-text="Katso pohjakuva" />
           </div>
           <div class="flexbox">
-            <Icon icon="far fa-heart" tooltip-text="Tykkää" v-show="!liked" @click="like" />
-            <Icon icon="fas fa-heart" tooltip-text="Älä tykkää" v-show="liked" @click="like" />
+            <Icon icon="far fa-heart" tooltip-text="Tykkää" v-if="!liked" @click="like" />
+            <Icon icon="fas fa-heart" tooltip-text="Älä tykkää" v-else @click="like" />
             <Icon icon="fas fa-dove" tooltip-text="Aloita chat" />
           </div>
           <h3>Katsottu {{ apartment.viewCount }} kertaa</h3>
@@ -25,24 +25,30 @@
 
           <div class="listing-data__title">
             <h2>Perustiedot</h2>
+            
             <div class="listing-data__content">
               <div class="row flexbox">
                 <p>Kohdenumero</p>
                 <p>{{ apartment._id }}</p>
               </div>
               <div class="row flexbox">
-                <p>Sijainti</p>
-                <p>{{ handleAddress }}, {{ handleNeighborhood }}, {{ handleCity }}</p>
+                <p>Osoite</p>
+                <p>{{ handleStreetName }} {{handleHouseNumber}}, {{ handleAreaCode }} {{ handleCity }}</p>
+              </div>
+              <div class="row flexbox">
+                <p>Kaupunginosa</p>
+                <p>{{ handleNeighborhood }}</p>
               </div>
               <div class="row flexbox">
                 <p>Talotyyppi</p>
-                <p>Omakotitalo</p>
+                <p>{{ handledApartment.apartmentType }}</p>
               </div>
               <div class="row flexbox">
                 <p>Omistusmuoto</p>
-                <p>omistus</p>
+                <p>{{ handleIsForSale }}</p>
               </div>
             </div>
+
             <div class="listing-data__content">
               <div class="row flexbox">
                 <p>Huoneet</p>
@@ -50,19 +56,19 @@
               </div>
               <div class="row flexbox">
                 <p>Asuinpinta-ala</p>
-                <p>200m</p>
+                <p>{{ apartment.livingArea }}m</p>
               </div>
               <div class="row flexbox">
                 <p>Kokonaispinta-ala</p>
-                <p>250m</p>
+                <p>{{ apartment.totalArea }}m</p>
               </div>
               <div class="row flexbox">
                 <p>Kerros/kerroksia</p> <!-- if omakotitalo=kerroksia -->
-                <p>2</p>
+                <p>{{ apartment.floor }}</p>
               </div>
               <div class="row flexbox">
                 <p>Rakennusvuosi</p>
-                <p>2020</p>
+                <p>{{ apartment.buildYear }}</p>
               </div>
               
               <div class="row flexbox">
@@ -70,6 +76,7 @@
                 <p>sauna</p>
               </div>
             </div>
+
             <div class="listing-data__content">
               <div class="row flexbox">
                 <p>Näköalat</p>
@@ -77,11 +84,11 @@
               </div>
               <div class="row flexbox">
                 <p>Tontin pinta-ala</p>
-                <p>1000m</p>
+                <p>{{ apartment.propertyArea }}</p>
               </div>
               <div class="row flexbox">
                 <p>Tontin kuvaus</p>
-                <p>Iso piha. Pihalla omenapuita. Kiinteistöön kuuluu peltoa ja metsää.</p>
+                <p>{{ apartment.propertyDescription }}</p>
               </div>
             </div>
           </div>
@@ -153,11 +160,11 @@
             <div class="listing-data__content">
               <div class="row flexbox">
                 <p>Velaton hinta</p>
-                <p>2 000 000 €</p>
+                <p>{{ handleDebtFreePrice }} €</p>
               </div>
               <div class="row flexbox">
                 <p>Myyntihinta</p>
-                <p>1 000 000 €</p>
+                <p>{{ handleSalePrice }} €</p>
               </div>
               <div class="row flexbox">
                 <p>Lainaosuus</p>
@@ -165,15 +172,15 @@
               </div>
               <div class="row flexbox">
                 <p>Neliöhinta</p>
-                <p>200 000 €</p>
+                <p>{{ handlePerSquareFootPrice }} €</p>
               </div>
               <div class="row flexbox">
                 <p>Hoitovastike</p>
-                <p>2 000 €</p>
+                <p>{{ handleUpkeep }} €</p>
               </div>
               <div class="row flexbox">
                 <p>Rahoitusvastike</p>
-                <p>1 000 €</p>
+                <p>{{ handleFinancing }} €</p>
               </div>
               <div class="row flexbox">
                 <p>Yhtiövastike</p>
@@ -201,7 +208,7 @@ import ApartmentService from '../../../api-services/apartment.service.js';
 
 export default {
   components: { 
-    ImageCarousel, //Handlaa kuvat
+    ImageCarousel,
     ListingThumbnails,
     Icon
   },
@@ -212,7 +219,15 @@ export default {
     return {
       liked: false,
       apartment: {},
-      location: {address: "", neighborhood: "", city: ""},
+      handledApartment: {},
+      location: {streetName: "", houseNumber: "", neighborhood: "", city: "", areaCode: ""},
+      costs: {
+        salePrice: null, 
+        debtFreePrice: null, 
+        perSquareFoot: null, 
+        upkeep: null,
+        financing: null,
+      },
 
       currentIndex: 0,
       timer: null,
@@ -227,8 +242,10 @@ export default {
 
       if (this.$route.params.apartment) {
         this.apartment = JSON.parse(this.$route.params.apartment);
-        console.log("2 " , JSON.stringify(this.apartment.images))
-      } 
+      }
+      if (this.$route.params.handledApartment) {
+        this.handledApartment = JSON.parse(this.$route.params.handledApartment);
+      }
       //Required when the page is refreshed
       else {
         try {
@@ -257,14 +274,42 @@ export default {
       floorPlan, utilities, location, price, nearbyServices, 
       balcony, patio, property, maintenanceCosts, equipment
     */
-    handleAddress() {
-      return this.handleUndefined("address");
+    handleStreetName() {
+      return this.handleUndefined("street");
+    },
+    handleHouseNumber() {
+      return this.handleUndefined("house");
     },
     handleNeighborhood() {
       return this.handleUndefined("neighborhood");
     },
     handleCity() {
       return this.handleUndefined("city");
+    },
+    handleAreaCode() {
+      return this.handleUndefined("area");
+    },
+    handleSalePrice() {
+      return this.handleUndefined("salePrice");
+    },
+    handleDebtFreePrice() {
+      return this.handleUndefined("debtFreePrice");
+    },
+    handleUpkeep() {
+      return this.handleUndefined("upkeep");
+    },
+    handleFinancing() {
+      return this.handleUndefined("financing");
+    },
+    handlePerSquareFootPrice() {
+      return this.countPerSquareFootPrice();
+    },
+    handleIsForSale() {
+      if(this.apartment.isForSale) {
+        return "omistus";
+      } else {
+        return "vuokra";
+      }
     }
   },
   methods: {
@@ -275,10 +320,15 @@ export default {
       let type = "";
       let t = "no " + name + " given ";
       switch(name) {
-        case "address":
-          type = this.apartment?.location?.address;
+        case "street":
+          type = this.apartment?.location?.address?.streetName;
           if (type !== undefined) { t = type }
-          this.location.address = t;
+          this.location.streetName = t;
+          break;
+        case "house":
+          type = this.apartment?.location?.address?.houseNumber;
+          if (type !== undefined) { t = type }
+          this.location.houseNumber = t;
           break;
         case "neighborhood":
           type = this.apartment?.location?.neighborhood;
@@ -290,9 +340,39 @@ export default {
           if (type !== undefined) { t = type }
           this.location.city = t;
           break;
+        case "area":
+          type = this.apartment?.location?.areaCode;
+          if (type !== undefined) { t = type }
+          this.location.areaCode = t;
+          break;
+        case "salePrice":
+          type = this.apartment?.price?.salePrice;
+          if (type !== undefined) { t = type }
+          this.costs.salePrice = t;
+          break;
+        case "debtFreePrice":
+          type = this.apartment?.price?.debtFreePrice;
+          if (type !== undefined) { t = type }
+          this.costs.debtFreePrice = t;
+          break;
+        case "upkeep":
+          type = this.apartment?.maintenanceCosts?.upkeep;
+          if (type !== undefined) { t = type }
+          this.costs.upkeep = t;
+          break;
+        case "financing":
+          type = this.apartment?.maintenanceCosts?.financing;
+          if (type !== undefined) { t = type }
+          this.costs.financing = t;
+          break;
       }
       return t;
     },
+    countPerSquareFootPrice() {
+      let price = (this.costs.salePrice / this.apartment.livingArea).toFixed(2);
+      this.costs.perSquareFoot = price;
+      return price;
+    }
   }
 }
 </script>

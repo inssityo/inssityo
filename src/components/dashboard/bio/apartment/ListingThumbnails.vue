@@ -2,7 +2,7 @@
   <div>
     <h4 class="margin__topless">Omakotitalo</h4>
     <h1>{{ location.neighborhood }}, {{ location.city }}</h1>
-    <h4 class="margin__topless">{{ location.address }}</h4>
+    <h4 class="margin__topless">{{ location.streetName }} {{ location.houseNumber}}</h4>
 
     <p class="listing-basics__description">{{ apartment.description }}</p>
 

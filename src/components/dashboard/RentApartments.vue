@@ -28,7 +28,11 @@ export default {
   async created() {
     try {
       const response =  await ApartmentService.getAll();
-      this.apartments = response.data;
+      let data = response.data;
+      this.apartments = data.filter(function(el) {
+        return el.isForSale === false;
+      });
+
     } catch (err) {
       console.log("apartment data error: " + err);
     }
