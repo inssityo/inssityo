@@ -39,11 +39,11 @@
 <script>
 export default {
   name: 'Sociality',
-  props: ['idValue'],
+  props: {idValue:{type:String}, foundSociality:{type:Number}},
 
   data() {
     return {
-      sociality: 1,
+      sociality: this.foundSociality,
     }
   },
   methods: {

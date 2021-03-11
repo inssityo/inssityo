@@ -2,15 +2,25 @@
   <div>
     <div class="flexbox">
       <p>Harrastukset</p>
-      <p v-if="idValue === 'P'">En harrasta<span>-</span>Himoharrastaja</p>
-      <p v-if="idValue === 'R'">Ei harrasta<span>-</span>Himoharrastaja</p>
+      <p>Ei harrasta<span> . . . </span>Himoharrastaja</p>
     </div>
-    <div class="flexbox" v-for="(hobby, index) in optionHobbies" :key="'h'+index" :id="idValue+'h'+index">  
-      <p class="margin__nothing">{{ hobby.text }}</p>
-      <div class="check__label-only" >
-        <div v-for="(level, index2,) in optionLevels" :key="'l'+index2">
-          <input type="radio" :id="index+idValue+'h'+index2" :value="level.level" v-model="optionHobbies[index].level" @change="updateLevel(index)"/>
-          <label :for="index+idValue+'h'+index2"></label>
+    <div
+      class="flexbox"
+      v-for="(value, propertyName, index) in hobbies"
+      :key="'h' + index"
+      :id="idValue + 'h' + index"
+    >
+      <p class="margin__nothing">{{ handlePropertyName(propertyName) }}</p>
+      <div class="check__label-only">
+        <div v-for="(level, index2) in 7" :key="'l' + level">
+          <input
+            type="radio"
+            :id="index + idValue + 'h' + index2"
+            :value="level"
+            :checked="level === value"
+            @change="updateLevel(propertyName, level)"
+          />
+          <label :for="index + idValue + 'h' + index2"></label>
         </div>
       </div>
     </div>
@@ -19,50 +29,19 @@
 
 <script>
 
-const READING = 'reading';
-const MUSIC = 'music';
-const CRAFTS = 'crafts';
-const SPORTS = 'sports';
-const CULTURE = 'culture';
-const ART = 'art';
-const COLLECTING = 'collecting';
-const COOKING = 'cooking';
-const GAMES = 'games';
-const VOLUNTARYWORK = 'voluntaryWork';
-const TRAVELLING = 'travelling';
-const INFORMATIONTECH = 'informationTech';
-
 export default {
   name: 'Hobbies',
-  props: ['idValue'],
+  props: {idValue: {
+    type:String},
+    currentHobbies: {
+      type: Object
+    }
+  },
 
   data() {
     return {
-      optionHobbies: [
-        { text: 'Lukeminen', value: READING, level: 1 },
-        { text: 'Musiikki', value: MUSIC, level: 1 },
-        { text: 'Kädentaidot', value: CRAFTS, level: 1 },
-        { text: 'Urheilu', value: SPORTS, level: 1 },
-        { text: 'Kulttuuri', value: CULTURE, level: 1 },
-        { text: 'Taide', value: ART, level: 1 },
-        { text: 'Keräily', value: COLLECTING, level: 1 },
-        { text: 'Ruuanlaitto', value: COOKING, level: 1 },
-        { text: 'Pelaaminen', value: GAMES, level: 1 },
-        { text: 'Vapaaehtoistyö', value: VOLUNTARYWORK, level: 1 },
-        { text: 'Matkustelu', value: TRAVELLING, level: 1 },
-        { text: 'Tietotekniikka', value: INFORMATIONTECH, level: 1 },
-      ],
-      optionLevels: [
-        { level: 1 },
-        { level: 2 },
-        { level: 3 },
-        { level: 4 },
-        { level: 5 },
-        { level: 6 },
-        { level: 7 },
-      ],
       hobbies: {
-        reading: 0,
+        reading:1,
         music: 1,
         crafts: 1,
         sports: 1,
@@ -77,53 +56,105 @@ export default {
       }
     }
   },
+  mounted() {
+    let found = (localStorage.getItem("loggedIn"))
+    if (found) {
+      const parsedFound = JSON.parse(found)
+
+      this.hobbies = parsedFound.hobbies
+      delete this.hobbies._id
+      console.log(this.hobbies)
+    }
+  },
   methods: {
+        handlePropertyName: function(given) {
+      switch(given) {
+        case"collecting": {
+          return "Keräily"
+        }
+        case"crafts": {
+          return "Käsityöt"
+        }
+        case"informationTech": {
+          return "Tietotekniikka"
+        }
+        case "sports": {
+          return "Urheilu"
+        }
+        case "music": {
+          return "Musiikki"
+        }
+        case "games": {
+          return"Pelit"
+        }
+        case "reading": {
+          return"Lukeminen"
+        }
+        case "art": {
+          return "Taide"
+        }
+        case"culture": {
+          return "Kulttuuri"
+        }
+        case"cooking": {
+          return"Ruuanlaitto"
+        }
+        case"travelling": {
+          return"Matkailu"
+        }
+        case"voluntaryWork": {
+          return"Vapaaehtoistyö"
+        }
+      }
+      return"ei tunnettu"
+  },
     emitToParent() {
       this.$emit('childToParent', [this.hobbies]);
     },
-    updateLevel(index){
+    updateLevel(propertyName, level){
       this.$nextTick(function () {});
-      this.handleHobbies(index);
+      this.handleHobbies(propertyName, level);
     },
-    handleHobbies(index) {
-      switch(this.optionHobbies[index].value) {
-        case READING: 
-          this.hobbies.reading = this.optionHobbies[0].level;
+    handleHobbies(propertyName,level) {
+      switch(propertyName) {
+        case "reading": 
+          this.hobbies.reading = level;
           break;
-        case MUSIC: 
-          this.hobbies.music = this.optionHobbies[1].level;
+        case "music": 
+          this.hobbies.music = level;
           break;
-        case CRAFTS: 
-          this.hobbies.crafts = this.optionHobbies[2].level;
+        case "crafts": 
+          this.hobbies.crafts = level;
           break;
-        case SPORTS: 
-          this.hobbies.sports = this.optionHobbies[3].level;
+        case "sports": 
+          this.hobbies.sports = level;
           break;
-        case CULTURE: 
-          this.hobbies.culture = this.optionHobbies[4].level;
+        case "culture": 
+          this.hobbies.culture = level;
           break;
-        case ART: 
-          this.hobbies.art = this.optionHobbies[5].level;
+        case "art": 
+          this.hobbies.art = level;
           break;
-        case COLLECTING: 
-          this.hobbies.collecting = this.optionHobbies[6].level;
+        case "collecting": 
+          this.hobbies.collecting = level;
           break;
-        case COOKING: 
-          this.hobbies.cooking = this.optionHobbies[7].level;
+        case "cooking": 
+          this.hobbies.cooking = level;
           break;
-        case GAMES: 
-          this.hobbies.games = this.optionHobbies[8].level;
+        case "games": 
+          this.hobbies.games = level;
           break;
-        case VOLUNTARYWORK: 
-          this.hobbies.voluntaryWork = this.optionHobbies[9].level;
+        case "voluntaryWork": 
+          this.hobbies.voluntaryWork = level;
           break;
-        case TRAVELLING: 
-          this.hobbies.travelling = this.optionHobbies[10].level;
+        case "travelling": 
+          this.hobbies.travelling = level;
           break;
-        case INFORMATIONTECH: 
-          this.hobbies.informationTech = this.optionHobbies[11].level;
+        case "informationTech": 
+          this.hobbies.informationTech = level;
           break;
       }
+      console.log(this.hobbies)
       this.emitToParent();
     }
   }
@@ -181,26 +212,26 @@ span {
   background: v.$KAMGreenSemiLight;
   border: 0.1rem solid v.$KAMGreenSemiLight;
 }
-.check__label-only div:first-child label, 
-.check__label-only div:nth-child(2) label, 
+.check__label-only div:first-child label,
+.check__label-only div:nth-child(2) label,
 .check__label-only div:nth-child(3) label {
   border: 0.1rem solid v.$KAMGreyDark;
 }
-.check__label-only div:nth-child(5) label, 
+.check__label-only div:nth-child(5) label,
 .check__label-only div:nth-child(6) label,
 .check__label-only div:last-child label {
   border: 0.1rem solid v.$KAMGreenDark;
 }
-.check__label-only div:first-child label:hover, 
-.check__label-only div:nth-child(2) label:hover, 
+.check__label-only div:first-child label:hover,
+.check__label-only div:nth-child(2) label:hover,
 .check__label-only div:nth-child(3) label:hover,
 .check__label-only div:first-child input[type="radio"]:checked + label,
 .check__label-only div:nth-child(2) input[type="radio"]:checked + label,
-.check__label-only div:nth-child(3) input[type="radio"]:checked + label   {
+.check__label-only div:nth-child(3) input[type="radio"]:checked + label {
   background: v.$KAMGreyDark;
   border: 0.1rem solid v.$KAMGreyDark;
 }
-.check__label-only div:nth-child(5) label:hover, 
+.check__label-only div:nth-child(5) label:hover,
 .check__label-only div:nth-child(6) label:hover,
 .check__label-only div:last-child label:hover,
 .check__label-only div:nth-child(5) input[type="radio"]:checked + label,
@@ -212,5 +243,4 @@ span {
 .check__label-only label:last-child {
   margin-right: 0;
 }
-
 </style>

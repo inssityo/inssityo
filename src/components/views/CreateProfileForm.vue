@@ -106,7 +106,7 @@ a {
   background: rgba(16, 105, 104, 0.6);
 
   h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 }
 .column-item--3 {

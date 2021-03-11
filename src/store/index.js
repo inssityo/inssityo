@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import AuthService from '../api-services/auth.service';
 import UserService from '../api-services/user.service';
 import LocalStorageService from '../plugins/localStorage.service';
+import { requestInterceptor, responseInterceptor } from '../plugins/requestInterceptors.js';
 
 const AUTH_REQUEST = 'auth_request';
 const AUTH_SUCCESS = 'auth_success';
@@ -44,13 +45,19 @@ export default createStore({
         AuthService.entry(credentials)
         .then(res => {
           const accessToken = res.data.accessToken
-          LocalStorageService.setToken(accessToken)
+          const refreshToken = res.data.refreshToken
+          const loggedin = res.data.user;
+          LocalStorageService.setLoggedInUser(JSON.stringify(loggedin))
+          LocalStorageService.setAccessToken(accessToken)
+          LocalStorageService.setRefreshToken(refreshToken)
+          requestInterceptor();
+          responseInterceptor();
           commit(AUTH_SUCCESS, accessToken)
           resolve(res)
         })
         .catch(err => {
           commit(AUTH_ERROR)
-          LocalStorageService.clearToken()
+          LocalStorageService.clearTokens()
           reject(err)
         })
       })
@@ -67,7 +74,7 @@ export default createStore({
         })
         .catch(err => {
           commit(AUTH_ERROR, err)
-          LocalStorageService.clearToken()
+          LocalStorageService.clearTokens()
           reject(err)
         })
       })
@@ -77,7 +84,8 @@ export default createStore({
         AuthService.logout(LocalStorageService.getAccessToken())
         .then(() => {
           commit(LOGOUT)
-          LocalStorageService.clearToken()
+          LocalStorageService.clearTokens()
+          LocalStorageService.clearStorage()
           resolve()
         })
         .catch(err => {
@@ -86,24 +94,5 @@ export default createStore({
         })
       })
     },
-    /*
-    refreshToken({commit}) {
-      return new Promise((resolve, reject) => {
-        commit(AUTH_REQUEST)
-        const refreshToken = LocalStorageService.getRefreshToken()
-        AuthService.tokenRefresh({'refreshToken': refreshToken})
-        .then(res => {
-          LocalStorageService.setToken(refreshToken)
-          //axios.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken
-          commit(AUTH_SUCCESS, accessToken)
-          resolve(res)
-        })
-        .catch(err => {
-          commit(AUTH_ERROR)
-          LocalStorageService.clearToken()
-          reject(err)
-        })
-      })
-    }*/
   },
 })

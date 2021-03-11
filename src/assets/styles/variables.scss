@@ -13,12 +13,17 @@
   src: url(~@/assets/fonts/Louis-George-Cafe-Light.ttf) format("truetype");
 }
 @font-face {
+  font-family: "KAMLouisBold";
+  src: url(~@/assets/fonts/Louis-George-Cafe-Bold.ttf) format("truetype");
+}
+@font-face {
   font-family: "KAMQuinn";
   src: url(~@/assets/fonts/Quantify.ttf) format("truetype");
 }
 
 $KAMLouis: "KAMLouis";
 $KAMLouisLight: "KAMLouisLight";
+$KAMLouisBold: "KAMLouisBold";
 $KAMQuinn: "KAMQuinn";
 
 $KAMBeigeLight: #F4ECE4;
@@ -43,3 +48,6 @@ $KAMPurple: #800080;
 
 //transparency:
 $KAMGreenTRN: rgba(1, 99, 97, 0.7);
+$KAMWhiteTRN7: rgba(255, 255, 255, 0.7);
+$KAMWhiteTRN8: rgba(255, 255, 255, 0.8);
+$KAMBlackTRN: rgba(0, 0, 0, 0.7);

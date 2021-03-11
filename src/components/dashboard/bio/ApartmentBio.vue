@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<ImageCarousel :images="apartment.images" />--> <!-- handlaa, jos ei ole kuvia -->
+    <ImageCarousel :images="apartment.images" /><!-- handlaa, jos ei ole kuvia -->
     <div class="content">
 
       <div class="container">
@@ -194,14 +194,14 @@
 </template>
 
 <script>
-//import ImageCarousel from './apartment/ImageCarousel.vue';
+import ImageCarousel from './apartment/ImageCarousel.vue';
 import ListingThumbnails from './apartment/ListingThumbnails.vue';
 import Icon from './Icon.vue';
 import ApartmentService from '../../../api-services/apartment.service.js';
 
 export default {
   components: { 
-    //ImageCarousel, //Handlaa kuvat
+    ImageCarousel, //Handlaa kuvat
     ListingThumbnails,
     Icon
   },
@@ -227,6 +227,7 @@ export default {
 
       if (this.$route.params.apartment) {
         this.apartment = JSON.parse(this.$route.params.apartment);
+        console.log("2 " , JSON.stringify(this.apartment.images))
       } 
       //Required when the page is refreshed
       else {

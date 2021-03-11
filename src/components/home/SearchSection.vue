@@ -1,22 +1,12 @@
 <template>
-  <div class="content">
-    <h1 class="margin__topless">Etsi ja löydä</h1>
-    
-    <div class="container">
-      <div class="column column-item--1 pointer">
-        <div class="transparency box">
-          <p>Löydä kämppis</p>
-        </div>
-        <img src="../../assets/images/pexels-anna-tarazevich-4850290.jpg" alt="Image 2">
-      </div>
-      <div class="column column-item--2 pointer">
-        <div class="transparency box">
-          <p>Löydä asunto</p>
-        </div>
-        <img src="../../assets/images/pexels-kelly-ritta-4377192-2.jpg" alt="Image 3">
-      </div>
+  <div>
+    <div class="flexbox check__label-only">
+      <input type="radio" id="search-buy" checked value="for-sale" name="choice" v-model="buy"/>
+      <label class="hover--check__label-only" for="search-buy" @click="handleSearch(true)">Osta</label>
+      <input type="radio" id="search-rent" value="rent" name="choice" v-model="buy"/>
+      <label class="hover--check__label-only" for="search-rent" @click="handleSearch(false)">Vuokraa</label>
     </div>
-    
+    <input type="text" id="hero-search-input" @keyup.enter="search" placeholder="Hae">
   </div>
 </template>
 
@@ -24,75 +14,79 @@
 
 export default {
   name: 'SearchButtons',
+  inject: ['$router'],
+
+  data() {
+    return {
+      buy: true,
+      route: "/apartments/for-sale",
+    }
+  },
+  methods: {
+    handleSearch(value) {
+      if (value) {
+        this.buy = true;
+        this.route = "/apartments/for-sale"
+      } else {
+        this.buy = false;
+        this.route = "/apartments/rent"
+      }
+      console.log("search " + value)
+    },
+    search() {
+      this.$router.push(this.route);
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-p {
-  font-size: 1.4rem !important;
-  font-weight: normal;
-  letter-spacing: 0.03rem;
+.flexbox {
+  justify-content: normal;
 }
-.content {
-  padding-top: 3rem;
-}
-.container {
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(1, 32vw);
-}
-.column {
 
+.check__label-only label {
+  color: v.$White;
+  letter-spacing: 0.15rem;
+  font-size: 2rem !important;
+  padding: 0;
+  margin-right: 4rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 0.3rem solid transparent !important;
+  background-color: transparent;
 }
-.column:hover {
-  img {
-    filter:brightness(70%);
-  }
-}
-.column-item--1 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  position: relative;
 
-  div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0.7rem 1.1rem;
-    border-bottom: 0.15rem solid v.$KAMGreenDark;
-    
-    p {
-      margin: 0;
-    }
-  }
-  img {
-    border-radius: 1.5rem 0 0 1.5rem;
-  }
+.check__label-only input:checked + label {
+  background-color: transparent;
+  color: v.$KAMPurple;
 }
-.column-item--2 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  position: relative;
-  overflow: hidden;
   
-  div {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 0;
-    padding: 0.7rem 1.1rem;
-    border-top: 0.15rem solid v.$KAMGreenDark;
-    text-align: right;
-    
-    p {
-      margin: 0;
-    }
-  }
-  img {
-    border-radius: 0 1.5rem 1.5rem 0;
-  }
+.hover--check__label-only:hover {
+  background-color: transparent !important;
+  border-bottom: 0.3rem solid v.$KAMPurple !important;
+  color: v.$White !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+#hero-search-input {
+  height: 3rem;
+  border-radius: 0;
+  background: v.$White;
+  background: v.$KAMWhiteTRN7;
+  padding: 0.2rem 1rem;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.02rem;
+  margin-top: 1.5rem;
+  border-bottom: 0.3rem solid v.$KAMGreenDark !important;
+}
+#hero-search-input:focus {
+  border-bottom: 0.3rem solid v.$KAMPurple !important;
+}
+#hero-search-input:hover {
+  background: v.$KAMBlackTRN !important;
 }
 
 </style>

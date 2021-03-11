@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="flexbox">
     <p>Onko asunto solu tai sen yksi huone?</p>
     <div class="flexbox">
       <p class="margin__topless margin__bottomless switch-no" v-bind:class="{'switch-yes': checkedCell}">{{ checkedCell ? "kyllä" : "ei" }}</p>
-      <label class="switch" v-on:click="emitToParent">
+      <label class="switch switch__margin-left" v-on:click="emitToParent">
         <input type="checkbox" id="checkbox-rent" v-model="checkedCell">
         <span class="slider round"></span>
       </label>
@@ -31,13 +31,5 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-div p {
-  margin-bottom: 0.2rem;
-}
-.flexbox{
-  p {
-    margin-right: 0.5rem;
-  }
-}
 
 </style>

@@ -2,12 +2,10 @@
   <section class="hero">  
     <div class="hero-head">
       <HeroImage />
-      <a href="#search-section">
-        <i class="fas fa-sort-down pointer hover__color--blue"></i>
-      </a>
+      <SearchButtons id="search-section" class="box" />
     </div>
     <div class="hero-body">
-      <section><SearchButtons id="search-section" /></section>
+      
       <section><FrontPageCards /></section>
       <section><InfoContainer /></section>
     </div>
@@ -38,8 +36,10 @@ export default {
 
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
+
 .hero-head {
   background-size: cover;
+  position: relative;
 }
 .hero-body {
   background: v.$White;
@@ -53,6 +53,13 @@ svg {
   width: 2rem !important;
   height: 2rem;
   color: v.$KAMGreenDark;
+}
+#search-section {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  width: 60%;
 }
 
 </style>

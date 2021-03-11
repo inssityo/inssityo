@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%">
     <select v-if="idValue === 'P'" v-model="type" v-on:click="emitToParent">
-      <option value="" selected disabled hidden>Työtyyppi</option>
+      <option value="" selected disabled hidden>{{workTypeChoice ? optionWorkTypes[workTypeChoice-1].text : "Työtyyppi"}}</option>
       <option v-for="(type, index,) in optionWorkTypes" :value="type.value" :key="index">{{ type.text }}</option>
     </select>
 
@@ -28,11 +28,13 @@
 <script>
 export default {
   name: 'WorkType',
-  props: ['employmentStatusP', 'employmentStatusR', 'idValue'],
+  props: {employmentStatusP:{type:Number}, employmentStatusR: {type:Number}, idValue:{type:String}, workTypeChoice: {
+    type: Number
+  }},
 
   watch: {
-    employmentStatus: function() { //(newVal, oldVal) {
-      //console.log("prop changed ", newVal, " ", oldVal)
+    employmentStatus: function() {
+
       this.handleWorkType();
     }
   },

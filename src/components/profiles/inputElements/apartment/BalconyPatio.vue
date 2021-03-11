@@ -1,37 +1,39 @@
 <template>
-  <div  id="balconyParent">
-
+  <div class="flexbox margin-top__1 margin-bottom__1">
+    <div class="width__50">
       <div class="flexbox">
-      <label class="description"> Parveke
-      </label>
-      <label class="switch">
+        <label class="label__padding__leftless">Parveke:</label>
+        <div class="flexbox">
+        <p class="margin__topless margin__bottomless switch-no" v-bind:class="{'switch-yes': balconyExists}">{{ balconyExists ? "kyllä" : "ei" }}</p>
+        <label class="switch switch__margin-left">
           <input type="checkbox" v-model="balconyExists" v-on:click="toggleBalcony" v-on:input="emitToParent">
           <span class="slider round" v-bind:class="{'switch-yes': balconyExists}"></span>
-      </label>
+        </label>
+        </div>
       </div>
 
-  <div class="balcText">
-      <label for="balconyDescText" v-if="balconyExists" class="description">Parvekkeen kuvaus
-      <input type="text" id="balconyDescText" v-model="balconyDesc" v-on:input="emitToParent">
-      </label>
-  </div>
-
+      <div v-if="balconyExists" class="margin-top__05">
+        <label for="balconyDescText" class="label__padding__leftless">Parvekkeen kuvaus:</label>
+        <input type="text" id="balconyDescText" class="box margin-top__025" placeholder="ranskalainen, viherhuone..." v-model="balconyDesc" v-on:input="emitToParent">
+      </div>
     </div>
 
-  <div id="patioParent">
-
+    <div class="width__50">
       <div class="flexbox">
-            <label class="description"> Terassi
-      </label>
-      <label class="switch">
+        <label class="label__padding__leftless">Terassi:</label>
+        <div class="flexbox">
+        <p class="margin__topless margin__bottomless switch-no" v-bind:class="{'switch-yes': patioExists}">{{ patioExists ? "kyllä" : "ei" }}</p>
+        <label class="switch switch__margin-left">
           <input type="checkbox" v-model="patioExists" v-on:click="togglePatio" v-on:input="emitToParent">
           <span class="slider round" v-bind:class="{'switch-yes': patioExists}"></span>
-      </label>
-            </div>
-            <div class="patioText">
-            <label for="patioDescText" v-if="patioExists" class="description">Terassin kuvaus
-      <input type="text" id="patioDescText" v-model="patioDesc" v-on:input="emitToParent">
-      </label>
+        </label>
+        </div>
+      </div>
+
+      <div v-if="patioExists" class="margin-top__05">
+        <label for="patioDescText" class="label__padding__leftless">Terassin kuvaus:</label>
+        <input type="text" id="patioDescText" class="box margin-top__025" placeholder="katettu, lasitettu..." v-model="patioDesc" v-on:input="emitToParent">
+      </div>
     </div>
   </div>
 </template>
@@ -51,13 +53,6 @@ export default {
   },
 
   methods: {
-    toggleBalcony() {
-      this.balconyExists = !this.balconyExists;
-    },
-
-    togglePatio() {
-      this.patioExists = !this.patioExists;
-    },
     emitToParent() {
       this.$emit("childToParent", {
         balconyExists: this.balconyExists,
@@ -66,6 +61,12 @@ export default {
         patioDesc: this.patioDesc,
       });
     },
+    toggleBalcony() {
+      this.balconyExists = !this.balconyExists;
+    },
+    togglePatio() {
+      this.patioExists = !this.patioExists;
+    },
   },
 };
 </script>
@@ -73,28 +74,9 @@ export default {
 <style lang='scss' scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-#patioParent,
-#balconyParent {
-  float: left;
-  width: 50%;
-  max-width: 50%;
-  margin-top: 0.5em;
-}
-
-#patioParent {
-  margin-left: 1em;
-}
-
-#balconyParent {
-  margin-right: 1em;
-}
-
-.patioText, .balcText {
-    margin-top: 0.5em;
-}
-
-.patioText {
-  margin-right: 1em;
+.flexbox {
+  align-items: normal;
+  //margin-bottom: 1rem;
 }
 
 </style>

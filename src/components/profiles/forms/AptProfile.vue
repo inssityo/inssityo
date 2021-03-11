@@ -134,6 +134,7 @@ export default {
     onChildClickBuildingType(value) {
       this.sharedApartment.buildingType = value.types;
       this.showBuildingType = value.show;
+      console.log("show " + this.showBuildingType)
     },
     onChildClickRooms(value) {
       this.sharedApartment.maxRooms = value;

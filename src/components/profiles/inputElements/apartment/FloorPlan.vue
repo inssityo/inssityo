@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <p>Pohja: <span>{{ floorPlanText }}</span></p>
-              
+  <div class="margin-top__025">
+    <p class="margin-top__025 margin-bottom__025">Pohja: <span>{{ floorPlanText }}</span></p>
     <label @click="handleFloorPlan">
       <div class="flexbox label__border-bottom--green" v-bind:class="{'remove__border-radius': showFloorPlan}">
-        <p v-show="!showFloorPlan">Lisää huonetyyppejä</p> 
-        <p v-show="showFloorPlan">Sulje huoneiston kuvaus</p>
+        <p v-if="!showFloorPlan">Lisää huonetyyppejä</p> 
+        <p v-else>Sulje huoneiston kuvaus</p>
 
-        <div v-show="showFloorPlan">
+        <div v-if="showFloorPlan">
           <i class="fas fa-times hover__color--blue"></i>
         </div>
-        <div v-show="!showFloorPlan">
+        <div v-else>
           <i class="fas fa-plus hover__color--blue"></i>
         </div>
       </div>
@@ -29,23 +28,22 @@
           </select>
 
           <div>
-            <div @click="remove(index)" v-show="index || ( !index && floorPlan.length > 1)">
+            <div @click="remove(index)" v-if="index || ( !index && floorPlan.length > 1)">
               <i class="fas fa-minus hover__color--blue"></i>
             </div>
-            <div @click="add" v-show="index === floorPlan.length-1">
+            <div @click="add" v-if="index === floorPlan.length-1">
               <i class="fas fa-plus hover__color--blue"></i>
             </div>
           </div>
-          
-          <p>{{ input.number }}<span v-show="input.number !== null && input.abbr !== null">/</span>{{ input.abbr }}</p>
         </div>
       </div>
     </div>
+
     <label for="description-floorplan">Kuvaus:
-      <textarea id="description-floorplan" class="box"  placeholder="Kerro vapaasti asunnosta." v-model="description" v-on:input="emitToParent"></textarea>
+      <textarea id="description-floorplan" class="box" placeholder="Kerro vapaasti asunnosta." v-model="description" v-on:input="emitToParent"></textarea>
     </label>
 
-        <label for="description-sights">Näkymät:
+    <label for="description-sights">Näkymät:
       <textarea id="description-sights" class="box" placeholder="Kuvaile asunnosta avautuvia näkymiä." v-model="sights" v-on:input="emitToParent"></textarea>
     </label>
 
@@ -112,10 +110,6 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-#number-of-rooms {
-  height: 1.75em;
-}
-
 label {
   padding: 0;
 
@@ -129,18 +123,18 @@ label {
     }
   }
 }
+label[for="number-of-rooms"] {
+  width: 3.2rem;
+}
 .show-floor-plan {
   padding: 0.2rem 0.5rem !important;
   margin: 0 0 1rem 0;
-  border-radius: 0 0 0.5rem 0.5rem;
+  border-radius: 0 0 0.3rem 0.3rem;
 
   .flexbox, div .flexbox {
     justify-content: normal;
   }
-  //roomtype label to the right
-  div:first-child label:first-child {
-    margin-right: 0.5rem;
-  }
+
   //labels
   div:first-child label {
     margin: 0.2rem 0 0.2rem 0;
@@ -151,7 +145,7 @@ label {
   }
 }
 .remove__border-radius {
-  border-radius: 0.5rem 0.5rem 0 0 !important;
+  border-radius: 0.3rem 0.3rem 0 0 !important;
   border-bottom: none !important;
   margin-bottom: 0 !important;
 }

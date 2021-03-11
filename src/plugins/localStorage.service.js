@@ -5,12 +5,23 @@ export default {
   getRefreshToken() {
     return localStorage.getItem('refreshToken')
   },
-  setToken(token) {
+  getLoggedInUser() {
+    return localStorage.getItem('loggedIn')
+  },
+  setAccessToken(token) {
     localStorage.setItem('accessToken', token);
+  },
+  setRefreshToken(token) {
     localStorage.setItem('refreshToken', token);
   },
-  clearToken() {
+  setLoggedInUser(user) {
+    localStorage.setItem('loggedIn', user)
+  },
+  clearTokens() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+  },
+  clearStorage() {
+    localStorage.clear();
   }
 };
