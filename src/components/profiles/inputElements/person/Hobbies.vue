@@ -63,7 +63,6 @@ export default {
 
       this.hobbies = parsedFound.hobbies
       delete this.hobbies._id
-      console.log(this.hobbies)
     }
   },
   methods: {
@@ -154,7 +153,6 @@ export default {
           this.hobbies.informationTech = level;
           break;
       }
-      console.log(this.hobbies)
       this.emitToParent();
     }
   }

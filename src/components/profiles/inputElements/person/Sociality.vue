@@ -30,7 +30,7 @@
             <div class="divider"></div>
           </div>
         </div>
-        <input class="box" type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" @change="emitToParent" />
+        <input class="box" type="range" name="range" v-model="sociality" :id="idValue+'range'" min="1" max="7" step="1"/>
       </div>
     </div>
   </div>
@@ -43,11 +43,21 @@ export default {
 
   data() {
     return {
-      sociality: this.foundSociality,
+      //ei toimi luotettavasti
+      sociality: this.foundSociality ? this.foundSociality : 1
+    }
+  },
+  watch: {
+    sociality() {
+      console.log(this.foundSociality)
+      console.log("WATCH", this.sociality)
+      this.emitToParent()
+
     }
   },
   methods: {
     emitToParent() {
+      console.log(this.sociality)
       this.$emit('childToParent', this.sociality)
     },
   }

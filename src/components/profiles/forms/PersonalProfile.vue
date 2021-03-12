@@ -17,13 +17,13 @@
           <input type="text" id="lastname" class="border-radius__right" v-model="user.surname" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--4">
-          <Age id-value="P" v-bind:ageGroup="user.ageGroup" v-on:childToParent="onChildClickAge" v-on:click="emitToParent" v-model="user.ageGroup" />
+          <Age id-value="P" v-bind:age-group="user.ageGroup" v-on:childToParent="onChildClickAge" v-on:click="emitToParent" v-model="user.ageGroup" />
         </div>
         <div class="row-item--5">
-          <Gender id-value="P" v-bind:genderChoice="user.gender" v-on:childToParent="onChildClickGender" v-on:click="emitToParent" v-model="user.gender" />
+          <Gender id-value="P" v-bind:gender-choice="user.gender" v-on:childToParent="onChildClickGender" v-on:click="emitToParent" v-model="user.gender" />
         </div>
         <div class="row-item--6" v-bind:class="{'row-item--6-2': user.employmentStatus === 1}">
-          <Status id-value="P" v-bind:currentStatus="user.employmentStatus" v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
+          <Status id-value="P" v-bind:current-status="user.employmentStatus" v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--7" v-show="user.employmentStatus === 1">
           <WorkType id-value="P" :employment-status-p="user.employmentStatus" v-bind:workTypeChoice="user.workType" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
@@ -42,10 +42,10 @@
 
       <div class="column column-item--3 container">
         <div class="row-item--1">
-          <Sociality id-value="P" v-bind:foundSociality="user.sociality" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent" />
+          <Sociality id-value="P" v-bind:found-sociality="user.sociality" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent" />
         </div>
         <div class="row-item--2">
-          <Traits id-value="P" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
+          <Traits id-value="P" :found-traits="user.personalityTraits" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
         </div>
         <div class="row-item--3">
           <Pets id-value="P" v-on:childToParent="onChildClickPets" v-on:click="emitToParent" />
@@ -54,7 +54,6 @@
           <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" v-on:click="emitToParent" />
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -180,7 +179,7 @@ export default {
       this.user.drugs = value.drugs;
     },
     onChildClickSociality(value) {
-      this.user.sociality = value;
+      this.user.sociality = parseInt(value);
     },
     onChildClickWorkType(value) {
       this.user.workType = value.types;
@@ -196,7 +195,7 @@ export default {
     if (loggedIn) {
       console.log("user found");
       this.user = JSON.parse(loggedIn);
-      console.log(this.user)
+      console.log("USER", this.user)
     }
   },
 }
