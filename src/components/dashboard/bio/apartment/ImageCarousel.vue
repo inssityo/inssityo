@@ -1,7 +1,7 @@
 <template>
   <div class="card-carousel">
     <div class="card-img">
-      <img :src="require(`../../../../assets/images/${currentImage}`)" class="img--calc" alt="">
+      <img :src="currentImage" class="img--calc" alt="">
      
       <span @click="nextImage">
         <i class="fas fa-caret-right pointer"></i>
@@ -18,7 +18,7 @@
         :class="['thumbnail-image', (activeImage == index) ? 'active' : '']"
         @click="activateImage(index)"
       >
-        <img :src="require(`../../../../assets/images/${image}`)">
+        <img :src="image">
       </div>
     </div>
   </div>
@@ -30,15 +30,44 @@ export default {
 
   data() {
     return {
-      imagesData: this.images,
+      imagesData: [],
       activeImage: 0
     }
   },
   computed: {
     //currentImage gets called whenever activeImage changes
     currentImage() {
-        return this.imagesData[this.activeImage];
+      return this.imagesData[this.activeImage];
     }
+  },
+  created() {
+ 
+      console.log("i " , JSON.stringify(this.images))
+      //var reader = new FileReader();
+      /*
+      var convertedImages = this.images.forEach(img => {
+      
+        let image = new Image();
+        image.src = 'data:image/jpeg;base64,' + img;
+        console.log("src " , image.src)
+        this.imagesData.push(image.src)
+      });*/
+      //this.imagesData = convertedImages;
+      if (this.images !== null) {
+
+      let imgArr = this.images;
+      imgArr.forEach((element, index) => {
+        
+        let data = element;
+        let buff = Buffer.from(data, "base64");
+        imgArr[index] = buff.toString("ascii");
+
+      });
+      this.imagesData = imgArr;
+    }
+
+
+      console.log("image ", this.imagesData)
   },
   methods: {
     //go forward on the images array or go at the first image
@@ -59,7 +88,7 @@ export default {
     },
     activateImage(imageIndex) {
         this.activeImage = imageIndex;
-    }
+    },
 }
 
 }

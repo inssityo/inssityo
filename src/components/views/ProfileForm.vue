@@ -15,7 +15,7 @@
       <a v-show="choice === 2 || choice === 3" href="#apt-rent-buy">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
       </a>
-      <AptRentBuy id="apt-rent-buy" v-show="choice === 1 || choice === 3" />
+      <AptRentBuy id="apt-rent-buy" v-show="choice === 1 || choice === 3" v-on:childToParent="onChildClickAptRentBuy"/>
 
       <a v-show="choice === 1" href="#personal">
         <i class="fas fa-sort-down pointer hover__color--blue"></i>
@@ -46,6 +46,7 @@ import PersonalProfile from '../profiles/forms/PersonalProfile.vue'
 import RoommateProfile from '../profiles/forms/RoommateProfile.vue'
 import AptProfile from '../profiles/forms/AptProfile.vue'
 import AptRentBuy from '../profiles/forms/AptRentBuy.vue'
+import ApartmentService from '../../api-services/apartment.service'
 
 //const TIMEOUT = 1;
 
@@ -92,6 +93,8 @@ export default {
       fromChildRoommateProfile: [],
       fromChildAptProfile: [],
 
+      fromChildAptRentBuy: [],
+
       isValid: false,
     }
   },
@@ -128,6 +131,9 @@ export default {
       this.fromChildAptProfile = value;
       //console.log(JSON.stringify(this.fromChildAptProfile));
     },
+    onChildClickAptRentBuy(value) {
+      this.fromChildAptRentBuy = value;
+    },
     //random hello text
     randomItem (items) {
       return items[Math.floor(Math.random()*items.length)];
@@ -147,22 +153,34 @@ export default {
 
       console.log("update")
     },
-    handleSubmit() {
+    updateApartment() {
+      /*for (const [key, value] of Object.entries(this.fromChildAptRentBuy)) {
+        this.apartment[key] = value;
+      }*/
+      this.apartment = this.fromChildAptRentBuy;
+
+    },
+    async handleSubmit() {
       console.log("submit")
       console.log(JSON.stringify(this.user))
       this.updateUser();
-      console.log(JSON.stringify(this.user))
+      console.log(JSON.stringify(this.apartment))
 
-      if (this.isValid) {
-        /*
-        axios.post(process.env.USERS_URL)
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });*/
-      }
+      //if (this.isValid) {
+        console.log("in")
+        if (this.choice === 3) {
+          this.updateApartment();
+          console.log("apt " + JSON.stringify(this.apartment)) //tarvitaan landlord id
+          try {
+            await ApartmentService.create(this.apartment)
+            .then(function (response) {
+              console.log("apartment created " + JSON.stringify(response.data));
+            })
+          } catch (err) {
+            console.log("apartment data error: " + err);
+          }
+        }
+      //}
     },
   },
   created() {

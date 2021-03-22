@@ -12,6 +12,7 @@
       <input type="checkbox" id="insurance" v-model="terms[2].insurance" v-on:click="handleInsuranceClick"> <!--lisää idValue -->
       <span class="checkmark"></span>
     </label>
+
     <label for="rent-increase" class="checkmark-label">Vuokraa korotetaan vuosittain
       <input type="checkbox" id="rent-increase" v-model="checkedRentIncrease" v-on:click="emitToParent">
       <span class="checkmark"></span>
@@ -20,13 +21,14 @@
       <input type="text" id="amount" v-model="amount" v-on:input="emitToParent">
     </label>
 
-    <label for="guarantee">Vuokravakuus
-            <textarea class="box" placeholder="Kahden kuukauden vuokrahinta ennen asuntoon muuttamista." v-model="termsDescription"></textarea>
-    </label>
-  
-    <label for="terms">Muita ehtoja
+
+    <div v-bind:class="{'margin-top__1' : !terms[3].checkedRentIncrease}">
+      <label for="guarantee" class="label__padding__leftless">Vuokravakuus:</label>
+      <textarea class="box margin-bottom__1" placeholder="Kahden kuukauden vuokrahinta ennen asuntoon muuttamista." v-model="termsDescription"></textarea>
+
+      <label for="terms" class="label__padding__leftless">Muita ehtoja:</label>
       <textarea id="terms-description" class="box" placeholder="Mikäli vuokrasuhde päättyy ennen kuin vuosi sen alkamisesta on kulunut, peritään vuokralaiselta sopimussakko 1,24 x 1 kk vuokraa vastaava määrä." v-model="guarantee"></textarea>
-    </label>
+    </div>
   </div>
 </template>
 
@@ -71,18 +73,25 @@ export default {
 div {
   margin-top: 0.3rem;
 
+  .flexbox {
+    justify-content: normal;
+
+    label {
+      padding-left: 1.8rem;
+    }
+  }
   //amount
   #amount {
     display: block;
-    margin: 1rem 0 0.5rem;
-    width: 24em;
+    margin: 0.3rem 0 0.5rem;
+    width: 3rem;
     
     input {
       margin: 0.3rem 0.5rem;
       width: 3rem;
     }
   }
-  label:nth-last-of-type(3) {
+  label:nth-last-of-type() {
     margin: 0 0 1rem 0;
   }
 }

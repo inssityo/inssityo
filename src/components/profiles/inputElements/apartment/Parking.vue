@@ -10,7 +10,7 @@
       >
         {{ exists ? "kyllä" : "ei" }}
       </p>
-      <label class="switch">
+      <label class="switch switch__margin-left">
         <input
           type="checkbox"
           v-model="exists"
@@ -25,11 +25,11 @@
     </div>
 
     <div v-if="exists" class="multiselect">
-      <div class="selectBox pointer" @click="showCheckboxes()">
+      <div class="select-box pointer" @click="showCheckboxes()">
         <select v-bind:class="{ 'background--green': expanded }">
           <option>Tyyppi</option>
         </select>
-        <div class="overSelect"></div>
+        <div class="over-select"></div>
         </div>
 
         <div
@@ -53,17 +53,17 @@
     </div>
 
     <div class="flexbox" v-if="exists">
-              <p>Sähköauton latauspiste</p>
+      <p>Sähköauton latauspiste:</p>
       <div class="flexbox">
 
         <p
-        class="margin__topless margin__bottomless switch-no"
-        id="parkingText"
-        v-bind:class="{ 'switch-yes': supportsElectric }"
-      >
+          class="margin__topless margin__bottomless switch-no"
+          id="parkingText"
+          v-bind:class="{ 'switch-yes': supportsElectric }"
+        >
         {{ supportsElectric ? "kyllä" : "ei" }}
       </p>
-      <label class="switch">
+      <label class="switch switch__margin-left">
         <input
           type="checkbox"
           v-model="supportsElectric"
@@ -78,14 +78,15 @@
     </div>
 
     <div v-if="exists">
-                  <label for="description-parking" class="description">
-           Kuvaus:       <textarea
-              id="description-parking"
-              class="box"
-              placeholder="Tietoa kohteen pysäköintimahdollisuuksista."
-              v-model="description"
-            ></textarea>
-                  </label>
+      <label for="description-parking" class="label__padding__leftless">
+        Kuvaus:
+        <textarea
+          id="description-parking"
+          class="box"
+          placeholder="Tietoa kohteen pysäköintimahdollisuuksista."
+          v-model="description"
+        ></textarea>
+      </label>
     </div>
 </template>
 
@@ -112,7 +113,7 @@ export default {
   methods: {
     emitToParent() {
       this.$emit("childToParent", {
-        exists:this.exists,
+        exists: this.exists,
         options: this.options,
         description: this.description,
         supportsElectric: this.supportsElectric,
@@ -160,15 +161,18 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-input[type="text"] {
-  padding-top: 14em;
+h3 {
+  margin-bottom: 0.8rem;
 }
-.switch{
-  margin-left: 1em;
+.flexbox .flexbox {
+  margin-top: 0.4rem;
 }
-
+.multiselect {
+  margin-top: 0.5rem;
+}
 textarea {
   margin-top: 0.5em;
   height: 5em;
 }
+
 </style>

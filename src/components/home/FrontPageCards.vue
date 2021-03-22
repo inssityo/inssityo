@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="margin__nothing">Vapaita asuntoja</h1>
+    <h1>Vapaita asuntoja</h1>
     <div class="container">
       <div class="column column-item--1">
         <Card />
