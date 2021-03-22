@@ -24,6 +24,7 @@
               id="available-content"
               v-on:click="emitToParent"
             />
+
             <AvailableTo
               v-on:childToParent="onChildClickAvailableTo"
               id="available-content"
@@ -60,6 +61,7 @@
           <h3>Muita kustannuksia</h3>
           <OtherExpenses v-on:childToParent="onChildClickOtherExpenses" v-on:click="emitToParent"/>
         </div>
+
 
         <div class="row">
           <h3>Kuvat</h3>
@@ -390,8 +392,8 @@ export default {
           city: "",
           neighborhood: "",
           address: {
-            streetName: "", 
-            houseNumber: ""
+            streetName:"",
+            houseNumber:""
           },
           areaCode: "",
         },
@@ -466,6 +468,8 @@ export default {
         floor: "",
         propertyFloors: "",
         sights: "",
+        rentIncrease:false,
+        rentIncreaseAmount:"",
         hasElevator: false,
         housingAssociation: "",
         buildingManager: "",
@@ -486,6 +490,7 @@ export default {
         limitations: "",
         availableFrom: null,
         availableUntil: null,
+        serviceDescription: "",
         property: {
           rented: false,
           owner: "",
@@ -568,12 +573,11 @@ export default {
     onChildClickCondition(value) {
       this.apartment.condition = value;
     },
-    onChildParking (value) {
-      //tukeeko skeema options arrayta?
-      this.apartment.parking.exists = value.exists;
-      this.apartment.parking.supportsElectric = value.supportsElectric;
-      this.apartment.parking.description = value.description;
-      this.apartment.parking.options = value.options;
+    onChildParking(value) {
+      this.apartment.utilities.parking.exists = value.exists
+      this.apartment.utilities.parking.type = value.options;
+      this.apartment.utilities.parking.supportsElectric = value.supportsElectric;
+      this.apartment.utilities.parking.description = value.description;
     },
     onChildClickApartmentType(value) {
       this.apartment.apartmentType = value.types;
@@ -623,9 +627,12 @@ export default {
       this.apartment.availableUntil = value;
     },
     onChildClickTerms(value) {
-      this.fromChildTerms = value.terms;
-      this.fromChildRentIncrease = value.amount;
-      this.apartment.guarantee = value.guarantee;
+      this.smokingAllowed = value.smokingAllowed;
+      this.petsAllowed = value.petsAllowed;
+      this.utilities.insurancePlan.mustHave = value.insuranceRequired;
+      this.rentIncrease = value.rentIncrease;
+      this.rentIncreaseAmount = value.amount;
+      this.guarantee = value.guarantee;
     },
     onYardChange(value) {
       this.apartment.propertyArea = value.yardArea;
@@ -752,6 +759,15 @@ textarea {
 }
 #build-year {
   width: 3.2rem;
+}
+
+#houseNumberLabel {
+  white-space: nowrap;
+}
+
+#housingAssociation {
+  width: 100%;
+  margin-right: 1em;
 }
 
 </style>

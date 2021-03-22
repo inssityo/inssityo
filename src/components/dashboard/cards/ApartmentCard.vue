@@ -10,7 +10,7 @@
       <div class="transparency flexbox">
         <p class="align-center"><i class="fas fa-ruler-combined"></i>{{ apartment.cellArea }}m<span>&sup2;</span></p>
         <p class="align-center"><i class="far fa-building"></i>{{ apartment.floor }}</p>
-        <p class="align-center"><i class="far fa-calendar-alt"></i>{{ apartment.availableFrom }}</p>
+        <p class="align-center"><i class="far fa-calendar-alt"></i> {{ handleDates }} </p>
         <p class="align-center"><i class="fas fa-coins"></i>{{ apartment.monthlyRent }}€</p>
       </div>
     </div>
@@ -72,7 +72,13 @@ export default {
         price = this.apartment.monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       return price;
-    }
+    },
+    handleDates: function() {
+    const dbDate  = this.apartment.availableFrom
+    var d = new Date(dbDate)
+    const dateString = d.getDate() + "." + (d.getMonth()+1) + "." + d.getFullYear();
+    return dateString
+  },
   },
   methods: {
     handleUndefinedSellingPrice() {
@@ -111,6 +117,4 @@ export default {
 .align-center {
   text-align: center;
 }
-
-
 </style>

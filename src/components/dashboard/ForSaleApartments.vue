@@ -1,8 +1,11 @@
 <template>
   <div class="content">
     <h1>Osta asunto, josta tarinat alkavat</h1>
+
+            <Autocomplete :items="apartments"/>
     <div class="box">
       <div class="cards flexbox box">
+
         <ApartmentCard card-id="S" :apartment-data="apartments[index]" v-for="(apt, index) in apartments" :key="index"/>
       </div>
     </div>
@@ -12,12 +15,14 @@
 <script>
 import ApartmentCard from "./cards/ApartmentCard.vue";
 import ApartmentService from "../../api-services/apartment.service.js";
+import Autocomplete from '../../components/dashboard/bio/apartment/Autocomplete.vue';
 
 export default {
   name: 'ForSaleApartments',
 
   components: {
-    ApartmentCard
+    ApartmentCard,
+    Autocomplete
   },
 
   data() {
