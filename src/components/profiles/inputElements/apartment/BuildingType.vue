@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     emitToParent() {
+
       if (this.idValue === 'ARB') {
         this.$emit('childToParent', {'types': this.buildingType, 'show': false});
       } else {
@@ -56,23 +57,7 @@ export default {
       }
     },
     handleBuildingTypes(value) {
-      switch(value) {
-        case 1:
-          this.optionBuildingTypes[0].checked = !this.optionBuildingTypes[0].checked;
-          break;
-        case 2:
-          this.optionBuildingTypes[1].checked = !this.optionBuildingTypes[1].checked;
-          break;
-        case 3:
-          this.optionBuildingTypes[2].checked = !this.optionBuildingTypes[2].checked;
-          break;
-        case 4:
-          this.optionBuildingTypes[3].checked = !this.optionBuildingTypes[3].checked;
-          break;
-        case 5:
-          this.optionBuildingTypes[4].checked = !this.optionBuildingTypes[4].checked;
-          break;
-      }
+        this.optionBuildingTypes[value-1].checked = !this.optionBuildingTypes[value-1].checked
       this.updateBuildingTypesArr();
     },
     updateBuildingTypesArr() {
