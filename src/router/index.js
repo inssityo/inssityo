@@ -65,7 +65,7 @@ const routes = [
     component: RentApartments,
   },
   {
-    path: "/apartments/for-sale",
+    path: "/apartments/buy",
     name: "for-sale-apartments",
     component: ForSaleApartments,
   },
@@ -75,8 +75,8 @@ const routes = [
     component: ApartmentBio,
   },
   {
-    path: "/apartments/for-sale/:id",
-    name: "apartment-for-sale-bio",
+    path: "/apartments/buy/:id",
+    name: "apartment-buy-bio",
     component: ApartmentBio,
   },
 ];

@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <Footer v-show="!isLogin"/>
+  <Footer v-if="!isLogin"/>
 </template>
 
 <script>
@@ -225,6 +225,7 @@ img {
 }
 .img--calc {
   max-height: calc(100vh - 0rem - 4.2rem);
+  display: block;
 }
 .transparency {
   width: 100%;

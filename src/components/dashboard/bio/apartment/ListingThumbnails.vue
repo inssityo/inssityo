@@ -2,7 +2,7 @@
   <div>
     <h4 class="margin__topless">{{  handleAptType  }}</h4>
     <h1>{{ location.neighborhood }}, {{ location.city }}</h1>
-    <h4 class="margin__topless">{{ location.address }}</h4>
+    <h4 class="margin__topless">{{ location.streetName }} {{ location.houseNumber}}</h4>
 
     <p class="listing-basics__description">{{ data.description }}</p>
 
@@ -44,7 +44,7 @@
           <i class="fas fa-hourglass-half"></i>
           <div>
             <p class="margin__bottomless">Rakennusvuosi</p>
-            <p class="margin__bottomless">{{ data.buildYear }}</p>
+            <p class="margin__bottomless">{{ apartment.buildYear }}</p>
           </div>
         </div>
       </div>
@@ -64,9 +64,7 @@
           <i class="fas fa-ruler-combined"></i>
           <div>
             <p class="margin__bottomless">Asuinpinta-ala</p>
-            <p class="margin__bottomless">
-              {{ data.livingArea }} &#13217;
-            </p>
+            <p class="margin__bottomless">{{ apartment.livingArea }}m<span>²</span></p>
           </div>
         </div>
       </div>
@@ -136,6 +134,10 @@ h1 {
 }
 p {
   margin-top: 0;
+
+  span {
+    font-family: v.$KAMQuinn;
+  }
 }
 
 p:last-of-type svg:not(:first-of-type) {

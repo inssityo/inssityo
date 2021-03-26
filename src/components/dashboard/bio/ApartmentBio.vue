@@ -16,18 +16,8 @@
             <Icon icon="fas fa-expand" tooltip-text="Katso pohjakuva" />
           </div>
           <div class="flexbox">
-            <Icon
-              icon="far fa-heart"
-              tooltip-text="Tykkää"
-              v-show="!liked"
-              @click="like"
-            />
-            <Icon
-              icon="fas fa-heart"
-              tooltip-text="Älä tykkää"
-              v-show="liked"
-              @click="like"
-            />
+            <Icon icon="far fa-heart" tooltip-text="Tykkää" v-if="!liked" @click="like" />
+            <Icon icon="fas fa-heart" tooltip-text="Älä tykkää" v-else @click="like" />
             <Icon icon="fas fa-dove" tooltip-text="Aloita chat" />
           </div>
           <h3>Katsottu {{ apartment.viewCount }} kertaa</h3>
@@ -38,21 +28,25 @@
 
           <div class="listing-data__title">
             <h2>Perustiedot</h2>
+            
             <div class="listing-data__content">
               <div class="row flexbox">
                 <p>Kohdenumero</p>
                 <p>{{ apartment._id }}</p>
               </div>
               <div class="row flexbox">
-                <p>Sijainti</p>
-                <p>
-                  {{ handleAddress }}, {{ handleNeighborhood }},
-                  {{ handleCity }}, {{ handleAreaCode }}
-                </p>
+
+                <p>Osoite</p>
+                <p>{{ handleStreetName }} {{handleHouseNumber}}, {{ handleAreaCode }} {{ handleCity }}</p>
+              </div>
+              <div class="row flexbox">
+                <p>Kaupunginosa</p>
+                <p>{{ handleNeighborhood }}</p>
               </div>
               <div class="row flexbox">
                 <p>Talotyyppi</p>
                 <p>{{ handleAptType }}</p>
+                <!--<p>{{ handledApartment.apartmentType }}</p>-->
               </div>
 
               <div v-if="apartment.isCellApartment" class="row flexbox">
@@ -232,6 +226,21 @@
                 <p>{{ handlePropertyOwner }}</p>
               </div>
 
+            </div>
+
+            <div class="listing-data__content">
+              <div class="row flexbox">
+                <p>Näköalat</p>
+                <p>Pihalle</p>
+              </div>
+              <div class="row flexbox">
+                <p>Tontin pinta-ala</p>
+                <p>{{ apartment.propertyArea }}</p>
+              </div>
+              <div class="row flexbox">
+                <p>Tontin kuvaus</p>
+                <p>{{ apartment.propertyDescription }}</p>
+              </div>
               <div
                 v-if="
                   apartment.property &&
@@ -399,11 +408,11 @@
             >
               <div v-if="apartment.price.debtFreePrice" class="row flexbox">
                 <p>Velaton hinta</p>
-                <p>{{ apartment.price.debtFreePrice }}</p>
+                <p>{{ handleDebtFreePrice }} €</p>
               </div>
               <div v-if="apartment.price.salePrice" class="row flexbox">
                 <p>Myyntihinta</p>
-                <p>{{ apartment.price.salePrice }}</p>
+                <p>{{ handleSalePrice }} €</p>
               </div>
               <div
                 v-if="
@@ -419,7 +428,8 @@
                 class="row flexbox"
               >
                 <p>Neliöhinta</p>
-                <p>{{ calculatePricePerMeter }}€/&#13217;</p>
+                <p>{{ handlePerSquareFootPrice }} €</p>
+                <!--<p>{{ calculatePricePerMeter }}€/&#13217;</p>-->
               </div>
               <div
                 v-if="
@@ -429,7 +439,7 @@
                 class="row flexbox"
               >
                 <p>Hoitovastike</p>
-                <p>{{ apartment.maintenanceCosts.upkeep }}€/kk</p>
+                <p>{{ handleUpkeep }} €</p>
               </div>
               <div
                 v-if="
@@ -439,7 +449,7 @@
                 class="row flexbox"
               >
                 <p>Rahoitusvastike</p>
-                <p>{{ apartment.maintenancecosts.financing }}</p>
+                <p>{{ handleFinancing }} €</p>
               </div>
               <div
                 v-if="
@@ -751,7 +761,7 @@ import ApartmentService from '../../../api-services/apartment.service.js';
 
 export default {
   components: { 
-    ImageCarousel, //Handlaa kuvat
+    ImageCarousel,
     ListingThumbnails,
     Icon,
   },
@@ -762,7 +772,15 @@ export default {
     return {
       liked: false,
       apartment: {},
-      location: { address: "", neighborhood: "", city: "" },
+      handledApartment: {},
+      location: {streetName: "", houseNumber: "", neighborhood: "", city: "", areaCode: ""},
+      costs: {
+        salePrice: null, 
+        debtFreePrice: null, 
+        perSquareFoot: null, 
+        upkeep: null,
+        financing: null,
+      },
 
       currentIndex: 0,
       timer: null,
@@ -776,6 +794,9 @@ export default {
 
       if (this.$route.params.apartment) {
         this.apartment = JSON.parse(this.$route.params.apartment);
+      }
+      if (this.$route.params.handledApartment) {
+        this.handledApartment = JSON.parse(this.$route.params.handledApartment);
       }
 
       //Required when the page is refreshed
@@ -911,8 +932,11 @@ export default {
       floorPlan, utilities, location, price, nearbyServices, 
       balcony, patio, property, maintenanceCosts, equipment
     */
-    handleAddress() {
-      return this.handleUndefined("address");
+    handleStreetName() {
+      return this.handleUndefined("street");
+    },
+    handleHouseNumber() {
+      return this.handleUndefined("house");
     },
     handleNeighborhood() {
       return this.handleUndefined("neighborhood");
@@ -921,7 +945,29 @@ export default {
       return this.handleUndefined("city");
     },
     handleAreaCode() {
-      return this.handleUndefined("areaCode");
+      return this.handleUndefined("area");
+    },
+    handleSalePrice() {
+      return this.handleUndefined("salePrice");
+    },
+    handleDebtFreePrice() {
+      return this.handleUndefined("debtFreePrice");
+    },
+    handleUpkeep() {
+      return this.handleUndefined("upkeep");
+    },
+    handleFinancing() {
+      return this.handleUndefined("financing");
+    },
+    handlePerSquareFootPrice() {
+      return this.countPerSquareFootPrice();
+    },
+    handleIsForSale() {
+      if(this.apartment.isForSale) {
+        return "omistus";
+      } else {
+        return "vuokra";
+      }
     },
     handlePropertyRented() {
       console.log(this.handleUndefined("rented"));
@@ -956,16 +1002,17 @@ export default {
     handleUndefined(name) {
       let type = "";
       let t = "no " + name + " given ";
-      switch (name) {
-        case "address":
-          type =
-            this.apartment?.location?.address.streetName +
-            " " +
-            this.apartment?.location?.address.houseNumber;
-          if (type !== undefined) {
-            t = type;
-          }
-          this.location.address = t;
+      
+      switch(name) {
+        case "street":
+          type = this.apartment?.location?.address?.streetName;
+          if (type !== undefined) { t = type }
+          this.location.streetName = t;
+          break;
+        case "house":
+          type = this.apartment?.location?.address?.houseNumber;
+          if (type !== undefined) { t = type }
+          this.location.houseNumber = t;
           break;
         case "neighborhood":
           type = this.apartment?.location?.neighborhood;
@@ -981,11 +1028,30 @@ export default {
           }
           this.location.city = t;
           break;
-        case "areaCode":
+        case "area":
           type = this.apartment?.location?.areaCode;
-          if (type !== undefined) {
-            t = type;
-          }
+          if (type !== undefined) { t = type }
+          this.location.areaCode = t;
+          break;
+        case "salePrice":
+          type = this.apartment?.price?.salePrice;
+          if (type !== undefined) { t = type }
+          this.costs.salePrice = t;
+          break;
+        case "debtFreePrice":
+          type = this.apartment?.price?.debtFreePrice;
+          if (type !== undefined) { t = type }
+          this.costs.debtFreePrice = t;
+          break;
+        case "upkeep":
+          type = this.apartment?.maintenanceCosts?.upkeep;
+          if (type !== undefined) { t = type }
+          this.costs.upkeep = t;
+          break;
+        case "financing":
+          type = this.apartment?.maintenanceCosts?.financing;
+          if (type !== undefined) { t = type }
+          this.costs.financing = t;
           break;
         case "rented":
           type = this.apartment?.property?.rented;
@@ -1014,8 +1080,14 @@ export default {
       }
       return t;
     },
-  },
-};
+    countPerSquareFootPrice() {
+      let price = (this.costs.salePrice / this.apartment.livingArea).toFixed(2);
+      this.costs.perSquareFoot = price;
+      return price;
+    }
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>

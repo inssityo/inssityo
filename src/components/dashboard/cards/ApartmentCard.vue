@@ -1,9 +1,10 @@
 <template>
-  <router-link :to="{name: 'apartment-rent-bio', params: { id: id, apartment: apartmentUrl }}" v-if="handleUrl" class="card pointer">
+  <router-link :to="{name: 'apartment-rent-bio', params: { id: id, apartment: apartmentUrl, handledApartment: handledApartmentUrl }}" v-if="handleUrl" class="card pointer">
+    {{ computedHandleApartmentUrl }}
     <div class="card-info">
       <div class="transparency">
         <h3>{{ apartment.location.neighborhood }}, {{ apartment.location.city }}</h3>
-        <p>{{ apartment.apartmentType }} {{apartment.buildYear }}</p>
+        <p>{{ computedApartmentType }} {{apartment.buildYear }}</p>
       </div>
     </div>
     <div class="card-info">
@@ -17,11 +18,12 @@
     <img src="../../../assets/images/pexels-catherine-augustin-3049121.jpg" class="box" alt="">
   </router-link>
 
-  <router-link :to="{name: 'apartment-for-sale-bio', params:{id: id, apartment: apartmentUrl }}" v-else class="card pointer">
+  <router-link :to="{name: 'apartment-buy-bio', params:{ id: id, apartment: apartmentUrl, handledApartment: handledApartmentUrl }}" v-else class="card pointer">
+    {{ computedHandleApartmentUrl }}
     <div class="card-info">
       <div class="transparency">
         <h3>{{ apartment.location.neighborhood }}, {{ apartment.location.city }}</h3>
-        <p>{{ apartment.apartmentType }} {{apartment.buildYear }}</p>
+        <p>{{ computedApartmentType }} {{apartment.buildYear }}</p>
       </div>
     </div>
     <div class="card-info">
@@ -51,6 +53,12 @@ export default {
       apartment: this.apartmentData,
       id: this.apartmentData._id,
       apartmentUrl: JSON.stringify(this.apartmentData),
+
+      handledApartment: {
+        apartmentType: "",
+        h: "moi",
+      },
+      handledApartmentUrl: {}, //Katoaa päivitettäessä bioa
     }
   },
   computed: {
@@ -63,22 +71,35 @@ export default {
       }
       return rent;
     },
-    handlePrice: function() {
+    handlePrice() {
       let price;
       if (this.cardId === 'S') {
-        price = this.handleUndefinedSellingPrice().toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        price = this.handleUndefinedSellingPrice();
+        if (price) {
+          price = price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
+        }
       }
       else if (this.cardId === 'R') {
         price = this.apartment.monthlyRent.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
       }
       return price;
     },
+    
+    computedApartmentType() {
+      return this.handleApartmentType();
+    },
+    
+    computedHandleApartmentUrl() {
+      return this.handleApartmentUrl();
+    },
+
     handleDates: function() {
-    const dbDate  = this.apartment.availableFrom
-    var d = new Date(dbDate)
-    const dateString = d.getDate() + "." + (d.getMonth()+1) + "." + d.getFullYear();
-    return dateString
-  },
+      const dbDate  = this.apartment.availableFrom
+      var d = new Date(dbDate)
+      const dateString = d.getDate() + "." + (d.getMonth()+1) + "." + d.getFullYear();
+      return dateString
+    },
+
   },
   methods: {
     handleUndefinedSellingPrice() {
@@ -87,6 +108,41 @@ export default {
         t = this.apartment?.price?.salePrice
       }
       return t;
+    },
+    handleApartmentType() {
+      let type = "";
+      switch(this.apartment.apartmentType) {
+        case 1:
+          type = "Kerrostalo";
+          break;
+        case 2:
+          type = "Rivitalo";
+          break;
+        case 3:
+          type = "Paritalo";
+          break;
+        case 4:
+          type = "Omakotitalo";
+          break;
+        case 5:
+          type = "Ketjutalo";
+          break;
+        case 6:
+          type = "Luhtitalo";
+          break;
+        case 7:
+          type = "Puutalo-osake";
+          break;
+        case 8:
+          type = "Muu";
+          break;
+      }
+      this.handledApartment.apartmentType = type;
+      return type;
+    },
+    handleApartmentUrl() {
+      this.handledApartmentUrl = JSON.stringify(this.handledApartment);
+      return "";
     }
   }
 }
