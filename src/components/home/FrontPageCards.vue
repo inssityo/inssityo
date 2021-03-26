@@ -1,7 +1,8 @@
 <template>
   <div class="content">
     <h1>Suositeltuja kohteita</h1>
-    <Card card-type="single" />
+    <!--<Card card-type="single" />-->
+    <ImageSlider :images="images"/>
     <div class="container">
       <div v-for="c in cards" :key="c" :class="'column column-item--' + c">
         <Card />
@@ -13,17 +14,26 @@
 
 <script>
 import ApartmentService from '../../api-services/apartment.service'
+import ImageSlider from './ImageSlider.vue';
 import Card from './FrontPageCard.vue';
 
 export default {
   name: 'FrontPageCards',
   components: {
-    Card
+    Card,
+    ImageSlider
   },
   data() {
     return {
       cards: [1, 2, 3, 4],
-      apartments: {}
+      apartments: {},
+      images: [
+        require('../../assets/images/Thumbnail7.jpg'),
+        require('../../assets/images/home-5835289_1920.jpg'),
+        require('../../assets/images/pexels-burst-545012.jpg'),
+        require('../../assets/images/pexels-maria-orlova-4906243-cropped.jpg'),
+        require('../../assets/images/pexels-vlada-karpovich-4451937.jpg')
+      ]
     }
   },
   async created() {
@@ -40,13 +50,16 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
+h1 {
+  margin-top: 1rem;
+}
 .container {
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(1, 1fr);
   gap: 1.5rem;
   margin: auto;
-  padding: 2rem 2rem 1rem 2rem;
+  padding: 2rem 0rem 1rem 0rem;
 }
 .column {
   width: 100%;

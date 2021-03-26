@@ -85,22 +85,22 @@ export default {
   //left: 50%;
   //margin-left: -40%;
   //box-shadow: 0px 10px 20px -25px black;
-  border-bottom: 1px solid v.$KAMGreenDark;
 }
 .navbar--white {
-  background-color: v.$White;
+  background-color: v.$KAMGreenDark;
+  //border-bottom: 1px solid v.$KAMGreenDark;
 
   .kam-logo {
-    color: v.$KAMGreenDark;
+    color: v.$White;
   }
   .dropdown .dropbtn {
-    color: v.$KAMGreenDark;
+    color: v.$White;
   }
   .dropdown-content {
-    background-color: v.$White;
+    background-color: v.$KAMGreenDark;
 
     a {
-      color: v.$Black;
+      color: v.$White;
     }
   }
 }
@@ -115,15 +115,15 @@ export default {
 }
 .kam-logo {
   font-family: v.$KAMQuinn;
-  text-transform: uppercase;
+  //text-transform: uppercase;
   font-size: 2.1rem;
   color: v.$White;
   letter-spacing: 0.1rem;
   width: 7.5rem;
 }
 .kam-logo:hover {
-  letter-spacing: 0.05rem;
-  text-transform: lowercase;
+  //letter-spacing: 0.05rem;
+  text-transform: uppercase;
 }
 .dropdown {
   overflow: hidden;

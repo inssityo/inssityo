@@ -56,11 +56,11 @@
               </div>
               <div class="row flexbox">
                 <p>Asuinpinta-ala</p>
-                <p>{{ apartment.livingArea }}m</p>
+                <p>{{ apartment.livingArea }}m<span>²</span></p>
               </div>
               <div class="row flexbox">
                 <p>Kokonaispinta-ala</p>
-                <p>{{ apartment.totalArea }}m</p>
+                <p>{{ apartment.totalArea }}m<span>²</span></p>
               </div>
               <div class="row flexbox">
                 <p>Kerros/kerroksia</p> <!-- if omakotitalo=kerroksia -->

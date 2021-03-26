@@ -38,7 +38,7 @@
           <i class="fas fa-hourglass-half"></i>
           <div>
             <p class="margin__bottomless">Rakennusvuosi</p>
-            <p class="margin__bottomless">2020</p>
+            <p class="margin__bottomless">{{ apartment.buildYear }}</p>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
           <i class="fas fa-ruler-combined"></i>
           <div>
             <p class="margin__bottomless">Asuinpinta-ala</p>
-            <p class="margin__bottomless">220m</p>
+            <p class="margin__bottomless">{{ apartment.livingArea }}m<span>²</span></p>
           </div>
         </div>
       </div>
@@ -92,6 +92,10 @@ h1 {
 }
 p {
   margin-top: 0;
+
+  span {
+    font-family: v.$KAMQuinn;
+  }
 }
 
 p:last-of-type svg:not(:first-of-type) {
