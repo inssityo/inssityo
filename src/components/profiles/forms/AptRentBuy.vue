@@ -625,7 +625,6 @@ export default {
       this.apartment.equipment.common = value.common;
     },
     onChildClickArea(value) {
-      //Area, ei min tai max!!!!, cellArea - KYSY SUVILTA
       this.apartment.totalArea = value.minRoom;
       this.apartment.livingArea = value.maxTotal;
     },
@@ -715,33 +714,14 @@ export default {
       this.apartment.location.neighborhood = value.neighborhood;
       this.apartment.location.areaCode = value.areaCode;
     },
-
-    getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        console.log(reader.result)
-        return reader.result;
-      };
-    },
     onChildImages(value) {
-      let resultArr = []
       this.apartment.images = value;
       console.log("value", value);
-      this.apartment.images.forEach((img) => {
-        console.log("IMG", img);
-
-        const result = this.getBase64(img[0])
-        resultArr.push(result)
-      });
-      this.apartment.images = resultArr
-      console.log("image2 " + this.apartment.images);
     },
     handleFloorPlan() {
       this.showFloorPlan = !this.showFloorPlan;
     },
   },
-  mounted() {},
 };
 </script>
 

@@ -60,9 +60,10 @@ export default {
     let found = (localStorage.getItem("loggedIn"))
     if (found) {
       const parsedFound = JSON.parse(found)
-
+      
       this.hobbies = parsedFound.hobbies
-      delete this.hobbies._id
+      //v aiheutti jotain ongelmaa, tutki kun ehdit v
+      //delete this.hobbies._id
     }
   },
   methods: {
