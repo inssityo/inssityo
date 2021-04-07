@@ -812,13 +812,13 @@ export default {
   },
   computed: {
     handleAptFloorPlan() {
-      return handleFloorPlan(this.apartment);
+      return 1; //handleFloorPlan(this.apartment);
     },
     handleAptEquipment() {
       return this.apartment.equipment;
     },
     handleAptType() {
-      return handleApartmentType(this.apartment);
+      return 1; //handleApartmentType(this.apartment);
     },
     handleKitchen() {
       return this.apartment.equipment.kitchen;
@@ -961,13 +961,6 @@ export default {
     },
     handlePerSquareFootPrice() {
       return this.countPerSquareFootPrice();
-    },
-    handleIsForSale() {
-      if(this.apartment.isForSale) {
-        return "omistus";
-      } else {
-        return "vuokra";
-      }
     },
     handlePropertyRented() {
       console.log(this.handleUndefined("rented"));

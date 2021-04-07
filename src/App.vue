@@ -134,6 +134,9 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 0.05rem;
 }
+p {
+  white-space: normal !important;
+}
 
 .alert-danger {
   color: #e60020;
