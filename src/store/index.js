@@ -14,6 +14,8 @@ export default createStore({
     return {
       status: '',
       accessToken: localStorage.getItem('accessToken') || '',
+      user: {},
+      target: {}
     }
   },
   mutations: {
@@ -31,12 +33,24 @@ export default createStore({
       state.status = ''
       state.accessToken = ''
     },
+    loggedInUser(state, user) {
+      state.user = user
+    },
+    targetProfile(state, target) {
+      state.target = target
+    }
   },
   getters : {
     isLoggedIn: state => {
       return state.accessToken;
     },
     authStatus: state => state.status,
+    getLoggedInUser: state => {
+      return state.user;
+    },
+    getTargetProfile: state => {
+      return state.target;
+    }
   },
   actions: {
     login({commit}, credentials) {

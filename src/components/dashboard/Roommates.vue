@@ -12,9 +12,12 @@
 <script>
 import RoommateCard from "./cards/RoommateCard.vue";
 import UserService from "../../api-services/user.service.js";
+import { pruneUsers, createComparedTargetObject, createComparisonUserObjects } from '../../algorithm/comparableObjects.js'
+import { getSimilarities/*calculateDistance, calculateIfExists*/ } from '../../algorithm/similarity.js'
 
 export default {
   name: 'Roommates',
+  inject: ['$store'],
 
   components: {
     RoommateCard,
@@ -22,15 +25,64 @@ export default {
 
   data() {
     return {
-      users: {}
+      users: {},
+      userId: "601a7fa029bf5f228cfcd4c5", //Hae tietokannasta
+      
+      pruneUsersObject: [],
+      comparedTargetObject: {},
+      comparisonUserObjects: {},
     }
   },
   async created() {
-    UserService.getAll().then((response) => {
-      this.users = response.data;
-    }).catch((error) => {
-      console.log("user data error: " + error.response.data);
-    });
+    try {
+      const response =  await UserService.getAll();
+      let users = response.data;
+
+      /* ==============================================================================*/
+      //Get logged in user, POISTA TÄMÄ
+      let loggedInUser = users.filter(({_id}) => _id.includes(this.userId));
+
+      //Siirrä nämä api-serviceen
+      this.$store.commit("loggedInUser", loggedInUser[0]);
+      this.$store.commit("targetProfile", loggedInUser[0].targetProfile);
+      /* ==============================================================================*/
+
+      //Remove logged in user
+      this.users = users.filter(({_id}) => !_id.includes(this.userId));
+
+    } catch (err) {
+      console.log("user data error: " + err);
+    }
+    this.pruneUsersFirst();
+  },
+  methods: {
+    pruneUsersFirst() {
+      const userObjects = this.users;
+      this.pruneUsersObject = pruneUsers(userObjects, this.$store.getters.getLoggedInUser.targetProfile);
+      this.createObjects();
+    },
+    createObjects() {
+      this.comparedTargetObject = createComparedTargetObject(this.$store.getters.getLoggedInUser);
+      this.comparisonUserObjects = createComparisonUserObjects(this.pruneUsersObject); //MUUTTAA THIS.USERS TIETOJA!!!!!
+      this.calculateSimilarity();
+    },
+    calculateSimilarity() {
+      
+      //[0] or [1]
+      //[0][0] or [1][0]
+
+      let similarities = getSimilarities(
+        this.comparisonUserObjects[0], this.comparedTargetObject[0][0], 
+        this.comparisonUserObjects[1], this.comparedTargetObject[1][0]);
+      
+      console.log(similarities)
+      /*
+      let ifExists = calculateIfExists(this.comparisonUserObjects[0], this.comparedTargetObject[0][0]);
+      console.log("IF exists ", ifExists);
+      
+      let distances = calculateDistance(this.comparisonUserObjects[1], this.comparedTargetObject[1][0]);
+      console.log("DISTANCE ", distances) //TOIMII*/
+    }
   }
 }
 </script>
