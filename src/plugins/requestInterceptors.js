@@ -30,12 +30,12 @@ export function responseInterceptor() {
   function (error) {
     const originalRequest = error.config;
 
-    if (error.response.status === 403 || error.response.status === 401 && originalRequest.url === `${process.env.VUE_APP_API_ENDPOINT}${process.env.VUE_APP_TOKEN_REFRESH_URL}`) {
+    if (error.response.status === 401 && originalRequest.url === `${process.env.VUE_APP_API_ENDPOINT}${process.env.VUE_APP_TOKEN_REFRESH_URL}`) {
       router.push({name: "entry"});
       return Promise.reject(error);
     }
 
-    if (error.response.status === 403  || error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = LocalStorageService.getRefreshToken();
       return  AuthService.tokenRefresh({"refreshToken": refreshToken})

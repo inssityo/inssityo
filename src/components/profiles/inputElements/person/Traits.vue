@@ -56,10 +56,12 @@ export default {
     };
   },
   mounted() {
-    if (this.foundTraits) {
+    if (localStorage.getItem("loggedIn")) {
       //console.log("%")
+      let found = JSON.parse(localStorage.getItem("loggedIn"))
+      console.log("ft",found)
       this.optionTraits.forEach((item) => {
-        if (this.foundTraits.includes(item.value)) {
+        if (found.personalityTraits !== undefined && found.personalityTraits.includes(item.value)) {
           console.log("TRUE", item.value)
           item.checked = true
         }
@@ -89,7 +91,6 @@ export default {
     updateTraitList: function () {
 
       this.traitList = this.optionTraits.filter(item => item.checked).map(filtered => filtered.value)
-                console.log(this.traitList)
     },
     handleNumberOfTraits() {
       if (this.traitList.length > 7) {
