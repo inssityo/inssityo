@@ -43,8 +43,7 @@ export default {
 
   data() {
     return {
-      //ei toimi luotettavasti
-      sociality: this.foundSociality ? this.foundSociality : 1
+      sociality: localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn").sociality : 1
     }
   },
   watch: {

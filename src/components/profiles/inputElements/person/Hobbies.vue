@@ -28,136 +28,138 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Hobbies',
-  props: {idValue: {
-    type:String},
+  name: "Hobbies",
+  props: {
+    idValue: {
+      type: String,
+    },
     currentHobbies: {
-      type: Object
-    }
+      type: Object,
+    },
   },
 
   data() {
     return {
       hobbies: {
-        reading:1,
-        music: 1,
-        crafts: 1,
-        sports: 1,
-        culture: 1,
-        art: 1,
-        collecting: 1,
-        cooking: 1,
-        games: 1,
-        voluntaryWork: 1,
-        travelling: 1,
-        informationTech: 1
-      }
+        reading: 4,
+        music: 4,
+        crafts: 4,
+        sports: 4,
+        culture: 4,
+        art: 4,
+        collecting: 4,
+        cooking: 4,
+        games: 4,
+        voluntaryWork: 4,
+        travelling: 4,
+        informationTech: 4,
+      },
+    };
+  },
+  mounted: async function () {
+    console.log("mounted")
+    let found = await localStorage.getItem("loggedIn");
+    const parsedFound = JSON.parse(found);
+    if (parsedFound.hobbies !== undefined && parsedFound.hobbies[0] !== undefined) {
+      delete parsedFound.hobbies[0]._id;
+      this.hobbies = parsedFound.hobbies[0];
+
     }
   },
-  mounted() {
-    let found = (localStorage.getItem("loggedIn"))
-    if (found) {
-      const parsedFound = JSON.parse(found)
-      
-      this.hobbies = parsedFound.hobbies
-      //v aiheutti jotain ongelmaa, tutki kun ehdit v
-      //delete this.hobbies._id
-    }
-  },
+
   methods: {
-        handlePropertyName: function(given) {
-      switch(given) {
-        case"collecting": {
-          return "Keräily"
+    handlePropertyName: function (given) {
+      switch (given) {
+        case "collecting": {
+          return "Keräily";
         }
-        case"crafts": {
-          return "Käsityöt"
+        case "crafts": {
+          return "Käsityöt";
         }
-        case"informationTech": {
-          return "Tietotekniikka"
+        case "informationTech": {
+          return "Tietotekniikka";
         }
         case "sports": {
-          return "Urheilu"
+          return "Urheilu";
         }
         case "music": {
-          return "Musiikki"
+          return "Musiikki";
         }
         case "games": {
-          return"Pelit"
+          return "Pelit";
         }
         case "reading": {
-          return"Lukeminen"
+          return "Lukeminen";
         }
         case "art": {
-          return "Taide"
+          return "Taide";
         }
-        case"culture": {
-          return "Kulttuuri"
+        case "culture": {
+          return "Kulttuuri";
         }
-        case"cooking": {
-          return"Ruuanlaitto"
+        case "cooking": {
+          return "Ruuanlaitto";
         }
-        case"travelling": {
-          return"Matkailu"
+        case "travelling": {
+          return "Matkailu";
         }
-        case"voluntaryWork": {
-          return"Vapaaehtoistyö"
+        case "voluntaryWork": {
+          return "Vapaaehtoistyö";
         }
       }
-      return"ei tunnettu"
-  },
-    emitToParent() {
-      this.$emit('childToParent', [this.hobbies]);
+      return "ei tunnettu";
     },
-    updateLevel(propertyName, level){
+    emitToParent() {
+      this.$emit("childToParent", [this.hobbies]);
+    },
+    updateLevel(propertyName, level) {
       this.$nextTick(function () {});
       this.handleHobbies(propertyName, level);
     },
-    handleHobbies(propertyName,level) {
-      switch(propertyName) {
-        case "reading": 
+    handleHobbies(propertyName, level) {
+      switch (propertyName) {
+        case "reading":
           this.hobbies.reading = level;
           break;
-        case "music": 
+        case "music":
           this.hobbies.music = level;
           break;
-        case "crafts": 
+        case "crafts":
           this.hobbies.crafts = level;
           break;
-        case "sports": 
+        case "sports":
           this.hobbies.sports = level;
           break;
-        case "culture": 
+        case "culture":
           this.hobbies.culture = level;
           break;
-        case "art": 
+        case "art":
           this.hobbies.art = level;
           break;
-        case "collecting": 
+        case "collecting":
           this.hobbies.collecting = level;
           break;
-        case "cooking": 
+        case "cooking":
           this.hobbies.cooking = level;
           break;
-        case "games": 
+        case "games":
           this.hobbies.games = level;
           break;
-        case "voluntaryWork": 
+        case "voluntaryWork":
           this.hobbies.voluntaryWork = level;
           break;
-        case "travelling": 
+        case "travelling":
           this.hobbies.travelling = level;
           break;
-        case "informationTech": 
+        case "informationTech":
           this.hobbies.informationTech = level;
           break;
       }
       this.emitToParent();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
