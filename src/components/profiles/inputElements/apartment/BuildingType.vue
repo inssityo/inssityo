@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     emitToParent() {
+
       if (this.idValue === 'ARB') {
         this.$emit('childToParent', {'types': this.buildingType, 'show': false});
       } else {

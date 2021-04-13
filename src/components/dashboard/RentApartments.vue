@@ -10,7 +10,7 @@
       />
     </div>
           <button v-if="filterActive" @click="removeFilter">
-        {{ filterType }}: {{ optionValue }} {{givenCity}} ({{filteredApartments.length}} osumaa)<i id="icon" class="far fa-times-circle"></i>
+        {{ typeOptions}} {{ filterType }}: {{ optionValue }} {{givenCity}} ({{filteredApartments.length}} osumaa)<i id="icon" class="far fa-times-circle"></i>
       </button>
     <div class="box">
       <div v-if="!filterActive" class="cards flexbox box">
@@ -50,13 +50,19 @@ export default {
       filterActive: false,
       filterType: "",
       optionValue: "",
+      houseFilterType:"",
+      houseOptionValue:"",
       givenCity:"",
+      typeOptions:[],
     };
   },
   async created() {
     try {
-      const response = await ApartmentService.getAll();
-      this.apartments = response.data;
+      const response =  await ApartmentService.getAll();
+      let data = response.data;
+      this.apartments = data.filter(function(el) {
+        return el.isForSale === false;
+      });
     } catch (err) {
       console.log("apartment data error: " + err);
     }

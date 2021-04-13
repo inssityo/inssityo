@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <Footer v-show="!isLogin"/>
+  <Footer v-if="!isLogin"/>
 </template>
 
 <script>
@@ -134,6 +134,9 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 0.05rem;
 }
+p {
+  white-space: normal !important;
+}
 
 .alert-danger {
   color: #e60020;
@@ -225,6 +228,7 @@ img {
 }
 .img--calc {
   max-height: calc(100vh - 0rem - 4.2rem);
+  display: block;
 }
 .transparency {
   width: 100%;

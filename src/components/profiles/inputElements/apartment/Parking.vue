@@ -106,7 +106,7 @@ export default {
         { text: "Autotalli", value: 3, checked: false },
         { text: "Yhteinen parkkihalli", value: 4, checked: false },
       ],
-      options: [null],
+      options: [],
       expanded: false,
     };
   },
@@ -174,5 +174,4 @@ textarea {
   margin-top: 0.5em;
   height: 5em;
 }
-
 </style>

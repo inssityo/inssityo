@@ -1,6 +1,9 @@
 <template>
+
+<div class="flexbox">
+  <p>Hae kohteita:</p>
   <div class="autocomplete">
-    <p>Hae kohteita:</p>
+    
     <input
       type="text"
       placeholder="Kirjoita sijainti..."
@@ -80,6 +83,30 @@
       </ul>
     </ul>
   </div>
+  <div class="multiselect">
+  <div class="selectBox pointer" @click="showCheckboxes()">
+    <select v-bind:class="{ 'background--green': expanded }">
+      <option @click="emitOnlyType">Kaikki talotyypit</option>
+    </select>
+    <div class="overSelect"></div>
+  </div>
+
+  <div :id="idValue + 'checkboxes-option'" class="checkboxes check__label-only">
+    <div
+      v-for="(option, index) in optionBuildingTypes"
+      :key="index"
+      class="flexbox pointer"
+    >
+      <input type="checkbox" :id="idValue + 'type' + index" />
+      <label
+        :for="idValue + 'type' + index"
+        @click="handleOptions(option.value - 1)"
+        >{{ option.text }}</label
+      >
+    </div>
+  </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -120,6 +147,18 @@ export default {
   },
   data() {
     return {
+            buildingType: "",
+      expanded: false,
+      optionBuildingTypes: [
+        { text: "Kerrostalo", value: 1, checked: false }, //High-Rise
+        { text: "Rivitalo", value: 2, checked: false }, //Terraced house
+        { text: "Paritalo", value: 3, checked: false }, //Detached house
+        { text: "Omakotitalo", value: 4, checked: false }, //Terraced House
+        { text: "Ketjutalo", value: 5, checked: false }, //Semi-Detached House
+        { text: "Luhtitalo", value: 6, checked: false }, //Luhtitalo
+        { text: "Puutalo-osake", value: 7, checked: false }, //Wooden house share
+        { text: "Muu", value: 8, checked: false }, //Other
+      ],
       search: "",
       results: {
         cityMatch: [],
@@ -127,11 +166,52 @@ export default {
         addressMatch: [],
         areaCodeMatch: [],
         wantedApts: [],
+        options:[],
       },
       isOpen: false,
     };
   },
   methods: {
+        showCheckboxes() {
+      let checkboxes = document.getElementById(
+        this.idValue + "checkboxes-option"
+      );
+      if (!this.expanded) {
+        checkboxes.style.display = "block";
+        this.expanded = true;
+      } else {
+        checkboxes.style.display = "none";
+        this.expanded = false;
+      }
+    },
+    handleOptions(value) {
+      this.optionBuildingTypes[value].checked = !this.optionBuildingTypes[value].checked;
+      this.updateOptionsArr();
+    },
+    updateOptionsArr() {
+      let arr = [];
+      this.optionBuildingTypes.forEach((option) => {
+        if (option.checked) {
+          arr.push(option.value);
+        }
+      });
+      this.options = arr;
+      this.emitOnlyType();
+    },
+
+    emitOnlyType() {
+      if (this.wantedApts) {
+        this.emitToParent(this.filterByType(this.wantedApts))
+      } else {
+      this.$emit('childToParent', {wantedApts: this.filterByType(this.items), HouseFilterType:"Talotyyppi",houseOptionValue:this.options})
+      }
+    },
+    filterByType(arr) {
+      if(this.options && this.options.length > 0) {
+      return arr.filter((item) => this.options.includes(item.apartmentType))
+      }
+      return arr
+    },
     onChange() {
       if (this.search.length > 1) {
         this.isOpen = true;
@@ -182,6 +262,8 @@ export default {
           selected = filteredApts.filter(
             (item) => item.location.city === optionValue
           );
+
+          this.filterByType(selected)
           break;
         case "Asuinalue":
           console.log(optionValue, givenCity);
@@ -190,6 +272,8 @@ export default {
               item.location.neighborhood === optionValue &&
               item.location.city === givenCity
           );
+          this.filterByType(selected)
+
           break;
         case "Osoite":
           selected = filteredApts.filter(
@@ -197,6 +281,7 @@ export default {
               item.location.address.streetName === optionValue.streetName &&
               item.location.city === givenCity
           );
+          this.filterByType(selected)
           break;
         case "Postinumero":
           selected = filteredApts.filter(
@@ -212,6 +297,7 @@ export default {
         filterType: filterType,
         optionValue: optionValue,
         givenCity: givenCity,
+        typeOptions: this.options
       });
     },
   },
@@ -226,11 +312,24 @@ export default {
 
 <style>
 .autocomplete {
+
   width: 25em;
 }
 ul {
   padding-inline-start: 0;
 }
+  width: 25em; margin-right: 10em;
+  margin-left: 2em;
+}
+
+ul {
+  padding-inline-start: 0;
+}
+
+.multiselect{
+  margin-bottom: 0;
+}
+
 .autocomplete-results {
   padding: 0;
   margin: 0;
@@ -243,12 +342,14 @@ ul {
 .autocomplete-results::-webkit-scrollbar {
   display: none;
 }
+
 .autocomplete-result {
   list-style: none;
   text-align: left;
   padding: 4px 2px;
   cursor: pointer;
 }
+
 .autocomplete-header {
   background-color: lavender;
   list-style: none;
@@ -257,6 +358,11 @@ ul {
   cursor: pointer;
   font-weight: bold;
 }
+
+p {
+  white-space: nowrap;
+}
+
 .autocomplete-result:hover {
   background-color: #016361;
   color: white;

@@ -1,6 +1,18 @@
 <template>
-  <div v-if="cardType === 'single'" class="card single pointer">
-    <img src="../../assets/images/Thumbnail7.jpg" class="box" alt="">
+  
+  <div class="card pointer">
+
+    <div class="card-slider">
+      <transition-group name="fade" tag="div">
+        <div v-for="i in [currentIndex]" :key="i">
+          <img :src="currentImg" />
+        </div>
+      </transition-group>
+      <!--
+      <span class="prev" @click="prev">&#10094; Previous</span>
+      <span class="next" @click="next">Next &#10095;</span>-->
+    </div>
+    
     <div class="card-info">
       <div class="card-info-container">
         <div class="card-info--location">
@@ -38,53 +50,18 @@
       <button>Lue lisää</button>
     </div>
   </div>
-
-  <div v-else class="card multiple pointer">
-    <img src="../../assets/images/Thumbnail7.jpg" class="box" alt="">
-    <div class="card-info">
-      <div class="card-info--location">
-        <h3>{{ neighborhood }}, {{ city }}</h3>
-        <h4>{{ address }}</h4>
-        <h4>{{ handlePrice }} €/kk</h4>
-      </div>
-
-      <div class="card-info--specs flexbox">
-        <div class="flexbox">
-          <i class="fas fa-ruler-combined"></i>
-          <p>{{ area }}m<span>²</span></p>
-        </div>
-
-        <div class="flexbox"  v-if="floorPlan.length < 8">
-          <i class="far fa-building"></i>
-          <p>{{ floorPlan }}</p>
-        </div>
-        <div class="flexbox"  v-else>
-          <i class="far fa-building"></i>
-          <p>{{ floorPlan.substring(0,8)+'..' }}</p>
-        </div>
-
-        <div class="flexbox">
-          <i class="far fa-building"></i>
-          <p class="margin__nothing">{{ floor }}</p>
-        </div>
-
-        <div class="flexbox">
-          <i class="far fa-calendar-alt"></i>
-          <p class="margin__nothing">{{ available }}</p>
-        </div>
-      </div>
-      <button>Lue lisää</button>
-    </div>
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'Card',
-  props: ['cardType'],
+  props: ['images'],
 
   data() {
     return {
+      imagesData: [],
+      timer: null,
+      currentIndex: 0,
+
       city: 'Oulu',
       neighborhood: 'Keskusta',
       address: 'Aleksanterinkatu 22 G 222',
@@ -96,24 +73,96 @@ export default {
       price: 98706030,
     }
   },
+  mounted: function() {
+    this.startSlide();
+  },
+
+  methods: {
+    startSlide: function() {
+      this.timer = setInterval(this.next, 4000);
+    },
+
+    next: function() {
+      this.currentIndex += 1;
+    },
+    prev: function() {
+      this.currentIndex -= 1;
+    }
+  },
+
   computed: {
+    currentImg: function() {
+      return this.images[Math.abs(this.currentIndex) % this.images.length];
+    },
     handlePrice: function () {
       return this.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
     }
   }
+
+
 }
 </script>
 
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
+.card-slider {
+  position: relative;
+  height: 35rem;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.9s ease;
+  overflow: hidden;
+  visibility: visible;
+  position: absolute;
+  width: 100%;
+  opacity: 1;
+}
+.fade-enter,
+.fade-leave-to {
+  visibility: hidden;
+  width: 100%;
+  opacity: 0;
+}
+img {
+  height: 35rem;
+  width: 100%
+}
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 1rem;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.7s ease;
+  border-radius: 0 4px 4px 0;
+  text-decoration: none;
+  user-select: none;
+}
+.next {
+  right: 0;
+}
+.prev {
+  left: 0;
+}
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.9);
+}
+
+
+h3 {
+  padding-left: 0.5rem;
+}
 h4 {
   padding: 0.2rem 0.5rem 0 0.5rem;
   text-transform: unset;
 }
 h4:first-of-type {
   margin: 0 0 0.8rem 0;
-  
 }
 h4:last-of-type {
   margin: 0;
@@ -123,39 +172,23 @@ h4:last-of-type {
 span {
   font-family: v.$KAMQuinn;
 }
-.single {
+
+
+.card {
+  height: auto;
+  width: auto;
+  margin: 0;
+  position: relative;
+
   .card-info {
     background: transparent;
     height: auto;
     position: absolute;
     width: 30%;
     min-height: fit-content;
-    left: 5.5%;
-    box-shadow: 0px 5px 40px -25px black;
+    left: 5%;
+    bottom: 6%;
   }
-  .card-info:first-of-type {
-    top: auto;
-    bottom: 8% !important;
-  }
-  .card-info-container {
-    background: v.$KAMWhiteTRN7;
-  }
-  img {
-    height: 40vw;
-  }
-  button {
-    margin: 1rem 0;
-  }
-}
-.card-info {
-    position: relative;
-  }
-.card {
-  height: auto;
-  width: auto;
-  margin: 0;//1rem;
-
-  
   .card-info:first-of-type p {
     margin: 0;
     padding: 0.5rem 0.5rem 0 0.5rem;
@@ -171,6 +204,10 @@ span {
     padding-top: 0;
     text-align: right;
   }
+  .card-info-container {
+    background: v.$KAMWhiteTRN7;
+    box-shadow: 0px 5px 40px -25px black;
+  }
 }
 .align-center {
   text-align: center;
@@ -184,13 +221,10 @@ span {
 .card-info--location {
   border-bottom: 1px solid v.$KAMGreenDark;
   padding: 0.5rem;
-  //background: v.$KAMGreySemiLight;
 }
 
 .card-info--specs {
   padding: 0.8rem 0.5rem;
-  //background: v.$KAMGreenDark;
-  //color: v.$White;
   
   .flexbox {
     flex-direction: column;
@@ -201,9 +235,8 @@ span {
   }
 }
 button {
-  margin: 0;
+  margin: 1rem 0;
   border-radius: 0;
-  //width: 100% !important;
 }
 
 

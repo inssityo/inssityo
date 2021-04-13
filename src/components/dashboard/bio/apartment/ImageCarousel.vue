@@ -41,33 +41,16 @@ export default {
     }
   },
   created() {
- 
-      console.log("i " , JSON.stringify(this.images))
-      //var reader = new FileReader();
-      /*
-      var convertedImages = this.images.forEach(img => {
-      
-        let image = new Image();
-        image.src = 'data:image/jpeg;base64,' + img;
-        console.log("src " , image.src)
-        this.imagesData.push(image.src)
-      });*/
-      //this.imagesData = convertedImages;
-      if (this.images !== null) {
+    if (this.images !== null) {
 
       let imgArr = this.images;
       imgArr.forEach((element, index) => {
-        
         let data = element;
         let buff = Buffer.from(data, "base64");
         imgArr[index] = buff.toString("ascii");
-
       });
       this.imagesData = imgArr;
     }
-
-
-      console.log("image ", this.imagesData)
   },
   methods: {
     //go forward on the images array or go at the first image

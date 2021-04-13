@@ -27,6 +27,7 @@
               id="available-content"
               v-on:click="emitToParent"
             />
+
             <AvailableTo
               v-on:childToParent="onChildClickAvailableTo"
               id="available-content"
@@ -71,6 +72,7 @@
             v-on:click="emitToParent"
           />
         </div>
+
 
         <div class="row">
           <h3>Kuvat</h3>
@@ -533,6 +535,8 @@ export default {
         floor: "",
         propertyFloors: "",
         sights: "",
+        rentIncrease:false,
+        rentIncreaseAmount:"",
         hasElevator: false,
         housingAssociation: "",
         buildingManager: "",
@@ -553,6 +557,7 @@ export default {
         limitations: "",
         availableFrom: null,
         availableUntil: null,
+        serviceDescription: "",
         property: {
           rented: false,
           owner: "",
@@ -635,10 +640,9 @@ export default {
       this.apartment.condition = value;
     },
     onChildParking(value) {
-      this.apartment.utilities.parking.exists = value.exists;
+      this.apartment.utilities.parking.exists = value.exists
       this.apartment.utilities.parking.type = value.options;
-      this.apartment.utilities.parking.supportsElectric =
-        value.supportsElectric;
+      this.apartment.utilities.parking.supportsElectric = value.supportsElectric;
       this.apartment.utilities.parking.description = value.description;
     },
     onChildClickApartmentType(value) {
@@ -689,9 +693,12 @@ export default {
       this.apartment.availableUntil = value;
     },
     onChildClickTerms(value) {
-      this.fromChildTerms = value.terms;
-      this.fromChildRentIncrease = value.amount;
-      this.apartment.guarantee = value.guarantee;
+      this.smokingAllowed = value.smokingAllowed;
+      this.petsAllowed = value.petsAllowed;
+      this.utilities.insurancePlan.mustHave = value.insuranceRequired;
+      this.rentIncrease = value.rentIncrease;
+      this.rentIncreaseAmount = value.amount;
+      this.guarantee = value.guarantee;
     },
     onYardChange(value) {
       this.apartment.propertyArea = value.yardArea;

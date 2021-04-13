@@ -119,6 +119,7 @@ export default {
   },
   methods: {
     emitToParent() {
+
       this.$emit("childToParent", {
         nearbyServices: this.nearbyServices,
         description: this.description,
