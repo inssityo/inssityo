@@ -53,6 +53,9 @@ export default {
       apartmentUrl: JSON.stringify(this.apartmentData),
     }
   },
+  mounted() {
+    //lisää kuvien prosessointi tähän.
+  },
   computed: {
     handleUrl() {
       let rent;

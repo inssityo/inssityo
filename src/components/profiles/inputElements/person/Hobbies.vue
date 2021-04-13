@@ -64,6 +64,7 @@ export default {
     if (parsedFound.hobbies !== undefined && parsedFound.hobbies[0] !== undefined) {
       delete parsedFound.hobbies[0]._id;
       this.hobbies = parsedFound.hobbies[0];
+
     }
   },
 
