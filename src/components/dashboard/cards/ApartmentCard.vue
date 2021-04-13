@@ -61,6 +61,9 @@ export default {
       handledApartmentUrl: {}, //Katoaa päivitettäessä bioa
     }
   },
+  mounted() {
+    //lisää kuvien prosessointi tähän.
+  },
   computed: {
     handleUrl() {
       let rent;

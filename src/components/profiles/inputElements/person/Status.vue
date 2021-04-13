@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%">
     <select v-if="idValue === 'P'" v-model="status" v-on:click="emitToParent">
-      <option value="" selected disabled hidden>Elämäntilanne</option>
+      <option value="" selected disabled hidden>{{currentStatus ? optionStatuses[currentStatus-1].text : "Elämäntilanne"}}</option>
       <option v-for="(status, index,) in optionStatuses" :value="status.value" :key="index">{{ status.text }}</option>
     </select>
 
@@ -28,7 +28,14 @@
 <script>
 export default {
   name: 'Status',
-  props: ['idValue'],
+  props: {
+    idValue: {
+      type: String
+    },
+    currentStatus: {
+      type: Number
+    }
+  },
 
   data() {
     return {

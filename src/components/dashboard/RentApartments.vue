@@ -69,7 +69,6 @@ export default {
   },
   methods: {
     updateFilteredApartments(value) {
-      console.log(value)
       if (value.wantedApts) {
       console.log(value)
       this.filteredApartments = value.wantedApts;

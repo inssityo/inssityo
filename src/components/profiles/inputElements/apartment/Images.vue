@@ -58,6 +58,7 @@ export default {
     uploadAndPreviewImage() {
       const files = this.$refs.file.files;
       this.invalidMessage = "";
+      console.log(files)
 
       files.forEach((e, i) => {
         let msg = this.validate(files[i]);
@@ -68,19 +69,17 @@ export default {
 
         //push the images that have passed the validation
         if (msg === "") {
-          this.images.push(URL.createObjectURL(files[i]));
+          //this.images.push(URL.createObjectURL(this.$refs.file.files[i]));
+          this.images.push(this.$refs.file.files[i]);
         }
       });
 
       this.emitToParent();
     },
-    /*
-    removeImage(index) {
-      this.images.splice(index, 1);
-    },*/
     moveImageInArray(from, to) {
       var moved = this.images.splice(from, 1)[0];
       this.images.splice(to, 0, moved);
+      this.emitToParent()
     },
     validate(file) {
       console.log("validate ", file.size, file.type)

@@ -60,6 +60,8 @@ export default createStore({
         .then(res => {
           const accessToken = res.data.accessToken
           const refreshToken = res.data.refreshToken
+          const loggedin = res.data.user;
+          LocalStorageService.setLoggedInUser(JSON.stringify(loggedin))
           LocalStorageService.setAccessToken(accessToken)
           LocalStorageService.setRefreshToken(refreshToken)
           requestInterceptor();
@@ -97,6 +99,7 @@ export default createStore({
         .then(() => {
           commit(LOGOUT)
           LocalStorageService.clearTokens()
+          LocalStorageService.clearStorage()
           resolve()
         })
         .catch(err => {
@@ -105,24 +108,5 @@ export default createStore({
         })
       })
     },
-    /*
-    refreshToken({commit}) {
-      return new Promise((resolve, reject) => {
-        commit(AUTH_REQUEST)
-        const refreshToken = LocalStorageService.getRefreshToken()
-        AuthService.tokenRefresh({'refreshToken': refreshToken})
-        .then(res => {
-          LocalStorageService.setToken(refreshToken)
-          //axios.defaults.headers.common['Authorization'] = 'Bearer ' + refreshToken
-          commit(AUTH_SUCCESS, accessToken)
-          resolve(res)
-        })
-        .catch(err => {
-          commit(AUTH_ERROR)
-          LocalStorageService.clearToken()
-          reject(err)
-        })
-      })
-    }*/
   },
 })

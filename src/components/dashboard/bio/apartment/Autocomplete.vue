@@ -1,4 +1,5 @@
 <template>
+
 <div class="flexbox">
   <p>Hae kohteita:</p>
   <div class="autocomplete">
@@ -82,7 +83,6 @@
       </ul>
     </ul>
   </div>
-
   <div class="multiselect">
   <div class="selectBox pointer" @click="showCheckboxes()">
     <select v-bind:class="{ 'background--green': expanded }">
@@ -262,6 +262,7 @@ export default {
           selected = filteredApts.filter(
             (item) => item.location.city === optionValue
           );
+
           this.filterByType(selected)
           break;
         case "Asuinalue":
@@ -272,6 +273,7 @@ export default {
               item.location.city === givenCity
           );
           this.filterByType(selected)
+
           break;
         case "Osoite":
           selected = filteredApts.filter(
@@ -287,7 +289,6 @@ export default {
               item.location.areaCode === optionValue &&
               item.location.city === givenCity
           );
-          this.filterByType(selected)
           break;
       }
       this.isOpen=false
@@ -311,6 +312,12 @@ export default {
 
 <style>
 .autocomplete {
+
+  width: 25em;
+}
+ul {
+  padding-inline-start: 0;
+}
   width: 25em; margin-right: 10em;
   margin-left: 2em;
 }
@@ -332,7 +339,6 @@ ul {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .autocomplete-results::-webkit-scrollbar {
   display: none;
 }

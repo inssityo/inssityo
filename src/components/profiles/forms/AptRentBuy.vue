@@ -10,11 +10,14 @@
     />
 
     <div class="container">
-
       <div class="column">
         <div class="row">
           <h3>Sijainti</h3>
-          <Location id-value="ARB" v-on:childToParent="onChildClickLocation" v-on:click="emitToParent"/>
+          <Location
+            id-value="ARB"
+            v-on:childToParent="onChildClickLocation"
+            v-on:click="emitToParent"
+          />
         </div>
 
         <div class="row">
@@ -48,38 +51,55 @@
             v-on:childToParent="onChildSetSalePrice"
             v-on:click="emitToParent"
           />
-          <MaintenanceCost 
+          <MaintenanceCost
             v-if="apartment.isForSale"
             apt-value="B"
             v-on:childToParent="onChildSetMaintenanceCost"
             v-on:click="emitToParent"
           />
-          <Price v-else apt-value="R" v-on:childToParent="onChildSetRent" v-on:click="emitToParent"/>
+          <Price
+            v-else
+            apt-value="R"
+            v-on:childToParent="onChildSetRent"
+            v-on:click="emitToParent"
+          />
         </div>
 
         <div class="row">
           <h3>Muita kustannuksia</h3>
-          <OtherExpenses v-on:childToParent="onChildClickOtherExpenses" v-on:click="emitToParent"/>
+          <OtherExpenses
+            v-on:childToParent="onChildClickOtherExpenses"
+            v-on:click="emitToParent"
+          />
         </div>
 
 
         <div class="row">
           <h3>Kuvat</h3>
-          <Images v-on:childToParent="onChildImages" v-on:click="emitToParent"/>
-        </div>   
+          <Images
+            v-on:childToParent="onChildImages"
+            v-on:click="emitToParent"
+          />
+        </div>
 
         <div class="row">
           <h3>Palvelut</h3>
-          <Services v-on:childToParent="onChildClickServices" v-on:click="emitToParent"/>
+          <Services
+            v-on:childToParent="onChildClickServices"
+            v-on:click="emitToParent"
+          />
           {{ fromChildServices }} {{ fromChildServicesText }}
-        </div>     
+        </div>
       </div>
 
       <div class="column">
         <div class="row">
           <h3>Asunnon ja kiinteistön kuvaus</h3>
-          
-          <label for="description-arb" class="margin-top__025 margin-bottom__025 label__padding__leftless">
+
+          <label
+            for="description-arb"
+            class="margin-top__025 margin-bottom__025 label__padding__leftless"
+          >
             Esittelyteksti asunnosta, sijainnista ja palveluista*
           </label>
           <textarea
@@ -93,10 +113,23 @@
 
         <div class="row">
           <h3>Asunnon pohja</h3>
-          <FloorPlan v-on:childToParent="onChildClickFloorPlan" v-on:click="emitToParent"/>
-          <CellAptRoom v-on:childToParent="onChildClickCellAptRoom" v-on:click="emitToParent"/>
-          <Area apt-value="B" v-on:childToParent="onChildClickArea" v-on:click="emitToParent"/>
-          <FloorCount v-on:childToParent="onChildClickFloorCount" v-on:click="emitToParent"/>
+          <FloorPlan
+            v-on:childToParent="onChildClickFloorPlan"
+            v-on:click="emitToParent"
+          />
+          <CellAptRoom
+            v-on:childToParent="onChildClickCellAptRoom"
+            v-on:click="emitToParent"
+          />
+          <Area
+            apt-value="B"
+            v-on:childToParent="onChildClickArea"
+            v-on:click="emitToParent"
+          />
+          <FloorCount
+            v-on:childToParent="onChildClickFloorCount"
+            v-on:click="emitToParent"
+          />
         </div>
 
         <div class="row">
@@ -105,7 +138,10 @@
             class="flexbox"
             v-bind:class="{ 'remove__align-center': showFeatures }"
           >
-            <Condition v-on:childToParent="onChildClickCondition" v-on:click="emitToParent"/>
+            <Condition
+              v-on:childToParent="onChildClickCondition"
+              v-on:click="emitToParent"
+            />
             <Features
               id-value="ARB"
               v-on:childToParent="onChildClickFeatures"
@@ -114,9 +150,14 @@
             />
           </div>
 
-          <BalconyPatio v-on:childToParent="onBalconyPatio" v-on:click="emitToParent"/>
-         
-          <label for="kitchen-equipment" class="label__padding__leftless">Keittiö:</label>
+          <BalconyPatio
+            v-on:childToParent="onBalconyPatio"
+            v-on:click="emitToParent"
+          />
+
+          <label for="kitchen-equipment" class="label__padding__leftless"
+            >Keittiö:</label
+          >
           <textarea
             id="kitchen-equipment"
             class="box margin-top__025 margin-bottom__025"
@@ -124,7 +165,9 @@
             v-model="apartment.equipment.kitchen"
             v-on:input="emitToParent"
           ></textarea>
-          <label for="bathroom-equipment" class="label__padding__leftless">Kylpyhuone:</label>
+          <label for="bathroom-equipment" class="label__padding__leftless"
+            >Kylpyhuone:</label
+          >
           <textarea
             id="bathroom-equipment"
             class="box margin-top__025 margin-bottom__025"
@@ -132,7 +175,9 @@
             v-model="apartment.equipment.bathroom"
             v-on:input="emitToParent"
           ></textarea>
-          <label for="storage" class="label__padding__leftless">Säilytystilat:</label>
+          <label for="storage" class="label__padding__leftless"
+            >Säilytystilat:</label
+          >
           <textarea
             id="storage"
             class="box margin-top__025 margin-bottom__025"
@@ -151,10 +196,13 @@
         </div>
 
         <div class="row">
-          <Yard v-on:childToParent="onYardChange" v-on:click="emitToParent"/>
+          <Yard v-on:childToParent="onYardChange" v-on:click="emitToParent" />
         </div>
         <div class="row">
-          <Parking v-on:childToParent="onChildParking" v-on:click="emitToParent"/>
+          <Parking
+            v-on:childToParent="onChildParking"
+            v-on:click="emitToParent"
+          />
         </div>
       </div>
 
@@ -184,17 +232,23 @@
               v-on:click="emitToParent"
             />
           </div>
-      
-          <div class="flexbox">  
-            <Floor v-on:childToParent="onChildClickFloor" v-on:click="emitToParent"/>
-            <Elevator v-on:childToParent="onChildClickElevator" v-on:click="emitToParent"/>
+
+          <div class="flexbox">
+            <Floor
+              v-on:childToParent="onChildClickFloor"
+              v-on:click="emitToParent"
+            />
+            <Elevator
+              v-on:childToParent="onChildClickElevator"
+              v-on:click="emitToParent"
+            />
           </div>
 
           <div class="margin-bottom__025">
-            <label 
-              class="label__padding__leftless" 
+            <label
+              class="label__padding__leftless"
               for="total-amount-of-apts-on-property"
-            >Asuinhuoneistojen määrä rakennuksessa:
+              >Asuinhuoneistojen määrä rakennuksessa:
             </label>
             <input
               type="number"
@@ -206,10 +260,8 @@
             />
           </div>
           <div>
-            <label 
-              class="label__padding__leftless" 
-              for="businesses-on-property"
-            >Liiketilojen määrä rakennuksessa:
+            <label class="label__padding__leftless" for="businesses-on-property"
+              >Liiketilojen määrä rakennuksessa:
             </label>
             <input
               type="number"
@@ -283,27 +335,43 @@
               v-on:input="emitToParent"
             />
           </div>
-          <label for="renovationDesc" class="label__padding__leftless margin-top__025">Remonttihistoria ja tulevat remontit:</label>
-          <textarea id="renovationDesc" class="box margin-top__025 margin-bottom__025"  placeholder="Kerro menneistä ja tiedetyistä tulevista remonteista" v-model="apartment.renovationDescription"></textarea>
-          
+          <label
+            for="renovationDesc"
+            class="label__padding__leftless margin-top__025"
+            >Remonttihistoria ja tulevat remontit:</label
+          >
+          <textarea
+            id="renovationDesc"
+            class="box margin-top__025 margin-bottom__025"
+            placeholder="Kerro menneistä ja tiedetyistä tulevista remonteista"
+            v-model="apartment.renovationDescription"
+          ></textarea>
         </div>
 
         <div v-if="apartment.isForSale" class="row">
           <h3>Materiaalit</h3>
-          <Materials v-on:childToParent="onChildMaterials" v-on:click="emitToParent"/>
+          <Materials
+            v-on:childToParent="onChildMaterials"
+            v-on:click="emitToParent"
+          />
         </div>
 
         <div class="row">
           <h3>Ylläpito</h3>
-          <Utilities v-on:childToParent="onChildUtilities" v-on:click="emitToParent"/>
+          <Utilities
+            v-on:childToParent="onChildUtilities"
+            v-on:click="emitToParent"
+          />
         </div>
 
         <div class="row" v-if="!apartment.isForSale">
           <h3>Vuokra-asunnon sopimusehdot</h3>
-          <Terms v-on:childToParent="onChildClickTerms" v-on:click="emitToParent"/>
+          <Terms
+            v-on:childToParent="onChildClickTerms"
+            v-on:click="emitToParent"
+          />
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -325,14 +393,14 @@ import Terms from "../inputElements/apartment/Terms.vue";
 import Price from "../inputElements/apartment/Price.vue";
 import Yard from "../inputElements/apartment/Yard.vue";
 import BalconyPatio from "../inputElements/apartment/BalconyPatio.vue";
-import Utilities from "../inputElements/apartment/Utilities.vue"
-import Materials from '../inputElements/apartment/Materials.vue';
-import Parking from '../inputElements/apartment/Parking.vue'
-import Elevator from '../inputElements/apartment/Elevator.vue';
-import FloorCount from '../inputElements/apartment/FloorCount.vue';
-import MaintenanceCost from '../inputElements/apartment/MaintenanceCost.vue';
-import Images from '../inputElements/apartment/Images.vue';
-import Location from '../inputElements/apartment/Location.vue';
+import Utilities from "../inputElements/apartment/Utilities.vue";
+import Materials from "../inputElements/apartment/Materials.vue";
+import Parking from "../inputElements/apartment/Parking.vue";
+import Elevator from "../inputElements/apartment/Elevator.vue";
+import FloorCount from "../inputElements/apartment/FloorCount.vue";
+import MaintenanceCost from "../inputElements/apartment/MaintenanceCost.vue";
+import Images from "../inputElements/apartment/Images.vue";
+import Location from "../inputElements/apartment/Location.vue";
 
 //LocationType puuttuu
 
@@ -366,12 +434,11 @@ export default {
     FloorCount,
     MaintenanceCost,
     Images,
-    Location
+    Location,
   },
 
   data() {
     return {
-
       showFloorPlan: false,
       showFeatures: false,
 
@@ -392,8 +459,8 @@ export default {
           city: "",
           neighborhood: "",
           address: {
-            streetName:"",
-            houseNumber:""
+            streetName: "",
+            houseNumber: "",
           },
           areaCode: "",
         },
@@ -459,7 +526,7 @@ export default {
         propertyArea: null,
         monthlyRent: null,
         price: { salePrice: null, debtFreePrice: null },
-        maintenanceCosts: { upkeep: null, financing:null },
+        maintenanceCosts: { upkeep: null, financing: null },
         guarantee: "",
         buildYear: null,
         apartmentType: null,
@@ -521,7 +588,7 @@ export default {
             exists: false,
             description: "",
             supportsElectric: false,
-            options: [],
+            options: [null],
           },
           water: {
             mustHave: false,
@@ -540,8 +607,8 @@ export default {
     };
   },
   methods: {
-     emitToParent() {
-      this.$emit('childToParent', this.apartment);
+    emitToParent() {
+      this.$emit("childToParent", this.apartment);
     },
     onChildMaterials(value) {
       this.apartment.buildMaterial = value.buildMaterial;
@@ -563,7 +630,6 @@ export default {
       this.apartment.equipment.common = value.common;
     },
     onChildClickArea(value) {
-      //Area, ei min tai max!!!!, cellArea - KYSY SUVILTA
       this.apartment.totalArea = value.minRoom;
       this.apartment.livingArea = value.maxTotal;
     },
@@ -581,7 +647,7 @@ export default {
     },
     onChildClickApartmentType(value) {
       this.apartment.apartmentType = value.types;
-      console.log(this.apartment.apartmentType)
+      console.log(this.apartment.apartmentType);
     },
     onChildClickCellAptRoom(value) {
       this.apartment.isCellApartment = value;
@@ -614,7 +680,7 @@ export default {
     },
     onChildClickServices(value) {
       this.apartment.nearbyServices = value.nearbyServices;
-      this.apartment.serviceDescription = value.description
+      this.apartment.serviceDescription = value.description;
     },
     onChildClickOtherExpenses(value) {
       this.fromChildOtherExpenses = value.expenses;
@@ -656,24 +722,13 @@ export default {
       this.apartment.location.areaCode = value.areaCode;
     },
     onChildImages(value) {
-      console.log("image " + JSON.stringify(value));
       this.apartment.images = value;
-      /*
-      this.apartment.images.foreach((img) => {
-        var file = img.files[0];
-        var reader = new FileReader();
-        reader.onloadend = function() {
-          console.log("result ", reader.result);
-        }
-        reader.readAsDataURL(file);
-      })*/
-      console.log("image2 " + JSON.stringify(this.apartment.images));
+      console.log("value", value);
     },
     handleFloorPlan() {
       this.showFloorPlan = !this.showFloorPlan;
     },
   },
-  mounted() {},
 };
 </script>
 
@@ -754,7 +809,8 @@ textarea {
     width: 3.5rem;
   }
 }
-#businesses-on-property, #total-amount-of-apts-on-property {
+#businesses-on-property,
+#total-amount-of-apts-on-property {
   width: 3em;
 }
 #build-year {
@@ -769,5 +825,4 @@ textarea {
   width: 100%;
   margin-right: 1em;
 }
-
 </style>
