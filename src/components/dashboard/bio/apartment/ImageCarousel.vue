@@ -44,11 +44,6 @@ export default {
     if (this.images !== null) {
 
       let imgArr = this.images;
-      imgArr.forEach((element, index) => {
-        let data = element;
-        let buff = Buffer.from(data, "base64");
-        imgArr[index] = buff.toString("ascii");
-      });
       this.imagesData = imgArr;
     }
   },

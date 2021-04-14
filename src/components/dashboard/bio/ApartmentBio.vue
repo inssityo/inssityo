@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ImageCarousel :images="apartment.images" /><!-- handlaa, jos ei ole kuvia -->
+    <ImageCarousel :images="createImageUrls" /><!-- handlaa, jos ei ole kuvia -->
     <div class="content">
       <div class="container">
         <div class="column column-item--1">
@@ -858,6 +858,18 @@ export default {
       } else {
         return "Vuokra";
       }
+    },
+    createImageUrls(){
+      console.log(this.apartment.images)
+      let urls = []
+      if (this.apartment.images) {
+        this.apartment.images.forEach(img => {
+          urls.push(`https://drive.google.com/uc?id=${img}&amp;export=download`)
+        }) 
+        console.log(urls)
+        return urls
+      }
+      return null
     },
     handleParkingTypes() {
       let parkingString = "";

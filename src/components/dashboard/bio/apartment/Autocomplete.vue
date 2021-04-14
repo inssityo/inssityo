@@ -318,13 +318,6 @@ export default {
 ul {
   padding-inline-start: 0;
 }
-  width: 25em; margin-right: 10em;
-  margin-left: 2em;
-}
-
-ul {
-  padding-inline-start: 0;
-}
 
 .multiselect{
   margin-bottom: 0;
