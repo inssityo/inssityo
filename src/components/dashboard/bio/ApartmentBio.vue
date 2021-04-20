@@ -860,7 +860,6 @@ export default {
       }
     },
     createImageUrls(){
-      console.log(this.apartment.images)
       let urls = []
       if (this.apartment.images) {
         this.apartment.images.forEach(img => {
