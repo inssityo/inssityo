@@ -1,13 +1,16 @@
 <template>
-  <select v-model="condition" v-on:click="emitToParent">
-    <option value="" selected disabled hidden>Kunto</option>
-    <option v-for="(condition, index,) in optionConditions" :value="condition.value" :key="index">{{ condition.text }}</option>
-  </select>
+  <div class="width__50">
+    <select v-model="condition" v-on:click="emitToParent">
+      <option value="" selected disabled hidden>Kunto</option>
+      <option v-for="(condition, index,) in optionConditions" :value="condition.value" :key="index">{{ condition.text }}</option>
+    </select>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'Condition',
+  emits: ['childToParent'],
 
   data() {
     return {

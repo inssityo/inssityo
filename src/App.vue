@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <Footer v-show="!isLogin"/>
+  <Footer v-if="!isLogin"/>
 </template>
 
 <script>
@@ -17,7 +17,10 @@ export default {
     isLogin() {
       return this.$route.name === 'entry'
     }
-  }
+  },
+  mounted() {
+    console.log(`Working on '${process.env.VUE_APP_MODE}' mode`)
+  },
 }
 </script>
 
@@ -67,6 +70,24 @@ section {
 .margin__nothing {
   margin: 0
 }
+.margin-top__1 {
+  margin-top: 1rem !important;
+}
+.margin-top__05 {
+  margin-top: 0.6rem;
+}
+.margin-top__025 {
+  margin-top: 0.3rem;
+}
+.margin-bottom__1 {
+  margin-bottom: 1rem !important;
+}
+.margin-bottom__05 {
+  margin-bottom: 0.6rem !important;
+}
+.margin-bottom__025 {
+  margin-bottom: 0.3rem !important;
+}
 .flexbox {
   display: flex;
   align-items: center;
@@ -77,6 +98,9 @@ section {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.width__50 {
+  width: 48.5%;
 }
 
 // ====== headings ====== //
@@ -100,21 +124,55 @@ h2 {
 }
 h3 {
   font-size: 1.2rem;
-  font-weight: bold;
   color: v.$KAMGreenDark;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
+}
+h4 {
+  font-family: v.$KAMLouisLight;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+p {
+  white-space: normal !important;
+}
+
+.alert-danger {
+  color: #e60020;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+}
+.info-text {
+  color: v.$KAMGreyDark;
+  display: flex;
+
+  .fa-info-circle {
+    color: v.$KAMGreySemiDark;
+    margin-right: 0.5rem;
+    padding-top: 0.2rem;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 // ====== label, input, select, textarea ====== //
 p, label, input, select, textarea, button {
   font-size: 1rem!important;
 }
+.label__padding__leftless {
+  padding: 0.2rem 0.4rem 0.2rem 0;
+}
+.label__nowrap {
+  white-space: nowrap;
+}
 label, textarea {
   letter-spacing: 0.03rem;
   cursor: pointer;
 }
-label, input[type="text"], input[type="date"], textarea {
+label, input[type="text"], input[type="date"], input[type="number"], textarea {
   padding: 0.2rem 0.4rem;
 }
 select {
@@ -131,7 +189,7 @@ input, select, textarea, button { //Muuta buttonin font-size
 a, a:hover  {
   text-decoration: none;
   cursor: pointer;
-  color: v.$KAMBeige;
+  color: v.$Black;
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
@@ -170,11 +228,12 @@ img {
 }
 .img--calc {
   max-height: calc(100vh - 0rem - 4.2rem);
+  display: block;
 }
 .transparency {
   width: 100%;
   background: v.$White;
-  background: rgba(255, 255, 255, 0.8);
+  background: v.$KAMWhiteTRN8;
   z-index: 1;
 }
 
@@ -218,7 +277,7 @@ img {
   background-color: v.$KAMGreyDark;
   color: v.$White;
   padding: 0.2rem 0.4rem;
-  font-size: 0.75rem!important;
+  font-size: 0.75rem !important;
   border-radius: 0.2rem;
 }
 .check__label-only input {
@@ -231,7 +290,7 @@ img {
   background-color: v.$KAMGreenSemiLight;
 }
 
-// ====== checkmark checkbox====== //
+// ====== checkmark checkbox ====== //
 .checkmark-label {
   display: block;
   position: relative;
@@ -284,16 +343,16 @@ img {
   width: 100%;
   z-index: 3;
 
-  .selectBox select:hover {
+  .select-box select:hover {
     background-color: v.$KAMGreenLight !important; //ei toimi
   }
   .background--green {
     background: v.$KAMGreenLight;
   }
-  .selectBox {
+  .select-box {
     position: relative;
   }
-  .overSelect {
+  .over-select {
     position: absolute;
     left: 0;
     right: 0;
@@ -365,6 +424,9 @@ button:focus {
 .switch-no {
   font-weight: bold;
   color: v.$KAMBlue;
+}
+.switch__margin-left {
+  margin-left: 1rem !important;
 }
 .switch {
   position: relative;

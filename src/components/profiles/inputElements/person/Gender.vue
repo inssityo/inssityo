@@ -1,8 +1,8 @@
 <template>
   <div style="width: 100%">
     <select v-if="idValue === 'P'" v-model="gender" v-on:click="emitToParent">
-      <option value="" selected disabled hidden>Sukupuoli</option>
-      <option v-for="(gender, index,) in optionGenders" :value="gender.value" :key="index">{{ gender.text }}</option>
+      <option value="" selected hidden disabled>{{genderChoice ? optionGenders[genderChoice-1].text : "Sukupuoli"}}</option>
+      <option v-for="(gender, index) in optionGenders" :value="gender.value" :key="index">{{ gender.text }}</option>
     </select>
 
     <div v-else class="multiselect">
@@ -28,7 +28,14 @@
 <script>
 export default {
   name: 'Gender',
-  props: ['idValue'],
+  props: {
+    idValue: {
+      type: String,
+    },
+    genderChoice: {
+      type: Number,
+    }
+  },
 
   data() {
     return {

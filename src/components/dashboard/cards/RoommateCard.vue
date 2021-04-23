@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/roommates/id" class="card pointer">
+  <router-link :to="{ name: 'roommate-bio', params: { id: id, user: userUrl }}" class="card pointer">
     <div class="card-info">
       <div class="transparency flexbox">
         <p>{{ user.name }}</p>
@@ -21,58 +21,14 @@
 <script>
 export default {
   name: 'RoommateCard',
+  props: ['userData'],
 
   data() {
     return {
-      user: {
-        email: '',
-        password: '',
-        creationTime: '',
-        lastActive: '',
-        name: 'Emilia',
-        surname: 'Esimerkki',
-        movingDate: '',
-        img: null,
-        ageGroup: 1,
-        gender: 2,
-        location: [],
-        rentLimit: 500,
-        maxRoomMates: 4,
-        employmentStatus: 4,
-        workType: null,
-        description: '',
-        alcohol: 1,
-        smoking: 1,
-        drugs: 1,
-        personalityTraits: {type:[],validate:[]},
-        sociality: 1,
-        pets: true,
-        petTypes: {
-          dogs: false,
-          cats: false,
-          rodents: false,
-          birds: false,
-          fishes: false,
-          terrarium: false,
-          other: false
-        },
-        hobbies: [
-          { text: 'Lukeminen', value: 'reading', level: 1 },
-          { text: 'Musiikki', value: 'music', level: 1 },
-          { text: 'Kädentaidot', value: 'handcrafts', level: 1 },
-          { text: 'Urheilu', value: 'sport',level:1},
-          { text: 'Kulttuuri', value: 'culture',level:1},
-          { text: 'Taide', value: 'art', level: 1 },
-          { text: 'Keräily', value: 'collecting', level: 1 },
-          { text: 'Ruuanlaitto', value: 'cooking', level: 1 },
-          { text: 'Pelaaminen', value: 'playing', level: 1 },
-          { text: 'Vapaaehtoistyö', value: 'volunteering', level: 1 },
-          { text: 'Matkustelu', value: 'traveling', level: 1 },
-          { text: 'Tietotekniikka', value: 'it', level: 1 }
-        ],
-        blockedUsers: [],
-        targetProfile: []
-      },
+      user: this.userData,
+      id: this.userData._id,
+      userUrl: JSON.stringify(this.userData),
+      
       modifiedAge: '',
       modifiedGender: '',
       modifiedStatus: ''
@@ -150,8 +106,5 @@ export default {
 <style lang="scss" scoped>
 @use '../../../assets/styles/variables.scss' as v;
 
-a {
-  color: v.$Black;
-}
 
 </style>

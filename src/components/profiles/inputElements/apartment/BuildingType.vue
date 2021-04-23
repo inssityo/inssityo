@@ -1,20 +1,20 @@
 <template>
-  <div v-bind:class="{'width100': idValue !== 'ARB'}">
+  <div class="box flexbox" v-bind:class="{'width__50': idValue === 'ARB','remove__align-center2': expanded}">
+    <label class="label__padding__leftless" v-bind:class="{'margin-top__025': expanded}">Talotyyppi:</label>
     <select v-if="idValue === 'ARB'" v-model="buildingType" v-on:click="emitToParent">
-      <option value="" selected disabled hidden>Talotyyppi</option>
+      <option value="" selected disabled hidden>Valitse...</option>
       <option v-for="(type, index,) in optionBuildingTypes" :value="type.value" :key="index">{{ type.text }}</option>
     </select>
 
     <div v-else class="multiselect">
-
-      <div class="selectBox pointer" @click="showCheckboxes()">
+      <div class="select-box pointer" @click="showCheckboxes()">
         <select v-bind:class="{'background--green': expanded}">
-          <option>Talotyyppi</option>
+          <option>Valitse...</option>
         </select>
-        <div class="overSelect"></div>
+        <div class="over-select"></div>
       </div>
 
-      <div id="checkboxes-buildingtype" class="checkboxes check__label-only">
+      <div :id="idValue+'-checkboxes-building-type'" class="checkboxes check__label-only">
         <div v-for="(type, index,) in optionBuildingTypes" :key="index" class="flexbox pointer">
           <input type="checkbox" :id="idValue+'b'+index" />
           <label :for="idValue+'b'+index" @click="handleBuildingTypes(type.value)">{{ type.text }}</label>
@@ -34,10 +34,13 @@ export default {
     return {
       optionBuildingTypes: [
         { text: 'Kerrostalo', value: 1, checked: false }, //High-Rise
-        { text: 'Omakotitalo', value: 2, checked: false }, //Detached House
-        { text: 'Erillistalo', value: 3, checked: false }, //
-        { text: 'Rivitalo', value: 4, checked: false }, //Terraced House
-        { text: 'Paritalo', value: 5, checked: false }, //Semi-Detached House
+        { text: 'Rivitalo', value: 2, checked: false }, //Terraced house
+        { text: 'Paritalo', value: 3, checked: false }, //Detached house
+        { text: 'Omakotitalo', value: 4, checked: false }, //Terraced House
+        { text: 'Ketjutalo', value: 5, checked: false }, //Semi-Detached House
+        { text: 'Luhtitalo', value: 6, checked: false }, //Luhtitalo
+        { text: 'Puutalo-osake', value: 7, checked: false }, //Wooden house share
+        { text: 'Muu', value: 8, checked: false }, //Other
       ],
       buildingType: '',
       buildingTypes: [],
@@ -46,30 +49,15 @@ export default {
   },
   methods: {
     emitToParent() {
-      if (this.idValue === 'P') {
+
+      if (this.idValue === 'ARB') {
         this.$emit('childToParent', {'types': this.buildingType, 'show': false});
       } else {
         this.$emit('childToParent', {'types': this.buildingTypes, 'show': this.expanded})
       }
     },
     handleBuildingTypes(value) {
-      switch(value) {
-        case 1:
-          this.optionBuildingTypes[0].checked = !this.optionBuildingTypes[0].checked;
-          break;
-        case 2:
-          this.optionBuildingTypes[1].checked = !this.optionBuildingTypes[1].checked;
-          break;
-        case 3:
-          this.optionBuildingTypes[2].checked = !this.optionBuildingTypes[2].checked;
-          break;
-        case 4:
-          this.optionBuildingTypes[3].checked = !this.optionBuildingTypes[3].checked;
-          break;
-        case 5:
-          this.optionBuildingTypes[4].checked = !this.optionBuildingTypes[4].checked;
-          break;
-      }
+        this.optionBuildingTypes[value-1].checked = !this.optionBuildingTypes[value-1].checked
       this.updateBuildingTypesArr();
     },
     updateBuildingTypesArr() {
@@ -83,7 +71,7 @@ export default {
       this.emitToParent();
     },
     showCheckboxes() {
-      let checkboxes = document.getElementById("checkboxes-buildingtype");
+      let checkboxes = document.getElementById(this.idValue+"-checkboxes-building-type");
       if (!this.expanded) {
         checkboxes.style.display = "block";
         this.expanded = true;
@@ -100,8 +88,11 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-.width100 {
-  width: 100%;
+.remove__align-center2 {
+  align-items: normal !important;
+}
+.margin-top__025 {
+  margin-top: 0.2rem;
 }
 
 </style>

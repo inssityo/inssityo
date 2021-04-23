@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import store from '@/store';
 import Home from "../components/views/Home.vue";
 import CreateProfileForm from "../components/views/CreateProfileForm.vue";
 import ProfileForm from "../components/views/ProfileForm.vue";
@@ -8,6 +9,7 @@ import Apartments from "../components/views/Apartments.vue";
 import RentApartments from "../components/dashboard/RentApartments.vue";
 import ForSaleApartments from "../components/dashboard/ForSaleApartments.vue";
 import RoommateBio from "../components/dashboard/bio/RoommateBio.vue";
+import ApartmentBio from "../components/dashboard/bio/ApartmentBio";
 
 const routes = [
   {
@@ -16,24 +18,41 @@ const routes = [
     component: Home,
   },
   {
-    path: "/profile",
-    name: "profile",
-    component: CreateProfileForm,
-  },
-  {
-    path: "/profile/edit/:profileForm",
-    name: "profileform",
-    component: ProfileForm,
-  },
-  {
     path: "/entry",
     name: "entry",
     component: Entry,
   },
   {
+    path: "/profile",
+    name: "profile",
+    component: CreateProfileForm,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/profile/edit/:profileForm",
+    name: "profileform",
+    component: ProfileForm,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/roommates",
     name: "roommates",
     component: Roommates,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/roommates/:id",
+    name: "roommate-bio",
+    component: RoommateBio,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/apartments",
@@ -46,14 +65,19 @@ const routes = [
     component: RentApartments,
   },
   {
-    path: "/apartments/for-sale",
+    path: "/apartments/buy",
     name: "for-sale-apartments",
     component: ForSaleApartments,
   },
   {
-    path: "/roommates/id",
-    name: "roommate-bio",
-    component: RoommateBio,
+    path: "/apartments/rent/:id",
+    name: "apartment-rent-bio",
+    component: ApartmentBio,
+  },
+  {
+    path: "/apartments/buy/:id",
+    name: "apartment-buy-bio",
+    component: ApartmentBio,
   },
 ];
 
@@ -61,5 +85,20 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (!store.getters.isLoggedIn) {
+      next({ 
+        path: "/entry",
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next()
+  }
+})
 
 export default router;

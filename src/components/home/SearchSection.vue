@@ -1,98 +1,142 @@
 <template>
-  <div class="content">
-    <h1 class="margin__topless">Etsi ja löydä</h1>
-    
-    <div class="container">
-      <div class="column column-item--1 pointer">
-        <div class="transparency box">
-          <p>Löydä kämppis</p>
-        </div>
-        <img src="../../assets/images/pexels-anna-tarazevich-4850290.jpg" alt="Image 2">
-      </div>
-      <div class="column column-item--2 pointer">
-        <div class="transparency box">
-          <p>Löydä asunto</p>
-        </div>
-        <img src="../../assets/images/pexels-kelly-ritta-4377192-2.jpg" alt="Image 3">
-      </div>
+  <div class="hero-search-container box">
+    <div class="flexbox check__label-only">
+      <input type="radio" id="search-buy" checked value="for-sale" name="choice" v-model="buy"/>
+      <label class="hover--check__label-only" for="search-buy" @click="handleSearch(true)">Osta</label>
+      <input type="radio" id="search-rent" value="rent" name="choice" v-model="buy"/>
+      <label class="hover--check__label-only" for="search-rent" @click="handleSearch(false)">Vuokraa</label>
     </div>
     
+    <div id="hero-search-bar">
+      <i class="fas fa-search"></i>
+      <div class="flexbox">
+        <input type="text" id="hero-search-input" class="box" @keyup.enter="search" placeholder="Hae">
+        <button @click="search">Hae</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'SearchButtons',
+  name: 'SearchBar',
+  inject: ['$router'],
+
+  data() {
+    return {
+      buy: true,
+      route: "/apartments/buy",
+    }
+  },
+  methods: {
+    handleSearch(value) {
+      if (value) {
+        this.buy = true;
+        this.route = "/apartments/buy"
+      } else {
+        this.buy = false;
+        this.route = "/apartments/rent"
+      }
+      console.log("search " + value)
+    },
+    search() {
+      this.$router.push(this.route);
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @use '../../assets/styles/variables.scss' as v;
 
-p {
-  font-size: 1.4rem !important;
-  font-weight: normal;
-  letter-spacing: 0.03rem;
+.hero-search-container {
+  background: v.$Black;
+  background: v.$KAMBlackTRN9;
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translate(-50%, -0%);
+  width: 60%;
+  box-shadow: 0px 10px 30px -25px black;
 }
-.content {
-  padding-top: 3rem;
+.flexbox {
+  justify-content: normal;
 }
-.container {
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(1, 32vw);
-}
-.column {
+.check__label-only {
+  margin-top: 0 !important;
+  padding: 0.7rem 1rem 0rem 1rem;
 
-}
-.column:hover {
-  img {
-    filter:brightness(70%);
+  label {
+    color: v.$White;
+    letter-spacing: 0.2rem;
+    font-size: 1.3rem !important;
+    padding: 0;
+    margin-right: 3rem;
+    text-transform: uppercase;
+    border-bottom: 0.3rem solid transparent !important;
+    background-color: transparent;
+  }
+  input:checked + label {
+    background-color: transparent;
+    color: v.$KAMBlue;
   }
 }
-.column-item--1 {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  position: relative;
-
-  div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0.7rem 1.1rem;
-    border-bottom: 0.15rem solid v.$KAMGreenDark;
-    
-    p {
-      margin: 0;
-    }
-  }
-  img {
-    border-radius: 1.5rem 0 0 1.5rem;
-  }
-}
-.column-item--2 {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  position: relative;
-  overflow: hidden;
   
-  div {
+.hover--check__label-only:hover {
+  background-color: transparent !important;
+  color: v.$KAMPurple !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+#hero-search-bar {
+  position: relative;
+
+  .fa-search {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 0;
-    padding: 0.7rem 1.1rem;
-    border-top: 0.15rem solid v.$KAMGreenDark;
-    text-align: right;
-    
-    p {
-      margin: 0;
-    }
+    bottom: 2rem;
+    left: 2rem;
+    color: v.$KAMGreyDark;
   }
-  img {
-    border-radius: 0 1.5rem 1.5rem 0;
+
+  .flexbox {
+    margin-top: 0.7rem;
   }
+}
+
+#hero-search-input {
+  height: 3rem;
+  width: 71vw;
+  border-radius: 0;
+  background: v.$White;
+  //background: v.$KAMWhiteTRN7;
+  margin: 0 0 1rem 1rem;
+  padding: 0.2rem 1rem 0.2rem 3rem;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.02rem;
+  border-bottom: 0.3rem solid transparent !important;
+}
+#hero-search-input:focus {
+  border-bottom: 0.3rem solid v.$KAMBlue !important;
+}
+#hero-search-input:hover {
+  background: v.$KAMWhiteTRN7 !important;
+  border-bottom: 0.3rem solid v.$KAMBlue !important;
+}
+button {
+  margin: 0 1rem 1rem 0;
+  height: 3rem;
+  width: 29vw !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  font-family: v.$KAMLouisLight;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  font-weight: bold;
+}
+button:hover {
+  background: v.$KAMBlue;
 }
 
 </style>

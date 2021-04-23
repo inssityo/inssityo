@@ -30,7 +30,7 @@
             <div class="divider"></div>
           </div>
         </div>
-        <input class="box" type="range" name="range" :id="idValue+'range'" min="1" max="7" step="1" v-model="sociality" @change="emitToParent" />
+        <input class="box" type="range" name="range" v-model="sociality" :id="idValue+'range'" min="1" max="7" step="1"/>
       </div>
     </div>
   </div>
@@ -39,15 +39,24 @@
 <script>
 export default {
   name: 'Sociality',
-  props: ['idValue'],
+  props: {idValue:{type:String}, foundSociality:{type:Number}},
 
   data() {
     return {
-      sociality: 1,
+      sociality: localStorage.getItem("loggedIn") ? localStorage.getItem("loggedIn").sociality : 1
+    }
+  },
+  watch: {
+    sociality() {
+      console.log(this.foundSociality)
+      console.log("WATCH", this.sociality)
+      this.emitToParent()
+
     }
   },
   methods: {
     emitToParent() {
+      console.log(this.sociality)
       this.$emit('childToParent', this.sociality)
     },
   }

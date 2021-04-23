@@ -22,7 +22,7 @@
         </div>
         <div class="row-item--6">
           <label for="description-r">Kuvaus kämppiksestä</label>
-          <textarea type="text" id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="targetProfile.description" v-on:keyup="emitToParent"></textarea>
+          <textarea id="description-r" class="box" placeholder="Kerro vapaasti, minkälaista kämppistä haet" v-model="targetProfile.description" v-on:keyup="emitToParent"></textarea>
         </div>
       </div>
 

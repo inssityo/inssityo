@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <label>Vapautuu:</label>
-    <input type="date" class="box" v-model="date" v-on:click="emitToParent"><!-- vaihda click -->
+  <div class="width__50">
+    <h3>Vapautuu</h3>
+    <input type="date" class="box" v-model="date" v-on:input="emitToParent">
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'AvalableFrom', //Heti vapaa?
+  name: 'AvailableFrom',
   
   data() {
     return {
@@ -27,8 +27,6 @@ export default {
 <style lang="scss" scoped>
 @use '../../../../assets/styles/variables.scss' as v;
 
-input[type="date"] {
-  margin: 0.3rem 0 0 0;
-}
+
 
 </style>

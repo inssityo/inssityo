@@ -17,35 +17,35 @@
           <input type="text" id="lastname" class="border-radius__right" v-model="user.surname" v-on:keyup="emitToParent">
         </div>
         <div class="row-item--4">
-          <Age id-value="P" v-on:childToParent="onChildClickAge" v-on:click="emitToParent" />
+          <Age id-value="P" v-bind:age-group="user.ageGroup" v-on:childToParent="onChildClickAge" v-on:click="emitToParent" v-model="user.ageGroup" />
         </div>
         <div class="row-item--5">
-          <Gender id-value="P" v-on:childToParent="onChildClickGender" v-on:click="emitToParent" />
+          <Gender id-value="P" v-bind:gender-choice="user.gender" v-on:childToParent="onChildClickGender" v-on:click="emitToParent" v-model="user.gender" />
         </div>
         <div class="row-item--6" v-bind:class="{'row-item--6-2': user.employmentStatus === 1}">
-          <Status id-value="P" v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
+          <Status id-value="P" v-bind:current-status="user.employmentStatus" v-on:childToParent="onChildClickStatus" v-on:click="emitToParent"/>
         </div>
         <div class="row-item--7" v-show="user.employmentStatus === 1">
-          <WorkType id-value="P" :employment-status-p="user.employmentStatus" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
+          <WorkType id-value="P" :employment-status-p="user.employmentStatus" v-bind:workTypeChoice="user.workType" v-on:childToParent="onChildClickWorkType" v-on:click="emitToParent" />
         </div>
         <div class="row-item--8">
           <label for="description-p">Kuvaus itsestäsi</label>
-          <textarea type="text" id="description-p" class="box" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista" v-model="user.description" v-on:keyup="emitToParent"></textarea>
+          <textarea id="description-p" class="box" placeholder="Kerro vapaasti itsestäsi ja hakusi taustoista." v-model="user.description" v-on:keyup="emitToParent"></textarea>
         </div>
       </div>
 
       <div class="column column-item--2 container">
         <div class="row-item--1">
-          <Hobbies id-value="P" v-on:childToParent="onChildClickHobbies" v-on:click="emitToParent" />
+          <Hobbies id-value="P" v-bind:currentHobbies="user.hobbies" v-on:childToParent="onChildClickHobbies" v-on:click="emitToParent" />
         </div>
       </div>
 
       <div class="column column-item--3 container">
         <div class="row-item--1">
-          <Sociality id-value="P" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent" />
+          <Sociality id-value="P" v-bind:found-sociality="user.sociality" v-on:childToParent="onChildClickSociality" v-on:click="emitToParent" />
         </div>
         <div class="row-item--2">
-          <Traits id-value="P" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
+          <Traits id-value="P" :found-traits="user.personalityTraits" v-on:childToParent="onChildClickTraits" v-on:click="emitToParent" />
         </div>
         <div class="row-item--3">
           <Pets id-value="P" v-on:childToParent="onChildClickPets" v-on:click="emitToParent" />
@@ -54,7 +54,6 @@
           <Intoxicants id-value="P" v-on:childToParent="onChildClickIntoxicants" v-on:click="emitToParent" />
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -70,6 +69,7 @@ import Pets from '../inputElements/person/Pets.vue'
 import Intoxicants from '../inputElements/person/Intoxicants.vue'
 import Sociality from '../inputElements/person/Sociality.vue'
 import WorkType from '../inputElements/person/WorkType.vue'
+import LocalStorageService from '../../../plugins/localStorage.service.js'
 
 export default {
   name: 'PersonalProfile',
@@ -111,7 +111,7 @@ export default {
 
         personalityTraits: [],
         sociality: 1,
-        pets: true,
+        pets: false,
         petTypes: [ //Miten handlataan tällainen vastaus?
           {
             dogs: false,
@@ -125,22 +125,25 @@ export default {
         ],
         hobbies: [
           {
-            collecting: 1,
-            crafts: 1,
-            informationTech: 1,
-            sports: 1,
-            music: 1,
-            games: 1,
-            reading: 1,
-            art: 1,
-            culture: 1,
-            cooking: 1,
-            travelling: 1,
-            voluntaryWork: 1,
+            collecting: 4,
+            crafts: 4,
+            informationTech: 4,
+            sports: 4,
+            music: 4,
+            games: 4,
+            reading: 4,
+            art: 4,
+            culture: 4,
+            cooking: 4,
+            travelling: 4,
+            voluntaryWork: 4,
           }
         ],
       }
     }
+  },
+  computed: {
+
   },
   methods: {
     emitToParent() {
@@ -176,7 +179,7 @@ export default {
       this.user.drugs = value.drugs;
     },
     onChildClickSociality(value) {
-      this.user.sociality = value;
+      this.user.sociality = parseInt(value);
     },
     onChildClickWorkType(value) {
       this.user.workType = value.types;
@@ -186,7 +189,15 @@ export default {
         this.user.workType = null;
       }
     }
-  }
+  },
+   mounted: function () {
+    let loggedIn = LocalStorageService.getLoggedInUser();
+    if (loggedIn) {
+      console.log("user found");
+      this.user = JSON.parse(loggedIn);
+      console.log("USER", this.user)
+    }
+  },
 }
 </script>
 

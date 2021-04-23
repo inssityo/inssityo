@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section>
     <img src="../../assets/images/pexels-daria-shevtsova-1680140.jpg" class="img--calc" alt="">
     <div class="container">
       <router-link to="/apartments/rent"  class="column column-item--1 flexbox">
@@ -8,14 +8,14 @@
           <p>Etsitkö vuokrattavaa asuntoa?</p>
         </div>
       </router-link>
-      <router-link to="/apartments/for-sale" class="column column-item--2 flexbox">
+      <router-link to="/apartments/buy" class="column column-item--2 flexbox">
         <div>
           <h2>Myytävät asunnot</h2>
           <p>Etsitkö ostettavaa asuntoa?</p>
         </div>
       </router-link>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

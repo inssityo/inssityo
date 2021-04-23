@@ -1,29 +1,47 @@
 <template>
   <div class="content">
     <h1>Osta asunto, josta tarinat alkavat</h1>
+
+            <Autocomplete :items="apartments"/>
     <div class="box">
       <div class="cards flexbox box">
-        <ApartmentCard card-id="S" v-for="r in cards" :key="r"/>
+
+        <ApartmentCard card-id="S" :apartment-data="apartments[index]" v-for="(apt, index) in apartments" :key="index"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ApartmentCard from "./cards/ApartmentCard.vue"
+import ApartmentCard from "./cards/ApartmentCard.vue";
+import ApartmentService from "../../api-services/apartment.service.js";
+import Autocomplete from '../../components/dashboard/bio/apartment/Autocomplete.vue';
 
 export default {
-  name: 'RentApartments',
+  name: 'ForSaleApartments',
 
   components: {
-    ApartmentCard
+    ApartmentCard,
+    Autocomplete
   },
 
   data() {
     return {
-      cards: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+      apartments: {},
+      price: {}
     }
-  }
+  },
+  async created() {
+    try {
+      const response =  await ApartmentService.getAll();
+      let data = response.data;
+      this.apartments = data.filter(function(el) {
+        return el.isForSale === true;
+      });
+    } catch (err) {
+      console.log("apartment data error: " + err);
+    }
+  },
   
 }
 </script>
